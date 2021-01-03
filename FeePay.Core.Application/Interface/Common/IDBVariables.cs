@@ -18,5 +18,13 @@ namespace FeePay.Core.Application.Interface.Common
         string SP_Get_SuperAdmin_Role { get; }
         string SP_GetAll_SuperAdmin_Role { get; }
         string SP_Update_SuperAdmin_Role { get; }
+        string SP_Add_SuperAdmin_UserRole { get; }
+        string SP_Delete_SuperAdmin_UserRole { get; }
+        string SP_Get_SuperAdmin_UserRole { get; }
+        string SP_Update_SuperAdmin_UserRole { get; }
+        string SP_GetUserRoles_SuperAdmin { get; }
+        string SP_Get_SuperAdmin_UsersInRole { get; }
+        string SP_GetAll_SuperAdmin_UserRole { get; }
+        string SP_AddLoginInfo_SuperAdmin { get; }
     }
 }

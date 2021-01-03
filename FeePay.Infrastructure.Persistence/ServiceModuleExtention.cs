@@ -14,6 +14,8 @@ namespace FeePay.Infrastructure.Persistence
         {
             services.AddSingleton<IDBVariables, DBVariables>();
             services.AddSingleton<ISuperAdminUserRepository, SuperAdminUserRepository>();
+            services.AddSingleton<ISuperAdminRoleRepository, SuperAdminRoleRepository>();
+            services.AddSingleton<ISuperAdminUserRoleRepository, SuperAdminUserRoleRepository>();
 
 
 

@@ -1,14 +1,14 @@
 ﻿CREATE PROCEDURE [dbo].[SP_Update_SuperAdmin_Role]
 (
-@Id int 
-,@Name nvarchar(256) NULL
+@Id INT 
+,@Name NVARCHAR(256) NULL
 ,@NormalizedName NVARCHAR(256) NULL
 ,@IsActive BIT = 0
 ,@ModifyBy INT NULL
 )
 AS
 BEGIN
-    IF NOT EXISTS(SELECT *FROM [dbo].[SuperAdmin_Role] WHERE [Id] = @Id AND [IsDelete] = 0)
+    IF EXISTS(SELECT *FROM [dbo].[SuperAdmin_Role] WHERE [Id] = @Id AND [IsDelete] = 0)
     BEGIN
         UPDATE [dbo].[SuperAdmin_Role] SET 
         [Name] = @Name

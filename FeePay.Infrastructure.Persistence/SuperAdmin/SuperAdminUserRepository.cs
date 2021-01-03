@@ -251,5 +251,43 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+        public async Task<IList<SuperAdminUser>> FindAllActiveUserAsync(string dbId = null)
+        {
+            try
+            {
+                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
+                {
+                    var SpRequiredParameters = new { IsActive = true };
+                    return (await connection.QueryAsync<SuperAdminUser>(_DBVariables.SP_GetAll_SuperAdmin_User, SpRequiredParameters, null, null, CommandType.StoredProcedure)).ToList();
+                }
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+        public async Task UpdateLoginState(int userId, string Ip, string dbId = null)
+        {
+            try
+            {
+                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
+                {
+                    var SpRequiredParameters = new { Id = userId, LastLoginIP = Ip };
+                    await connection.QueryAsync<SuperAdminUser>(_DBVariables.SP_AddLoginInfo_SuperAdmin, SpRequiredParameters, null, null, CommandType.StoredProcedure);
+                }
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
     }
 }

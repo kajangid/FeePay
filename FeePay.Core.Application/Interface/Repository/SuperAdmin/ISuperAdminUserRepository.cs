@@ -20,5 +20,7 @@ namespace FeePay.Core.Application.Interface.Repository.SuperAdmin
         Task<SuperAdminUser> FindActiveUserByUserIdAsync(int userId, string dbId = null);
         Task<SuperAdminUser> FindActiveUserByUserNameAsync(string normalizedUserName, string dbId = null);
         Task<SuperAdminUser> FindActiveUserByUserEmailAsync(string normalizedEmail, string dbId = null);
+        Task<IList<SuperAdminUser>> FindAllActiveUserAsync(string dbId = null);
+        Task UpdateLoginState(int userId, string Ip, string dbId = null);
     }
 }

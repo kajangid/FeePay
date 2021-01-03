@@ -11,20 +11,27 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using FeePay.Web.Areas.Common;
 using FeePay.Web.Models;
+using FeePay.Core.Application.Interface.Repository;
 
 namespace FeePay.Web.Areas.SuperAdmin.Controllers
 {
     [Area("SuperAdmin")]
     public class AuthenticationController : AreaBaseController
     {
-        private readonly SignInManager<SuperAdminUser> _SignInManager;
-        public AuthenticationController(ILogger<AuthenticationController> logger,
-            SignInManager<SuperAdminUser> _signInManager)
+        public AuthenticationController(ILogger<AuthenticationController> Logger,
+            UserManager<SuperAdminUser> UserManager,
+            IUnitOfWork UnitOfWork,
+            SignInManager<SuperAdminUser> SignInManager)
         {
-            _ILogger = logger;
-            _SignInManager = _signInManager;
+            _ILogger = Logger;
+            _SignInManager = SignInManager;
+            _UserManager = UserManager;
+            _UnitOfWork = UnitOfWork;
         }
         private readonly ILogger _ILogger;
+        private readonly UserManager<SuperAdminUser> _UserManager;
+        private readonly SignInManager<SuperAdminUser> _SignInManager;
+        private readonly IUnitOfWork _UnitOfWork;
 
         [HttpGet]
         [AllowAnonymous]
@@ -53,12 +60,17 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+                SuperAdminUser user = await _UserManager.FindByEmailAsync(model.Email.ToUpper());
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                //var result = await _SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _SignInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _ILogger.LogInformation("User logged in.");
+                    // event will be create for this
+                    await _UnitOfWork.SuperAdminUser.UpdateLoginState(user.Id, Request.HttpContext.Connection.RemoteIpAddress.ToString());
+                    _ILogger.LogInformation("update system for login");
                     return RedirectToLocal(returnUrl);
                 }
                 else

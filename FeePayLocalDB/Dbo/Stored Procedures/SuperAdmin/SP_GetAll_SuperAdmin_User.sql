@@ -12,7 +12,11 @@
 )
 AS
 BEGIN
-	SELECT *FROM [dbo].[SuperAdmin_User] WHERE
+	SELECT  [Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PhoneNumber],
+			[PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDate], [LockoutEnabled], [AccessFailedCount], [SecurityStamp],
+			[FirstName], [LastName], [FullName], [Photo], [City], [LastLoginIP], [LastLoginDate], [IsActive], [ModifyDate],
+			[ModifyBy], [AddedDate], [AddedBy]
+	FROM [dbo].[SuperAdmin_User] WHERE
 			[IsDelete] = 0 AND
 			([Id] != 0 AND [Id] = @Id) OR
 			([UserName] IS NOT NULL AND [UserName] = @UserName) OR

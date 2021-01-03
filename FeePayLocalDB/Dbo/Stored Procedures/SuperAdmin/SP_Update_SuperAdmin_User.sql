@@ -25,7 +25,7 @@
 )
 AS
 BEGIN
-    IF NOT EXISTS(SELECT *FROM [dbo].[SuperAdmin_User] WHERE [Id] = @Id)
+    IF EXISTS(SELECT *FROM [dbo].[SuperAdmin_User] WHERE [Id] = @Id)
     BEGIN 
         UPDATE [dbo].[SuperAdmin_User]
         SET 

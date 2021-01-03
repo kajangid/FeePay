@@ -11,5 +11,7 @@ namespace FeePay.Core.Application.Interface.Repository
     public interface IUnitOfWork
     {
         ISuperAdminUserRepository SuperAdminUser { get; }
+        ISuperAdminRoleRepository SuperAdminRole { get; }
+        ISuperAdminUserRoleRepository SuperAdminUserRole { get; }
     }
 }

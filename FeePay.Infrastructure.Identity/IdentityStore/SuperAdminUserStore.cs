@@ -16,21 +16,13 @@ using Microsoft.AspNetCore.Identity;
 namespace FeePay.Infrastructure.Identity.IdentityStore
 {
     public class SuperAdminUserStore : IUserStore<SuperAdminUser>, IUserEmailStore<SuperAdminUser>, IUserPhoneNumberStore<SuperAdminUser>,
-        IUserTwoFactorStore<SuperAdminUser>, IUserPasswordStore<SuperAdminUser>//, IUserRoleStore<SuperAdminUser>
+        IUserTwoFactorStore<SuperAdminUser>, IUserPasswordStore<SuperAdminUser>, IUserRoleStore<SuperAdminUser>
     {
-        public SuperAdminUserStore(IConnectionStringBuilder _connectionStringBuilder, IDBVariables dBVariables,
-            IUnitOfWork unitOfWork)
+        public SuperAdminUserStore(IUnitOfWork unitOfWork)
         {
-            _connectionString = _connectionStringBuilder.GetDefaultConnectionString();
-            _DBVariables = dBVariables;
             _UnitOfWork = unitOfWork;
         }
         private readonly IUnitOfWork _UnitOfWork;
-        private readonly IDBVariables _DBVariables;
-        private readonly string _connectionString;
-        private readonly string SuperAdminUsertbl = "[SuperAdmin_User]";
-        private readonly string SuperAdminRoletbl = "[SuperAdmin_Role]";
-        private readonly string SuperAdminUserRoletbl = "[SuperAdmin_UserRole]";
         public async Task<IdentityResult> CreateAsync(SuperAdminUser user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -179,82 +171,47 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
             return Task.FromResult(user.PasswordHash != null);
         }
 
-        /*
+
         public async Task AddToRoleAsync(SuperAdminUser user, string roleName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync(cancellationToken);
-                var normalizedName = roleName.ToUpper();
-                var roleId = await connection.ExecuteScalarAsync<int?>($"SELECT [Id] FROM {SuperAdminRoletbl} WHERE [NormalizedName] = @{nameof(normalizedName)}", new { normalizedName });
-                if (!roleId.HasValue)
-                    roleId = await connection.ExecuteAsync($"INSERT INTO {SuperAdminRoletbl}([Name], [NormalizedName]) VALUES(@{nameof(roleName)}, @{nameof(normalizedName)})",
-                        new { roleName, normalizedName });
-
-                await connection.ExecuteAsync($"IF NOT EXISTS(SELECT 1 FROM {SuperAdminUserRoletbl} WHERE [UserId] = @userId AND [RoleId] = @{nameof(roleId)}) " +
-                    $"INSERT INTO {SuperAdminUserRoletbl}([UserId], [RoleId]) VALUES(@userId, @{nameof(roleId)})",
-                    new { userId = user.Id, roleId });
-            }
+            await _UnitOfWork.SuperAdminUserRole.AssignRoleToUserAsync(user, roleName);
         }
 
         public async Task RemoveFromRoleAsync(SuperAdminUser user, string roleName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync(cancellationToken);
-                var roleId = await connection.ExecuteScalarAsync<int?>($"SELECT [Id] FROM {SuperAdminRoletbl} WHERE [NormalizedName] = @normalizedName", new { normalizedName = roleName.ToUpper() });
-                if (!roleId.HasValue)
-                    await connection.ExecuteAsync($"DELETE FROM {SuperAdminUserRoletbl} WHERE [UserId] = @userId AND [RoleId] = @{nameof(roleId)}", new { userId = user.Id, roleId });
-            }
+            await _UnitOfWork.SuperAdminUserRole.UnassignUserFromRoleAsync(user, roleName);
         }
 
         public async Task<IList<string>> GetRolesAsync(SuperAdminUser user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync(cancellationToken);
-                var queryResults = await connection.QueryAsync<string>($"SELECT r.[Name] FROM {SuperAdminRoletbl} r INNER JOIN {SuperAdminUserRoletbl} ur ON ur.[RoleId] = r.Id " +
-                    "WHERE ur.UserId = @userId", new { userId = user.Id });
-
-                return queryResults.ToList();
-            }
+            var Roles = await _UnitOfWork.SuperAdminUserRole.GetUserRolesAsync(user);
+            return Roles.Select(s => s.Name).ToList();
         }
 
         public async Task<bool> IsInRoleAsync(SuperAdminUser user, string roleName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                var roleId = await connection.ExecuteScalarAsync<int?>($"SELECT [Id] FROM {SuperAdminRoletbl} WHERE [NormalizedName] = @normalizedName", new { normalizedName = roleName.ToUpper() });
-                if (roleId == default(int)) return false;
-                var matchingRoles = await connection.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM {SuperAdminUserRoletbl} WHERE [UserId] = @userId AND [RoleId] = @{nameof(roleId)}",
-                    new { userId = user.Id, roleId });
-
-                return matchingRoles > 0;
-            }
+            int matchingRoles = await _UnitOfWork.SuperAdminUserRole.UserInRoleAsync(user, roleName);
+            return matchingRoles > 0;
+            //using (var connection = new SqlConnection(_connectionString))
+            //{
+            //    var roleId = await connection.ExecuteScalarAsync<int?>($"SELECT [Id] FROM {SuperAdminRoletbl} WHERE [NormalizedName] = @normalizedName", new { normalizedName = roleName.ToUpper() });
+            //    if (roleId == default(int)) return false;
+            //    var matchingRoles = await connection.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM {SuperAdminUserRoletbl} WHERE [UserId] = @userId AND [RoleId] = @{nameof(roleId)}",
+            //        new { userId = user.Id, roleId });
+            //    return matchingRoles > 0;
+            //}
         }
 
         public async Task<IList<SuperAdminUser>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                var queryResults = await connection.QueryAsync<SuperAdminUser>($@"SELECT u.* FROM {SuperAdminUsertbl} u 
-                    INNER JOIN {SuperAdminUserRoletbl} ur ON ur.[UserId] = u.[Id] INNER JOIN {SuperAdminRoletbl} r ON r.[Id] = ur.[RoleId] WHERE r.[NormalizedName] = @normalizedName",
-                    new { normalizedName = roleName.ToUpper() });
-
-                return queryResults.ToList();
-            }
+            return (await _UnitOfWork.SuperAdminUserRole.GetUsersInRoleAsync(roleName)).ToList();
         }
-        */
+
         public void Dispose()
         {
             // Nothing to dispose.

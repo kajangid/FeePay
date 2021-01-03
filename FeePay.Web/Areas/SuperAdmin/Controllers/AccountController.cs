@@ -1,4 +1,5 @@
-﻿using FeePay.Core.Domain.Entities.Identity;
+﻿using FeePay.Core.Application.Interface.Repository;
+using FeePay.Core.Domain.Entities.Identity;
 using FeePay.Web.Filters;
 using FeePay.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -20,18 +21,22 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
         private readonly SignInManager<SuperAdminUser> _SignInManager;
         public AccountController(ILogger<AccountController> logger,
             UserManager<SuperAdminUser> _userManager,
-            SignInManager<SuperAdminUser> _signInManager)
+            SignInManager<SuperAdminUser> _signInManager,
+            IUnitOfWork unitOfWork)
         {
             _ILogger = logger;
             _UserManager = _userManager;
             _SignInManager = _signInManager;
+            _UnitOfWork = unitOfWork;
         }
         private readonly ILogger _ILogger;
+        private readonly IUnitOfWork _UnitOfWork;
 
-
-        public IActionResult SuperAdminUserList()
+        [HttpGet]
+        [SuperAdminAuthorize]
+        public async Task<IActionResult> SuperAdminUserList()
         {
-            return View();
+            return View(await _UnitOfWork.SuperAdminUser.FindAllActiveUserAsync());
         }
 
         [HttpGet]
