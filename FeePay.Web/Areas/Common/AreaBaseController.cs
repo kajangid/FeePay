@@ -8,5 +8,6 @@ namespace FeePay.Web.Areas.Common
 {
     public class AreaBaseController : Controller
     {
+
     }
 }

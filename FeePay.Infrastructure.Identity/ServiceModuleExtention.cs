@@ -79,6 +79,7 @@ namespace FeePay.Infrastructure.Identity
                 .AddClaimsPrincipalFactory<StudentClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
 
+            // TODO on all Identity validation
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.

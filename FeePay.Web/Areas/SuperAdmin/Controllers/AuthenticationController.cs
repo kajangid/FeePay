@@ -18,19 +18,15 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
     [Area("SuperAdmin")]
     public class AuthenticationController : AreaBaseController
     {
-        public AuthenticationController(ILogger<AuthenticationController> Logger,
-            UserManager<SuperAdminUser> UserManager,
-            IUnitOfWork UnitOfWork,
-            SignInManager<SuperAdminUser> SignInManager)
+        public AuthenticationController(ILogger<AuthenticationController> Logger, SignInManager<SuperAdminUser> SignInManager,
+            IUnitOfWork UnitOfWork)
         {
             _ILogger = Logger;
             _SignInManager = SignInManager;
-            _UserManager = UserManager;
             _UnitOfWork = UnitOfWork;
         }
-        private readonly ILogger _ILogger;
-        private readonly UserManager<SuperAdminUser> _UserManager;
         private readonly SignInManager<SuperAdminUser> _SignInManager;
+        private readonly ILogger _ILogger;
         private readonly IUnitOfWork _UnitOfWork;
 
         [HttpGet]
@@ -60,7 +56,7 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                SuperAdminUser user = await _UserManager.FindByEmailAsync(model.Email.ToUpper());
+                SuperAdminUser user = await _UnitOfWork.SuperAdminUser.FindActiveUserByUserEmailAsync(model.Email.ToUpper());
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 //var result = await _SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);

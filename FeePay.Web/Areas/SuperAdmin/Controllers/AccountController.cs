@@ -14,26 +14,23 @@ using System.Threading.Tasks;
 namespace FeePay.Web.Areas.SuperAdmin.Controllers
 {
     [Area("SuperAdmin")]
-    //[SuperAdminAuthorize]
+    [SuperAdminAuthorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<SuperAdminUser> _UserManager;
-        private readonly SignInManager<SuperAdminUser> _SignInManager;
-        public AccountController(ILogger<AccountController> logger,
-            UserManager<SuperAdminUser> _userManager,
-            SignInManager<SuperAdminUser> _signInManager,
-            IUnitOfWork unitOfWork)
+        public AccountController(UserManager<SuperAdminUser> _userManager, SignInManager<SuperAdminUser> _signInManager,
+            ILogger<AccountController> logger, IUnitOfWork unitOfWork)
         {
             _ILogger = logger;
             _UserManager = _userManager;
             _SignInManager = _signInManager;
             _UnitOfWork = unitOfWork;
         }
+        private readonly UserManager<SuperAdminUser> _UserManager;
+        private readonly SignInManager<SuperAdminUser> _SignInManager;
         private readonly ILogger _ILogger;
         private readonly IUnitOfWork _UnitOfWork;
 
         [HttpGet]
-        [SuperAdminAuthorize]
         public async Task<IActionResult> SuperAdminUserList()
         {
             return View(await _UnitOfWork.SuperAdminUser.FindAllActiveUserAsync());
@@ -65,10 +62,8 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
             return View(model);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SuperAdminAuthorize]
         public async Task<IActionResult> Logout()
         {
             await _SignInManager.SignOutAsync();
