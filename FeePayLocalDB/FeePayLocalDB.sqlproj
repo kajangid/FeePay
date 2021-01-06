@@ -89,11 +89,6 @@
     <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Update_SuperAdmin_User.sql" />
     <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Update_SuperAdmin_UserRole.sql" />
     <Build Include="Dbo\Tables\RegisteredSchool.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_Update_RegisteredSchool.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_GetAll_RegisteredSchool.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_Get_RegisteredSchool.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_Delete_RegisteredSchool.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_Add_RegisteredSchool.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Dbo\Scripts\Sp_Exe.Script.PostDeployment.sql" />
