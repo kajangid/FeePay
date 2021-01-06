@@ -11,13 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
     <Folder Include="Mapping\" />
-    <Folder Include="Enums\" />
     <Folder Include="Exception\" />
-    <Folder Include="Event\" />
-    <Folder Include="Behaviour\" />
-    <Folder Include="Service\" />
+    <Folder Include="Events\" />
+    <Folder Include="Behaviors\" />
   </ItemGroup>
 
   <ItemGroup>

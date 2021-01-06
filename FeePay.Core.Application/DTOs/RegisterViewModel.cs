@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FeePay.Web.Models
+namespace FeePay.Core.Application.DTOs
 {
     public class RegisterViewModel
     {

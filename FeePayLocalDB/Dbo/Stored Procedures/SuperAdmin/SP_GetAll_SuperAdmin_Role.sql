@@ -9,7 +9,8 @@
 )
 AS
 BEGIN
-	SELECT *FROM [dbo].[SuperAdmin_Role] WHERE
+	SELECT TOP(100) [Id], [Name], [NormalizedName], [IsActive], [IsDelete], [ModifyDate], [ModifyBy], [AddedDate], [AddedBy]
+	FROM [dbo].[SuperAdmin_Role] WHERE
 			[IsDelete] = 0 AND
 			([Id] != 0 AND [Id] = @Id) OR
 			([Name] IS NOT NULL AND [Name] = @Name) OR
@@ -17,6 +18,5 @@ BEGIN
 			([IsActive] IS NOT NULL AND [IsActive] = @IsActive) OR
 			([ModifyBy] != 0 AND [ModifyBy] = @ModifyBy) OR
 			([AddedBy] !=0 AND [AddedBy] = @AddedBy)
-	RETURN 
+
 END
-RETURN 0

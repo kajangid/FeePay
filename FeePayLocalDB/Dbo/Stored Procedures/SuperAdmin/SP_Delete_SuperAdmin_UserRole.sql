@@ -4,16 +4,17 @@
 AS
 BEGIN
 	--IF EXISTS(SELECT 1 FROM [dbo].[SuperAdmin_UserRole] WHERE [Id] = @Id AND [IsDelete] = 0)
-	IF EXISTS(SELECT 1 FROM [dbo].[SuperAdmin_UserRole] WHERE [UserId] = @UserId AND [RoleId] = @RoleId)
+	IF EXISTS(SELECT 1 FROM [dbo].[SuperAdmin_UserRole] WHERE [UserId] = @UserId AND [RoleId] = @RoleId AND [IsDelete] = 0)
 	BEGIN
 		UPDATE [dbo].[SuperAdmin_UserRole] SET
 			--[Id] = @Id
-			[IsDelete] = 0
+			[IsDelete] = 1
 			,[ModifyDate] = GETDATE()
 			,[ModifyBy] = @ModifyBy
 		WHERE 
 			[UserId] = @UserId AND 
-			[RoleId] = @RoleId
+			[RoleId] = @RoleId AND
+			[IsDelete] = 0
 		
 		RETURN 1
 	END

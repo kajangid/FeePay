@@ -1,4 +1,5 @@
-﻿using FeePay.Web.Filters;
+﻿using FeePay.Web.Areas.Common;
+using FeePay.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,9 @@ using System.Threading.Tasks;
 namespace FeePay.Web.Areas.SuperAdmin.Controllers
 {
     [Area("SuperAdmin")]
-    //[SuperAdminAuthorize]
-    public class HomeController : Controller
+    [SuperAdminAuthorize]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public class HomeController : AreaBaseController
     {
         public IActionResult Index()
         {

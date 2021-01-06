@@ -12,7 +12,7 @@
 )
 AS
 BEGIN
-	SELECT  [Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PhoneNumber],
+	SELECT TOP(100)  [Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PhoneNumber],
 			[PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDate], [LockoutEnabled], [AccessFailedCount], [SecurityStamp],
 			[FirstName], [LastName], [FullName], [Photo], [City], [LastLoginIP], [LastLoginDate], [IsActive], [ModifyDate],
 			[ModifyBy], [AddedDate], [AddedBy]
@@ -27,6 +27,5 @@ BEGIN
 			([IsActive] IS NOT NULL AND [IsActive] = @IsActive) OR
 			([ModifyBy] != 0 AND [ModifyBy] = @ModifyBy) OR
 			([AddedBy] !=0 AND [AddedBy] = @AddedBy)
-	RETURN 
+
 END
-RETURN 0

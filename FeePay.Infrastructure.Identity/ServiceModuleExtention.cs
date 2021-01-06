@@ -62,13 +62,6 @@ namespace FeePay.Infrastructure.Identity
         }
         public static IServiceCollection AddInfrastructureIdentityService(this IServiceCollection services, IConfiguration configuration)
         {
-
-            services.AddTransient<IUserStore<SuperAdminUser>, SuperAdminUserStore>();
-            services.AddTransient<IRoleStore<SuperAdminRole>, SuperAdminRoleStore>();
-            services.AddTransient<IUserStore<SchoolAdminUser>, SchoolAdminUserStore>();
-            services.AddTransient<IRoleStore<SchoolAdminRole>, SchoolAdminRoleStore>();
-            services.AddTransient<IUserStore<StudentLogin>, StudentLoginStore>();
-
             services.AddIdentity<SuperAdminUser, SuperAdminRole>()
                 .AddClaimsPrincipalFactory<SuperAdminClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
@@ -78,6 +71,12 @@ namespace FeePay.Infrastructure.Identity
             services.AddThirdIdentity<StudentLogin>()
                 .AddClaimsPrincipalFactory<StudentClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
+
+            services.AddTransient<IUserStore<SuperAdminUser>, SuperAdminUserStore>();
+            services.AddTransient<IRoleStore<SuperAdminRole>, SuperAdminRoleStore>();
+            services.AddTransient<IUserStore<SchoolAdminUser>, SchoolAdminUserStore>();
+            services.AddTransient<IRoleStore<SchoolAdminRole>, SchoolAdminRoleStore>();
+            services.AddTransient<IUserStore<StudentLogin>, StudentLoginStore>();
 
             // TODO on all Identity validation
             services.Configure<IdentityOptions>(options =>
@@ -96,10 +95,9 @@ namespace FeePay.Infrastructure.Identity
 
             services.ConfigureApplicationCookie(options =>
             {
-                //options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-                options.Cookie.Name = "9#778987_Cookie";
+                options.Cookie.Name = "#Cookie_955#649";
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
                 options.LoginPath = "/Student/Login";
                 options.LogoutPath = "/Student/Logout";
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;

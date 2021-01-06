@@ -1,4 +1,5 @@
-﻿using FeePay.Web.Filters;
+﻿using FeePay.Web.Areas.Common;
+using FeePay.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,7 +11,7 @@ namespace FeePay.Web.Areas.School.Controllers
 {
     [Area("School")]
     [SchoolAdminAuthorize]
-    public class AccountController : Controller
+    public class AccountController : AreaBaseController
     {
         public AccountController(ILogger<AccountController> logger)
         {

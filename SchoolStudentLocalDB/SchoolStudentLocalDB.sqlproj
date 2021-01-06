@@ -56,5 +56,41 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Dbo" />
+    <Folder Include="Dbo\Stored Procedures" />
+    <Folder Include="Dbo\Stored Procedures\StudentLogin" />
+    <Folder Include="Dbo\Stored Procedures\SchoolAdmin" />
+    <Folder Include="Dbo\Tables" />
+    <Folder Include="Dbo\Scripts" />
+    <Folder Include="Dbo\PublishProfile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Add_SchoolAdmin_User.sql" />
+    <Build Include="Dbo\Tables\SchoolAdmin_User.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_AddLoginInfo_SchoolAdmin.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Delete_SchoolAdmin_User.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_User.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_GetAll_SchoolAdmin_User.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Update_SchoolAdmin_User.sql" />
+    <Build Include="Dbo\Tables\SchoolAdmin_Role.sql" />
+    <Build Include="Dbo\Tables\SchoolAdmin_UserRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Add_SchoolAdmin_Role.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Add_SchoolAdmin_UserRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Delete_SchoolAdmin_Role.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Delete_SchoolAdmin_UserRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_UsersInRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_UserRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_Role.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_GetUserRoles_SchoolAdmin.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_GetAll_SchoolAdmin_UserRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_GetAll_SchoolAdmin_Role.sql" />
+    <Build Include="Dbo\Tables\StudentLogin.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Update_SchoolAdmin_UserRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Update_SchoolAdmin_Role.sql" />
+    <Build Include="Dbo\Stored Procedures\StudentLogin\SP_Delete_StudentLogin.sql" />
+    <Build Include="Dbo\Stored Procedures\StudentLogin\SP_Add_StudentLogin.sql" />
+    <Build Include="Dbo\Stored Procedures\StudentLogin\SP_Update_StudentLogin.sql" />
+    <Build Include="Dbo\Stored Procedures\StudentLogin\SP_GetAll_StudentLogin.sql" />
+    <Build Include="Dbo\Stored Procedures\StudentLogin\SP_Get_StudentLogin.sql" />
   </ItemGroup>
 </Project>

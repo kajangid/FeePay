@@ -21,7 +21,7 @@ $("#sidebar-menu ul li a[href^='#']").on('click', function(e) {
 
 
 // on scroll
-let sidebar-menuLinks = document.querySelectorAll("nav ul li a");
+let sidebar_menuLinks = document.querySelectorAll("nav ul li a");
 let mainSections = document.querySelectorAll(".highlight-on-scroll");
 
 
@@ -41,7 +41,7 @@ window.addEventListener("scroll", event => {
 
   let fromTop = window.scrollY;
 
-  sidebar-menuLinks.forEach(link => {
+  sidebar_menuLinks.forEach(link => {
     let section = document.querySelector(link.hash);
 
 

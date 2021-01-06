@@ -1,4 +1,11 @@
-﻿<div class="page-header">
+﻿@using Microsoft.AspNetCore.Identity
+@using FeePay.Core.Domain.Entities.Identity
+
+@inject SignInManager<SuperAdminUser> SignInManager
+@inject UserManager<SuperAdminUser> UserManager
+
+
+<div class="page-header">
     <div class="header-wrapper row m-0">
         <form class="form-inline search-full" action="#" method="get">
             <div class="form-group w-100">
@@ -145,7 +152,9 @@
                         </div>
                     </div>
                 </li>
-                <li>                         <span class="header-search"><i data-feather="search"></i></span></li>
+                <li>
+                    <span class="header-search"><i data-feather="search"></i></span>
+                </li>
                 <li class="onhover-dropdown">
                     <div class="notification-box"><i data-feather="bell"> </i><span class="badge badge-pill badge-secondary">4                                </span></div>
                     <ul class="notification-dropdown onhover-show-div">
@@ -314,20 +323,23 @@
                 </li>
                 <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
                 <li class="profile-nav onhover-dropdown p-0 mr-0">
-                    <div class="media profile-media">
-                        <img class="b-r-10" src="~/Cuba/images/dashboard/profile.jpg" alt="">
-                        <div class="media-body">
-                            <span>Emay Walter</span>
-                            <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <div class="media profile-media">
+                            <img class="b-r-10" src="~/Cuba/images/dashboard/profile.jpg" alt="">
+                            <div class="media-body">
+                                <span>@UserManager.GetUserName(User)</span>
+                                <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
+                            </div>
                         </div>
-                    </div>
-                    <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="#"><i data-feather="user"></i><span>Account </span></a></li>
-                        <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
-                        <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
-                        <li><a href="#"><i data-feather="settings"></i><span>Settings</span></a></li>
-                        <li><a href="#"><i data-feather="log-in"> </i><span>Log in</span></a></li>
-                    </ul>
+                        <ul class="profile-dropdown onhover-show-div">
+                            <li><a href="@Url.Action("Profile","Account")"><i data-feather="user"></i><span>Account </span></a></li>
+                            <li><a href="@Url.Action("Inbox","Account")"><i data-feather="mail"></i><span>Inbox</span></a></li>
+                            <li><a href="@Url.Action("Taskboard","Account")"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
+                            <li><a href="@Url.Action("Setting","Account")"><i data-feather="settings"></i><span>Settings</span></a></li>
+                            <li><a href="@Url.Action("Logout","Account")"><i data-feather="log-out"> </i><span>Log Out</span></a></li>
+                        </ul>
+                    }
                 </li>
             </ul>
         </div>

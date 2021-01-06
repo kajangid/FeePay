@@ -1,4 +1,5 @@
-﻿using FeePay.Core.Domain.Entities.Identity;
+﻿using FeePay.Core.Application.Interface.Repository;
+using FeePay.Core.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -12,164 +13,206 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
     public class SchoolAdminUserStore : IUserStore<SchoolAdminUser>, IUserEmailStore<SchoolAdminUser>, IUserPhoneNumberStore<SchoolAdminUser>,
         IUserTwoFactorStore<SchoolAdminUser>, IUserPasswordStore<SchoolAdminUser>, IUserRoleStore<SchoolAdminUser>
     {
-        public Task AddToRoleAsync(SchoolAdminUser user, string roleName, CancellationToken cancellationToken)
+        public SchoolAdminUserStore(IUnitOfWork unitOfWork)
         {
-            throw new NotImplementedException();
+            _UnitOfWork = unitOfWork;
+        }
+        private readonly IUnitOfWork _UnitOfWork;
+        public async Task<IdentityResult> CreateAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            user.Id = await _UnitOfWork.SchoolAdminUser.AddUserAsync(user);
+            return IdentityResult.Success;
         }
 
-        public Task<IdentityResult> CreateAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        public async Task<IdentityResult> UpdateAsync(SchoolAdminUser user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+            await _UnitOfWork.SchoolAdminUser.UpdateUserAsync(user);
+            return IdentityResult.Success;
         }
 
-        public Task<IdentityResult> DeleteAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        public async Task<IdentityResult> DeleteAsync(SchoolAdminUser user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+            await _UnitOfWork.SchoolAdminUser.DeleteUserAsync(user.Id);
+            return IdentityResult.Success;
         }
 
-        public void Dispose()
+        public async Task<SchoolAdminUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+            return await _UnitOfWork.SchoolAdminUser.FindActiveUserByUserIdAsync(Convert.ToInt32(userId));
         }
 
-        public Task<SchoolAdminUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+        public async Task<SchoolAdminUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+            return await _UnitOfWork.SchoolAdminUser.FindActiveUserByUserNameAsync(normalizedUserName);
         }
 
-        public Task<SchoolAdminUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
+        public async Task<SchoolAdminUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+            return await _UnitOfWork.SchoolAdminUser.FindActiveUserByUserEmailAsync(normalizedEmail);
         }
 
-        public Task<SchoolAdminUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetEmailAsync(SchoolAdminUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> GetEmailConfirmedAsync(SchoolAdminUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetNormalizedEmailAsync(SchoolAdminUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        // other fetch methods
 
         public Task<string> GetNormalizedUserNameAsync(SchoolAdminUser user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetPasswordHashAsync(SchoolAdminUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetPhoneNumberAsync(SchoolAdminUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> GetPhoneNumberConfirmedAsync(SchoolAdminUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IList<string>> GetRolesAsync(SchoolAdminUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> GetTwoFactorEnabledAsync(SchoolAdminUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(user.NormalizedUserName);
         }
 
         public Task<string> GetUserIdAsync(SchoolAdminUser user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(user.Id.ToString());
         }
 
         public Task<string> GetUserNameAsync(SchoolAdminUser user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IList<SchoolAdminUser>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> HasPasswordAsync(SchoolAdminUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> IsInRoleAsync(SchoolAdminUser user, string roleName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemoveFromRoleAsync(SchoolAdminUser user, string roleName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetEmailAsync(SchoolAdminUser user, string email, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetEmailConfirmedAsync(SchoolAdminUser user, bool confirmed, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetNormalizedEmailAsync(SchoolAdminUser user, string normalizedEmail, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(user.UserName);
         }
 
         public Task SetNormalizedUserNameAsync(SchoolAdminUser user, string normalizedName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task SetPasswordHashAsync(SchoolAdminUser user, string passwordHash, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetPhoneNumberAsync(SchoolAdminUser user, string phoneNumber, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetPhoneNumberConfirmedAsync(SchoolAdminUser user, bool confirmed, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetTwoFactorEnabledAsync(SchoolAdminUser user, bool enabled, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            user.NormalizedUserName = normalizedName;
+            return Task.FromResult(0);
         }
 
         public Task SetUserNameAsync(SchoolAdminUser user, string userName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            user.UserName = userName;
+            return Task.FromResult(0);
         }
 
-        public Task<IdentityResult> UpdateAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        public Task SetEmailAsync(SchoolAdminUser user, string email, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            user.Email = email;
+            return Task.FromResult(0);
+        }
+
+        public Task<string> GetEmailAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.Email);
+        }
+
+        public Task<bool> GetEmailConfirmedAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.EmailConfirmed);
+        }
+
+        public Task SetEmailConfirmedAsync(SchoolAdminUser user, bool confirmed, CancellationToken cancellationToken)
+        {
+            user.EmailConfirmed = confirmed;
+            return Task.FromResult(0);
+        }
+
+        public Task<string> GetNormalizedEmailAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.NormalizedEmail);
+        }
+
+        public Task SetNormalizedEmailAsync(SchoolAdminUser user, string normalizedEmail, CancellationToken cancellationToken)
+        {
+            user.NormalizedEmail = normalizedEmail;
+            return Task.FromResult(0);
+        }
+
+        public Task SetPhoneNumberAsync(SchoolAdminUser user, string phoneNumber, CancellationToken cancellationToken)
+        {
+            user.PhoneNumber = phoneNumber;
+            return Task.FromResult(0);
+        }
+
+        public Task<string> GetPhoneNumberAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PhoneNumber);
+        }
+
+        public Task<bool> GetPhoneNumberConfirmedAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PhoneNumberConfirmed);
+        }
+
+        public Task SetPhoneNumberConfirmedAsync(SchoolAdminUser user, bool confirmed, CancellationToken cancellationToken)
+        {
+            user.PhoneNumberConfirmed = confirmed;
+            return Task.FromResult(0);
+        }
+
+        public Task SetTwoFactorEnabledAsync(SchoolAdminUser user, bool enabled, CancellationToken cancellationToken)
+        {
+            user.TwoFactorEnabled = enabled;
+            return Task.FromResult(0);
+        }
+
+        public Task<bool> GetTwoFactorEnabledAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.TwoFactorEnabled);
+        }
+
+        public Task SetPasswordHashAsync(SchoolAdminUser user, string passwordHash, CancellationToken cancellationToken)
+        {
+            user.PasswordHash = passwordHash;
+            return Task.FromResult(0);
+        }
+
+        public Task<string> GetPasswordHashAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PasswordHash);
+        }
+
+        public Task<bool> HasPasswordAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PasswordHash != null);
+        }
+
+        //role assigning
+
+        public async Task AddToRoleAsync(SchoolAdminUser user, string roleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            await _UnitOfWork.SchoolAdminUserRole.AssignRoleToUserAsync(user, roleName);
+        }
+
+        public async Task RemoveFromRoleAsync(SchoolAdminUser user, string roleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            await _UnitOfWork.SchoolAdminUserRole.UnassignUserFromRoleAsync(user, roleName);
+        }
+
+        public async Task<IList<string>> GetRolesAsync(SchoolAdminUser user, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var Roles = await _UnitOfWork.SchoolAdminUserRole.GetUserRolesAsync(user);
+            return Roles.Select(s => s.Name).ToList();
+        }
+
+        public async Task<bool> IsInRoleAsync(SchoolAdminUser user, string roleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            int matchingRoles = await _UnitOfWork.SchoolAdminUserRole.UserInRoleAsync(user, roleName);
+            return matchingRoles > 0;
+            //using (var connection = new SqlConnection(_connectionString))
+            //{
+            //    var roleId = await connection.ExecuteScalarAsync<int?>($"SELECT [Id] FROM {SchoolAdminRoletbl} WHERE [NormalizedName] = @normalizedName", new { normalizedName = roleName.ToUpper() });
+            //    if (roleId == default(int)) return false;
+            //    var matchingRoles = await connection.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM {SchoolAdminUserRoletbl} WHERE [UserId] = @userId AND [RoleId] = @{nameof(roleId)}",
+            //        new { userId = user.Id, roleId });
+            //    return matchingRoles > 0;
+            //}
+        }
+
+        public async Task<IList<SchoolAdminUser>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return (await _UnitOfWork.SchoolAdminUserRole.GetUsersInRoleAsync(roleName)).ToList();
+        }
+
+        public void Dispose()
+        {
+            // Nothing to dispose.
         }
     }
 }

@@ -30,6 +30,13 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
             return IdentityResult.Success;
         }
 
+        public async Task<IdentityResult> UpdateAsync(SuperAdminUser user, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            await _UnitOfWork.SuperAdminUser.UpdateUserAsync(user);
+            return IdentityResult.Success;
+        }
+
         public async Task<IdentityResult> DeleteAsync(SuperAdminUser user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -54,6 +61,8 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
             cancellationToken.ThrowIfCancellationRequested();
             return await _UnitOfWork.SuperAdminUser.FindActiveUserByUserEmailAsync(normalizedEmail);
         }
+
+        // other fetch methods
 
         public Task<string> GetNormalizedUserNameAsync(SuperAdminUser user, CancellationToken cancellationToken)
         {
@@ -80,13 +89,6 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
         {
             user.UserName = userName;
             return Task.FromResult(0);
-        }
-
-        public async Task<IdentityResult> UpdateAsync(SuperAdminUser user, CancellationToken cancellationToken)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            await _UnitOfWork.SuperAdminUser.UpdateUserAsync(user);
-            return IdentityResult.Success;
         }
 
         public Task SetEmailAsync(SuperAdminUser user, string email, CancellationToken cancellationToken)
@@ -171,6 +173,7 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
             return Task.FromResult(user.PasswordHash != null);
         }
 
+        //role assigning
 
         public async Task AddToRoleAsync(SuperAdminUser user, string roleName, CancellationToken cancellationToken)
         {

@@ -60,18 +60,42 @@
     <Folder Include="Dbo\PublishProfile" />
     <Folder Include="Dbo\Stored Procedures" />
     <Folder Include="Dbo\Tables" />
+    <Folder Include="Dbo\Stored Procedures\SuperAdmin" />
+    <Folder Include="Dbo\Scripts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dbo\PublishProfile\FeePayLocalDB.publish.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Dbo\Stored Procedures\SP_Add_SuperAdmin_User.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_Delete_SuperAdmin_User.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_Get_SuperAdmin_User.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_GetAll_SuperAdmin_User.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_Update_SuperAdmin_User.sql" />
     <Build Include="Dbo\Tables\SuperAdmin_Role.sql" />
     <Build Include="Dbo\Tables\SuperAdmin_User.sql" />
     <Build Include="Dbo\Tables\SuperAdmin_UserRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Add_SuperAdmin_Role.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Add_SuperAdmin_User.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Add_SuperAdmin_UserRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_AddLoginInfo_SuperAdmin.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Delete_SuperAdmin_Role.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Delete_SuperAdmin_User.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Delete_SuperAdmin_UserRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Get_SuperAdmin_Role.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Get_SuperAdmin_User.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Get_SuperAdmin_UserRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Get_SuperAdmin_UsersInRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_GetAll_SuperAdmin_Role.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_GetAll_SuperAdmin_User.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_GetAll_SuperAdmin_UserRole.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_GetUserRoles_SuperAdmin.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Update_SuperAdmin_Role.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Update_SuperAdmin_User.sql" />
+    <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Update_SuperAdmin_UserRole.sql" />
+    <Build Include="Dbo\Tables\RegisteredSchool.sql" />
+    <Build Include="Dbo\Stored Procedures\SP_Add_RegisteredSchool.sql" />
+    <Build Include="Dbo\Stored Procedures\SP_Update_RegisteredSchool.sql" />
+    <Build Include="Dbo\Stored Procedures\SP_Get_RegisteredSchool.sql" />
+    <Build Include="Dbo\Stored Procedures\SP_GetAll_RegisteredSchool.sql" />
+    <Build Include="Dbo\Stored Procedures\SP_Delete_RegisteredSchool.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Dbo\Scripts\Sp_Exe.Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>

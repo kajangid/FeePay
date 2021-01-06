@@ -24,16 +24,18 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
             return IdentityResult.Success;
         }
 
+        public async Task<IdentityResult> UpdateAsync(SuperAdminRole role, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            await _UnitOfWork.SuperAdminRole.UpdateRoleAsync(role);
+            return IdentityResult.Success;
+        }
+
         public async Task<IdentityResult> DeleteAsync(SuperAdminRole role, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             await _UnitOfWork.SuperAdminRole.DeleteRoleAsync(role.Id);
             return IdentityResult.Success;
-        }
-
-        public void Dispose()
-        {
-            // 
         }
 
         public async Task<SuperAdminRole> FindByIdAsync(string roleId, CancellationToken cancellationToken)
@@ -46,6 +48,11 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
         {
             cancellationToken.ThrowIfCancellationRequested();
             return await _UnitOfWork.SuperAdminRole.FindActiveRoleByRoleNameAsync(normalizedRoleName);
+        }
+
+        public void Dispose()
+        {
+            // 
         }
 
         public Task<string> GetNormalizedRoleNameAsync(SuperAdminRole role, CancellationToken cancellationToken)
@@ -83,13 +90,6 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
             if (role == null) throw new ArgumentNullException(nameof(role));
             role.Name = roleName;
             return Task.CompletedTask;
-        }
-
-        public async Task<IdentityResult> UpdateAsync(SuperAdminRole role, CancellationToken cancellationToken)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            await _UnitOfWork.SuperAdminRole.UpdateRoleAsync(role);
-            return IdentityResult.Success;
         }
     }
 }

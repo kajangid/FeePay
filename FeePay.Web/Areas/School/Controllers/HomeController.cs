@@ -1,4 +1,5 @@
-﻿using FeePay.Web.Filters;
+﻿using FeePay.Web.Areas.Common;
+using FeePay.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace FeePay.Web.Areas.School.Controllers
 {
     [Area("School")]
     [SchoolAdminAuthorize]
-    public class HomeController : Controller
+    public class HomeController : AreaBaseController
     {
         public IActionResult Index()
         {

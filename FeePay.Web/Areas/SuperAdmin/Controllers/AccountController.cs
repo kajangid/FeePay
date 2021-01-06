@@ -1,7 +1,8 @@
 ﻿using FeePay.Core.Application.Interface.Repository;
 using FeePay.Core.Domain.Entities.Identity;
+using FeePay.Web.Areas.Common;
 using FeePay.Web.Filters;
-using FeePay.Web.Models;
+using FeePay.Core.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,8 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
 {
     [Area("SuperAdmin")]
     [SuperAdminAuthorize]
-    public class AccountController : Controller
+    //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public class AccountController : AreaBaseController
     {
         public AccountController(UserManager<SuperAdminUser> _userManager, SignInManager<SuperAdminUser> _signInManager,
             ILogger<AccountController> logger, IUnitOfWork unitOfWork)
@@ -62,8 +64,9 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _SignInManager.SignOutAsync();

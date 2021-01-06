@@ -5,14 +5,15 @@
 )
 AS
 BEGIN
-    IF EXISTS(SELECT *FROM [dbo].[SuperAdmin_Role] WHERE [Id] = @Id)
+    IF EXISTS(SELECT *FROM [dbo].[SuperAdmin_Role] WHERE [Id] = @Id AND [IsDelete] = 0)
     BEGIN
         UPDATE [dbo].[SuperAdmin_Role] SET 
         [IsDelete] = 1
         ,[ModifyDate] = GETDATE()
         ,[ModifyBy] = @ModifyBy
         WHERE 
-        [Id] = @Id
+        [Id] = @Id AND 
+        [IsDelete] = 0
 
 	    RETURN @Id
     END

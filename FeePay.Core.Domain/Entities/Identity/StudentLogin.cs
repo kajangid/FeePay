@@ -11,8 +11,11 @@ namespace FeePay.Core.Domain.Entities.Identity
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
-        public string LastLoginIP { get; set; }
+        public bool IsLogin { get; set; }
         public DateTime? LastLoginDate { get; set; }
+        public string LastLoginIP { get; set; }
+        public string LastLoginDevice { get; set; }
+        public string LastLoginLocation { get; set; }
 
 
         // Temp Fields to store runtime data

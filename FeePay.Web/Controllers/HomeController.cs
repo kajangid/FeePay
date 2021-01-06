@@ -1,4 +1,5 @@
-﻿using FeePay.Web.Models;
+﻿using FeePay.Core.Application.Enums;
+using FeePay.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,6 +21,14 @@ namespace FeePay.Web.Controllers
 
         public IActionResult Index()
         {
+
+            _logger.LogInformation("Hello, {Name}!", LogFile.FileName.Student);
+            // -> Event written to log-Alice.txt
+
+            _logger.LogInformation("Hello, {Name}!", LogFile.FileName.SuperAdmin);
+            // -> Event written to log-Bob.txt
+
+            _logger.LogInformation("Shutting down");
             return View();
         }
 

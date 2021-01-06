@@ -5,9 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FeePay.Web.Extensions;
 
-namespace FeePay.Web.Models
+namespace FeePay.Core.Application.DTOs
 {
     public class CommonLoginViewModel
     {

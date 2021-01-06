@@ -10,8 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using FeePay.Web.Areas.Common;
-using FeePay.Web.Models;
+using FeePay.Core.Application.DTOs;
 using FeePay.Core.Application.Interface.Repository;
+using static FeePay.Core.Application.Enums.Notification;
 
 namespace FeePay.Web.Areas.SuperAdmin.Controllers
 {
@@ -67,11 +68,13 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
                     // event will be create for this
                     await _UnitOfWork.SuperAdminUser.UpdateLoginState(user.Id, Request.HttpContext.Connection.RemoteIpAddress.ToString());
                     _ILogger.LogInformation("update system for login");
+                    TostMessage(NotificationType.success, $"Welcome back { user.FullName }.");
                     return RedirectToLocal(returnUrl);
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    AlertMessage(NotificationType.error,"Error", "Invalid login attempt.");
                     return View(model);
                 }
             }

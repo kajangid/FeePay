@@ -27,7 +27,7 @@
 )
 AS
 BEGIN
-    IF NOT EXISTS(SELECT *FROM [dbo].[SuperAdmin_User] WHERE [UserName] = @UserName)
+    IF NOT EXISTS(SELECT *FROM [dbo].[SuperAdmin_User] WHERE [UserName] = @UserName AND [IsDelete] = 0)
     BEGIN 
         INSERT INTO [dbo].[SuperAdmin_User]
                ([UserName],[NormalizedUserName],[Email],[NormalizedEmail],[EmailConfirmed],[PasswordHash],[PhoneNumber],[PhoneNumberConfirmed]
