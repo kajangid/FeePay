@@ -9,7 +9,7 @@
 )
 AS
 BEGIN
-	SELECT TOP(100) [Id], [Name], [NormalizedName], [IsActive], [IsDelete], [ModifyDate], [ModifyBy], [AddedDate], [AddedBy]
+	SELECT [Id], [Name], [NormalizedName], [IsActive], [IsDelete], [ModifyDate], [ModifyBy], [AddedDate], [AddedBy]
 	FROM [dbo].[RegisteredSchool] WHERE
 			[IsDelete] = 0 AND
 			([Id] != 0 AND [Id] = @Id) OR
