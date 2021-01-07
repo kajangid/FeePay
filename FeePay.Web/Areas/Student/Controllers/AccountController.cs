@@ -1,6 +1,6 @@
-﻿using FeePay.Core.Application.Interface.Service;
+﻿using FeePay.Web.Filters;
+using FeePay.Core.Application.Interface.Service;
 using FeePay.Web.Areas.Common;
-using FeePay.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,10 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FeePay.Web.Areas.School.Controllers
+namespace FeePay.Web.Areas.Student.Controllers
 {
-    [Area("School")]
-    [SchoolAdminAuthorize]
+    [Area("Student")]
+    [StudentAuthorize]
     public class AccountController : AreaBaseController
     {
         public AccountController(ILogger<AccountController> logger, ILoginService loginService)

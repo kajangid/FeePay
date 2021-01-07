@@ -7,10 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FeePay.Web.Areas.SuperAdmin.Controllers
+namespace FeePay.Web.Areas.Student.Controllers
 {
-    [Area("SuperAdmin")]
-    [SuperAdminAuthorize]
+    [Area("Student")]
+    [StudentAuthorize]
     public class HomeController : AreaBaseController
     {
         public HomeController(ILogger<HomeController> Logger)

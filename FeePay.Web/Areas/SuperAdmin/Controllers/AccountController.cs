@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FeePay.Core.Application.Interface.Service;
 
 namespace FeePay.Web.Areas.SuperAdmin.Controllers
 {
@@ -19,23 +20,18 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
     //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class AccountController : AreaBaseController
     {
-        public AccountController(UserManager<SuperAdminUser> _userManager, SignInManager<SuperAdminUser> _signInManager,
-            ILogger<AccountController> logger, IUnitOfWork unitOfWork)
+        public AccountController(ILogger<AccountController> logger, ILoginService LoginService)
         {
             _ILogger = logger;
-            _UserManager = _userManager;
-            _SignInManager = _signInManager;
-            _UnitOfWork = unitOfWork;
+            _LoginService = LoginService;
         }
-        private readonly UserManager<SuperAdminUser> _UserManager;
-        private readonly SignInManager<SuperAdminUser> _SignInManager;
         private readonly ILogger _ILogger;
-        private readonly IUnitOfWork _UnitOfWork;
+        private readonly ILoginService _LoginService;
 
         [HttpGet]
-        public async Task<IActionResult> SuperAdminUserList()
+        public IActionResult Index()
         {
-            return View(await _UnitOfWork.SuperAdminUser.FindAllActiveUserAsync());
+            return View();
         }
 
         [HttpGet]
@@ -46,21 +42,22 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public IActionResult Register(RegisterViewModel model)
+        //public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var user = new SuperAdminUser { UserName = model.Email, Email = model.Email, Password = model.Password, IsActive = true };
-                var result = await _UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    //await _SignInManager.SignInAsync(user, isPersistent: false);
-                    //_ILogger.LogInformation("User created a new account with password.");
-                    _ILogger.LogInformation("User created a new account with password.");
-                    return RedirectToAction(nameof(SuperAdminUserList));
-                }
-                AddErrors(result);
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    var user = new SuperAdminUser { UserName = model.Email, Email = model.Email, Password = model.Password, IsActive = true };
+            //    var result = await _UserManager.CreateAsync(user, model.Password);
+            //    if (result.Succeeded)
+            //    {
+            //        //await _SignInManager.SignInAsync(user, isPersistent: false);
+            //        //_ILogger.LogInformation("User created a new account with password.");
+            //        _ILogger.LogInformation("User created a new account with password.");
+            //        return RedirectToAction(nameof(Index));
+            //    }
+            //    AddErrors(result);
+            //}
             return View(model);
         }
 
@@ -69,7 +66,7 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await _SignInManager.SignOutAsync();
+            await _LoginService.SuperAdminLogout();
             _ILogger.LogInformation("User logged out.");
             return RedirectToAction(nameof(AuthenticationController.Index), "Authentication");
         }

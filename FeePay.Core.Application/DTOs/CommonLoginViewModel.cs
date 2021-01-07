@@ -17,7 +17,7 @@ namespace FeePay.Core.Application.DTOs
         public string Email { get; set; }
 
 
-        // TODO on all validation
+        // TODO: Clear Validation Bug
         [Required]
         [DisplayName("Password")]
         [DataType(DataType.Password)]
@@ -33,5 +33,6 @@ namespace FeePay.Core.Application.DTOs
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+        public string UserIp { get; set; }
     }
 }

@@ -4,6 +4,8 @@ using FeePay.Core.Application.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using FeePay.Core.Application.UseCase;
+using FeePay.Core.Application.Services;
+using FeePay.Core.Application.Interface.Service;
 
 namespace FeePay.Core.Application
 {
@@ -16,7 +18,7 @@ namespace FeePay.Core.Application
                 (configuration.GetSection("ConnectionStringsConfigration").Get<ConnectionStringConfig>());
             services.AddSingleton<IConnectionStringBuilder, ConnectionStringBuilder>();
 
-
+            services.AddTransient<IAppContextAccessor, AppContextAccessor>();
 
             return services;
         }

@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using FeePay.Core.Domain.Entities.Identity;
 using FeePay.Infrastructure.Identity.ClaimsPrincipalFactory;
 using FeePay.Infrastructure.Identity.IdentityStore;
+using FeePay.Infrastructure.Identity.Service;
+using FeePay.Core.Application.Interface.Service;
 
 namespace FeePay.Infrastructure.Identity
 {
@@ -71,12 +73,15 @@ namespace FeePay.Infrastructure.Identity
             services.AddThirdIdentity<StudentLogin>()
                 .AddClaimsPrincipalFactory<StudentClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
-
+            // identity stores
             services.AddTransient<IUserStore<SuperAdminUser>, SuperAdminUserStore>();
             services.AddTransient<IRoleStore<SuperAdminRole>, SuperAdminRoleStore>();
             services.AddTransient<IUserStore<SchoolAdminUser>, SchoolAdminUserStore>();
             services.AddTransient<IRoleStore<SchoolAdminRole>, SchoolAdminRoleStore>();
             services.AddTransient<IUserStore<StudentLogin>, StudentLoginStore>();
+
+            //login services
+            services.AddScoped<ILoginService, LoginService>();
 
             // TODO on all Identity validation
             services.Configure<IdentityOptions>(options =>

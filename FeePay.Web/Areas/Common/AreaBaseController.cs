@@ -61,5 +61,16 @@ namespace FeePay.Web.Areas.Common
             }
         }
         #endregion
+
+
+        /// <summary>
+        /// Check the return url is a local and redirect to appropriate page.
+        /// </summary>
+        /// <param name="returnUrl">The page to return to.</param>
+        public IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
+            else return RedirectToAction("Index", "Home");
+        }
     }
 }

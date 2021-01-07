@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FeePay.Core.Application;
 using FeePay.Infrastructure.Identity;
 using FeePay.Infrastructure.Persistence;
+using FeePay.Web.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,10 +28,13 @@ namespace FeePay.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging();
+            services.AddHttpContextAccessor();
             services.AddInfrastructurePersistenceServices();
             services.AddApplicationServices(Configuration);
             services.AddInfrastructureIdentityService(Configuration);
             services.AddControllersWithViews();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,7 +5,7 @@
 ,@NormalizedName NVARCHAR(256) = NULL
 ,@IsActive BIT = 0
 ,@ModifyBy BIT = 0
-,@AddedBy INT NULL
+,@AddedBy INT = 0
 )
 AS
 BEGIN

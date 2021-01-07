@@ -1,7 +1,6 @@
 ﻿using FeePay.Core.Application.DTOs;
 using FeePay.Core.Application.Interface.Service;
 using FeePay.Web.Areas.Common;
-using FeePay.Web.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +11,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using static FeePay.Core.Application.Enums.Notification;
 
-namespace FeePay.Web.Areas.School.Controllers
+namespace FeePay.Web.Areas.Student.Controllers
 {
     /// <summary>
-    /// Authentication school users to enter.
+    /// Authenticate Student to enter.
     /// </summary>
-    [Area("School")]
+    [Area("Student")]
     public class AuthenticationController : AreaBaseController
     {
         public AuthenticationController(ILogger<AuthenticationController> Logger, ILoginService LoginService)
@@ -27,6 +26,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
         private readonly ILogger _Logger;
         private readonly ILoginService _LoginService;
+
 
         [HttpGet]
         public async Task<IActionResult> Index(string returnUrl = null)
@@ -40,18 +40,18 @@ namespace FeePay.Web.Areas.School.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
 
             // Ensure all logout 
-            await _LoginService.EnsureSchoolUserLogoutAsync();
-            return View();
+            await _LoginService.EnsureStudentLogoutAsync();
+            return View(await _LoginService.BindStudentLoginModelAsync());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(SchoolLoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Index(StudentLoginViewModel model, string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            ViewData["ReturnUrl"] = returnUrl;          
             if (ModelState.IsValid)
             {
-                var result = await _LoginService.AuthenticateSchoolUserAsync(model);
+                var result = await _LoginService.AuthenticateStudentAsync(model);
                 if (result.Succeeded)
                 {
                     _Logger.LogInformation("User logged in.");
@@ -60,14 +60,14 @@ namespace FeePay.Web.Areas.School.Controllers
                 }
                 else
                 {
+                    _Logger.LogInformation(result.Message);
                     ModelState.AddModelError(string.Empty, result.Message);
                     AlertMessage(NotificationType.error, "Error", result.Message);
-                    return View(model);
+                    return View(await _LoginService.BindStudentLoginModelAsync(model));
                 }
             }
-            return View(model);
+            return View(await _LoginService.BindStudentLoginModelAsync(model));
 
         }
-
     }
 }

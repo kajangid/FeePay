@@ -28,15 +28,16 @@ namespace FeePay.Web.Filters
                 string url = filterContext.HttpContext.Request.Path;
                 if (filterContext.HttpContext.User.Identity.IsAuthenticated)
                 {
-                    var authenticateAdminResult = filterContext.HttpContext.User.Claims
+                    var claims = filterContext.HttpContext.User.Claims;
+                    var authenticateAdminResult = claims
                         .FirstOrDefault(claim => claim.Type == "SchoolAuthRoute" && claim.Issuer.Equals("SchoolAdmin", StringComparison.InvariantCultureIgnoreCase));
 
                     if (authenticateAdminResult == null)
                         //filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "SchoolAdmin", action = "Index" }));// or send to the return url
-                        filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "SchoolAdmin", action = "Login" }));
+                        filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { area = "School", controller = "Authentication", action = "Index", returnUrl = "" }));
                 }
                 else
-                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "SchoolAdmin", action = "Login" }));
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { area = "School", controller = "Authentication", action = "Index", returnUrl = "" }));
             }
         }
     }

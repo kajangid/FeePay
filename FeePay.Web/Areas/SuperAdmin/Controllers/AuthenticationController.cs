@@ -13,25 +13,22 @@ using FeePay.Web.Areas.Common;
 using FeePay.Core.Application.DTOs;
 using FeePay.Core.Application.Interface.Repository;
 using static FeePay.Core.Application.Enums.Notification;
+using FeePay.Core.Application.Interface.Service;
 
 namespace FeePay.Web.Areas.SuperAdmin.Controllers
 {
     [Area("SuperAdmin")]
     public class AuthenticationController : AreaBaseController
     {
-        public AuthenticationController(ILogger<AuthenticationController> Logger, SignInManager<SuperAdminUser> SignInManager,
-            IUnitOfWork UnitOfWork)
+        public AuthenticationController(ILogger<AuthenticationController> Logger,ILoginService LoginService )
         {
             _ILogger = Logger;
-            _SignInManager = SignInManager;
-            _UnitOfWork = UnitOfWork;
+            _LoginService = LoginService;
         }
-        private readonly SignInManager<SuperAdminUser> _SignInManager;
         private readonly ILogger _ILogger;
-        private readonly IUnitOfWork _UnitOfWork;
+        private readonly ILoginService _LoginService;
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Index(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -43,38 +40,28 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
 
-            // Ensure all logout 
-            await _SignInManager.SignOutAsync();
-
+            await _LoginService.EnsureSuperAdminLogoutAsync();
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(SuperAdminLoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                SuperAdminUser user = await _UnitOfWork.SuperAdminUser.FindActiveUserByUserEmailAsync(model.Email.ToUpper());
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                //var result = await _SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-                var result = await _SignInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _LoginService.AuthenticateSuperAdminAsync(model);
                 if (result.Succeeded)
                 {
-                    _ILogger.LogInformation("User logged in.");
-                    // event will be create for this
-                    await _UnitOfWork.SuperAdminUser.UpdateLoginState(user.Id, Request.HttpContext.Connection.RemoteIpAddress.ToString());
                     _ILogger.LogInformation("update system for login");
-                    TostMessage(NotificationType.success, $"Welcome back { user.FullName }.");
+                    TostMessage(NotificationType.success, $"Welcome back { result.Message }.");
                     return RedirectToLocal(returnUrl);
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    AlertMessage(NotificationType.error,"Error", "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, result.Message);
+                    AlertMessage(NotificationType.error,"Error", result.Message);
                     return View(model);
                 }
             }
@@ -82,11 +69,5 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
         }
 
 
-
-        private IActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
-            else return RedirectToAction("Index", "Home");
-        }
     }
 }

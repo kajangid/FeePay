@@ -93,4 +93,7 @@
     <Build Include="Dbo\Stored Procedures\StudentLogin\SP_GetAll_StudentLogin.sql" />
     <Build Include="Dbo\Stored Procedures\StudentLogin\SP_Get_StudentLogin.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Dbo\Scripts\Script_1.PostDeployment.sql" />
+  </ItemGroup>
 </Project>

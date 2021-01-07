@@ -1,9 +1,10 @@
-﻿@model SuperAdminLoginViewModel
+﻿@model StudentLoginViewModel 
 @{
     Layout = null;
 }
 
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -14,7 +15,7 @@
     <meta name="author" content="@(ViewBag.Author != null ? ViewBag.Author : "travel tech software")">
     <link rel="icon" href="@Url.Content("~/Cuba/images/favicon.png")" type="image/x-icon">
     <link rel="shortcut icon" href="@Url.Content("~/Cuba/images/favicon.png")" type="image/x-icon">
-    <title>Super Admin Login FeePay</title>
+    <title>Student Login FeePay</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
@@ -26,22 +27,24 @@
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/responsive.css")">
 </head>
 <body>
-    <!-- login page start-->
-    <div class="container-fluid p-0">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
+            <div class="col-xl-7 order-1"><img class="bg-img-cover bg-center" src="~/Cuba/images/login/1.jpg" alt="looginpage"></div>
+            <div class="col-xl-5 p-0">
                 <div class="login-card">
                     <div>
-                        <div>
-                            <a class="logo" href="index.html">
-                                <img class="img-fluid for-light" src="~/Cuba/images/logo/login.png" alt="looginpage">
-                                <img class="img-fluid for-dark" src="~/Cuba/images/logo/logo_dark.png" alt="looginpage">
-                            </a>
-                        </div>
+                        <div><a class="logo text-left" href="index.html"><img class="img-fluid for-light" src="~/Cuba/images/logo/login.png" alt="looginpage"><img class="img-fluid for-dark" src="~/Cuba/images/logo/logo_dark.png" alt="looginpage"></a></div>
                         <div class="login-main">
                             <form id="login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="theme-form needs-validation" novalidate="">
                                 <h4>Sign in to account</h4>
                                 <p>Enter your email & password to login</p>
+                                <div class="form-group">
+                                    <label asp-for="SchoolUniqueId" class="col-form-label"></label>
+                                    <select asp-for="SchoolUniqueId" asp-items="@(new SelectList(Model.ActiveSchools, "Value","Text"))" class="form-control">
+                                        <option value="">Select School</option>
+                                    </select>
+                                    <div class="invalid-feedback"><span asp-validation-for="SchoolUniqueId"></span></div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Email Address</label>
                                     <input asp-for="Email" class="form-control" type="email" required="" placeholder="Test@gmail.com">
@@ -60,12 +63,6 @@
                                     </div>
                                     <button class="btn btn-primary btn-block" type="submit">Sign in</button>
                                 </div>
-                                @*
-                                <h6 class="text-muted mt-4 or">Or Sign in with</h6>
-                                <div class="social mt-4">
-                                    <div class="btn-showcase"><a class="btn btn-light" href="https://www.linkedin.com/login" target="_blank"><i class="txt-linkedin" data-feather="linkedin"></i> LinkedIn </a><a class="btn btn-light" href="https://twitter.com/login?lang=en" target="_blank"><i class="txt-twitter" data-feather="twitter"></i>twitter</a><a class="btn btn-light" href="https://www.facebook.com/" target="_blank"><i class="txt-fb" data-feather="facebook"></i>facebook</a></div>
-                                </div>
-                                *@
                                 <div class="my-2 txt-danger" style="font-size: 12px;line-height: 1;letter-spacing: 0.9px;" asp-validation-summary="All"></div>
                                 <p class="mt-4 mb-0">Don't have account?<a class="ml-2" href="#">Create Account</a></p>
                             </form>

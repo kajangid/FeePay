@@ -25,8 +25,8 @@ namespace FeePay.Infrastructure.Persistence.Student
         private string getConStr(string dbId = null)
         {
             return string.IsNullOrEmpty(dbId) ?
-                _ConnectionStringBuilder.GetDynamicConnectionString() : // when we will get the db id from claims
-                _ConnectionStringBuilder.GetConnectionString(dbId); // when login is not complete
+                _ConnectionStringBuilder.GetSchoolConnectionString() : // Demo DB
+                _ConnectionStringBuilder.GetDynamicSchoolConnectionString(dbId); 
         }
 
         public async Task<int> AddUserAsync(StudentLogin user, string dbId = null)
