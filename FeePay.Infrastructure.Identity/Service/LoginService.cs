@@ -17,30 +17,20 @@ namespace FeePay.Infrastructure.Identity.Service
 {
     public class LoginService : ILoginService
     {
-        public LoginService(SignInManager<SchoolAdminUser> SignInManagerSchool, UserManager<SchoolAdminUser> UserManagerSchool,
-             IHttpContextAccessor httpContentAccessor, IUnitOfWork UnitOfWork, IAppContextAccessor appContextAccessor,
-            SignInManager<StudentLogin> SignInManagerStudent, UserManager<StudentLogin> UserManagerStudent,
-            SignInManager<SuperAdminUser> SignInManagerSuperAdmin, UserManager<SuperAdminUser> UserManagerSuperAdmin)
+        public LoginService(SignInManager<SchoolAdminUser> SignInManagerSchool, SignInManager<StudentLogin> SignInManagerStudent,
+            SignInManager<SuperAdminUser> SignInManagerSuperAdmin, IUnitOfWork UnitOfWork, IAppContextAccessor appContextAccessor)
         {
             _SignInManagerSchool = SignInManagerSchool;
-            _UserManagerSchool = UserManagerSchool;
             _SignInManagerStudent = SignInManagerStudent;
-            _UserManagerStudent = UserManagerStudent;
             _SignInManagerSuperAdmin = SignInManagerSuperAdmin;
-            _UserManagerSuperAdmin = UserManagerSuperAdmin;
             _UnitOfWork = UnitOfWork;
-            _HttpContext = httpContentAccessor.HttpContext;
             _AppContextAccessor = appContextAccessor;
         }
         private readonly IAppContextAccessor _AppContextAccessor;
-        private readonly SignInManager<SchoolAdminUser> _SignInManagerSchool;
-        private readonly UserManager<SchoolAdminUser> _UserManagerSchool;
-        private readonly SignInManager<StudentLogin> _SignInManagerStudent;
-        private readonly UserManager<StudentLogin> _UserManagerStudent;
-        private readonly SignInManager<SuperAdminUser> _SignInManagerSuperAdmin;
-        private readonly UserManager<SuperAdminUser> _UserManagerSuperAdmin;
         private readonly IUnitOfWork _UnitOfWork;
-        private readonly HttpContext _HttpContext;
+        private readonly SignInManager<SchoolAdminUser> _SignInManagerSchool;
+        private readonly SignInManager<StudentLogin> _SignInManagerStudent;
+        private readonly SignInManager<SuperAdminUser> _SignInManagerSuperAdmin;
 
 
         public async Task<Response<bool>> AuthenticateSchoolUserAsync(SchoolLoginViewModel model)
@@ -170,5 +160,25 @@ namespace FeePay.Infrastructure.Identity.Service
         public async Task SchoolAdminLogout() => await _SignInManagerSchool.SignOutAsync();
         public async Task SuperAdminLogout() => await _SignInManagerSuperAdmin.SignOutAsync();
         public async Task StudentLogout() => await _SignInManagerStudent.SignOutAsync();
+
+        public bool CheckUserIdentityClaim()
+        {
+            var allClaims = _AppContextAccessor.GetCurrentUserClaims();
+            var currentArea = _AppContextAccessor.GetRequestPath();
+            if (allClaims != null)
+            {
+                var SuperAdminIdentity = allClaims.FirstOrDefault(claim => claim.Type == "SuperAdminAuthRoute" && claim.Issuer.Equals("SuperAdmin", StringComparison.InvariantCultureIgnoreCase));
+                if (SuperAdminIdentity != null && !currentArea.Contains("/SuperAdmin/")) { return false; }
+
+                var SchoolAdminIdentity = allClaims.FirstOrDefault(claim => claim.Type == "SchoolAuthRoute" && claim.Issuer.Equals("SchoolAdmin", StringComparison.InvariantCultureIgnoreCase));
+                if (SchoolAdminIdentity != null && !currentArea.Contains("/School/")) { return false; }
+
+                var StudentLoginIdentity = allClaims.FirstOrDefault(claim => claim.Type == "StudentAuthRoute" && claim.Issuer.Equals("Student", StringComparison.InvariantCultureIgnoreCase));
+                if (StudentLoginIdentity != null && !currentArea.Contains("/Student/")) { return false; }
+            }
+            return true;
+        }
+
+
     }
 }

@@ -27,5 +27,11 @@ namespace FeePay.Core.Application.Services
             var ip = _HttpContextAccessor.HttpContext.User?.Claims;
             return ip?.ToList();
         }
+
+        public string GetRequestPath()
+        {
+            var Path = _HttpContextAccessor.HttpContext?.Request.Path;
+            return (Path != null ? Path.ToString() : "");
+        }
     }
 }

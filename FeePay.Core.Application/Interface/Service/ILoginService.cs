@@ -26,5 +26,7 @@ namespace FeePay.Core.Application.Interface.Service
         Task SchoolAdminLogout();
         Task SuperAdminLogout();
         Task StudentLogout();
+
+        bool CheckUserIdentityClaim();
     }
 }

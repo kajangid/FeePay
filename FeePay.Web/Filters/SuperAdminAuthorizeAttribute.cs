@@ -33,10 +33,10 @@ namespace FeePay.Web.Filters
 
                     if (authenticateAdminResult == null)
                         //filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "SuperAdmin", action = "Index" }));// or send to the return url
-                        filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { area = "SuperAdmin", controller = "Authentication", action = "Index", returnUrl = "" }));
+                        filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { area = "SuperAdmin", controller = "Authentication", action = "Index", returnUrl = url }));
                 }
                 else
-                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { area = "SuperAdmin", controller = "Authentication", action = "Index", returnUrl = "" }));
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { area = "SuperAdmin", controller = "Authentication", action = "Index", returnUrl = url }));
             }
         }
     }

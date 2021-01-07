@@ -29,10 +29,11 @@ namespace FeePay.Web.Areas.Student.Controllers
 
 
         [HttpGet]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Index(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated && _LoginService.CheckUserIdentityClaim())
                 return RedirectToLocal(returnUrl);
 
             // Clear the existing external cookie to ensure a clean login process

@@ -29,10 +29,11 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
         private readonly ILoginService _LoginService;
 
         [HttpGet]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Index(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated && _LoginService.CheckUserIdentityClaim())
                 return RedirectToLocal(returnUrl);
 
 
