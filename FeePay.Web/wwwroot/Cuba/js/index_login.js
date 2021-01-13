@@ -1,25 +1,5 @@
 ﻿(function ($) {
     "use strict";
-
-    jQuery.validator.setDefaults({
-        onfocusout: function (e) { this.element(e); },
-        onkeyup: function (e) { this.element(e); },
-
-        highlight: function (element) {
-            jQuery(element).closest('.form-control').addClass('is-invalid');
-        },
-        unhighlight: function (element) {
-            jQuery(element).closest('.form-control').removeClass('is-invalid');
-            jQuery(element).closest('.form-control').addClass('is-valid');
-        },
-
-        errorElement: 'div',
-        errorClass: 'invalid-feedback',
-        errorPlacement: function (error, element) {
-            if (element.parent('.input-group-prepend').length) $(element).siblings(".invalid-feedback").append(error); //error.insertAfter(element.parent());
-            else error.insertAfter(element);
-        },
-    });
     $('.show-hide').show();
     $('.show-hide span').addClass('show');
     $('.show-hide span').click(function () {

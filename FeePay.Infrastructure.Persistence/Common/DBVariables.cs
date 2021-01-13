@@ -30,11 +30,15 @@
         public string SP_Delete_SchoolAdmin_User { get; } = "SP_Delete_SchoolAdmin_User";
         public string SP_Get_SchoolAdmin_User { get; } = "SP_Get_SchoolAdmin_User";
         public string SP_GetAll_SchoolAdmin_User { get; } = "SP_GetAll_SchoolAdmin_User";
+        public string SP_Get_SchoolAdmin_User_With_AddEditUser { get; } = "SP_Get_SchoolAdmin_User_AddEditUser";
+        public string SP_GetAll_SchoolAdmin_User_With_AddEditUser { get; } = "SP_GetAll_SchoolAdmin_User_AddEditUser";
         public string SP_Update_SchoolAdmin_User { get; } = "SP_Update_SchoolAdmin_User";
         public string SP_Add_SchoolAdmin_Role { get; } = "SP_Add_SchoolAdmin_Role";
         public string SP_Delete_SchoolAdmin_Role { get; } = "SP_Delete_SchoolAdmin_Role";
         public string SP_Get_SchoolAdmin_Role { get; } = "SP_Get_SchoolAdmin_Role";
         public string SP_GetAll_SchoolAdmin_Role { get; } = "SP_GetAll_SchoolAdmin_Role";
+        public string SP_Get_SchoolAdmin_Role_With_AddEditUser { get; } = "SP_Get_SchoolAdmin_Role_AddEditUser";
+        public string SP_GetAll_SchoolAdmin_Role_With_AddEditUser { get; } = "SP_GetAll_SchoolAdmin_Role_AddEditUser";
         public string SP_Update_SchoolAdmin_Role { get; } = "SP_Update_SchoolAdmin_Role";
         public string SP_Add_SchoolAdmin_UserRole { get; } = "SP_Add_SchoolAdmin_UserRole";
         public string SP_Delete_SchoolAdmin_UserRole { get; } = "SP_Delete_SchoolAdmin_UserRole";

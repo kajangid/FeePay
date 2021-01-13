@@ -22,18 +22,20 @@ namespace FeePay.Infrastructure.Persistence.School
         }
         private readonly IDBVariables _DBVariables;
         private readonly IConnectionStringBuilder _ConnectionStringBuilder;
-        private string getConStr(string dbId = null)
+        private string GetConStr(string dbId = null)
         {
             return string.IsNullOrEmpty(dbId) ?
                 _ConnectionStringBuilder.GetSchoolConnectionString() : // Demo DB
                 _ConnectionStringBuilder.GetDynamicSchoolConnectionString(dbId);
         }
 
+
+
         public async Task<int> AddRoleAsync(SchoolAdminRole role, string dbId = null)
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(getConStr(dbId)))
+                using (IDbConnection connection = new SqlConnection(GetConStr(dbId)))
                 {
                     var SpRequiredParameters = new
                     {
@@ -42,8 +44,9 @@ namespace FeePay.Infrastructure.Persistence.School
                         NormalizedName = role.NormalizedName,
                         Name = role.Name
                     };
-                    return await connection.ExecuteAsync(_DBVariables.SP_Add_SchoolAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
-
+                    int id = await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Add_SchoolAdmin_Role
+                        , SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                    return id;
                 }
             }
             catch (TimeoutException ex)
@@ -55,11 +58,12 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<int> UpdateRoleAsync(SchoolAdminRole role, string dbId = null)
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(getConStr(dbId)))
+                using (IDbConnection connection = new SqlConnection(GetConStr(dbId)))
                 {
                     var SpRequiredParameters = new
                     {
@@ -69,7 +73,7 @@ namespace FeePay.Infrastructure.Persistence.School
                         Name = role.Name,
                         ModifyBy = role.ModifyBy
                     };
-                    return await connection.ExecuteAsync(_DBVariables.SP_Update_SchoolAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                    return await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Update_SchoolAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
 
                 }
             }
@@ -82,13 +86,14 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<int> DeleteRoleAsync(int Id, string dbId = null)
         {
             try
             {
-                using (var connection = new SqlConnection(getConStr(dbId)))
+                using (var connection = new SqlConnection(GetConStr(dbId)))
                 {
-                    return await connection.ExecuteAsync(_DBVariables.SP_Delete_SchoolAdmin_Role, new { Id = Id }, null, null, CommandType.StoredProcedure);
+                    return await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Delete_SchoolAdmin_Role, new { Id = Id }, null, null, CommandType.StoredProcedure);
                 }
             }
             catch (TimeoutException ex)
@@ -101,15 +106,19 @@ namespace FeePay.Infrastructure.Persistence.School
             }
 
         }
+
+
+
+
         public async Task<SchoolAdminRole> FindRoleByRoleIdAsync(int roleId, string dbId = null)
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(getConStr(dbId)))
-                {
-                    var SpRequiredParameters = new { Id = roleId };
-                    return await connection.QuerySingleOrDefaultAsync<SchoolAdminRole>(_DBVariables.SP_Get_SchoolAdmin_Role, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { Id = roleId };
+                return await connection.QuerySingleOrDefaultAsync<SchoolAdminRole>(
+                    _DBVariables.SP_Get_SchoolAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+
             }
             catch (TimeoutException ex)
             {
@@ -120,15 +129,16 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminRole> FindRoleByRoleNameAsync(string normalizedName, string dbId = null)
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(getConStr(dbId)))
-                {
-                    var SpRequiredParameters = new { NormalizedName = normalizedName };
-                    return await connection.QuerySingleOrDefaultAsync<SchoolAdminRole>(_DBVariables.SP_Get_SchoolAdmin_Role, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { NormalizedName = normalizedName };
+                return await connection.QuerySingleOrDefaultAsync<SchoolAdminRole>(
+                    _DBVariables.SP_Get_SchoolAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+
             }
             catch (TimeoutException ex)
             {
@@ -139,15 +149,17 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminRole> FindActiveRoleByRoleIdAsync(int roleId, string dbId = null)
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(getConStr(dbId)))
-                {
-                    var SpRequiredParameters = new { Id = roleId, IsActive = true };
-                    return await connection.QuerySingleOrDefaultAsync<SchoolAdminRole>(_DBVariables.SP_Get_SchoolAdmin_Role, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { Id = roleId, IsActive = true };
+                return await connection.QuerySingleOrDefaultAsync<SchoolAdminRole>(
+                            _DBVariables.SP_Get_SchoolAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+
+
             }
             catch (TimeoutException ex)
             {
@@ -158,15 +170,16 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminRole> FindActiveRoleByRoleNameAsync(string normalizedName, string dbId = null)
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(getConStr(dbId)))
-                {
-                    var SpRequiredParameters = new { NormalizedName = normalizedName, IsActive = true };
-                    return await connection.QuerySingleOrDefaultAsync<SchoolAdminRole>(_DBVariables.SP_Get_SchoolAdmin_Role, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { NormalizedName = normalizedName, IsActive = true };
+                return await connection.QuerySingleOrDefaultAsync<SchoolAdminRole>(
+                    _DBVariables.SP_Get_SchoolAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+
             }
             catch (TimeoutException ex)
             {
@@ -177,5 +190,190 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
+        public async Task<IEnumerable<SchoolAdminRole>> GetAllActiveRolesAsync(string dbId = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { IsActive = true };
+                return await connection.QueryAsync<SchoolAdminRole>
+                    (_DBVariables.SP_GetAll_SchoolAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+
+        public async Task<IEnumerable<SchoolAdminRole>> GetAllRolesAsync(string dbId = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { };
+                return await connection.QueryAsync<SchoolAdminRole>
+                    (_DBVariables.SP_GetAll_SchoolAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+
+
+
+
+
+        public async Task<SchoolAdminRole> FindRoleByRoleId_WithAddEditUserAsync(int roleId, string dbId = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { Id = roleId };
+                var list = await connection.QueryAsync<SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminRole>
+                    (_DBVariables.SP_Get_SchoolAdmin_Role_With_AddEditUser,
+                    (role, addeduser, modifyuser) => { role.AddedByUser = addeduser; role.ModifyByUser = modifyuser; return role; }
+                    , SpRequiredParameters, splitOn: "Id,Id,Id", commandType: CommandType.StoredProcedure);
+
+                return list?.FirstOrDefault();
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+
+        public async Task<SchoolAdminRole> FindRoleByRoleName_WithAddEditUserAsync(string normalizedName, string dbId = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { NormalizedName = normalizedName };
+                var list = await connection.QueryAsync<SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminRole>
+                    (_DBVariables.SP_Get_SchoolAdmin_Role_With_AddEditUser,
+                    (role, addeduser, modifyuser) => { role.AddedByUser = addeduser; role.ModifyByUser = modifyuser; return role; }
+                    , SpRequiredParameters, splitOn: "Id,Id,Id", commandType: CommandType.StoredProcedure);
+
+                return list?.FirstOrDefault();
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+
+        public async Task<SchoolAdminRole> FindActiveRoleByRoleId_WithAddEditUserAsync(int roleId, string dbId = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { Id = roleId, IsActive = true };
+                var list = await connection.QueryAsync<SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminRole>
+                    (_DBVariables.SP_Get_SchoolAdmin_Role_With_AddEditUser,
+                    (role, addeduser, modifyuser) => { role.AddedByUser = addeduser; role.ModifyByUser = modifyuser; return role; }
+                    , SpRequiredParameters, splitOn: "Id,Id,Id", commandType: CommandType.StoredProcedure);
+
+                return list?.FirstOrDefault();
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+
+        public async Task<SchoolAdminRole> FindActiveRoleByRoleName_WithAddEditUserAsync(string normalizedName, string dbId = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { NormalizedName = normalizedName, IsActive = true };
+                var list = await connection.QueryAsync<SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminRole>
+                    (_DBVariables.SP_Get_SchoolAdmin_Role_With_AddEditUser,
+                    (role, addeduser, modifyuser) => { role.AddedByUser = addeduser; role.ModifyByUser = modifyuser; return role; }
+                    , SpRequiredParameters, splitOn: "Id,Id,Id", commandType: CommandType.StoredProcedure);
+
+                return list?.FirstOrDefault();
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+
+        public async Task<IEnumerable<SchoolAdminRole>> GetAllActiveRoles_WithAddEditUserAsync(string dbId = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { IsActive = true };
+                return await connection.QueryAsync<SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminRole>
+                    (_DBVariables.SP_GetAll_SchoolAdmin_Role_With_AddEditUser,
+                    (role, addeduser, modifyuser) => { role.AddedByUser = addeduser; role.ModifyByUser = modifyuser; return role; }
+                    , SpRequiredParameters, splitOn: "Id,Id,Id", commandType: CommandType.StoredProcedure);
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+
+        public async Task<IEnumerable<SchoolAdminRole>> GetAllRoles_WithAddEditUserAsync(string dbId = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new { };
+                return await connection.QueryAsync<SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminRole>
+                    (_DBVariables.SP_GetAll_SchoolAdmin_Role_With_AddEditUser,
+                    (role, addeduser, modifyuser) => { role.AddedByUser = addeduser; role.ModifyByUser = modifyuser; return role; }
+                    , SpRequiredParameters, splitOn: "Id,Id,Id", commandType: CommandType.StoredProcedure);
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+
+
     }
 }

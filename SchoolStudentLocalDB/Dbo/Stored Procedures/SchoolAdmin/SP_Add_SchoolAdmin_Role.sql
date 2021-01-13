@@ -28,8 +28,8 @@ BEGIN
                ,@AddedBy
                ,GETDATE()
                ,@AddedBy)
-
-        RETURN CAST(SCOPE_IDENTITY() AS INT)
+               
+			   SELECT CAST(SCOPE_IDENTITY() AS INT)
     END
     ELSE
     BEGIN

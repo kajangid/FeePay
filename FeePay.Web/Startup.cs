@@ -33,8 +33,6 @@ namespace FeePay.Web
             services.AddApplicationServices(Configuration);
             services.AddInfrastructureIdentityService(Configuration);
             services.AddControllersWithViews();
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +44,8 @@ namespace FeePay.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
             }
             app.UseStaticFiles();
             app.UseSerilogRequestLogging();

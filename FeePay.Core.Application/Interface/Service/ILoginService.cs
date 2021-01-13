@@ -17,6 +17,7 @@ namespace FeePay.Core.Application.Interface.Service
         Task<StudentLoginViewModel> BindStudentLoginModelAsync();
         Task<StudentLoginViewModel> BindStudentLoginModelAsync(StudentLoginViewModel model);
 
+
         Task EnsureStudentLogoutAsync();
         Task EnsureSchoolUserLogoutAsync();
         Task EnsureSuperAdminLogoutAsync();
@@ -28,5 +29,9 @@ namespace FeePay.Core.Application.Interface.Service
         Task StudentLogout();
 
         bool CheckUserIdentityClaim();
+
+        string GetLogedInStudentId();
+        string GetLogedInSchoolAdminId();
+        string GetLogedInSuperAdminId();
     }
 }

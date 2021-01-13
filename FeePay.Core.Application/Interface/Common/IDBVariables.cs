@@ -34,11 +34,15 @@ namespace FeePay.Core.Application.Interface.Common
         string SP_Delete_SchoolAdmin_User { get; }
         string SP_Get_SchoolAdmin_User { get; }
         string SP_GetAll_SchoolAdmin_User { get; }
+        string SP_Get_SchoolAdmin_User_With_AddEditUser { get; }
+        string SP_GetAll_SchoolAdmin_User_With_AddEditUser { get; }
         string SP_Update_SchoolAdmin_User { get; }
         string SP_Add_SchoolAdmin_Role { get; }
         string SP_Delete_SchoolAdmin_Role { get; }
         string SP_Get_SchoolAdmin_Role { get; }
         string SP_GetAll_SchoolAdmin_Role { get; }
+        string SP_Get_SchoolAdmin_Role_With_AddEditUser { get; }
+        string SP_GetAll_SchoolAdmin_Role_With_AddEditUser { get; }
         string SP_Update_SchoolAdmin_Role { get; }
         string SP_Add_SchoolAdmin_UserRole { get; }
         string SP_Delete_SchoolAdmin_UserRole { get; }

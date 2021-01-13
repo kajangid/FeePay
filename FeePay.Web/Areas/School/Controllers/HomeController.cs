@@ -14,16 +14,38 @@ namespace FeePay.Web.Areas.School.Controllers
     [SchoolAdminAuthorize]
     public class HomeController : AreaBaseController
     {
-        public HomeController(ILogger<HomeController> Logger)
+        private readonly ILogger _logger;
+        private readonly ILoginService _loginService;
+        public HomeController(ILogger<HomeController> logger, ILoginService loginService)
         {
-            _Logger = Logger;
+            _logger = logger;
+            _loginService = loginService;
         }
-        private readonly ILogger _Logger;
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index()
         {
             return View();
         }
+
+
+
+
+
+
+
+
+
+        #region LogOut method
+        [HttpGet]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult Logout()
+        {
+            _loginService.SchoolAdminLogout();
+            _logger.LogInformation("User logged out.");
+            return RedirectToAction(nameof(AuthenticationController.Index), "Authentication");
+        }
+        #endregion
     }
 }

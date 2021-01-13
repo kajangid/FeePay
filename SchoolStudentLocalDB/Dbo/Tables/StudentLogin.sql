@@ -14,8 +14,6 @@
     [LockoutEnabled]       BIT                NOT NULL,
     [AccessFailedCount]    INT                NOT NULL,
     [SecurityStamp]        NVARCHAR (1000)     NULL, 
-    [FirstName] NVARCHAR(50) NULL, 
-    [LastName] NVARCHAR(50) NULL, 
     [Password] NVARCHAR(50) NULL, 
     [IsLogin] BIT NULL,
     [LastLoginIP] NVARCHAR(50) NULL, 

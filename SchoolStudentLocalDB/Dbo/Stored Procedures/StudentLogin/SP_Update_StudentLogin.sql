@@ -13,8 +13,6 @@
 ,@LockoutEndDate datetimeoffset(7) = NULL
 ,@LockoutEnabled BIT = NULL
 ,@SecurityStamp NVARCHAR(1000) = NULL
-,@FirstName NVARCHAR(50) = NULL
-,@LastName NVARCHAR(50) = NULL
 ,@Password NVARCHAR(50) = NULL
 ,@IsActive  BIT = NULL
 ,@ModifyBy INT = NULL
@@ -39,8 +37,6 @@ BEGIN
             [LockoutEnabled] = @LockoutEnabled,
             [AccessFailedCount] = @AccessFailedCount,
             [SecurityStamp] = @SecurityStamp,
-            [FirstName] = @FirstName,
-            [LastName] = @LastName,
             [Password] = @Password,
             [IsActive] = @IsActive,
             [ModifyDate] = GETDATE(),

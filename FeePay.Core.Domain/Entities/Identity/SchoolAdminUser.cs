@@ -19,6 +19,14 @@ namespace FeePay.Core.Domain.Entities.Identity
         // Temp Fields to store runtime data
         public string SchoolUniqueId { get; set; }
         public string SchoolName { get; set; }
+        public List<string> Roles { get; set; }
+
+
+
+        public SchoolAdminUser AddedByUser { get; set; }
+        public SchoolAdminUser ModifyByUser { get; set; }
+
+
 
     }
 }

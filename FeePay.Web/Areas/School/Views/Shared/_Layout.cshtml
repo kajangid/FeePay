@@ -33,7 +33,7 @@
     <link id="color" rel="stylesheet" href="@Url.Content("~/Cuba/css/color-1.css")" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/responsive.css")">
-
+    @RenderSection("Style", false)
 </head>
 <body>
     <!-- tap on top starts-->
@@ -71,12 +71,14 @@
     <script src="@Url.Content("~/Cuba/js/config.js")"></script>
     <!-- Plugins JS start-->
     <script src="@Url.Content("~/Cuba/js/sidebar-menu.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/tooltip-init.js")"></script>
     <!-- Plugins JS Ends-->
     <partial name="_Partial_AlertMessage" />
     <!-- Theme js-->
     <script src="@Url.Content("~/Cuba/js/script.js")"></script>
-    <script src="@Url.Content("~/Cuba/js/theme-customizer/customizer.js")"></script>
+    @*<script src="@Url.Content("~/Cuba/js/theme-customizer/customizer.js")"></script>*@
     <!-- login js-->
     <!-- Plugin used-->
+    @RenderSection("Scripts", false)
 </body>
 </html>

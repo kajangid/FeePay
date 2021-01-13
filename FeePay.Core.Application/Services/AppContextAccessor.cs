@@ -24,14 +24,26 @@ namespace FeePay.Core.Application.Services
         }
         public List<Claim> GetCurrentUserClaims()
         {
-            var ip = _HttpContextAccessor.HttpContext.User?.Claims;
-            return ip?.ToList();
+            var claims = _HttpContextAccessor.HttpContext.User?.Claims;
+            return claims?.ToList();
         }
 
         public string GetRequestPath()
         {
             var Path = _HttpContextAccessor.HttpContext?.Request.Path;
             return (Path != null ? Path.ToString() : "");
+        }
+
+        public string ClaimSchoolUniqueId()
+        {
+            var claims = _HttpContextAccessor.HttpContext.User?.Claims;
+            var uniqueIdClaim = claims?.FirstOrDefault(claim => claim.Type == "SchoolUniqueId" && claim.ValueType.Equals("school_id", StringComparison.InvariantCultureIgnoreCase));
+            return uniqueIdClaim?.Value;
+        }
+        public ClaimsPrincipal getCurrentUser()
+        {
+            var user = _HttpContextAccessor.HttpContext.User;
+            return user;
         }
     }
 }

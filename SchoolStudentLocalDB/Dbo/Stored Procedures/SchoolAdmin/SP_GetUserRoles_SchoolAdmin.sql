@@ -5,7 +5,7 @@ BEGIN
 	SELECT [r].[Id], [r].[Name], [r].[NormalizedName] FROM [dbo].[SchoolAdmin_Role] r 
 	INNER JOIN [dbo].[SchoolAdmin_UserRole] ur ON 
 	ur.[RoleId] = r.Id
-    WHERE 
+	WHERE 
 	ur.UserId = @UserId
 END
 RETURN 0

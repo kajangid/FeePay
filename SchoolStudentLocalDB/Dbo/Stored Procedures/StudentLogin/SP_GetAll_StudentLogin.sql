@@ -14,7 +14,7 @@ AS
 BEGIN
 	SELECT  [Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PhoneNumber],
 			[PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDate], [LockoutEnabled], [AccessFailedCount], [SecurityStamp],
-			[FirstName], [LastName], [LastLoginIP], [LastLoginDate], [IsActive], [ModifyDate],
+			[LastLoginIP], [LastLoginDate], [IsActive], [ModifyDate],
 			[ModifyBy], [AddedDate], [AddedBy]
 	FROM [dbo].[StudentLogin] WHERE
 			[IsDelete] = 0 AND

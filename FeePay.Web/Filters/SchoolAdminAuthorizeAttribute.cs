@@ -13,6 +13,10 @@ namespace FeePay.Web.Filters
 {
     public class SchoolAdminAuthorizeAttribute : Attribute, IAuthorizationFilter
     {
+#nullable enable
+        public string? Roles { get; set; }
+#nullable disable
+
         public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
             var controllerActionDescriptor = filterContext.ActionDescriptor as ControllerActionDescriptor;
@@ -32,9 +36,21 @@ namespace FeePay.Web.Filters
                     var authenticateAdminResult = claims
                         .FirstOrDefault(claim => claim.Type == "SchoolAuthRoute" && claim.Issuer.Equals("SchoolAdmin", StringComparison.InvariantCultureIgnoreCase));
 
+                    // check if Authorize
                     if (authenticateAdminResult == null)
+                    {
                         //filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "SchoolAdmin", action = "Index" }));// or send to the return url
                         filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { area = "School", controller = "Authentication", action = "Index", returnUrl = url }));
+                        return;
+                    }
+
+                    // check if in role
+                    if (authenticateAdminResult != null && !string.IsNullOrEmpty(Roles))
+                    {
+                        var rolelist = Roles.Trim().ToUpper().Split(new char[] { ',' }).ToList();
+                        if (!claims.Any(a => a.Type == "Role" && rolelist.Contains(a.Value.ToUpper()) && a.Issuer.Equals("school", StringComparison.InvariantCultureIgnoreCase)))
+                            filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { area = "School", controller = "Authentication", action = "Accessdenied", returnUrl = url }));
+                    }
                 }
                 else
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { area = "School", controller = "Authentication", action = "Index", returnUrl = url }));

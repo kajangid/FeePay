@@ -14,7 +14,14 @@ namespace FeePay.Core.Application.Enums
             success,
             warning,
             info,
-            question
+            question,
+
+            theme,
+            dark,
+            danger,
+            light,
+            primary,
+            secondary
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using FeePay.Core.Application.Interface.Repository;
-using FeePay.Core.Application.DTOs;
-using FeePay.Core.Domain.Entities.Identity;
-using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,25 +8,40 @@ using FeePay.Core.Application.Wrapper;
 using FeePay.Core.Application.Interface.Service;
 using Microsoft.AspNetCore.Http;
 using FeePay.Core.Domain.Entities.Common;
+using AutoMapper;
+using FeePay.Core.Application.Interface.Repository;
+using FeePay.Core.Application.DTOs;
+using FeePay.Core.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace FeePay.Infrastructure.Identity.Service
 {
     public class LoginService : ILoginService
     {
         public LoginService(SignInManager<SchoolAdminUser> SignInManagerSchool, SignInManager<StudentLogin> SignInManagerStudent,
-            SignInManager<SuperAdminUser> SignInManagerSuperAdmin, IUnitOfWork UnitOfWork, IAppContextAccessor appContextAccessor)
+            SignInManager<SuperAdminUser> SignInManagerSuperAdmin, IUnitOfWork UnitOfWork, IAppContextAccessor appContextAccessor,
+            UserManager<SchoolAdminUser> UserManagerSchool, UserManager<StudentLogin> UserManagerStudent,
+            UserManager<SuperAdminUser> UserManagerSuperAdmin, IMapper Mapper)
         {
             _SignInManagerSchool = SignInManagerSchool;
             _SignInManagerStudent = SignInManagerStudent;
             _SignInManagerSuperAdmin = SignInManagerSuperAdmin;
             _UnitOfWork = UnitOfWork;
             _AppContextAccessor = appContextAccessor;
+            _UserManagerSchool = UserManagerSchool;
+            _UserManagerStudent = UserManagerStudent;
+            _UserManagerSuperAdmin = UserManagerSuperAdmin;
+            _Mapper = Mapper;
         }
         private readonly IAppContextAccessor _AppContextAccessor;
         private readonly IUnitOfWork _UnitOfWork;
+        private readonly IMapper _Mapper;
         private readonly SignInManager<SchoolAdminUser> _SignInManagerSchool;
         private readonly SignInManager<StudentLogin> _SignInManagerStudent;
         private readonly SignInManager<SuperAdminUser> _SignInManagerSuperAdmin;
+        private readonly UserManager<SchoolAdminUser> _UserManagerSchool;
+        private readonly UserManager<StudentLogin> _UserManagerStudent;
+        private readonly UserManager<SuperAdminUser> _UserManagerSuperAdmin;
 
 
         public async Task<Response<bool>> AuthenticateSchoolUserAsync(SchoolLoginViewModel model)
@@ -48,7 +59,7 @@ namespace FeePay.Infrastructure.Identity.Service
 
             user.SchoolUniqueId = model.SchoolUniqueId;
             user.SchoolName = t.Name;
-
+            user.Roles = (await _UnitOfWork.SchoolAdminUserRole.GetUserRolesAsync(user.Id, model.SchoolUniqueId))?.Select(s => s.Name).ToList();
             // Authorize User
             var result = await _SignInManagerSchool.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
 
@@ -90,7 +101,7 @@ namespace FeePay.Infrastructure.Identity.Service
             if (result.Succeeded)
             {
                 await _UnitOfWork.StudentLogin.UpdateLoginState(user.Id, _AppContextAccessor.GetUserIP(), model.SchoolUniqueId);
-                return new Response<bool>(true, user.FirstName);
+                return new Response<bool>(true, user.UserName);
             }
             return new Response<bool>("Invalid Email or Password.");
         }
@@ -123,6 +134,7 @@ namespace FeePay.Infrastructure.Identity.Service
                 ActiveSchools = allschool.Select(s => new DropDownItem { Text = s.Name, Value = s.UniqueId }).ToList()
             };
         }
+
         public async Task<StudentLoginViewModel> BindStudentLoginModelAsync(StudentLoginViewModel model)
         {
             var allschool = await _UnitOfWork.RegisteredSchool.GetAllActiveSchoolAsync();
@@ -134,6 +146,8 @@ namespace FeePay.Infrastructure.Identity.Service
                 ActiveSchools = allschool.Select(s => new DropDownItem { Text = s.Name, Value = s.UniqueId }).ToList()
             };
         }
+
+
 
         public async Task EnsureStudentLogoutAsync()
         {
@@ -179,6 +193,17 @@ namespace FeePay.Infrastructure.Identity.Service
             return true;
         }
 
-
+        public string GetLogedInStudentId()
+        {
+            return _UserManagerStudent.GetUserId(_AppContextAccessor.getCurrentUser());
+        }
+        public string GetLogedInSchoolAdminId()
+        {
+            return _UserManagerSchool.GetUserId(_AppContextAccessor.getCurrentUser());
+        }
+        public string GetLogedInSuperAdminId()
+        {
+            return _UserManagerSuperAdmin.GetUserId(_AppContextAccessor.getCurrentUser());
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[SchoolAdmin_UserRole]
 (
-	[Id] INT NOT NULL PRIMARY KEY,
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(100, 1),
     [UserId] INT NOT NULL, 
     [RoleId] INT NOT NULL, 
     [IsActive] BIT NULL DEFAULT 0, 

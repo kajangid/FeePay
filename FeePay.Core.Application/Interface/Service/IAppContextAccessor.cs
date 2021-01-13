@@ -12,5 +12,11 @@ namespace FeePay.Core.Application.Interface.Service
         string GetUserIP();
         List<Claim> GetCurrentUserClaims();
         string GetRequestPath();
+        /// <summary>
+        /// <!-- get's the current user claim -->
+        /// </summary>
+        /// <returns> tenant db id </returns>
+        string ClaimSchoolUniqueId();
+        ClaimsPrincipal getCurrentUser();
     }
 }

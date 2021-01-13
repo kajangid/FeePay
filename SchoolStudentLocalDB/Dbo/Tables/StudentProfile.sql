@@ -1,0 +1,23 @@
+﻿CREATE TABLE [dbo].[StudentProfile]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(100, 1), 
+    [AdmissionNo] NVARCHAR(50) NOT NULL, 
+    [FirstName] NVARCHAR(50) NOT NULL, 
+    [LastName] NVARCHAR(50) NOT NULL, 
+    [FatherName] NVARCHAR(50) NOT NULL,
+    [ClassId] INT NOT NULL,  
+    [MotherName] NVARCHAR(50) NULL, 
+    [DateOfBirth] DATETIME NULL, 
+    [Address] NVARCHAR(500) NULL, 
+    [MobileNo] NVARCHAR(50) NOT NULL, 
+    [GuardianMobileNo] NVARCHAR(50) NULL, 
+    [Image] NVARCHAR(350) NULL, 
+    [AdmissionDate] DATETIME NULL, 
+    [Stream] NVARCHAR(MAX) NULL, 
+    [IsActive] BIT NULL DEFAULT 0, 
+    [IsDelete] BIT NULL DEFAULT 0, 
+    [ModifyDate] DATETIME NULL DEFAULT GetDate(), 
+    [ModifyBy] INT NULL, 
+    [AddedDate] DATETIME NULL DEFAULT GetDate(), 
+    [AddedBy] INT NULL,
+)

@@ -8,8 +8,6 @@ namespace FeePay.Core.Domain.Entities.Identity
 {
     public class StudentLogin : IdentityUser
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         public string Password { get; set; }
         public bool IsLogin { get; set; }
         public DateTime? LastLoginDate { get; set; }

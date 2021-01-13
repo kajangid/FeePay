@@ -8,6 +8,7 @@ namespace FeePay.Core.Domain.Entities.Identity
 {
     public class SchoolAdminRole : SuperAdminRole
     {
-        
+        public SchoolAdminUser AddedByUser { get; set; }
+        public SchoolAdminUser ModifyByUser { get; set; }
     }
 }

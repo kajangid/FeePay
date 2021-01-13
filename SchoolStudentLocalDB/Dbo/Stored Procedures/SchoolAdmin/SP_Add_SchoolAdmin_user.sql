@@ -38,7 +38,7 @@ BEGIN
                ,@FullName,@LastLoginIP,@LastLoginDate,@IsActive,0,GETDATE(),@AddedBy,GETDATE()
                ,@AddedBy)
 
-        RETURN CAST(SCOPE_IDENTITY() AS INT)
+        SELECT CAST(SCOPE_IDENTITY() AS INT)
     END
     ELSE
     BEGIN
