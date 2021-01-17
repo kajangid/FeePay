@@ -37,7 +37,6 @@
     <ProjectReference Include="..\FeePay.Core.Application\FeePay.Core.Application.csproj" />
     <ProjectReference Include="..\FeePay.Core.Domain\FeePay.Core.Domain.csproj" />
     <ProjectReference Include="..\FeePay.Infrastructure.Identity\FeePay.Infrastructure.Identity.csproj" />
-    <ProjectReference Include="..\FeePay.Infrastructure.Persistence\FeePay.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\FeePay.Infrastructure.Shared\FeePay.Infrastructure.Shared.csproj" />
   </ItemGroup>
 

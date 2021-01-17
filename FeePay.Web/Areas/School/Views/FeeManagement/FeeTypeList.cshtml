@@ -1,0 +1,117 @@
+﻿@model IEnumerable<FeeTypeViewModel>
+@{
+    var random = new Random();
+    var ColorList = new List<string> { "primary", "secondary", "success", "info", "dark", "light", "danger", "warning" };
+}
+@section Style{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
+
+
+}
+@section Scripts{
+    <script src="@Url.Content("~/Cuba/js/clipboard/clipboard.min.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/notify/bootstrap-notify.min.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/index_global.js")"></script>
+    <script>
+        (function () {
+            "use strict";
+            $('#feeTypeListTable').DataTable({ "order": [[5, 'desc']] });
+            $('#feeTypeListTable').reArrangeDatatableSerialNumber();
+        })(jQuery);
+    </script>
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Fee Management</li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header b-r-info b-l-info border-3">
+                    <h5>
+                        <a asp-action="FeeTypeManage" asp-controller="FeeManagement">
+                            <i class="fa fa-plus"></i> Add Fee Type
+                        </a>
+                    </h5>
+                    <div class="card-header-right">
+                        <ul class="list-unstyled card-option">
+                            <li><i class="fa fa-spin fa-cog"></i></li>
+                            <li><i class="icofont icofont-maximize full-card"></i></li>
+                            <li><i class="icofont icofont-minus minimize-card"></i></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body" style="">
+                    <div class="table-responsive">
+                        <table class="hover" id="feeTypeListTable" data-type="datatable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>Active</th>
+                                    <th>Modify By</th>
+                                    <th>Modify date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            var color = ColorList.OrderBy(s => random.NextDouble()).First();
+                                            <tr data-key="@item.Id">
+                                                <td></td>
+                                                <td>@item.Name</td>
+                                                <td>@item.Code</td>
+                                                <td>
+                                                    <input asp-for="@item.IsActive" type="checkbox">
+                                                </td>
+                                                <td><a href="@Url.Action("StaffManage","Account",new { id = item.ModifyById })" class="btn btn-@(color) btn-xs">@item.ModifyBy</a></td>
+                                                <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
+                                                <td>
+                                                    <a asp-action="FeeTypeManage" asp-controller="FeeManagement" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Fee Type" class="d-inline-block mr-2">
+                                                        <i data-feather="edit-3"></i>
+                                                    </a>
+                                                    <a data-action="deleterow" data-actionmag="Fee Type" asp-action="FeeTypeDelete" asp-controller="FeeManagement" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Fee Type" class="d-inline-block">
+                                                        <i data-feather="trash-2"></i>
+                                                    </a>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr><td colspan="6">there is no fee type to be shown.</td></tr>
+                                    }
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

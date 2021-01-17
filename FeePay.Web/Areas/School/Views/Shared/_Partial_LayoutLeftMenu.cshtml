@@ -24,6 +24,16 @@
                 </li>
                 <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title" href="#">
+                        <i data-feather="airplay"></i> <span> Fee Management </span>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li><a href="@Url.Action("FeeTypeList","FeeManagement")">All Fee Type</a></li>
+                        <li><a href="@Url.Action("FeeGroupList","FeeManagement")">All Fee Group</a></li>
+                        <li><a href="@Url.Action("FeeMasterList","FeeManagement")">All Fee Master</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="#">
                         <i data-feather="airplay"></i> <span> Administrative </span>
                     </a>
                     <ul class="sidebar-submenu">

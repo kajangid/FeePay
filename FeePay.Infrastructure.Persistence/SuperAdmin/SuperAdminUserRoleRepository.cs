@@ -32,10 +32,16 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             {
                 using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
                 {
-                    var roleId = await connection.ExecuteScalarAsync<int?>(_DBVariables.SP_Get_SuperAdmin_Role, new { NormalizedName = normalizedName });
+                    var roleId = await connection.ExecuteScalarAsync<int?>(_DBVariables.SP_Get_SuperAdmin_Role
+                        , new { NormalizedName = normalizedName }
+                        , commandType: CommandType.StoredProcedure);
                     if (!roleId.HasValue)
-                        roleId = await connection.ExecuteAsync(_DBVariables.SP_Add_SuperAdmin_Role, new { RoleName = roleName, NormalizedName = normalizedName });
-                    return await connection.ExecuteAsync(_DBVariables.SP_Add_SuperAdmin_UserRole, new { UserId = user.Id, RoleId = roleId });
+                        roleId = await connection.ExecuteAsync(_DBVariables.SP_Add_SuperAdmin_Role
+                            , new { RoleName = roleName, NormalizedName = normalizedName }
+                            , commandType: CommandType.StoredProcedure);
+                    return await connection.ExecuteAsync(_DBVariables.SP_Add_SuperAdmin_UserRole
+                        , new { UserId = user.Id, RoleId = roleId }
+                        , commandType: CommandType.StoredProcedure);
                 }
             }
             catch (TimeoutException ex)
@@ -57,7 +63,9 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
                 {
                     var role = await connection.QuerySingleOrDefaultAsync<SuperAdminRole>(_DBVariables.SP_Get_SuperAdmin_Role, new { NormalizedName = roleName.ToUpper() });
                     if (role != null && role.Id != 0)
-                        return await connection.ExecuteAsync(_DBVariables.SP_Delete_SuperAdmin_UserRole, new { UserId = user.Id, RoleId = role.Id });
+                        return await connection.ExecuteAsync(_DBVariables.SP_Delete_SuperAdmin_UserRole
+                            , new { UserId = user.Id, RoleId = role.Id }
+                            , commandType: CommandType.StoredProcedure);
                     else
                         return 0;
                 }
@@ -78,7 +86,9 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             {
                 using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
                 {
-                    return (await connection.QueryAsync<SuperAdminRole>(_DBVariables.SP_GetUserRoles_SuperAdmin, new { UserId = user.Id })).ToList();
+                    return (await connection.QueryAsync<SuperAdminRole>(_DBVariables.SP_GetUserRoles_SuperAdmin
+                        , new { UserId = user.Id }
+                        , commandType: CommandType.StoredProcedure)).ToList();
                 }
             }
             catch (TimeoutException ex)
@@ -98,7 +108,9 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
                 using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
                 {
                     return (await connection.QueryAsync<SuperAdminRole>
-                        (_DBVariables.SP_GetUserRoles_SuperAdmin, new { UserId = user.Id }))
+                        (_DBVariables.SP_GetUserRoles_SuperAdmin
+                        , new { UserId = user.Id }
+                        , commandType: CommandType.StoredProcedure))
                         .Where(W => W.NormalizedName == roleName.ToUpper()).Count();
                 }
             }
@@ -118,7 +130,9 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
                 using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
                 {
                     return (await connection.QueryAsync<SuperAdminUser>
-                        (_DBVariables.SP_Get_SuperAdmin_UsersInRole, new { UserId = roleName.ToUpper() })).ToList();
+                        (_DBVariables.SP_Get_SuperAdmin_UsersInRole
+                        , new { UserId = roleName.ToUpper() }
+                        , commandType: CommandType.StoredProcedure)).ToList();
                 }
             }
             catch (TimeoutException ex)

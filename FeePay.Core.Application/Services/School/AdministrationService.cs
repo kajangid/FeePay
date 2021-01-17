@@ -32,7 +32,7 @@ namespace FeePay.Core.Application.Services.School
         private readonly ISchoolAdminRegistrationService _schoolAdminRegistrationService;
 
 
-
+        #region Staffs 
         public async Task<StaffMemberViewModel> BindStaffMemberViewModel(StaffMemberViewModel model = null)
         {
             if (model != null && model.Id != 0)
@@ -44,60 +44,49 @@ namespace FeePay.Core.Application.Services.School
         public async Task<Response<List<StaffMemberViewModel>>> GetAllStaffMemberAsync()
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            var tt = await _unitOfWork.SchoolAdminUser.FindAllActiveUser_WithAddEditUserAsync(SchoolId);
+            var tt = await _unitOfWork.SchoolAdminUser.FindAllActive_WithAddEditUserAsync(SchoolId);
             return new Response<List<StaffMemberViewModel>>(_mapper.Map<List<StaffMemberViewModel>>(tt));
         }
         public async Task<Response<StaffMemberViewModel>> GetStaffByIdAsync(int unserId)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            SchoolAdminUser schoolAdminUser = await _unitOfWork.SchoolAdminUser.FindActiveUserByUserIdAsync(unserId, SchoolId);
+            SchoolAdminUser schoolAdminUser = await _unitOfWork.SchoolAdminUser.FindActiveByIdAsync(unserId, SchoolId);
             StaffMemberViewModel StaffModel = _mapper.Map<StaffMemberViewModel>(schoolAdminUser);
-            StaffModel.RoleList = await GetCheckBoxRoleListAsync(unserId);
-            return new Response<StaffMemberViewModel>(StaffModel);
+            return new Response<StaffMemberViewModel>(await BindStaffMemberViewModel(StaffModel));
         }
         public async Task<Response<StaffMemberViewModel>> AddOrEditStaffMemberAsync(StaffMemberViewModel model)
         {
             if (model.Id == 0)
             {
                 bool success = await _schoolAdminRegistrationService.RegisterSchoolUserWithPhoneNumberAsync(model);
-                if (!success) new Response<StaffMemberViewModel>("User is already exist or a error is accord while creating staff member.");
+                if (!success) return new Response<StaffMemberViewModel>("User is already exist or a error is accord while creating staff member.");
             }
             else
             {
                 bool success = await _schoolAdminRegistrationService.UpdateSchoolUserWithPhoneNumberAsync(model);
-                if (!success) new Response<StaffMemberViewModel>("User is already exist with same phone number or a error is accord while updating staff member.");
+                if (!success) return new Response<StaffMemberViewModel>("User is already exist with same phone number or a error is accord while updating staff member.");
             }
             return new Response<StaffMemberViewModel>(model);
         }
         public async Task<Response<bool>> deleteStaffMemberAsync(int userId)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            try
+            var roles = await _unitOfWork.SchoolAdminUserRole.GetUserRolesAsync(userId, SchoolId);
+            if (roles != null && roles.Count > 0)
             {
-                var roles = await _unitOfWork.SchoolAdminUserRole.GetUserRolesAsync(userId, SchoolId);
-                if (roles != null && roles.Count > 0)
+                foreach (var role in roles)
                 {
-                    foreach (var role in roles)
-                    {
-                        await _unitOfWork.SchoolAdminUserRole.delete(userId, role.Id, SchoolId);
-                    }
+                    await _unitOfWork.SchoolAdminUserRole.delete(userId, role.Id, SchoolId);
                 }
-                int res = await _unitOfWork.SchoolAdminUser.DeleteUserAsync(userId, SchoolId);
-                if (res > 0) return new Response<bool>(true); 
-                
-                //_logger.LogInformation($@"Error deleting schoolAdminUser user Method={nameof(deleteStaffMemberAsync)} | 
-                //            UserId={userId} | LoginUserId={_loginService.GetLogedInSchoolAdminId()} | DBsetId={SchoolId}");
-                return new Response<bool>("Error deleting school staff member");
             }
-            catch //(Exception ex)
-            {
-                //_logger.LogError(ex, $@"Error deleting schoolAdminUser user Method={nameof(deleteStaffMemberAsync)} | 
-                //            UserId={userId} | LoginUserId={_loginService.GetLogedInSchoolAdminId()} | DBsetId={SchoolId}");
-                return new Response<bool>();
-            }
+            int res = await _unitOfWork.SchoolAdminUser.DeleteAsync(userId, SchoolId);
+            if (res > 0) return new Response<bool>(true);
+
+            return new Response<bool>("Error deleting school staff member");
         }
+        #endregion
 
-
+        #region Roles 
         public async Task<RoleViewModel> BindRoleViewModel(RoleViewModel model = null)
         {
             if (model != null && model.Id != 0)
@@ -109,16 +98,15 @@ namespace FeePay.Core.Application.Services.School
         public async Task<Response<List<RoleViewModel>>> GetAllStaffRolesAsync()
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            var tt = await _unitOfWork.SchoolAdminRole.GetAllActiveRoles_WithAddEditUserAsync(SchoolId);
+            var tt = await _unitOfWork.SchoolAdminRole.GetAll_WithAddEditUserAsync(SchoolId);
             return new Response<List<RoleViewModel>>(_mapper.Map<List<RoleViewModel>>(tt.ToList()));
         }
         public async Task<Response<RoleViewModel>> GetStaffRoleByIdAsync(int roleId)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            SchoolAdminRole schoolAdminRole = await _unitOfWork.SchoolAdminRole.FindActiveRoleByRoleIdAsync(roleId, SchoolId);
+            SchoolAdminRole schoolAdminRole = await _unitOfWork.SchoolAdminRole.FindByIdAsync(roleId, SchoolId);
             RoleViewModel roleModel = _mapper.Map<RoleViewModel>(schoolAdminRole);
-            roleModel.UserList = await GetCheckBoxStaffListAsync(roleId);
-            return new Response<RoleViewModel>(roleModel);
+            return new Response<RoleViewModel>(await BindRoleViewModel(roleModel));
         }
         public async Task<Response<RoleViewModel>> AddOrEditStaffRoleAsync(RoleViewModel model)
         {
@@ -129,13 +117,13 @@ namespace FeePay.Core.Application.Services.School
             if (RoleId == 0)
             {
                 role.AddedBy = UserId;
-                RoleId = await _unitOfWork.SchoolAdminRole.AddRoleAsync(role, SchoolId);
+                RoleId = await _unitOfWork.SchoolAdminRole.AddAsync(role, SchoolId);
                 if (RoleId <= 0) return new Response<RoleViewModel>($"Role is already present with the same name {model.Name}");
             }
             else
             {
                 role.ModifyBy = UserId;
-                RoleId = await _unitOfWork.SchoolAdminRole.UpdateRoleAsync(role, SchoolId);
+                RoleId = await _unitOfWork.SchoolAdminRole.UpdateAsync(role, SchoolId);
                 if (RoleId <= 0) return new Response<RoleViewModel>($"Role is already present with the same name {model.Name}");
             }
             await _schoolAdminRegistrationService.AssignRolesToSchoolUserAsync(role, model.UserList);
@@ -145,36 +133,26 @@ namespace FeePay.Core.Application.Services.School
         public async Task<Response<bool>> deleteStaffRoleAsync(int roleId)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            try
+            var staffs = await _unitOfWork.SchoolAdminUserRole.GetUsersInRoleAsync(roleId, SchoolId);
+            if (staffs != null && staffs.Count > 0)
             {
-                var staffs = await _unitOfWork.SchoolAdminUserRole.GetUsersInRoleAsync(roleId, SchoolId);
-                if (staffs != null && staffs.Count > 0)
+                foreach (var staff in staffs)
                 {
-                    foreach (var staff in staffs)
-                    {
-                        await _unitOfWork.SchoolAdminUserRole.delete(staff.Id, roleId, SchoolId);
-                    }
+                    await _unitOfWork.SchoolAdminUserRole.delete(staff.Id, roleId, SchoolId);
                 }
-                int res = await _unitOfWork.SchoolAdminRole.DeleteRoleAsync(roleId, SchoolId);
-                if (res > 0) return new Response<bool>(true);
+            }
+            int res = await _unitOfWork.SchoolAdminRole.DeleteAsync(roleId, SchoolId);
+            if (res > 0) return new Response<bool>(true);
 
-                //_logger.LogInformation($@"Error deleting schoolAdminRole role Method={nameof(deleteStaffMemberAsync)} | 
-                //            RoleId={roleId} | LoginUserId={_loginService.GetLogedInSchoolAdminId()} | DBsetId={SchoolId}");
-                return new Response<bool>("Error deleting school staff member");
-            }
-            catch //(Exception ex)
-            {
-                //_logger.LogError(ex, $@"Error deleting schoolAdminRole role Method={nameof(deleteStaffMemberAsync)} | 
-                //            RoleId={roleId} | LoginUserId={_loginService.GetLogedInSchoolAdminId()} | DBsetId={SchoolId}");
-                return new Response<bool>();
-            }
+            return new Response<bool>("Error deleting school staff member");
         }
+        #endregion
 
 
         private async Task<List<CheckBoxItem>> GetCheckBoxRoleListAsync(int unserId = 0)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            IEnumerable<SchoolAdminRole> roles = await _unitOfWork.SchoolAdminRole.GetAllActiveRolesAsync(SchoolId);
+            IEnumerable<SchoolAdminRole> roles = await _unitOfWork.SchoolAdminRole.GetAllActiveAsync(SchoolId);
             //List<RoleViewModel> RoleList = _mapper.Map<IList<RoleViewModel>>(allStaffRole).ToList();
             List<CheckBoxItem> cbList = new List<CheckBoxItem>();
             if (unserId != 0)
@@ -199,7 +177,7 @@ namespace FeePay.Core.Application.Services.School
         private async Task<List<CheckBoxItem>> GetCheckBoxStaffListAsync(int roleId = 0)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            IEnumerable<SchoolAdminUser> staff = await _unitOfWork.SchoolAdminUser.FindAllActiveUserAsync(SchoolId);
+            IEnumerable<SchoolAdminUser> staff = await _unitOfWork.SchoolAdminUser.FindAllActiveAsync(SchoolId);
             List<CheckBoxItem> cbList = new List<CheckBoxItem>();
             string dash = "----";
             if (roleId != 0)

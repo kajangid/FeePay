@@ -20,7 +20,7 @@ BEGIN
 			[Id] = @Id AND
 			[IsDelete] = 0
 		
-		SELECT  @Id
+		RETURN @Id
 	END
 	ELSE
 	BEGIN

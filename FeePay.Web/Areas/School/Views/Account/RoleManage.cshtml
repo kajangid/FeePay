@@ -3,7 +3,6 @@
 
 }
 @section Style{
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
 }
 
 @section Scripts{
@@ -32,7 +31,7 @@
 
 
 <div class="container-fluid">
-    <form id="managerole" asp-action="RoleManage" asp-controller="Account" method="post" data-ajaxurl="@Url.Action("ManageRole","Account")" class="form theme-form needs-validation" novalidate="">
+    <form id="managerole" asp-action="RoleManage" asp-controller="Account" method="post" class="needs-validation" novalidate="">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">

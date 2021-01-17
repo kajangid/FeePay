@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FeePay.Core.Application.DTOs
 {
-    public class StaffMemberViewModel
+    public class StaffMemberViewModel : BaseViewModel
     {
         public StaffMemberViewModel()
         {
@@ -42,25 +42,13 @@ namespace FeePay.Core.Application.DTOs
         [DisplayName("A Initial Password")]
         public string Password { get; set; }
 
-        [DisplayName("User Active")]
-        public bool IsActive { get; set; }
-
         [DisplayName("Last Login Time")]
         public DateTime? LastLoginDate { get; set; }
 
+
+
+        public string RoleListString { get; set; }
         public List<CheckBoxItem> RoleList { get; set; }
-
-        public int ModifyById { get; set; }
-
-        public string ModifyBy { get; set; }
-
-        public DateTime? ModifyDate { get; set; }
-
-        public int AddedById { get; set; }
-
-        public string AddedBy { get; set; }
-
-        public DateTime? AddedDate { get; set; }
 
         [DisplayName("User Image")]
         public IFormFile formFile { get; set; }

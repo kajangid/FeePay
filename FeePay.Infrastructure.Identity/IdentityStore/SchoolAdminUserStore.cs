@@ -25,40 +25,40 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
         public async Task<IdentityResult> CreateAsync(SchoolAdminUser user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            user.Id = await _UnitOfWork.SchoolAdminUser.AddUserAsync(user, _AppContextAccessor.ClaimSchoolUniqueId());
+            user.Id = await _UnitOfWork.SchoolAdminUser.AddAsync(user, _AppContextAccessor.ClaimSchoolUniqueId());
             return IdentityResult.Success;
         }
 
         public async Task<IdentityResult> UpdateAsync(SchoolAdminUser user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await _UnitOfWork.SchoolAdminUser.UpdateUserAsync(user, _AppContextAccessor.ClaimSchoolUniqueId());
+            await _UnitOfWork.SchoolAdminUser.UpdateAsync(user, _AppContextAccessor.ClaimSchoolUniqueId());
             return IdentityResult.Success;
         }
 
         public async Task<IdentityResult> DeleteAsync(SchoolAdminUser user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await _UnitOfWork.SchoolAdminUser.DeleteUserAsync(user.Id, _AppContextAccessor.ClaimSchoolUniqueId());
+            await _UnitOfWork.SchoolAdminUser.DeleteAsync(user.Id, _AppContextAccessor.ClaimSchoolUniqueId());
             return IdentityResult.Success;
         }
 
         public async Task<SchoolAdminUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return await _UnitOfWork.SchoolAdminUser.FindActiveUserByUserIdAsync(Convert.ToInt32(userId), _AppContextAccessor.ClaimSchoolUniqueId());
+            return await _UnitOfWork.SchoolAdminUser.FindActiveByIdAsync(Convert.ToInt32(userId), _AppContextAccessor.ClaimSchoolUniqueId());
         }
 
         public async Task<SchoolAdminUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return await _UnitOfWork.SchoolAdminUser.FindActiveUserByUserNameAsync(normalizedUserName, _AppContextAccessor.ClaimSchoolUniqueId());
+            return await _UnitOfWork.SchoolAdminUser.FindActiveByUserNameAsync(normalizedUserName, _AppContextAccessor.ClaimSchoolUniqueId());
         }
 
         public async Task<SchoolAdminUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return await _UnitOfWork.SchoolAdminUser.FindActiveUserByUserEmailAsync(normalizedEmail, _AppContextAccessor.ClaimSchoolUniqueId());
+            return await _UnitOfWork.SchoolAdminUser.FindActiveByEmailAsync(normalizedEmail, _AppContextAccessor.ClaimSchoolUniqueId());
         }
 
         // other fetch methods

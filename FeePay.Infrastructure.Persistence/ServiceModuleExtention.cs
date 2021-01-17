@@ -17,6 +17,7 @@ namespace FeePay.Infrastructure.Persistence
         public static IServiceCollection AddInfrastructurePersistenceServices(this IServiceCollection services)
         {
             services.AddScoped<IDBVariables, DBVariables>();
+
             services.AddScoped<ISuperAdminUserRepository, SuperAdminUserRepository>();
             services.AddScoped<ISuperAdminRoleRepository, SuperAdminRoleRepository>();
             services.AddScoped<ISuperAdminUserRoleRepository, SuperAdminUserRoleRepository>();
@@ -24,8 +25,11 @@ namespace FeePay.Infrastructure.Persistence
             services.AddScoped<ISchoolAdminRoleRepository, SchoolAdminRoleRepository>();
             services.AddScoped<ISchoolAdminUserRoleRepository, SchoolAdminUserRoleRepository>();
             services.AddScoped<IStudentLoginRepository, StudentLoginRepository>();
-            services.AddScoped<IRegisteredSchoolRepository, RegisteredSchoolRepository>();
 
+            services.AddScoped<IRegisteredSchoolRepository, RegisteredSchoolRepository>();
+            services.AddScoped<IFeeTypeRepository, FeeTypeRepository>();
+            services.AddScoped<IFeeGroupRepository, FeeGroupRepository>();
+            services.AddScoped<IFeeMasterRespository, FeeMasterRespository>();
 
 
 

@@ -52,14 +52,14 @@ namespace FeePay.Infrastructure.Identity.Service
 
             // Get the User from School database
             SchoolAdminUser user = await _UnitOfWork.SchoolAdminUser
-                .FindActiveUserByUserEmailAsync(model.Email.ToUpper(), model.SchoolUniqueId);
+                .FindActiveByEmailAsync(model.Email.ToUpper(), model.SchoolUniqueId);
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
 
             user.SchoolUniqueId = model.SchoolUniqueId;
             user.SchoolName = t.Name;
-            user.Roles = (await _UnitOfWork.SchoolAdminUserRole.GetUserRolesAsync(user.Id, model.SchoolUniqueId))?.Select(s => s.Name).ToList();
+            //user.RolesName = (await _UnitOfWork.SchoolAdminUserRole.GetUserRolesAsync(user.Id, model.SchoolUniqueId))?.Select(s => s.Name).ToList();
             // Authorize User
             var result = await _SignInManagerSchool.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
 
@@ -127,7 +127,7 @@ namespace FeePay.Infrastructure.Identity.Service
 
         public async Task<StudentLoginViewModel> BindStudentLoginModelAsync()
         {
-            var allschool = await _UnitOfWork.RegisteredSchool.GetAllActiveSchoolAsync();
+            var allschool = await _UnitOfWork.RegisteredSchool.GetAllActiveAsync();
 
             return new StudentLoginViewModel()
             {
@@ -137,7 +137,7 @@ namespace FeePay.Infrastructure.Identity.Service
 
         public async Task<StudentLoginViewModel> BindStudentLoginModelAsync(StudentLoginViewModel model)
         {
-            var allschool = await _UnitOfWork.RegisteredSchool.GetAllActiveSchoolAsync();
+            var allschool = await _UnitOfWork.RegisteredSchool.GetAllActiveAsync();
 
             return new StudentLoginViewModel()
             {

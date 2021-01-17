@@ -274,7 +274,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 using (IDbConnection connection = new SqlConnection(getConStr(dbId)))
                 {
                     var SpRequiredParameters = new { Id = userId, LastLoginIP = Ip };
-                    await connection.ExecuteScalarAsync<int>(_DBVariables.SP_AddLoginInfo_StudentLogin, SpRequiredParameters, null, null, CommandType.StoredProcedure);
+                    await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Add_StudentLogin_LoginInfo, SpRequiredParameters, null, null, CommandType.StoredProcedure);
                 }
             }
             catch (TimeoutException ex)

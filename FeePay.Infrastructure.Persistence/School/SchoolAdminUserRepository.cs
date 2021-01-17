@@ -29,7 +29,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 _ConnectionStringBuilder.GetDynamicSchoolConnectionString(dbId);
         }
 
-        public async Task<int> AddUserAsync(SchoolAdminUser user, string dbId = null)
+        public async Task<int> AddAsync(SchoolAdminUser user, string dbId = null)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<int> UpdateUserAsync(SchoolAdminUser user, string dbId = null)
+        public async Task<int> UpdateAsync(SchoolAdminUser user, string dbId = null)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<int> DeleteUserAsync(int Id, string dbId = null)
+        public async Task<int> DeleteAsync(int Id, string dbId = null)
         {
             try
             {
@@ -129,9 +129,9 @@ namespace FeePay.Infrastructure.Persistence.School
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                    var SpRequiredParameters = new { Id = userId, LastLoginIP = Ip };
-                    await connection.ExecuteScalarAsync<int>(_DBVariables.SP_AddLoginInfo_SchoolAdmin, SpRequiredParameters, commandType: CommandType.StoredProcedure);
-                
+                var SpRequiredParameters = new { Id = userId, LastLoginIP = Ip };
+                await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Add_SchoolAdmin_User_LoginInfo, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+
             }
             catch (TimeoutException ex)
             {
@@ -145,14 +145,29 @@ namespace FeePay.Infrastructure.Persistence.School
 
 
 
-        public async Task<SchoolAdminUser> FindUserByUserIdAsync(int userId, string dbId = null)
+        public async Task<SchoolAdminUser> FindByIdAsync(int userId, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { Id = userId };
-                return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                //return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
+                //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
+                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    (user, role) => { user.Roles.Add(role); return user; },
+                    SpRequiredParameters,
+                    splitOn: "Id,Id",
+                    commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+                return result?.FirstOrDefault();
             }
             catch (TimeoutException ex)
             {
@@ -163,14 +178,28 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<SchoolAdminUser> FindUserByUserNameAsync(string normalizedUserName, string dbId = null)
+        public async Task<SchoolAdminUser> FindByUserNameAsync(string normalizedUserName, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedUserName = normalizedUserName };
-                return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                //return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
+                //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
+                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    (user, role) => { user.Roles.Add(role); return user; },
+                    SpRequiredParameters,
+                    splitOn: "Id,Id",
+                    commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+                return result?.FirstOrDefault();
             }
             catch (TimeoutException ex)
             {
@@ -181,14 +210,28 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<SchoolAdminUser> FindUserByUserEmailAsync(string normalizedEmail, string dbId = null)
+        public async Task<SchoolAdminUser> FindByEmailAsync(string normalizedEmail, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedEmail = normalizedEmail };
-                return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                //return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
+                //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
+                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    (user, role) => { user.Roles.Add(role); return user; },
+                    SpRequiredParameters,
+                    splitOn: "Id,Id",
+                    commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+                return result?.FirstOrDefault();
             }
             catch (TimeoutException ex)
             {
@@ -199,14 +242,28 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<SchoolAdminUser> FindActiveUserByUserIdAsync(int userId, string dbId = null)
+        public async Task<SchoolAdminUser> FindActiveByIdAsync(int userId, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { Id = userId, IsActive = true };
-                return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                //return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
+                //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
+                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    (user, role) => { user.Roles.Add(role); return user; },
+                    SpRequiredParameters,
+                    splitOn: "Id,Id",
+                    commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+                return result?.FirstOrDefault();
             }
             catch (TimeoutException ex)
             {
@@ -217,14 +274,28 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<SchoolAdminUser> FindActiveUserByUserNameAsync(string normalizedUserName, string dbId = null)
+        public async Task<SchoolAdminUser> FindActiveByUserNameAsync(string normalizedUserName, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedUserName = normalizedUserName, IsActive = true };
-                return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                //return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
+                //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
+                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    (user, role) => { user.Roles.Add(role); return user; },
+                    SpRequiredParameters,
+                    splitOn: "Id,Id",
+                    commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+                return result?.FirstOrDefault();
             }
             catch (TimeoutException ex)
             {
@@ -235,14 +306,28 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<SchoolAdminUser> FindActiveUserByUserEmailAsync(string normalizedEmail, string dbId = null)
+        public async Task<SchoolAdminUser> FindActiveByEmailAsync(string normalizedEmail, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedEmail = normalizedEmail, IsActive = true };
-                return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                //return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
+                //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
+                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    (user, role) => { user.Roles.Add(role); return user; },
+                    SpRequiredParameters,
+                    splitOn: "Id,Id",
+                    commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+                return result?.FirstOrDefault();
             }
             catch (TimeoutException ex)
             {
@@ -256,15 +341,29 @@ namespace FeePay.Infrastructure.Persistence.School
 
 
 
-        public async Task<IEnumerable<SchoolAdminUser>> FindAllActiveUserAsync(string dbId = null)
+        public async Task<IEnumerable<SchoolAdminUser>> FindAllActiveAsync(string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { IsActive = true };
-                return await connection.QueryAsync<SchoolAdminUser>
-                    (_DBVariables.SP_GetAll_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                //return await connection.QueryAsync<SchoolAdminUser>
+                //    (_DBVariables.SP_GetAll_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
+                    _DBVariables.SP_GetAll_SchoolAdmin_User,
+                    (user, role) => { user.Roles.Add(role); return user; },
+                    SpRequiredParameters,
+                    splitOn: "Id,Id",
+                    commandType: CommandType.StoredProcedure);
 
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+
+                return result;
             }
             catch (TimeoutException ex)
             {
@@ -275,14 +374,28 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<IEnumerable<SchoolAdminUser>> FindAllUserAsync(string dbId = null)
+        public async Task<IEnumerable<SchoolAdminUser>> FindAllAsync(string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { };
-                return await connection.QueryAsync<SchoolAdminUser>
-                    (_DBVariables.SP_GetAll_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                //return await connection.QueryAsync<SchoolAdminUser>
+                //    (_DBVariables.SP_GetAll_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
+                    _DBVariables.SP_GetAll_SchoolAdmin_User,
+                    (user, role) => { user.Roles.Add(role); return user; },
+                    splitOn: "Id,Id",
+                    commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+
+                return result;
 
             }
             catch (TimeoutException ex)
@@ -296,42 +409,28 @@ namespace FeePay.Infrastructure.Persistence.School
         }
 
 
-        public async Task<IList<SchoolAdminUser>> GetAllUsersWithRolesAsync(string dbId = null)
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return (await connection.QueryAsync<SchoolAdminUser>(
-                    _DBVariables.SP_GetAll_SchoolAdmin_User, commandType: CommandType.StoredProcedure)).ToList();
 
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-        }
-
-
-
-
-        public async Task<SchoolAdminUser> FindUserByUserId_WithAddEditUserAsync(int userId, string dbId = null)
+        public async Task<SchoolAdminUser> FindById_WithAddEditUserAsync(int userId, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { Id = userId };
-                var list = await connection.QueryAsync<SchoolAdminUser, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
                 (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
-                (user, addedbyuser, modifybyuser) => { user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
-                , SpRequiredParameters, null, true
-                , splitOn: "Id,Id,Id", null
-                , CommandType.StoredProcedure);
-                return list?.FirstOrDefault();
+                (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
+                , SpRequiredParameters
+                , splitOn: "Id,Id,Id,Id"
+                , commandType: CommandType.StoredProcedure);
 
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+
+                return result?.FirstOrDefault();
             }
             catch (TimeoutException ex)
             {
@@ -342,20 +441,27 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<SchoolAdminUser> FindUserByUserName_WithAddEditUserAsync(string normalizedUserName, string dbId = null)
+        public async Task<SchoolAdminUser> FindByUserName_WithAddEditUserAsync(string normalizedUserName, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedUserName = normalizedUserName };
-                var list = await connection.QueryAsync<SchoolAdminUser, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
                 (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
-                (user, addedbyuser, modifybyuser) => { user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
-                , SpRequiredParameters, null, true
-                , splitOn: "Id,Id,Id", null
-                , CommandType.StoredProcedure);
-                return list?.FirstOrDefault();
+                (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
+                , SpRequiredParameters
+                , splitOn: "Id,Id,Id,Id"
+                , commandType: CommandType.StoredProcedure);
 
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+
+                return result?.FirstOrDefault();
             }
             catch (TimeoutException ex)
             {
@@ -366,19 +472,27 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<SchoolAdminUser> FindUserByUserEmail_WithAddEditUserAsync(string normalizedEmail, string dbId = null)
+        public async Task<SchoolAdminUser> FindByEmail_WithAddEditUserAsync(string normalizedEmail, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedEmail = normalizedEmail };
-                var list = await connection.QueryAsync<SchoolAdminUser, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
                 (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
-                (user, addedbyuser, modifybyuser) => { user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
-                , SpRequiredParameters, null, true
-                , splitOn: "Id,Id,Id", null
-                , CommandType.StoredProcedure);
-                return list?.FirstOrDefault();
+                (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
+                , SpRequiredParameters
+                , splitOn: "Id,Id,Id,Id"
+                , commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+
+                return result?.FirstOrDefault();
 
             }
             catch (TimeoutException ex)
@@ -390,19 +504,27 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<SchoolAdminUser> FindActiveUserByUserId_WithAddEditUserAsync(int userId, string dbId = null)
+        public async Task<SchoolAdminUser> FindActiveById_WithAddEditUserAsync(int userId, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { Id = userId, IsActive = true };
-                var list = await connection.QueryAsync<SchoolAdminUser, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
                     (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
-                    (user, addedbyuser, modifybyuser) => { user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
-                    , SpRequiredParameters, null, true
-                    , splitOn: "Id,Id,Id", null
-                    , CommandType.StoredProcedure);
-                return list?.FirstOrDefault();
+                    (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
+                    , SpRequiredParameters
+                    , splitOn: "Id,Id,Id,Id"
+                    , commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+
+                return result?.FirstOrDefault();
 
             }
             catch (TimeoutException ex)
@@ -414,19 +536,27 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<SchoolAdminUser> FindActiveUserByUserName_WithAddEditUserAsync(string normalizedUserName, string dbId = null)
+        public async Task<SchoolAdminUser> FindActiveByUserName_WithAddEditUserAsync(string normalizedUserName, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedUserName = normalizedUserName, IsActive = true };
-                var list = await connection.QueryAsync<SchoolAdminUser, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
                 (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
-                (user, addedbyuser, modifybyuser) => { user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
-                , SpRequiredParameters, null, true
-                , splitOn: "Id,Id,Id", null
-                , CommandType.StoredProcedure);
-                return list?.FirstOrDefault();
+                (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
+                , SpRequiredParameters
+                , splitOn: "Id,Id,Id,Id"
+                , commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+
+                return result?.FirstOrDefault();
 
             }
             catch (TimeoutException ex)
@@ -438,19 +568,27 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<SchoolAdminUser> FindActiveUserByUserEmail_WithAddEditUserAsync(string normalizedEmail, string dbId = null)
+        public async Task<SchoolAdminUser> FindActiveByEmail_WithAddEditUserAsync(string normalizedEmail, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedEmail = normalizedEmail, IsActive = true };
-                var list = await connection.QueryAsync<SchoolAdminUser, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
                 (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
-                (user, addedbyuser, modifybyuser) => { user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
-                , SpRequiredParameters, null, true
-                , splitOn: "Id,Id,Id", null
-                , CommandType.StoredProcedure);
-                return list?.FirstOrDefault();
+                (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
+                , SpRequiredParameters
+                , splitOn: "Id,Id,Id,Id"
+                , commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+
+                return result?.FirstOrDefault();
 
             }
             catch (TimeoutException ex)
@@ -465,19 +603,27 @@ namespace FeePay.Infrastructure.Persistence.School
 
 
 
-        public async Task<IEnumerable<SchoolAdminUser>> FindAllActiveUser_WithAddEditUserAsync(string dbId = null)
+        public async Task<IEnumerable<SchoolAdminUser>> FindAllActive_WithAddEditUserAsync(string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { IsActive = true };
-                return await connection.QueryAsync<SchoolAdminUser, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
                     (_DBVariables.SP_GetAll_SchoolAdmin_User_With_AddEditUser,
-                    (user, addedbyuser, modifybyuser) => { user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
-                    , SpRequiredParameters, null, true
-                    , splitOn: "Id,Id,Id", null
-                    , CommandType.StoredProcedure);
+                    (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
+                    , SpRequiredParameters
+                    , splitOn: "Id,Id,Id,Id"
+                    , commandType: CommandType.StoredProcedure);
 
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+
+                return result;
             }
             catch (TimeoutException ex)
             {
@@ -494,12 +640,21 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { };
-                return await connection.QueryAsync<SchoolAdminUser, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
+                var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
                     (_DBVariables.SP_GetAll_SchoolAdmin_User_With_AddEditUser,
-                    (user, addedbyuser, modifybyuser) => { user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
-                    , SpRequiredParameters, null, true
-                    , splitOn: "Id,Id,Id", null
-                    , CommandType.StoredProcedure);
+                    (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
+                    , SpRequiredParameters
+                    , splitOn: "Id,Id,Id,Id"
+                    , commandType: CommandType.StoredProcedure);
+
+                var result = users.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    return groupedPost;
+                });
+
+                return result;
 
             }
             catch (TimeoutException ex)

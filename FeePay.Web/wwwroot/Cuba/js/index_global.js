@@ -48,10 +48,36 @@
                     }
                 ).catch(swal.noop);
             } catch (ex) {
+                console.log("Ah, Snap!. Catch an error..", ex);
+            }
+        });
 
+        $('table[data-type="datatable"]').on('click', 'a[data-action="isactiverow"]', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            try {
+                swalWithBootstrapButtons.fire({
+                    title: 'Are you sure?',
+                    //text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then(
+                    value => {
+                        console.log("Confirmed....");
+                        dataTableRowActive($this, swalWithBootstrapButtons);
+                    },
+                    dismiss => {
+                        console.log("Dismiss....");
+                    }
+                ).catch(swal.noop);
+            } catch (ex) {
                 console.log("catch an error..", ex);
             }
         });
+
         function dataTableRowDelete(buttonClicked) {
             var table = $('table[data-type="datatable"]');
             var url = buttonClicked.attr("href");
@@ -83,6 +109,9 @@
                 .always(function () {
                     console.log("complete");
                 });
+        }
+        function dataTableRowActive(buttonClicked) {
+
         }
     } else {
         console.log("sweet alert library not loaded....");

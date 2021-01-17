@@ -23,7 +23,7 @@ namespace FeePay.Infrastructure.Persistence.School
         private readonly IDBVariables _DBVariables;
         private readonly string _DefaultConnectionString;
 
-        public async Task<int> AddRegisteredSchoolAsync(RegisteredSchool school)
+        public async Task<int> AddAsync(RegisteredSchool school)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<int> UpdateRegisteredSchoolAsync(RegisteredSchool school)
+        public async Task<int> UpdateAsync(RegisteredSchool school)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<int> DeleteRegisteredSchoolAsync(int Id)
+        public async Task<int> DeleteAsync(int Id)
         {
             try
             {
@@ -219,7 +219,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<IList<RegisteredSchool>> GetAllActiveSchoolAsync()
+        public async Task<IList<RegisteredSchool>> GetAllActiveAsync()
         {
             try
             {

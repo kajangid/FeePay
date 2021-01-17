@@ -24,6 +24,7 @@ namespace FeePay.Core.Application
 
             services.AddTransient<IAppContextAccessor, AppContextAccessor>();
             services.AddScoped<IAdministrationService, AdministrationService>();
+            services.AddScoped<IFeeManagementService, FeeManagementService>();
 
 
 

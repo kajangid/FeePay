@@ -1,171 +1,184 @@
-﻿CREATE PROCEDURE [dbo].[SP_Get_SchoolAdmin_User]
+﻿-- =============================================
+-- Author:		Karan
+-- Create date: 12-01-2021
+-- Description:	Sp to get school user data
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_Get_SchoolAdmin_User]
 (
-@Id INT = 0
+@Id INT = NULL
 ,@UserName NVARCHAR(256) = NULL
 ,@NormalizedUserName NVARCHAR(256) = NULL
 ,@Email NVARCHAR(256) = NULL
 ,@NormalizedEmail NVARCHAR(256) = NULL
 ,@PhoneNumber NVARCHAR(50) = NULL
-,@IsActive BIT = 1
+,@IsActive BIT = NULL
 )
 AS
 BEGIN
-	IF(@Id != 0)
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+		
+	IF(@Id IS NOT NULL AND @Id != 0)
 	BEGIN
 		SELECT 
-			[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
-			, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
-			, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
-			, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive]
-			,
-			[au].[Id],[au].[FullName],[au].[Email]
-			,
-			[mu].[Id],[mu].[FullName],[mu].[Email]
+		[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
+		, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
+		, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
+		, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive], [a].[PasswordHash]
+		, [a].[AddedBy], [a].[ModifyBy]
 
-			FROM [dbo].[SchoolAdmin_User] a 
-			INNER JOIN [dbo].[SchoolAdmin_User] au 
-			ON [a].[AddedBy] = [au].[Id]
-			INNER JOIN [dbo].[SchoolAdmin_User] mu 
-			ON [a].[ModifyBy] = [au].[Id]
-			WHERE
-			[a].[IsDelete] = 0 AND
-			[au].[IsDelete] = 0 AND
-			[mu].[IsDelete] = 0 AND
-			[Id] = @id AND 
-			[IsActive] = @IsActive
-		--SELECT *FROM [dbo].[SchoolAdmin_User] WHERE [Id] = @id AND [IsActive] = @IsActive AND [IsDelete] = 0
+		, [t3].[Id],[t3].[Name],[t3].[NormalizedName]
+
+		FROM [dbo].[SchoolAdmin_User] [a] 
+
+		OUTER APPLY (
+			SELECT [r].[Id],[r].[Name],[r].[NormalizedName] 
+			FROM [dbo].[SchoolAdmin_UserRole] [ur] 
+			LEFT JOIN [dbo].[SchoolAdmin_Role] [r]
+			ON [r].[Id] = [ur].[RoleId] AND [r].[IsDelete] = 0 AND [r].[IsActive] = 1
+			WHERE [ur].[UserId] = [a].[Id] AND [ur].[IsDelete] = 0 AND [ur].[IsActive] = 1) [t3]
+
+		WHERE
+		[a].[IsDelete] = 0
+		AND [a].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [a].[IsActive] END
+		AND [a].[Id] = @Id 
+
 		RETURN 
 	END
 	IF(@UserName IS NOT NULL)
 	BEGIN
 		SELECT 
-			[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
-			, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
-			, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
-			, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive]
-			,
-			[au].[Id],[au].[FullName],[au].[Email]
-			,
-			[mu].[Id],[mu].[FullName],[mu].[Email]
+		[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
+		, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
+		, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
+		, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive], [a].[PasswordHash]
+		, [a].[AddedBy], [a].[ModifyBy]
 
-			FROM [dbo].[SchoolAdmin_User] a 
-			INNER JOIN [dbo].[SchoolAdmin_User] au 
-			ON [a].[AddedBy] = [au].[Id]
-			INNER JOIN [dbo].[SchoolAdmin_User] mu 
-			ON [a].[ModifyBy] = [au].[Id]
-			WHERE
-			[a].[IsDelete] = 0 AND
-			[au].[IsDelete] = 0 AND
-			[mu].[IsDelete] = 0 AND
-			[UserName] = @UserName AND 
-			[IsActive] = @IsActive
-		--SELECT *FROM [dbo].[SchoolAdmin_User] WHERE [UserName] = @UserName AND [IsActive] = @IsActive AND [IsDelete] = 0
+		, [t3].[Id],[t3].[Name],[t3].[NormalizedName]
+
+		FROM [dbo].[SchoolAdmin_User] [a] 
+
+		OUTER APPLY (
+			SELECT [r].[Id],[r].[Name],[r].[NormalizedName] 
+			FROM [dbo].[SchoolAdmin_UserRole] [ur] 
+			LEFT JOIN [dbo].[SchoolAdmin_Role] [r]
+			ON [r].[Id] = [ur].[RoleId] AND [r].[IsDelete] = 0 AND [r].[IsActive] = 1
+			WHERE [ur].[UserId] = [a].[Id] AND [ur].[IsDelete] = 0 AND [ur].[IsActive] = 1) [t3]
+
+		WHERE
+		[a].[IsDelete] = 0
+		AND [a].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [a].[IsActive] END
+		AND [a].[UserName] = @UserName 
+
 		RETURN 
 	END
 	IF(@NormalizedUserName IS NOT NULL)
 	BEGIN
 		SELECT 
-			[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
-			, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
-			, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
-			, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive]
-			,
-			[au].[Id],[au].[FullName],[au].[Email]
-			,
-			[mu].[Id],[mu].[FullName],[mu].[Email]
+		[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
+		, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
+		, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
+		, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive], [a].[PasswordHash]
+		, [a].[AddedBy], [a].[ModifyBy]
 
-			FROM [dbo].[SchoolAdmin_User] a 
-			INNER JOIN [dbo].[SchoolAdmin_User] au 
-			ON [a].[AddedBy] = [au].[Id]
-			INNER JOIN [dbo].[SchoolAdmin_User] mu 
-			ON [a].[ModifyBy] = [au].[Id]
-			WHERE
-			[a].[IsDelete] = 0 AND
-			[au].[IsDelete] = 0 AND
-			[mu].[IsDelete] = 0 AND
-			[NormalizedUserName] = @NormalizedUserName AND 
-			[IsActive] = @IsActive
-		--SELECT *FROM [dbo].[SchoolAdmin_User] WHERE [NormalizedUserName] = @NormalizedUserName AND [IsActive] = @IsActive AND [IsDelete] = 0
+		, [t3].[Id],[t3].[Name],[t3].[NormalizedName]
+
+		FROM [dbo].[SchoolAdmin_User] [a] 
+
+		OUTER APPLY (
+			SELECT [r].[Id],[r].[Name],[r].[NormalizedName] 
+			FROM [dbo].[SchoolAdmin_UserRole] [ur] 
+			LEFT JOIN [dbo].[SchoolAdmin_Role] [r]
+			ON [r].[Id] = [ur].[RoleId] AND [r].[IsDelete] = 0 AND [r].[IsActive] = 1
+			WHERE [ur].[UserId] = [a].[Id] AND [ur].[IsDelete] = 0 AND [ur].[IsActive] = 1) [t3]
+
+		WHERE
+		[a].[IsDelete] = 0
+		AND [a].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [a].[IsActive] END
+		AND [a].[NormalizedUserName] = @NormalizedUserName  
+
 		RETURN 
 	END
 	IF(@Email IS NOT NULL)
-	BEGIN	
+	BEGIN
 		SELECT 
-			[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
-			, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
-			, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
-			, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive]
-			,
-			[au].[Id],[au].[FullName],[au].[Email]
-			,
-			[mu].[Id],[mu].[FullName],[mu].[Email]
+		[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
+		, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
+		, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
+		, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive], [a].[PasswordHash]
+		, [a].[AddedBy], [a].[ModifyBy]
 
-			FROM [dbo].[SchoolAdmin_User] a 
-			INNER JOIN [dbo].[SchoolAdmin_User] au 
-			ON [a].[AddedBy] = [au].[Id]
-			INNER JOIN [dbo].[SchoolAdmin_User] mu 
-			ON [a].[ModifyBy] = [au].[Id]
-			WHERE
-			[a].[IsDelete] = 0 AND
-			[au].[IsDelete] = 0 AND
-			[mu].[IsDelete] = 0 AND
-			[Email] = @Email AND 
-			[IsActive] = @IsActive
-		--SELECT *FROM [dbo].[SchoolAdmin_User] WHERE [Email] = @Email AND [IsActive] = @IsActive AND [IsDelete] = 0
+		, [t3].[Id],[t3].[Name],[t3].[NormalizedName]
+
+		FROM [dbo].[SchoolAdmin_User] [a] 
+
+		OUTER APPLY (
+			SELECT [r].[Id],[r].[Name],[r].[NormalizedName] 
+			FROM [dbo].[SchoolAdmin_UserRole] [ur] 
+			LEFT JOIN [dbo].[SchoolAdmin_Role] [r]
+			ON [r].[Id] = [ur].[RoleId] AND [r].[IsDelete] = 0 AND [r].[IsActive] = 1
+			WHERE [ur].[UserId] = [a].[Id] AND [ur].[IsDelete] = 0 AND [ur].[IsActive] = 1) [t3]
+
+		WHERE
+		[a].[IsDelete] = 0
+		AND [a].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [a].[IsActive] END
+		AND [a].[Email] = @Email 
+
 		RETURN 
 	END
 	IF(@NormalizedEmail IS NOT NULL)
-	BEGIN	
+	BEGIN
 		SELECT 
-			[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
-			, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
-			, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
-			, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive]
-			,
-			[au].[Id],[au].[FullName],[au].[Email]
-			,
-			[mu].[Id],[mu].[FullName],[mu].[Email]
+		[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
+		, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
+		, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
+		, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive], [a].[PasswordHash]
+		, [a].[AddedBy], [a].[ModifyBy]
 
-			FROM [dbo].[SchoolAdmin_User] a 
-			INNER JOIN [dbo].[SchoolAdmin_User] au 
-			ON [a].[AddedBy] = [au].[Id]
-			INNER JOIN [dbo].[SchoolAdmin_User] mu 
-			ON [a].[ModifyBy] = [au].[Id]
-			WHERE
-			[a].[IsDelete] = 0 AND
-			[au].[IsDelete] = 0 AND
-			[mu].[IsDelete] = 0 AND
-			[NormalizedEmail] = @NormalizedEmail AND 
-			[IsActive] = @IsActive
-		--SELECT *FROM [dbo].[SchoolAdmin_User] WHERE [NormalizedEmail] = @NormalizedEmail AND [IsActive] = @IsActive AND [IsDelete] = 0
+		, [t3].[Id],[t3].[Name],[t3].[NormalizedName]
+
+		FROM [dbo].[SchoolAdmin_User] [a] 
+
+		OUTER APPLY (
+			SELECT [r].[Id],[r].[Name],[r].[NormalizedName] 
+			FROM [dbo].[SchoolAdmin_UserRole] [ur] 
+			LEFT JOIN [dbo].[SchoolAdmin_Role] [r]
+			ON [r].[Id] = [ur].[RoleId] AND [r].[IsDelete] = 0 AND [r].[IsActive] = 1
+			WHERE [ur].[UserId] = [a].[Id] AND [ur].[IsDelete] = 0 AND [ur].[IsActive] = 1) [t3]
+
+		WHERE
+		[a].[IsDelete] = 0
+		AND [a].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [a].[IsActive] END
+		AND [a].[NormalizedEmail] = @NormalizedEmail 
+
 		RETURN 
 	END
 	IF(@PhoneNumber IS NOT NULL)
-	BEGIN	
+	BEGIN
 		SELECT 
-			[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
-			, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
-			, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
-			, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive]
-			,
-			[au].[Id],[au].[FullName],[au].[Email]
-			,
-			[mu].[Id],[mu].[FullName],[mu].[Email]
+		[a].[Id], [a].[UserName], [a].[NormalizedUserName], [a].[Email], [a].[NormalizedEmail], [a].[EmailConfirmed]
+		, [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[TwoFactorEnabled], [a].[LockoutEndDate], [a].[LockoutEnabled]
+		, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
+		, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive], [a].[PasswordHash]
+		, [a].[AddedBy], [a].[ModifyBy]
 
-			FROM [dbo].[SchoolAdmin_User] a 
-			INNER JOIN [dbo].[SchoolAdmin_User] au 
-			ON [a].[AddedBy] = [au].[Id]
-			INNER JOIN [dbo].[SchoolAdmin_User] mu 
-			ON [a].[ModifyBy] = [au].[Id]
-			WHERE
-			[a].[IsDelete] = 0 AND
-			[au].[IsDelete] = 0 AND
-			[mu].[IsDelete] = 0 AND
-			[PhoneNumber] = @PhoneNumber AND 
-			[IsActive] = @IsActive
-		--SELECT *FROM [dbo].[SchoolAdmin_User] WHERE [PhoneNumber] = @PhoneNumber AND [IsActive] = @IsActive AND [IsDelete] = 0
+		, [t3].[Id],[t3].[Name],[t3].[NormalizedName]
+
+		FROM [dbo].[SchoolAdmin_User] [a] 
+
+		OUTER APPLY (
+			SELECT [r].[Id],[r].[Name],[r].[NormalizedName] 
+			FROM [dbo].[SchoolAdmin_UserRole] [ur] 
+			LEFT JOIN [dbo].[SchoolAdmin_Role] [r]
+			ON [r].[Id] = [ur].[RoleId] AND [r].[IsDelete] = 0 AND [r].[IsActive] = 1
+			WHERE [ur].[UserId] = [a].[Id] AND [ur].[IsDelete] = 0 AND [ur].[IsActive] = 1) [t3]
+
+		WHERE
+		[a].[IsDelete] = 0
+		AND [a].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [a].[IsActive] END
+		AND [a].[PhoneNumber] = @PhoneNumber 
+
 		RETURN 
 	END
-	--SELECT TOP(1) *FROM [dbo].[SchoolAdmin_User] WHERE [IsDelete] = 0 ORDER BY [Id] DESC
-	--RETURN 
 END

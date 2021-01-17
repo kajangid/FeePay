@@ -17,7 +17,8 @@ namespace FeePay.Infrastructure.Persistence
             ISuperAdminUserRoleRepository SuperAdminUserRoleRepository,
             ISchoolAdminUserRepository SchoolAdminUserRepository, ISchoolAdminRoleRepository SchoolAdminRoleRepository,
             ISchoolAdminUserRoleRepository SchoolAdminUserRoleRepository,
-            IStudentLoginRepository StudentLoginRepository, IRegisteredSchoolRepository RegisteredSchoolRepository
+            IStudentLoginRepository StudentLoginRepository, IRegisteredSchoolRepository RegisteredSchoolRepository,
+            IFeeTypeRepository feeTypeRepository, IFeeGroupRepository feeGroupRepository, IFeeMasterRespository feeMasterRespository
             )
         {
             SuperAdminUser = SuperAdminUserRepository;
@@ -31,7 +32,9 @@ namespace FeePay.Infrastructure.Persistence
             StudentLogin = StudentLoginRepository;
             RegisteredSchool = RegisteredSchoolRepository;
 
-
+            FeeType = feeTypeRepository;
+            FeeGroup = feeGroupRepository;
+            FeeMaster = feeMasterRespository;
         }
         public ISuperAdminUserRepository SuperAdminUser { get; }
         public ISuperAdminRoleRepository SuperAdminRole { get; }
@@ -42,5 +45,9 @@ namespace FeePay.Infrastructure.Persistence
         public ISchoolAdminUserRoleRepository SchoolAdminUserRole { get; }
         public IStudentLoginRepository StudentLogin { get; }
         public IRegisteredSchoolRepository RegisteredSchool { get; }
+
+        public IFeeTypeRepository FeeType { get; }
+        public IFeeGroupRepository FeeGroup { get; }
+        public IFeeMasterRespository FeeMaster { get; }
     }
 }

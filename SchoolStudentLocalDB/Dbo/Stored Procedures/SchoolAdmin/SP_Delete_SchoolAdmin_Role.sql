@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[SP_Delete_SchoolAdmin_Role]
 (
 @Id INT 
-,@ModifyBy INT NULL
+,@ModifyBy INT  = NULL
 )
 AS
 BEGIN
@@ -10,7 +10,7 @@ BEGIN
         UPDATE [dbo].[SchoolAdmin_Role] SET 
         [IsDelete] = 1
         ,[ModifyDate] = GETDATE()
-        ,[ModifyBy] = @ModifyBy
+        ,[ModifyBy] = ISNULL(@ModifyBy,[ModifyBy])
         WHERE 
         [Id] = @Id
 

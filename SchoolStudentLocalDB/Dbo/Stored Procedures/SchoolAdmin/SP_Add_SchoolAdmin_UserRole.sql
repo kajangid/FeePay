@@ -15,6 +15,7 @@ BEGIN
 		(@UserId, @RoleId,@IsActive,0,GETDATE(),GETDATE(),@AddedBy,@AddedBy)
 		
 		SELECT CAST(SCOPE_IDENTITY() AS INT)
+		RETURN
 	END
 	ELSE
 	BEGIN

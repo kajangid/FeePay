@@ -8,6 +8,10 @@ namespace FeePay.Core.Domain.Entities.Identity
 {
     public class SchoolAdminUser : IdentityUser
     {
+        public SchoolAdminUser()
+        {
+            Roles = new List<SchoolAdminRole>();
+        }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
@@ -19,8 +23,9 @@ namespace FeePay.Core.Domain.Entities.Identity
         // Temp Fields to store runtime data
         public string SchoolUniqueId { get; set; }
         public string SchoolName { get; set; }
-        public List<string> Roles { get; set; }
+        public List<string> RolesName { get; set; }
 
+        public List<SchoolAdminRole> Roles { get; set; }
 
 
         public SchoolAdminUser AddedByUser { get; set; }

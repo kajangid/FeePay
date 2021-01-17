@@ -24,7 +24,7 @@ namespace FeePay.Infrastructure.Identity.ClaimsPrincipalFactory
             identity.AddClaim(new Claim("SchoolUniqueId", user.SchoolUniqueId ?? string.Empty, "school_id", "SchoolAdmin"));
             user.Roles?.ForEach(f =>
             {
-                identity.AddClaim(new Claim("Role", f.Trim(), "role_name", "school"));
+                identity.AddClaim(new Claim("Role", f.Name.Trim(), "role_name", "school"));
             });
             return identity;
         }

@@ -95,7 +95,7 @@ namespace FeePay.Infrastructure.Persistence.School
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return (await connection.QueryAsync<SchoolAdminRole>(_DBVariables.SP_GetUserRoles_SchoolAdmin
+                return (await connection.QueryAsync<SchoolAdminRole>(_DBVariables.SP_Get_SchoolAdmin_UserRoles
                     , new { UserId = userId, IsActive = true }, commandType: CommandType.StoredProcedure)).ToList();
             }
             catch (TimeoutException ex)
@@ -125,7 +125,7 @@ namespace FeePay.Infrastructure.Persistence.School
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return (await connection.QueryAsync<SchoolAdminRole>(_DBVariables.SP_GetUserRoles_SchoolAdmin
+                return (await connection.QueryAsync<SchoolAdminRole>(_DBVariables.SP_Get_SchoolAdmin_UserRoles
                     , new { UserId = userId, IsActive = true }, commandType: CommandType.StoredProcedure))
                     .Where(W => W.NormalizedName == roleName.ToUpper()).Count();
             }

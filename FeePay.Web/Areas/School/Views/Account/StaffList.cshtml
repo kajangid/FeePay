@@ -86,8 +86,12 @@
                                                 <td></td>
                                                 <td>@item.FirstName @item.LastName</td>
                                                 <td>@item.Email</td>
-                                                <td>@item.LastLoginDate?.ToString("dd/MM/yyyy :: HH:mm")</td>
-                                                <td>Roles</td>
+                                                <td>@item.LastLoginDate?.ToString("dd/MM/yyyy::hh:mm")</td>
+                                                <td>
+                                                    <p title="@item.RoleListString">
+                                                        @(item.RoleListString.Length > 15 ? item.RoleListString.Substring(0, 15) + "....": item.RoleListString)
+                                                    </p>
+                                                </td>
                                                 <td><input asp-for="@item.IsActive" type="checkbox"></td>
                                                 <td><a href="@Url.Action("StaffManage","Account",new { id = item.ModifyById })" class="btn btn-@(color) btn-xs">@item.ModifyBy</a></td>
                                                 <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
@@ -95,7 +99,7 @@
                                                     <a asp-action="StaffManage" asp-controller="Account" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Staff" class="d-inline-block mr-2">
                                                         <i data-feather="edit-3"></i>
                                                     </a>
-                                                    <a asp-action="StaffDelete" asp-controller="Account" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Staff" class="d-inline-block">
+                                                    <a data-action="deleterow" data-actionmag="Staff" asp-action="StaffDelete" asp-controller="Account" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Staff" class="d-inline-block">
                                                         <i data-feather="trash-2"></i>
                                                     </a>
 

@@ -7,8 +7,6 @@
 ,@FirstName NVARCHAR(50) = NULL
 ,@FullName NVARCHAR(110) = NULL
 ,@IsActive  BIT = NULL
-,@LastLoginDate DATETIMEOFFSET(7) = NULL
-,@LastLoginIP NVARCHAR(50) = NULL
 ,@LastName NVARCHAR(50) = NULL
 ,@LockoutEnabled BIT = NULL
 ,@LockoutEndDate DATETIMEOFFSET(7) = NULL
@@ -30,15 +28,15 @@ BEGIN
         INSERT INTO [dbo].[SchoolAdmin_User]
                ([UserName],[NormalizedUserName],[Email],[NormalizedEmail],[EmailConfirmed],[PasswordHash],[PhoneNumber],[PhoneNumberConfirmed]
                ,[TwoFactorEnabled],[LockoutEndDate],[LockoutEnabled],[AccessFailedCount],[SecurityStamp],[FirstName],[LastName],[Password]
-               ,[FullName],[LastLoginIP],[LastLoginDate],[IsActive],[IsDelete],[ModifyDate],[ModifyBy],[AddedDate]
+               ,[FullName],[IsActive],[IsDelete],[ModifyDate],[ModifyBy],[AddedDate]
                ,[AddedBy])
          VALUES
                (@UserName,@NormalizedUserName,@Email,@NormalizedEmail,@EmailConfirmed,@PasswordHash,@PhoneNumber,@PhoneNumberConfirmed
                ,@TwoFactorEnabled,@LockoutEndDate,@LockoutEnabled,@AccessFailedCount,@SecurityStamp,@FirstName,@LastName,@Password
-               ,@FullName,@LastLoginIP,@LastLoginDate,@IsActive,0,GETDATE(),@AddedBy,GETDATE()
+               ,@FullName,@IsActive,0,GETDATE(),@AddedBy,GETDATE()
                ,@AddedBy)
 
-        SELECT CAST(SCOPE_IDENTITY() AS INT)
+        RETURN CAST(SCOPE_IDENTITY() AS INT)
     END
     ELSE
     BEGIN

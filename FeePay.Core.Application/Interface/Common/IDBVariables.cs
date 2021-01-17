@@ -8,6 +8,7 @@ namespace FeePay.Core.Application.Interface.Common
 {
     public interface IDBVariables
     {
+        #region SUPER ADMIN IDENTITY
         string SP_Add_SuperAdmin_User { get; }
         string SP_Delete_SuperAdmin_User { get; }
         string SP_Get_SuperAdmin_User { get; }
@@ -26,10 +27,10 @@ namespace FeePay.Core.Application.Interface.Common
         string SP_Get_SuperAdmin_UsersInRole { get; }
         string SP_GetAll_SuperAdmin_UserRole { get; }
         string SP_AddLoginInfo_SuperAdmin { get; }
+        #endregion
 
 
-
-        //School 
+        #region SCHOOL ADMIN IDENTITY
         string SP_Add_SchoolAdmin_User { get; }
         string SP_Delete_SchoolAdmin_User { get; }
         string SP_Get_SchoolAdmin_User { get; }
@@ -48,23 +49,65 @@ namespace FeePay.Core.Application.Interface.Common
         string SP_Delete_SchoolAdmin_UserRole { get; }
         string SP_Get_SchoolAdmin_UserRole { get; }
         string SP_Update_SchoolAdmin_UserRole { get; }
-        string SP_GetUserRoles_SchoolAdmin { get; }
+        string SP_Get_SchoolAdmin_UserRoles { get; }
         string SP_Get_SchoolAdmin_UsersInRole { get; }
         string SP_GetAll_SchoolAdmin_UserRole { get; }
-        string SP_AddLoginInfo_SchoolAdmin { get; }
+        string SP_Add_SchoolAdmin_User_LoginInfo { get; }
+        #endregion
+
+
+        #region STUDENT LOGIN IDENTITY
+        string SP_Add_StudentLogin { get; }
+        string SP_Update_StudentLogin { get; }
+        string SP_Delete_StudentLogin { get; }
+        string SP_Get_StudentLogin { get; }
+        string SP_GetAll_StudentLogin { get; }
+        string SP_Add_StudentLogin_LoginInfo { get; }
+        #endregion
+
+
+        #region REGISTER SCHOOL 
         string SP_Add_RegisteredSchool { get; }
         string SP_Update_RegisteredSchool { get; }
         string SP_Delete_RegisteredSchool { get; }
         string SP_Get_RegisteredSchool { get; }
         string SP_GetAll_RegisteredSchool { get; }
+        #endregion
 
-        //Student
 
-        string SP_Add_StudentLogin { get; }
-        string SP_Delete_StudentLogin { get; }
-        string SP_Get_StudentLogin { get; }
-        string SP_GetAll_StudentLogin { get; }
-        string SP_Update_StudentLogin { get; }
-        string SP_AddLoginInfo_StudentLogin { get; }
+        #region FEE TYPE 
+        public string SP_Add_FeeType { get; }
+        public string SP_Update_FeeType { get; }
+        public string SP_Delete_FeeType { get; }
+        public string SP_Get_FeeType { get; }
+        public string SP_GetAll_FeeType { get; }
+        public string SP_Get_FeeType_AddEditUser { get; }
+        public string SP_GetAll_FeeType_AddEditUser { get; }
+        #endregion
+
+
+        #region FEE GROUP
+        public string SP_Add_FeeGroup { get; }
+        public string SP_Update_FeeGroup { get; }
+        public string SP_Delete_FeeGroup { get; }
+        public string SP_Get_FeeGroup { get; }
+        public string SP_GetAll_FeeGroup { get; }
+        public string SP_Get_FeeGroup_AddEditUser { get; }
+        public string SP_GetAll_FeeGroup_AddEditUser { get; }
+        #endregion
+
+
+        #region FEE MASTER
+        public string SP_Add_FeeMaster { get; }
+        public string SP_Update_FeeMaster { get; }
+        public string SP_Delete_FeeMaster { get; }
+        public string SP_Get_FeeMaster { get; }
+        public string SP_GetAll_FeeMaster { get; }
+        public string SP_Get_FeeMaster_AddEditUser { get; }
+        public string SP_GetAll_FeeMaster_AddEditUser { get; }
+        #endregion
+
+
+
     }
 }

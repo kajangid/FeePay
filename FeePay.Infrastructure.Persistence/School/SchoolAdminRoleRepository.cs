@@ -31,7 +31,7 @@ namespace FeePay.Infrastructure.Persistence.School
 
 
 
-        public async Task<int> AddRoleAsync(SchoolAdminRole role, string dbId = null)
+        public async Task<int> AddAsync(SchoolAdminRole role, string dbId = null)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<int> UpdateRoleAsync(SchoolAdminRole role, string dbId = null)
+        public async Task<int> UpdateAsync(SchoolAdminRole role, string dbId = null)
         {
             try
             {
@@ -87,13 +87,13 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<int> DeleteRoleAsync(int Id, string dbId = null)
+        public async Task<int> DeleteAsync(int Id, string dbId = null)
         {
             try
             {
                 using (var connection = new SqlConnection(GetConStr(dbId)))
                 {
-                    return await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Delete_SchoolAdmin_Role, new { Id = Id }, null, null, CommandType.StoredProcedure);
+                    return await connection.ExecuteAsync(_DBVariables.SP_Delete_SchoolAdmin_Role, new { Id = Id }, null, null, CommandType.StoredProcedure);
                 }
             }
             catch (TimeoutException ex)
@@ -110,7 +110,7 @@ namespace FeePay.Infrastructure.Persistence.School
 
 
 
-        public async Task<SchoolAdminRole> FindRoleByRoleIdAsync(int roleId, string dbId = null)
+        public async Task<SchoolAdminRole> FindByIdAsync(int roleId, string dbId = null)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<SchoolAdminRole> FindRoleByRoleNameAsync(string normalizedName, string dbId = null)
+        public async Task<SchoolAdminRole> FindByNameAsync(string normalizedName, string dbId = null)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<SchoolAdminRole> FindActiveRoleByRoleIdAsync(int roleId, string dbId = null)
+        public async Task<SchoolAdminRole> FindActiveByIdAsync(int roleId, string dbId = null)
         {
             try
             {
@@ -171,7 +171,7 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<SchoolAdminRole> FindActiveRoleByRoleNameAsync(string normalizedName, string dbId = null)
+        public async Task<SchoolAdminRole> FindActiveByNameAsync(string normalizedName, string dbId = null)
         {
             try
             {
@@ -191,7 +191,7 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<IEnumerable<SchoolAdminRole>> GetAllActiveRolesAsync(string dbId = null)
+        public async Task<IEnumerable<SchoolAdminRole>> GetAllActiveAsync(string dbId = null)
         {
             try
             {
@@ -211,7 +211,7 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<IEnumerable<SchoolAdminRole>> GetAllRolesAsync(string dbId = null)
+        public async Task<IEnumerable<SchoolAdminRole>> GetAllAsync(string dbId = null)
         {
             try
             {
@@ -235,7 +235,7 @@ namespace FeePay.Infrastructure.Persistence.School
 
 
 
-        public async Task<SchoolAdminRole> FindRoleByRoleId_WithAddEditUserAsync(int roleId, string dbId = null)
+        public async Task<SchoolAdminRole> FindById_WithAddEditUserAsync(int roleId, string dbId = null)
         {
             try
             {
@@ -259,7 +259,7 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<SchoolAdminRole> FindRoleByRoleName_WithAddEditUserAsync(string normalizedName, string dbId = null)
+        public async Task<SchoolAdminRole> FindByName_WithAddEditUserAsync(string normalizedName, string dbId = null)
         {
             try
             {
@@ -282,7 +282,7 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<SchoolAdminRole> FindActiveRoleByRoleId_WithAddEditUserAsync(int roleId, string dbId = null)
+        public async Task<SchoolAdminRole> FindActiveById_WithAddEditUserAsync(int roleId, string dbId = null)
         {
             try
             {
@@ -306,7 +306,7 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<SchoolAdminRole> FindActiveRoleByRoleName_WithAddEditUserAsync(string normalizedName, string dbId = null)
+        public async Task<SchoolAdminRole> FindActiveByName_WithAddEditUserAsync(string normalizedName, string dbId = null)
         {
             try
             {
@@ -330,7 +330,7 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<IEnumerable<SchoolAdminRole>> GetAllActiveRoles_WithAddEditUserAsync(string dbId = null)
+        public async Task<IEnumerable<SchoolAdminRole>> GetAllActive_WithAddEditUserAsync(string dbId = null)
         {
             try
             {
@@ -352,7 +352,7 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
-        public async Task<IEnumerable<SchoolAdminRole>> GetAllRoles_WithAddEditUserAsync(string dbId = null)
+        public async Task<IEnumerable<SchoolAdminRole>> GetAll_WithAddEditUserAsync(string dbId = null)
         {
             try
             {

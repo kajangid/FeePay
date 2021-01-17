@@ -20,5 +20,8 @@ namespace FeePay.Core.Application.Interface.Repository
         ISchoolAdminUserRoleRepository SchoolAdminUserRole { get; }
         IStudentLoginRepository StudentLogin { get; }
         IRegisteredSchoolRepository RegisteredSchool { get; }
+        IFeeTypeRepository FeeType { get; }
+        IFeeGroupRepository FeeGroup { get; }
+        IFeeMasterRespository FeeMaster { get; }
     }
 }

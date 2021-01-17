@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[SP_AddLoginInfo_SchoolAdmin]
+﻿CREATE PROCEDURE [dbo].[SP_Add_SchoolAdmin_User_LoginInfo]
 (
 @Id INT
 ,@LastLoginIP NVARCHAR(50) NULL

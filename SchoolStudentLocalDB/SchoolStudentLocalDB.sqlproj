@@ -63,13 +63,15 @@
     <Folder Include="Dbo\Tables" />
     <Folder Include="Dbo\Scripts" />
     <Folder Include="Dbo\PublishProfile" />
+    <Folder Include="Dbo\Stored Procedures\SchoolFee" />
+    <Folder Include="Dbo\Stored Procedures\SchoolClass" />
+    <Folder Include="Dbo\Stored Procedures\Student" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Add_SchoolAdmin_User.sql" />
     <Build Include="Dbo\Tables\SchoolAdmin_User.sql" />
-    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_AddLoginInfo_SchoolAdmin.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Add_SchoolAdmin_User_LoginInfo.sql" />
     <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Delete_SchoolAdmin_User.sql" />
-    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_User.sql" />
     <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_GetAll_SchoolAdmin_User.sql" />
     <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Update_SchoolAdmin_User.sql" />
     <Build Include="Dbo\Tables\SchoolAdmin_Role.sql" />
@@ -81,7 +83,7 @@
     <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_UsersInRole.sql" />
     <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_UserRole.sql" />
     <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_Role.sql" />
-    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_GetUserRoles_SchoolAdmin.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_UserRoles.sql" />
     <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_GetAll_SchoolAdmin_UserRole.sql" />
     <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_GetAll_SchoolAdmin_Role.sql" />
     <Build Include="Dbo\Tables\StudentLogin.sql" />
@@ -92,8 +94,49 @@
     <Build Include="Dbo\Stored Procedures\StudentLogin\SP_Update_StudentLogin.sql" />
     <Build Include="Dbo\Stored Procedures\StudentLogin\SP_GetAll_StudentLogin.sql" />
     <Build Include="Dbo\Stored Procedures\StudentLogin\SP_Get_StudentLogin.sql" />
+    <Build Include="Dbo\Tables\Class.sql" />
+    <Build Include="Dbo\Tables\FeeGroup.sql" />
+    <Build Include="Dbo\Tables\FeeMaster.sql" />
+    <Build Include="Dbo\Tables\FeeType.sql" />
+    <Build Include="Dbo\Tables\StudentFees.sql" />
+    <Build Include="Dbo\Tables\StudentProfile.sql" />
+    <Build Include="Dbo\Stored Procedures\StudentLogin\SP_Add_StudentLogin_LoginInfo.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_GetAll_SchoolAdmin_UsersWithRoles.sql" />
+    <Build Include="Dbo\Tables\Session.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Add_FeeType.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Add_FeeGroup.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Add_FeeMaster.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Add_StudentFees.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolClass\SP_Add_Class.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolClass\SP_Add_Session.sql" />
+    <Build Include="Dbo\Stored Procedures\Student\SP_Add_StudentProfile.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Update_FeeGroup.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Update_FeeMaster.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Update_FeeType.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Delete_FeeGroup.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Delete_FeeMaster.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Delete_FeeType.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_Role_AddEditUser.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_User_AddEditUser.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_GetAll_SchoolAdmin_Role_AddEditUser.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_GetAll_SchoolAdmin_User_AddEditUser.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Get_FeeGroup.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Get_FeeGroup_AddEditUser.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Get_FeeMaster.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Get_FeeMaster_AddEditUser.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Get_FeeType.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_Get_FeeType_AddEditUser.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_GetAll_FeeGroup.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_GetAll_FeeGroup_AddEditUser.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_GetAll_FeeMaster.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_GetAll_FeeMaster_AddEditUser.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_GetAll_FeeType.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_GetAll_FeeType_AddEditUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Dbo\Scripts\Script_1.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dbo\PublishProfile\SchoolStudentLocalDB.publish.xml" />
   </ItemGroup>
 </Project>

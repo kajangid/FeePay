@@ -9,22 +9,22 @@ namespace FeePay.Core.Application.Interface.Repository.School
 {
     public interface ISchoolAdminRoleRepository
     {
-        Task<int> AddRoleAsync(SchoolAdminRole Role, string dbId = null);
-        Task<int> UpdateRoleAsync(SchoolAdminRole Role, string dbId = null);
-        Task<int> DeleteRoleAsync(int Id, string dbId = null);
+        Task<int> AddAsync(SchoolAdminRole Role, string dbId = null);
+        Task<int> UpdateAsync(SchoolAdminRole Role, string dbId = null);
+        Task<int> DeleteAsync(int Id, string dbId = null);
 
-        Task<SchoolAdminRole> FindRoleByRoleIdAsync(int roleId, string dbId = null);
-        Task<SchoolAdminRole> FindRoleByRoleNameAsync(string normalizedName, string dbId = null);
-        Task<SchoolAdminRole> FindActiveRoleByRoleIdAsync(int roleId, string dbId = null);
-        Task<SchoolAdminRole> FindActiveRoleByRoleNameAsync(string normalizedName, string dbId = null);
-        Task<IEnumerable<SchoolAdminRole>> GetAllActiveRolesAsync(string dbId = null);
-        Task<IEnumerable<SchoolAdminRole>> GetAllRolesAsync(string dbId = null);
+        Task<SchoolAdminRole> FindByIdAsync(int roleId, string dbId = null);
+        Task<SchoolAdminRole> FindByNameAsync(string normalizedName, string dbId = null);
+        Task<SchoolAdminRole> FindActiveByIdAsync(int roleId, string dbId = null);
+        Task<SchoolAdminRole> FindActiveByNameAsync(string normalizedName, string dbId = null);
+        Task<IEnumerable<SchoolAdminRole>> GetAllActiveAsync(string dbId = null);
+        Task<IEnumerable<SchoolAdminRole>> GetAllAsync(string dbId = null);
 
-        Task<SchoolAdminRole> FindRoleByRoleId_WithAddEditUserAsync(int roleId, string dbId = null);
-        Task<SchoolAdminRole> FindRoleByRoleName_WithAddEditUserAsync(string normalizedName, string dbId = null);
-        Task<SchoolAdminRole> FindActiveRoleByRoleId_WithAddEditUserAsync(int roleId, string dbId = null);
-        Task<SchoolAdminRole> FindActiveRoleByRoleName_WithAddEditUserAsync(string normalizedName, string dbId = null);
-        Task<IEnumerable<SchoolAdminRole>> GetAllActiveRoles_WithAddEditUserAsync(string dbId = null);
-        Task<IEnumerable<SchoolAdminRole>> GetAllRoles_WithAddEditUserAsync(string dbId = null);
+        Task<SchoolAdminRole> FindById_WithAddEditUserAsync(int roleId, string dbId = null);
+        Task<SchoolAdminRole> FindByName_WithAddEditUserAsync(string normalizedName, string dbId = null);
+        Task<SchoolAdminRole> FindActiveById_WithAddEditUserAsync(int roleId, string dbId = null);
+        Task<SchoolAdminRole> FindActiveByName_WithAddEditUserAsync(string normalizedName, string dbId = null);
+        Task<IEnumerable<SchoolAdminRole>> GetAllActive_WithAddEditUserAsync(string dbId = null);
+        Task<IEnumerable<SchoolAdminRole>> GetAll_WithAddEditUserAsync(string dbId = null);
     }
 }

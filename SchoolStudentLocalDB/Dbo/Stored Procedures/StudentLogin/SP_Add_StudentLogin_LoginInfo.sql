@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[SP_AddLoginInfo_StudentLogin]
+﻿CREATE PROCEDURE [dbo].[SP_Add_StudentLogin_LoginInfo]
 (
 @Id INT
 ,@IsLogin BIT = NULL

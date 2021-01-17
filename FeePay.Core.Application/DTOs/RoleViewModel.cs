@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FeePay.Core.Application.DTOs
 {
-    public class RoleViewModel
+    public class RoleViewModel : BaseViewModel
     {
         public RoleViewModel()
         {
@@ -21,14 +21,7 @@ namespace FeePay.Core.Application.DTOs
         [StringLength(49)]
         [DisplayName("Role Name")]
         public string Name { get; set; }
-        [DisplayName("Role Active")]
-        public bool IsActive { get; set; }
-        public int ModifyById { get; set; }
-        public string ModifyBy { get; set; }
-        public DateTime? ModifyDate { get; set; }
-        public int AddedById { get; set; }
-        public string AddedBy { get; set; }
-        public DateTime? AddedDate { get; set; }
+
 
         public List<CheckBoxItem> UserList { get; set; }
 

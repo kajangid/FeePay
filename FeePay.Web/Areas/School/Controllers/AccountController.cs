@@ -1,21 +1,21 @@
-﻿using FeePay.Core.Application.DTOs;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using FeePay.Core.Application.DTOs;
 using FeePay.Core.Application.Interface.Service;
 using FeePay.Core.Application.Interface.Service.School;
 using FeePay.Web.Areas.Common;
 using FeePay.Web.Filters;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using static FeePay.Core.Application.Enums.Notification;
 
 namespace FeePay.Web.Areas.School.Controllers
 {
     [Area("School")]
-    [SchoolAdminAuthorize(Roles = "Admin")]
+    [SchoolAdminAuthorize(Roles = "Admin,Manager")]
     public class AccountController : AreaBaseController
     {
         public AccountController(ILogger<AccountController> logger, ILoginService loginService,
@@ -38,9 +38,14 @@ namespace FeePay.Web.Areas.School.Controllers
 
 
 
+
+
+
+
         #region Staff Section
 
         [HttpGet]
+        [Route("School/Users")]
         public async Task<IActionResult> StaffList()
         {
             ViewData["Title"] = "Staff";
@@ -48,6 +53,7 @@ namespace FeePay.Web.Areas.School.Controllers
             return View(result.Data);
         }
 
+        [Route("School/ManageUser/{id?}")]
         public async Task<IActionResult> StaffManage(int? id)
         {
             if (id == null || id == 0)
@@ -62,6 +68,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("School/ManageUser/{id?}")]
         public async Task<IActionResult> StaffManage(StaffMemberViewModel model, int? id)
         {
             if (!ModelState.IsValid)
@@ -86,23 +93,19 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpDelete]
+        [Route("School/DeleteUser")]
         public async Task<JsonResult> StaffDelete(int id)
         {
-            // check any role is assign
-            // remove all roles assign to this user 
-            // remove this user with isdelete 1 and isactive 0
             var res = await _AdministrationService.deleteStaffMemberAsync(id);
             return Json(new { success = res.Succeeded, message = res.Message });
         }
 
         #endregion
 
-
-
-
         #region Role Section
 
         [HttpGet]
+        [Route("School/Roles")]
         public async Task<IActionResult> RoleList()
         {
             ViewData["Title"] = "Roles";
@@ -111,6 +114,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpGet]
+        [Route("School/ManageRole/{id?}")]
         public async Task<IActionResult> RoleManage(int? id)
         {
             if (id == null || id == 0)
@@ -125,6 +129,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("School/ManageRole/{id?}")]
         public async Task<IActionResult> RoleManage(RoleViewModel model, int? id)
         {
             if (!ModelState.IsValid)
@@ -145,11 +150,9 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpDelete]
+        [Route("School/DeleteRole")]
         public async Task<JsonResult> RoleDelete(int id)
         {
-            // check any role is assign to any user
-            // remove all user which is assign to this role  
-            // remove this role with isdelete 1 and isactive 0
             var res = await _AdministrationService.deleteStaffRoleAsync(id);
             return Json(new { success = res.Succeeded, message = res.Message });
         }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FeePay.Core.Application.DTOs;
 using FeePay.Core.Domain.Entities.Identity;
+using FeePay.Core.Domain.Entities.School;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace FeePay.Core.Application.Mapping
     {
         public CustomerProfile()
         {
+            #region School Identity
+
             // Mapping properties from SchoolAdminRole to RoleViewModel 
             CreateMap<SchoolAdminRole, RoleViewModel>()
                 .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
@@ -32,12 +35,55 @@ namespace FeePay.Core.Application.Mapping
                 .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
                 .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
                 .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
-                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)))
+                .ForMember(dest => dest.RoleListString, opt => opt.MapFrom(src => (src.Roles != null && src.Roles.Count > 0 ? string.Join(",", src.Roles.Select(s => s.Name).ToArray()) : "")));
 
 
             // Mapping properties from StaffMemberViewModel to SchoolAdminUser 
             CreateMap<StaffMemberViewModel, SchoolAdminUser>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => (src.FirstName + " " + src.LastName)));
+
+            #endregion
+
+            #region FeeManagement
+
+            // Mapping properties from FeeType to FeeTypeViewModel 
+            CreateMap<FeeType, FeeTypeViewModel>()
+                .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+                .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+                .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+
+            // Mapping properties from FeeTypeViewModel to FeeType 
+            CreateMap<FeeTypeViewModel, FeeType>();
+
+
+
+            // Mapping properties from FeeGroup to FeeGroupViewModel 
+            CreateMap<FeeGroup, FeeGroupViewModel>()
+                .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+                .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+                .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+
+
+            // Mapping properties from FeeGroupViewModel to FeeGroup 
+            CreateMap<FeeGroupViewModel, FeeGroup>();
+
+
+
+            // Mapping properties from FeeMaster to FeeMasterViewModel 
+            CreateMap<FeeMaster, FeeMasterViewModel>()
+                .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+                .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+                .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+
+
+            // Mapping properties from FeeMasterViewModel to FeeMaster 
+            CreateMap<FeeMasterViewModel, FeeMaster>();
+
+            #endregion
         }
     }
 }

@@ -1,0 +1,111 @@
+﻿@model FeeTypeViewModel
+@{
+}
+@section Style{
+}
+
+@section Scripts{
+    <script src="@Url.Content("~/Cuba/js/clipboard/clipboard.min.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Fee Management</li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("FeeTypeList","FeeManagement")"> Fee Types </a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <form id="managefeetype" asp-action="FeeTypeManage" asp-controller="FeeManagement" method="post" class="needs-validation" novalidate="">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header b-r-info b-l-info border-3">
+                        <h5>
+                            <a asp-action="FeeTypeList" asp-controller="FeeManagement">
+                                <i class="icofont icofont-arrow-left"></i> Back To List
+                            </a>
+                        </h5>
+                        <div class="card-header-right">
+                            <ul class="list-unstyled card-option">
+                                <li><i class="fa fa-spin fa-cog"></i></li>
+                                <li><i class="icofont icofont-maximize full-card"></i></li>
+                                <li><i class="icofont icofont-minus minimize-card"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @Html.AntiForgeryToken()
+                        <input asp-for="Id" type="hidden" />
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label asp-for="Name">Name *</label>
+                                    <input asp-for="Name" class="form-control" type="text" placeholder="Name">
+                                    <div class="invalid-feedback"><span asp-validation-for="Name"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label asp-for="Code">Code *</label>
+                                    <input asp-for="Code" class="form-control" type="text" placeholder="Code">
+                                    <div class="invalid-feedback"><span asp-validation-for="Code"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label asp-for="Description">Description</label>
+                                    <textarea  asp-for="Description" class="form-control" type="text" placeholder="Description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label asp-for="IsActive">
+                                        <input class="checkbox_animated" asp-for="IsActive" type="checkbox"> Active
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group mb-0 text-right"><input type="submit" class="btn btn-success mr-3" value="Add" /></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col">
+                                <div id="form-validation-summary" class="my-2 txt-danger" style="font-size: 12px;line-height: 1;letter-spacing: 0.9px;" asp-validation-summary="All"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
