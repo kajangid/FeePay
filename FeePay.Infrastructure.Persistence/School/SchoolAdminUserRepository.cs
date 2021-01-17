@@ -634,7 +634,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<IEnumerable<SchoolAdminUser>> FindAllUser_WithAddEditUserAsync(string dbId = null)
+        public async Task<IEnumerable<SchoolAdminUser>> FindAll_WithAddEditUserAsync(string dbId = null)
         {
             try
             {

@@ -44,13 +44,13 @@ namespace FeePay.Core.Application.Services.School
         public async Task<Response<List<StaffMemberViewModel>>> GetAllStaffMemberAsync()
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            var tt = await _unitOfWork.SchoolAdminUser.FindAllActive_WithAddEditUserAsync(SchoolId);
+            var tt = await _unitOfWork.SchoolAdminUser.FindAll_WithAddEditUserAsync(SchoolId);
             return new Response<List<StaffMemberViewModel>>(_mapper.Map<List<StaffMemberViewModel>>(tt));
         }
         public async Task<Response<StaffMemberViewModel>> GetStaffByIdAsync(int unserId)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            SchoolAdminUser schoolAdminUser = await _unitOfWork.SchoolAdminUser.FindActiveByIdAsync(unserId, SchoolId);
+            SchoolAdminUser schoolAdminUser = await _unitOfWork.SchoolAdminUser.FindByIdAsync(unserId, SchoolId);
             StaffMemberViewModel StaffModel = _mapper.Map<StaffMemberViewModel>(schoolAdminUser);
             return new Response<StaffMemberViewModel>(await BindStaffMemberViewModel(StaffModel));
         }

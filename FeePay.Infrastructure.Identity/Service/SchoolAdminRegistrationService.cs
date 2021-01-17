@@ -48,7 +48,8 @@ namespace FeePay.Infrastructure.Identity.Service
                 _logger.LogInformation("new school admin user created.....");
                 if (model.RoleList != null && model.RoleList.Any(a => a.IsSelected == true))
                 {
-                    SchoolAdminUser UserInserted = await _userManager.FindByNameAsync(User.UserName);
+                    SchoolAdminUser UserInserted = await _unitOfWork.SchoolAdminUser.FindByUserNameAsync(User.UserName, _appContextAccessor.ClaimSchoolUniqueId());
+                    // _userManager.FindByNameAsync(User.UserName);
                     await AssignRolesToSchoolUserAsync(UserInserted, model.RoleList);
                 }
                 return identityResult.Succeeded;
@@ -72,7 +73,8 @@ namespace FeePay.Infrastructure.Identity.Service
                 _logger.LogInformation("school admin user updated.....");
                 if (model.RoleList != null)
                 {
-                    SchoolAdminUser UserInserted = await _userManager.FindByNameAsync(User.UserName);
+                    SchoolAdminUser UserInserted = await _unitOfWork.SchoolAdminUser.FindByUserNameAsync(User.UserName, _appContextAccessor.ClaimSchoolUniqueId());
+                    // _userManager.FindByNameAsync(User.UserName);
                     await AssignRolesToSchoolUserAsync(UserInserted, model.RoleList);
                 }
                 return identityResult.Succeeded;
