@@ -9,7 +9,7 @@
 	)
 AS
 BEGIN
-	IF NOT EXISTS(SELECT [Id] FROM [FeeType] WHERE [Name] = @Name AND [IsDelete] = 0)
+	IF NOT EXISTS(SELECT [Id] FROM [FeeType] WHERE [Name] = @Name AND [NormalizedName] = @NormalizedName AND [Code] = @Code AND [IsDelete] = 0)
 	BEGIN
 		INSERT INTO [FeeType]([Name],[NormalizedName],[Code],[Description],[IsActive],[IsDelete],[AddedBy],[AddedDate])
 		VALUES(@Name,@NormalizedName,@Code,@Description,@IsActive,0,@AddedBy,GETDATE())

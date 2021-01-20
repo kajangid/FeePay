@@ -27,9 +27,13 @@ namespace FeePay.Core.Application.Interface.Service.School
         #region Fee Master
         Task<FeeMasterViewModel> BindFeeMasterViewModel(FeeMasterViewModel model = null);
         Task<Response<List<FeeMasterViewModel>>> GetAllFeeMasterAsync();
+        Task<Response<List<FeeGroupViewModel>>> GetAllFeeGroupMasterAsync();
         Task<Response<FeeMasterViewModel>> GetFeeMasterByIdAsync(int feeMasterId);
         Task<Response<FeeMasterViewModel>> AddOrEditFeeMasterAsync(FeeMasterViewModel model);
         Task<Response<bool>> deleteFeeMasterAsync(int feeMasterId);
+        #endregion
+
+        #region Fee Assign
         #endregion
 
     }

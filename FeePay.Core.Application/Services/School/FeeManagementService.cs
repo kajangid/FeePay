@@ -67,7 +67,7 @@ namespace FeePay.Core.Application.Services.School
         }
         public Task<Response<bool>> deleteFeeTypeAsync(int feeTypeId)
         {
-            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            //var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
             //var roles = await _unitOfWork.SchoolAdminUserRole.GetUserRolesAsync(userId, SchoolId);
             //if (roles != null && roles.Count > 0)
             //{
@@ -116,7 +116,7 @@ namespace FeePay.Core.Application.Services.School
         }
         public Task<Response<bool>> deleteFeeGroupAsync(int feeGroupId)
         {
-            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            //var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
             //var roles = await _unitOfWork.SchoolAdminUserRole.GetUserRolesAsync(userId, SchoolId);
             //if (roles != null && roles.Count > 0)
             //{
@@ -161,6 +161,13 @@ namespace FeePay.Core.Application.Services.School
             var tt = await _unitOfWork.FeeMaster.GetAll_WithAddEditUserAsync(SchoolId);
             return new Response<List<FeeMasterViewModel>>(_mapper.Map<List<FeeMasterViewModel>>(tt.ToList()));
         }
+        public async Task<Response<List<FeeGroupViewModel>>> GetAllFeeGroupMasterAsync()
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var list = await _unitOfWork.FeeGroup.GetAllWithMasterAandTypeAsync(SchoolId);
+            List<FeeGroupViewModel> tt = _mapper.Map<List<FeeGroupViewModel>>(list.ToList());
+            return new Response<List<FeeGroupViewModel>>(_mapper.Map<List<FeeGroupViewModel>>(tt.ToList()));
+        }
         public async Task<Response<FeeMasterViewModel>> GetFeeMasterByIdAsync(int feeMasterId)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
@@ -189,7 +196,7 @@ namespace FeePay.Core.Application.Services.School
         }
         public Task<Response<bool>> deleteFeeMasterAsync(int feeMasterId)
         {
-            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            //var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
             //var roles = await _unitOfWork.SchoolAdminUserRole.GetUserRolesAsync(userId, SchoolId);
             //if (roles != null && roles.Count > 0)
             //{
@@ -200,6 +207,12 @@ namespace FeePay.Core.Application.Services.School
 
             return Task.FromResult(new Response<bool>("Error deleting school fee master"));
         }
+
+        #endregion
+
+
+        #region Fee Assign
+
 
         #endregion
     }

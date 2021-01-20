@@ -247,11 +247,11 @@ namespace FeePay.Web.Areas.School.Controllers
         [DisplayName("List Fee Master")]
         public async Task<IActionResult> FeeMasterList()
         {
-            ViewData["Title"] = "Fee Group";
-            List<FeeMasterViewModel> model = new List<FeeMasterViewModel>();
+            ViewData["Title"] = "Group Fees";
+            List<FeeGroupViewModel> model = new List<FeeGroupViewModel>();
             try
             {
-                var res = await _feeManagementService.GetAllFeeMasterAsync();
+                var res = await _feeManagementService.GetAllFeeGroupMasterAsync();
                 if (res.Succeeded) model = res.Data;
                 else
                 {
@@ -343,6 +343,9 @@ namespace FeePay.Web.Areas.School.Controllers
         {
             return View();
         }
+        #endregion
+
+        #region FEE ASSIGN
         #endregion
     }
 }

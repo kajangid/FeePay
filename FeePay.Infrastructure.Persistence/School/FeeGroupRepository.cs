@@ -335,6 +335,40 @@ namespace FeePay.Infrastructure.Persistence.School
         }
 
 
+
+
+        public async Task<IEnumerable<FeeGroup>> GetAllWithMasterAandTypeAsync(string dbId = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var list = await connection.QueryAsync<FeeGroup, FeeMaster, FeeType, FeeGroup>(
+                    _dBVariables.SP_GetAll_FeeGroup_MasterAndType,
+                    (feegroup, master, type) => { feegroup.FeeMasterList.Add(master); feegroup.FeeTypeList.Add(type); return feegroup; },
+                    splitOn: "Id,Id,Id",
+                    commandType: CommandType.StoredProcedure);
+
+                var result = list.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedPost = g.First();
+                    groupedPost.FeeMasterList = g.Select(p => p.FeeMasterList?.Single()).ToList();
+                    groupedPost.FeeTypeList = g.Select(p => p.FeeTypeList?.Single()).ToList();
+                    return groupedPost;
+                });
+
+                return result;
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+
+
         // private methods
         private string GetConStr(string dbId = null)
         {

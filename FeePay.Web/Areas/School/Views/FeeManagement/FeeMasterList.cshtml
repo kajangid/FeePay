@@ -1,12 +1,9 @@
-﻿@model IEnumerable<FeeMasterViewModel>
+﻿@model IEnumerable<FeeGroupViewModel>
 @{
-    var random = new Random();
-    var ColorList = new List<string> { "primary", "secondary", "success", "info", "dark", "light", "danger", "warning" };
+
 }
 @section Style{
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
-
-
 }
 @section Scripts{
     <script src="@Url.Content("~/Cuba/js/clipboard/clipboard.min.js")"></script>
@@ -17,11 +14,17 @@
     <script>
         (function () {
             "use strict";
-            $('#feeMasterListTable').DataTable({ "order": [[6, 'desc']] });
-            $('#feeMasterListTable').reArrangeDatatableSerialNumber();
+            $('#feeListTable').DataTable({
+                columnDefs: [
+                    { orderable: false, targets: [0, 3] }
+                ],
+                order: [[1, 'asc']],
+            });
+            $('#feeListTable').reArrangeDatatableSerialNumber();
         })(jQuery);
     </script>
 }
+
 <div class="container-fluid">
     <div class="page-title">
         <div class="row">
@@ -38,7 +41,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="container-fluid">
     <div class="row">
@@ -60,16 +62,12 @@
                 </div>
                 <div class="card-body" style="">
                     <div class="table-responsive">
-                        <table class="hover" id="feeMasterListTable" data-type="datatable">
+                        <table class="hover" id="feeListTable" data-type="datatable">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Amount</th>
-                                    <th>Fee Type</th>
-                                    <th>Fee Group</th>
-                                    <th>Active</th>
-                                    <th>Modify By</th>
-                                    <th>Modify date</th>
+                                    <th>Fees Group</th>
+                                    <th>Fees Code</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -78,35 +76,36 @@
                                     {
                                         foreach (var item in Model)
                                         {
-                                            var color = ColorList.OrderBy(s => random.NextDouble()).First();
-                                            var color1 = ColorList.OrderBy(s => random.NextDouble()).First();
                                             <tr data-key="@item.Id">
                                                 <td></td>
-                                                <td>@item.Amount</td>
-                                                <td>@item.FeeType?.Name</td>
-                                                <td>@item.FeeGroup?.Name</td>
+                                                <td>@item.Name</td>
                                                 <td>
-                                                    <input asp-for="@item.IsActive" type="checkbox">
+                                                    @{
+                                                        for (int i = 0; i < item.FeeMaster.Count; i++)
+                                                        {
+                                                            <stan class="d-block">
+                                                                @item.FeeType[i].Code : ₹ @item.FeeMaster[i].Amount
+                                                                <a asp-action="FeeMasterManage" asp-controller="FeeManagement" asp-route-id="@item.FeeMaster[i].Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Fee Master" class="d-inline-block ml-3">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </a>
+                                                                <a data-action="deleterow" data-actionmag="Fee Master" asp-action="FeeMasterDelete" asp-controller="FeeManagement" asp-route-id="@item.FeeMaster[i].Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Fee Master" class="d-inline-block">
+                                                                    <i class="fa fa-trash-o"></i>
+                                                                </a>
+                                                            </stan>
+                                                        }
+                                                    }
                                                 </td>
-                                                <td><a href="@Url.Action("StaffManage","Account",new { id = item.ModifyById })" class="btn btn-@(color) btn-xs">@item.ModifyBy</a></td>
-                                                <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
                                                 <td>
-                                                    <a asp-action="FeeMasterManage" asp-controller="FeeManagement" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Fee Master" class="d-inline-block mr-2">
-                                                        <i data-feather="edit-3"></i>
+                                                    <a asp-action="FeeAssign" asp-controller="FeeManagement" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Assign / View Student" class="d-inline-block mr-1">
+                                                        <i data-feather="user-check"></i>
                                                     </a>
-                                                    <a data-action="deleterow" data-actionmag="Fee Master" asp-action="FeeMasterDelete" asp-controller="FeeManagement" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Fee Master" class="d-inline-block">
+                                                    <a data-action="deleterow" data-actionmag="Fee Group" asp-action="FeeGroupDelete" asp-controller="FeeManagement" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Fee Group" class="d-inline-block">
                                                         <i data-feather="trash-2"></i>
                                                     </a>
-
                                                 </td>
                                             </tr>
                                         }
                                     }
-                                    else
-                                    {
-                                        <tr><td colspan="6">there is no fee master to be shown.</td></tr>
-                                    }
-
                                 }
                             </tbody>
                         </table>

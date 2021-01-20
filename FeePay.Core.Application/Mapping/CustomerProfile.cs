@@ -64,11 +64,15 @@ namespace FeePay.Core.Application.Mapping
                 .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
                 .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
                 .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
-                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)))
+                .ForMember(dest => dest.FeeType, opt => opt.MapFrom(src => src.FeeTypeList))
+                .ForMember(dest => dest.FeeMaster, opt => opt.MapFrom(src => src.FeeMasterList));
 
 
             // Mapping properties from FeeGroupViewModel to FeeGroup 
-            CreateMap<FeeGroupViewModel, FeeGroup>();
+            CreateMap<FeeGroupViewModel, FeeGroup>()
+                .ForMember(dest => dest.FeeTypeList, opt => opt.MapFrom(src => src.FeeType))
+                .ForMember(dest => dest.FeeMasterList, opt => opt.MapFrom(src => src.FeeMaster));
 
 
 
@@ -84,6 +88,43 @@ namespace FeePay.Core.Application.Mapping
             CreateMap<FeeMasterViewModel, FeeMaster>();
 
             #endregion
+
+            #region Academics
+
+            // Mapping properties from Classes to ClassViewModel 
+            CreateMap<Classes, ClassViewModel>()
+                .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+                .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+                .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+
+
+            // Mapping properties from ClassViewModel to Classes 
+            CreateMap<ClassViewModel, Classes>();
+
+            // Mapping properties from Section to SectionViewModel 
+            CreateMap<Section, SectionViewModel>()
+                .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+                .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+                .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+
+
+            // Mapping properties from SectionViewModel to Section 
+            CreateMap<SectionViewModel, Section>();
+
+            // Mapping properties from Section to SessionViewModel 
+            CreateMap<Session, SessionViewModel>()
+                .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+                .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+                .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+
+
+            // Mapping properties from SessionViewModel to Section 
+            CreateMap<SessionViewModel, Session>();
+            #endregion Session
+
         }
     }
 }

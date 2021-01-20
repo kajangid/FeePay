@@ -76,38 +76,71 @@ namespace FeePay.Core.Application.Interface.Common
 
 
         #region FEE TYPE 
-        public string SP_Add_FeeType { get; }
-        public string SP_Update_FeeType { get; }
-        public string SP_Delete_FeeType { get; }
-        public string SP_Get_FeeType { get; }
-        public string SP_GetAll_FeeType { get; }
-        public string SP_Get_FeeType_AddEditUser { get; }
-        public string SP_GetAll_FeeType_AddEditUser { get; }
+        string SP_Add_FeeType { get; }
+        string SP_Update_FeeType { get; }
+        string SP_Delete_FeeType { get; }
+        string SP_Get_FeeType { get; }
+        string SP_GetAll_FeeType { get; }
+        string SP_Get_FeeType_AddEditUser { get; }
+        string SP_GetAll_FeeType_AddEditUser { get; }
         #endregion
 
 
         #region FEE GROUP
-        public string SP_Add_FeeGroup { get; }
-        public string SP_Update_FeeGroup { get; }
-        public string SP_Delete_FeeGroup { get; }
-        public string SP_Get_FeeGroup { get; }
-        public string SP_GetAll_FeeGroup { get; }
-        public string SP_Get_FeeGroup_AddEditUser { get; }
-        public string SP_GetAll_FeeGroup_AddEditUser { get; }
+        string SP_Add_FeeGroup { get; }
+        string SP_Update_FeeGroup { get; }
+        string SP_Delete_FeeGroup { get; }
+        string SP_Get_FeeGroup { get; }
+        string SP_GetAll_FeeGroup { get; }
+        string SP_Get_FeeGroup_AddEditUser { get; }
+        string SP_GetAll_FeeGroup_AddEditUser { get; }
+        string SP_GetAll_FeeGroup_MasterAndType { get; }
         #endregion
 
 
         #region FEE MASTER
-        public string SP_Add_FeeMaster { get; }
-        public string SP_Update_FeeMaster { get; }
-        public string SP_Delete_FeeMaster { get; }
-        public string SP_Get_FeeMaster { get; }
-        public string SP_GetAll_FeeMaster { get; }
-        public string SP_Get_FeeMaster_AddEditUser { get; }
-        public string SP_GetAll_FeeMaster_AddEditUser { get; }
+        string SP_Add_FeeMaster { get; }
+        string SP_Update_FeeMaster { get; }
+        string SP_Delete_FeeMaster { get; }
+        string SP_Get_FeeMaster { get; }
+        string SP_GetAll_FeeMaster { get; }
+        string SP_Get_FeeMaster_AddEditUser { get; }
+        string SP_GetAll_FeeMaster_AddEditUser { get; }
         #endregion
 
 
+        #region Class
+        string SP_Add_Class { get; }
+        string SP_Update_Class { get; }
+        string SP_Delete_Class { get; }
+        string SP_Get_Class { get; }
+        string SP_Get_Class_AddEditUser { get; }
+        #endregion
 
+
+        #region Section
+        string SP_Add_Section { get; }
+        string SP_Update_Section { get; }
+        string SP_Delete_Section { get; }
+        string SP_Get_Section { get; }
+        string SP_Get_Section_AddEditUser { get; }
+        #endregion
+
+
+        #region ClassSection
+        string SP_Add_ClassSection { get; }
+        string SP_Remove_ClassSection { get; }
+        string SP_Get_ClassSection { get; }
+        string SP_GetAll_ClassesSections_AddEditUser { get; }
+        #endregion
+
+
+        #region Session
+        string SP_Add_Session { get; }
+        string SP_Update_Session { get; }
+        string SP_Delete_Session { get; }
+        string SP_Get_Session { get; }
+        string SP_Get_Session_AddEditUser { get; }
+        #endregion
     }
 }

@@ -31,6 +31,12 @@ namespace FeePay.Infrastructure.Persistence
             services.AddScoped<IFeeGroupRepository, FeeGroupRepository>();
             services.AddScoped<IFeeMasterRespository, FeeMasterRespository>();
 
+            services.AddScoped<IClassRepository, ClassRepository>(); 
+            services.AddScoped<ISectionRepository, SectionRepository>();
+            services.AddScoped<IClassSectionRepository, ClassSectionRepository>(); 
+            services.AddScoped<ISessionRepository, SessionRepository>();
+
+
 
 
 

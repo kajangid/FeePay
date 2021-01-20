@@ -20,5 +20,9 @@ namespace FeePay.Core.Application.DTOs
         [StringLength(349)]
         [DisplayName("Description")]
         public string Description { get; set; }
+
+
+        public List<FeeTypeViewModel> FeeType { get; set; }
+        public List<FeeMasterViewModel> FeeMaster { get; set; }
     }
 }

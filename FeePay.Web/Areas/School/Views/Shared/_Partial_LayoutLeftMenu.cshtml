@@ -24,21 +24,38 @@
                 </li>
                 <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title" href="#">
-                        <i data-feather="airplay"></i> <span> Fee Management </span>
+                        <i data-feather="airplay"></i> <span> Fees </span>
                     </a>
                     <ul class="sidebar-submenu">
-                        <li><a href="@Url.Action("FeeTypeList","FeeManagement")">All Fee Type</a></li>
-                        <li><a href="@Url.Action("FeeGroupList","FeeManagement")">All Fee Group</a></li>
-                        <li><a href="@Url.Action("FeeMasterList","FeeManagement")">All Fee Master</a></li>
+                        <li><a href="@Url.Action("FeeTypeList","FeeManagement")">Create Fees Name</a></li>
+                        <li><a href="@Url.Action("FeeGroupList","FeeManagement")">Create Fees Group</a></li>
+                        <li><a href="@Url.Action("FeeMasterList","FeeManagement")">Define Group Fees</a></li>
                     </ul>
                 </li>
                 <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title" href="#">
-                        <i data-feather="airplay"></i> <span> Administrative </span>
+                        <i data-feather="airplay"></i> <span> Master </span>
                     </a>
                     <ul class="sidebar-submenu">
-                        <li><a href="@Url.Action("StaffList","Account")">All Staff</a></li>
-                        <li><a href="@Url.Action("RoleList","Account")">All Role</a></li>
+                        <li><a href="@Url.Action("ClassList","Academic")">Create Class</a></li>
+                        <li><a href="@Url.Action("SectionList","Academic")">Create Section</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-list">
+                    <label class="badge badge-info">6 soon</label>
+                    <a class="sidebar-link sidebar-title" href="#">
+                        <i data-feather="airplay"></i> <span> Setting </span>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="@Url.Action("StaffList","Account")">User Creation</a></li>
+                        <li><a href="@Url.Action("RoleList","Account")">User Rights</a></li>
+                        <li><a href="@Url.Action("SessionList","Academic")">Create New Session</a></li>
+                        <li><a href="#">Student Promotion</a></li>
+                        <li><a href="#">Upload Student</a></li>
+                        <li><a href="#">Send SMS</a></li>
+                        <li><a href="#">SMS Setting</a></li>
+                        <li><a href="#">Upload Student</a></li>
                     </ul>
                 </li>
 

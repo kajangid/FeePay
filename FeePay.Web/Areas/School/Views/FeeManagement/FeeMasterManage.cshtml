@@ -2,12 +2,18 @@
 @{
 }
 @section Style{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/date-picker.css")">
 }
 
 @section Scripts{
+    <script src="@Url.Content("~/Cuba/js/datepicker/date-picker/datepicker.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/datepicker/date-picker/datepicker.en.js")"></script>
     <script src="@Url.Content("~/Cuba/js/clipboard/clipboard.min.js")"></script>
     <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
     <partial name="_ValidationScriptsPartial" />
+    <script>
+
+    </script>
 }
 
 
@@ -54,20 +60,20 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label asp-for="FeeTypeId">Fee Type *</label>
-                                    <select asp-for="FeeTypeId" asp-items="@(new SelectList(Model.FeeTypeList,"Value","Text",Model?.FeeTypeId))" class="form-control">
-                                        <option value=""> Select </option>
-                                    </select>
-                                    <div class="invalid-feedback"><span asp-validation-for="FeeTypeId"></span></div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
                                     <label asp-for="FeeGroupId">Fee Group *</label>
                                     <select asp-for="FeeGroupId" asp-items="@(new SelectList(Model.FeeGroupList,"Value","Text",Model?.FeeGroupId))" class="form-control">
                                         <option value=""> Select </option>
                                     </select>
                                     <div class="invalid-feedback"><span asp-validation-for="FeeGroupId"></span></div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label asp-for="FeeTypeId">Fee Type *</label>
+                                    <select asp-for="FeeTypeId" asp-items="@(new SelectList(Model.FeeTypeList,"Value","Text",Model?.FeeTypeId))" class="form-control">
+                                        <option value=""> Select </option>
+                                    </select>
+                                    <div class="invalid-feedback"><span asp-validation-for="FeeTypeId"></span></div>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +87,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label asp-for="DueDate">Due Date</label>
-                                    <input asp-for="DueDate" type="text" class="form-control" />
+                                    <input asp-for="DueDate" type="text" class="datepicker-here form-control" data-language="en" />
                                 </div>
                             </div>
                         </div>

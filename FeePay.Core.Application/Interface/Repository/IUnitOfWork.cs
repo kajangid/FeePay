@@ -23,5 +23,9 @@ namespace FeePay.Core.Application.Interface.Repository
         IFeeTypeRepository FeeType { get; }
         IFeeGroupRepository FeeGroup { get; }
         IFeeMasterRespository FeeMaster { get; }
+        IClassRepository ClassRepo { get; }
+        ISectionRepository SectionRepo { get; }
+        IClassSectionRepository ClassSection { get; }
+        ISessionRepository Session { get; }
     }
 }

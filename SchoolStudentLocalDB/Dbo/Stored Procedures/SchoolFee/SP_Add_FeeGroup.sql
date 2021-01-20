@@ -8,7 +8,7 @@
 	)
 AS
 BEGIN
-	IF NOT EXISTS(SELECT [Id] FROM [FeeGroup] WHERE [Name] = @Name AND [IsDelete] = 0)
+	IF NOT EXISTS(SELECT [Id] FROM [dbo].[FeeGroup] WHERE [Name] = @Name AND [NormalizedName] = @NormalizedName AND [IsDelete] = 0)
 	BEGIN
 		INSERT INTO [FeeGroup]([Name],[NormalizedName],[Description],[IsActive],[IsDelete],[AddedBy],[AddedDate])
 		VALUES(@Name,@NormalizedName,@Description,@IsActive,0,@AddedBy,GETDATE())

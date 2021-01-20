@@ -91,13 +91,12 @@
                                                 <td><a href="@Url.Action("StaffManage","Account",new { id = item.AddedById })" class="btn btn-@(color1) btn-xs">@item.AddedBy</a></td>
                                                 <td>@item.AddedDate?.ToString("dd/MM/yyyy")</td>
                                                 <td>
-                                                    <a asp-action="FeeGroupManage" asp-controller="FeeManagement" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Fee Group" class="d-inline-block mr-2">
+                                                    <a asp-action="FeeGroupManage" asp-controller="FeeManagement" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Fee Group" class="d-inline-block mr-1">
                                                         <i data-feather="edit-3"></i>
                                                     </a>
                                                     <a data-action="deleterow" data-actionmag="Fee Group" asp-action="FeeGroupDelete" asp-controller="FeeManagement" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Fee Group" class="d-inline-block">
                                                         <i data-feather="trash-2"></i>
                                                     </a>
-
                                                 </td>
                                             </tr>
                                         }

@@ -132,6 +132,8 @@
     <Build Include="Dbo\Stored Procedures\SchoolFee\SP_GetAll_FeeMaster_AddEditUser.sql" />
     <Build Include="Dbo\Stored Procedures\SchoolFee\SP_GetAll_FeeType.sql" />
     <Build Include="Dbo\Stored Procedures\SchoolFee\SP_GetAll_FeeType_AddEditUser.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolFee\SP_GetAll_FeeGroup_MasterAndType.sql" />
+    <Build Include="Dbo\Stored Procedures\SchoolAdmin\SP_Get_SchoolAdmin_User.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Dbo\Scripts\Script_1.PostDeployment.sql" />
