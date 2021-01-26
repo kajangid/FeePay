@@ -77,16 +77,19 @@
                                         foreach (var item in Model)
                                         {
                                             var color = ColorList.OrderBy(s => random.NextDouble()).First();
-                                            var color1 = ColorList.OrderBy(s => random.NextDouble()).First();
-                                            var SectionList = item.Sections.Select(s => s.NormalizedName).ToArray();
-                                            var SectionListString = string.Join(",", SectionList);
+                                            var color1 = ColorList.OrderBy(s => random.NextDouble()).First();                                            
                                             <tr data-key="@item.Id">
                                                 <td></td>
                                                 <td>@item.Name</td>
                                                 <td>
-                                                    <p title="@SectionListString">
-                                                        @(SectionListString.Length > 15 ? SectionListString.Substring(0, 15) + "....": SectionListString)
-                                                    </p>
+                                                    @if (item.Sections != null && item.Sections.Count > 0)
+                                                    {
+                                                        var SectionList = item.Sections.Select(s => s?.NormalizedName).ToArray();
+                                                        var SectionListString = string.Join(",", SectionList);
+                                                        <p title="@SectionListString">
+                                                            @(SectionListString.Length > 15 ? SectionListString.Substring(0, 15) + "....": SectionListString)
+                                                        </p>
+                                                    }
                                                 </td>
                                                 <td>
                                                     <input asp-for="@item.IsActive" type="checkbox">

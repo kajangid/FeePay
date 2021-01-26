@@ -1,11 +1,11 @@
-﻿using FeePay.Core.Domain.Entities.School;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FeePay.Core.Domain.Entities.SuperAdmin;
 
-namespace FeePay.Core.Application.Interface.Repository.School
+namespace FeePay.Core.Application.Interface.Repository.SuperAdmin
 {
     public interface IRegisteredSchoolRepository
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FeePay.Core.Domain.Entities.Student;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace FeePay.Core.Domain.Entities.Identity
         public string LastLoginDevice { get; set; }
         public string LastLoginLocation { get; set; }
 
+        public StudentAdmission StudentAdmission { get; set; }
 
         // Temp Fields to store runtime data
         public string SchoolUniqueId { get; set; }

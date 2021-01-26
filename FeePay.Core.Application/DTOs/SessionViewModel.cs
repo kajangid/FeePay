@@ -17,13 +17,11 @@ namespace FeePay.Core.Application.DTOs
         [StringLength(19)]
         public string Year { get; set; }
 
-        [DisplayName("Start Year")]
-        [StringLength(19)]
-        public string StartYear { get; set; }
+        [DisplayName("Start Date")]
+        public DateTime? StartYear { get; set; }
 
-        [DisplayName("End Year")]
-        [StringLength(19)]
-        public string EndYear { get; set; }
+        [DisplayName("End Date")]
+        public DateTime? EndYear { get; set; }
 
         [DisplayName("Description")]
         [StringLength(349)]

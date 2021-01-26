@@ -13,44 +13,44 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
 {
     public class SchoolAdminRoleStore : IRoleStore<SchoolAdminRole>
     {
-        public SchoolAdminRoleStore(IUnitOfWork unitOfWork, IAppContextAccessor AppContextAccessor)
+        public SchoolAdminRoleStore(IUnitOfWork unitOfWork, IAppContextAccessor appContextAccessor)
         {
-            _UnitOfWork = unitOfWork;
-            _AppContextAccessor = AppContextAccessor;
+            _unitOfWork = unitOfWork;
+            _appContextAccessor = appContextAccessor;
         }
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IAppContextAccessor _AppContextAccessor;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAppContextAccessor _appContextAccessor;
         public async Task<IdentityResult> CreateAsync(SchoolAdminRole role, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            role.Id = await _UnitOfWork.SchoolAdminRole.AddAsync(role, _AppContextAccessor.ClaimSchoolUniqueId());
+            role.Id = await _unitOfWork.SchoolAdminRole.AddAsync(role, _appContextAccessor.ClaimSchoolUniqueId());
             return IdentityResult.Success;
         }
 
         public async Task<IdentityResult> UpdateAsync(SchoolAdminRole role, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await _UnitOfWork.SchoolAdminRole.UpdateAsync(role, _AppContextAccessor.ClaimSchoolUniqueId());
+            await _unitOfWork.SchoolAdminRole.UpdateAsync(role, _appContextAccessor.ClaimSchoolUniqueId());
             return IdentityResult.Success;
         }
 
         public async Task<IdentityResult> DeleteAsync(SchoolAdminRole role, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await _UnitOfWork.SchoolAdminRole.DeleteAsync(role.Id, _AppContextAccessor.ClaimSchoolUniqueId());
+            await _unitOfWork.SchoolAdminRole.DeleteAsync(role.Id, _appContextAccessor.ClaimSchoolUniqueId());
             return IdentityResult.Success;
         }
 
         public async Task<SchoolAdminRole> FindByIdAsync(string roleId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return await _UnitOfWork.SchoolAdminRole.FindActiveByIdAsync(Convert.ToInt32(roleId), _AppContextAccessor.ClaimSchoolUniqueId());
+            return await _unitOfWork.SchoolAdminRole.FindActiveByIdAsync(Convert.ToInt32(roleId), _appContextAccessor.ClaimSchoolUniqueId());
         }
 
         public async Task<SchoolAdminRole> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return await _UnitOfWork.SchoolAdminRole.FindActiveByNameAsync(normalizedRoleName, _AppContextAccessor.ClaimSchoolUniqueId());
+            return await _unitOfWork.SchoolAdminRole.FindActiveByNameAsync(normalizedRoleName, _appContextAccessor.ClaimSchoolUniqueId());
         }
 
         public void Dispose()

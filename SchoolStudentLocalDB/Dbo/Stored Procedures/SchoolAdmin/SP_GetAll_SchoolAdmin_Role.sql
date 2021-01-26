@@ -19,7 +19,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT 
-		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[IsActive],[r].[AddedDate]
+		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[Access],[r].[IsActive],[r].[AddedDate]
 		,[r].[ModifyDate], [r].[AddedBy], [r].[ModifyBy]
 	FROM [dbo].[SchoolAdmin_Role] [r]
 	WHERE

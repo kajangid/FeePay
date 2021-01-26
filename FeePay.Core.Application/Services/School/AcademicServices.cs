@@ -81,7 +81,7 @@ namespace FeePay.Core.Application.Services.School
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
             Classes _class = _mapper.Map<Classes>(model);
             _class.NormalizedName = _class.Name.ToUpper().Trim();
-            int result = 0;
+            int result;
             if (_class.Id <= 0)
             {
                 _class.AddedBy = UserId;
@@ -114,6 +114,7 @@ namespace FeePay.Core.Application.Services.School
 
         #endregion
 
+
         #region Section
         public async Task<Response<List<SectionViewModel>>> GetListOfSectionsAsync()
         {
@@ -135,7 +136,7 @@ namespace FeePay.Core.Application.Services.School
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
             Section section = _mapper.Map<Section>(model);
             section.NormalizedName = section.Name.ToUpper().Trim();
-            var result = 0;
+            int result;
             if (section.Id <= 0)
             {
                 section.AddedBy = UserId;
@@ -151,7 +152,6 @@ namespace FeePay.Core.Application.Services.School
         }
 
         #endregion
-
 
 
         #region Session
@@ -174,7 +174,7 @@ namespace FeePay.Core.Application.Services.School
             var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
             Session session = _mapper.Map<Session>(model);
-            var result = 0;
+            int result;
             if (session.Id <= 0)
             {
                 session.AddedBy = UserId;
@@ -191,5 +191,19 @@ namespace FeePay.Core.Application.Services.School
 
         #endregion
 
+        public async Task<Response<List<DropDownItem>>> GetAllDropDownClassesAsync()
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var _classes = (await _unitOfWork.ClassRepo.GetAllActiveAsync(SchoolId))
+                .Select(s => new DropDownItem { Value = s.Id.ToString(), Text = s.NormalizedName }).ToList();
+            return new Response<List<DropDownItem>>(_classes ?? new List<DropDownItem>());
+        }
+        public async Task<Response<List<DropDownItem>>> GetClassSectionsAsync(int classId)
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var _class = await _unitOfWork.ClassSection.FindSectionsInClassByClassIdAsync(classId, SchoolId);
+            List<DropDownItem> ddl = _class.Sections?.Select(s => new DropDownItem { Text = s.NormalizedName, Value = s.Id.ToString() }).ToList();
+            return new Response<List<DropDownItem>>(ddl ?? new List<DropDownItem>());
+        }
     }
 }

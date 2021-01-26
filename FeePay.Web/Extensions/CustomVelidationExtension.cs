@@ -73,7 +73,7 @@ namespace FeePay.Web.Extensions
         public override bool IsValid(object value)
         {
             StringBuilder str = new StringBuilder();
-            str.Append("^.{").Append(min).Append(",").Append(max).Append("}$");
+            str.Append("^.{").Append(min).Append(',').Append(max).Append("}$");
             Regex regex1 = new Regex(str.ToString(), RegexOptions.IgnoreCase);
             return regex1.IsMatch(value.ToString());
         }

@@ -1,12 +1,15 @@
-﻿CREATE TABLE [dbo].[SchoolAdmin_Role]
-(
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY(100, 1),
-    [Name]             NVARCHAR (256)   NOT NULL,
-    [NormalizedName]   NVARCHAR (256)   NOT NULL,
-    [IsActive] BIT NULL DEFAULT 0, 
-    [IsDelete] BIT NULL DEFAULT 0, 
-    [ModifyDate] DATETIME NULL DEFAULT GetDate(), 
-    [ModifyBy] INT NULL, 
-    [AddedDate] DATETIME NULL DEFAULT GetDate(), 
-    [AddedBy] INT NULL,
-)
+﻿CREATE TABLE [dbo].[SchoolAdmin_Role] (
+    [Id]             INT            IDENTITY (100, 1) NOT NULL,
+    [Name]           NVARCHAR (256) NOT NULL,
+    [NormalizedName] NVARCHAR (256) NOT NULL,
+    [IsActive]       BIT            DEFAULT ((0)) NULL,
+    [IsDelete]       BIT            DEFAULT ((0)) NULL,
+    [ModifyDate]     DATETIME       DEFAULT (getdate()) NULL,
+    [ModifyBy]       INT            NULL,
+    [AddedDate]      DATETIME       DEFAULT (getdate()) NULL,
+    [AddedBy]        INT            NULL,
+    [Access]         NVARCHAR (MAX) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+

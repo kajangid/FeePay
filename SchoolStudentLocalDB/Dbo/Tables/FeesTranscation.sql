@@ -1,0 +1,12 @@
+﻿CREATE TABLE [dbo].[FeesTranscation]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(100, 1),
+	[UserId] INT NOT NULL, 
+	[MethodId] INT NOT NULL, 
+	[Amount] NUMERIC(10,2) NOT NULL, 
+	[Date] DATETIME NOT NULL, 
+	[Recepit] NVARCHAR(50) NOT NULL, 
+	[IsComplete] BIT NOT NULL,
+	[State] NVARCHAR(50) NOT NULL,
+
+)

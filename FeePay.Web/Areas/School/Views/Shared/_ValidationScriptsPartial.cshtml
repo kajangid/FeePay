@@ -10,7 +10,7 @@
 
             highlight: function (element) {
                 jQuery(element).closest('.form-control').addClass('is-invalid');
-                console.log("highlight:", $(".validation-summary-error"));
+                //console.log("highlight:", $(".validation-summary-error"));
             },
             unhighlight: function (element) {
                 jQuery(element).closest('.form-control').removeClass('is-invalid');
@@ -28,6 +28,31 @@
                 (this.numberOfInvalids()) ? es.show() : es.hide();
                 this.defaultShowErrors();
             }
+        });
+        // file maxsize validation
+        $.validator.addMethod("file-maxsize", function (value, element, params) {
+            if (value && element.files[0]) {
+                var allowedMinSize = params.value;
+                var selectedFileSizeInKByte = element.files[0].size / 1024;
+                return selectedFileSizeInKByte <= allowedMinSize;
+            }
+            return true;
+        });
+        $.validator.unobtrusive.adapters.add("file-maxsize", ['value'], function (options) {
+            options.rules["file-maxsize"] = options.params;
+            options.messages["file-maxsize"] = options.message;
+        });
+        // file type va;idation
+
+        $.validator.addMethod("filetype", function (value, element, params) {
+            var selectedFileType = value.split('.').pop();
+            var validFileTypes = params.validtypes;
+            return validFileTypes.toLowerCase().indexOf(selectedFileType.toLowerCase()) !== -1;
+        });
+
+        $.validator.unobtrusive.adapters.add("filetype", ['validtypes'], function (options) {
+            options.rules.filetype = options.params;
+            options.messages["filetype"] = options.message;
         });
     })(jQuery);
 </script>

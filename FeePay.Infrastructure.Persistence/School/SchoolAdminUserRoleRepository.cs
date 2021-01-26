@@ -62,7 +62,6 @@ namespace FeePay.Infrastructure.Persistence.School
         }
         public async Task<int> UnassignUserFromRoleAsync(SchoolAdminUser user, string roleName, string dbId = null)
         {
-            var normalizedName = roleName.ToUpper();
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
@@ -197,7 +196,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 int res = await connection.ExecuteAsync(
                      _DBVariables.SP_Delete_SchoolAdmin_UserRole,
-                     new { Id = Id },
+                     new { Id },
                      commandType: CommandType.StoredProcedure);
 
                 return (res > 0);

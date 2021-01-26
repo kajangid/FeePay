@@ -1,4 +1,9 @@
-﻿CREATE PROCEDURE [dbo].[SP_Delete_Class]
+﻿-- =============================================
+-- Author:		Karan
+-- Create date: 18-01-2021
+-- Description:	Sp to delete (isdelete column true) Class data 
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_Delete_Class]
 	(
 	@Id INT,
 	@ModifyBy INT = NULL

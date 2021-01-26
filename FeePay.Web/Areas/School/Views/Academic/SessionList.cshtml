@@ -63,12 +63,11 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Year</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
                                     <th>Status</th>
-                                    <th>Active</th>
                                     <th>Modify By</th>
                                     <th>Modify date</th>
-                                    <th>Added By</th>
-                                    <th>Added date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -82,14 +81,14 @@
                                             <tr data-key="@item.Id">
                                                 <td></td>
                                                 <td>@item.Year</td>
-                                                <td></td>
+                                                <td>@item.StartYear?.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.EndYear?.ToString("dd/MM/yyyy")</td>
                                                 <td>
-                                                    <input asp-for="@item.IsActive" type="checkbox">
+                                                    @if (item.IsActive)
+                                                    {<label class="badge badge-success">Active</label>}
                                                 </td>
                                                 <td><a href="@Url.Action("StaffManage","Account",new { id = item.ModifyById })" class="btn btn-@(color) btn-xs">@item.ModifyBy</a></td>
                                                 <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
-                                                <td><a href="@Url.Action("StaffManage","Account",new { id = item.AddedById })" class="btn btn-@(color1) btn-xs">@item.AddedBy</a></td>
-                                                <td>@item.AddedDate?.ToString("dd/MM/yyyy")</td>
                                                 <td>
                                                     <a asp-action="SessionManage" asp-controller="Academic" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Session" class="d-inline-block mr-1">
                                                         <i data-feather="edit-3"></i>

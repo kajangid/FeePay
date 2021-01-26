@@ -11,5 +11,6 @@ namespace FeePay.Core.Domain.Entities.Identity
         public int Id { get; set; }
         public string Name { get; set; }
         public string NormalizedName { get; set; }
+        public string Access { get; set; }
     }
 }

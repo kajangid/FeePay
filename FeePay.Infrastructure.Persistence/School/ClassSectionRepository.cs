@@ -9,6 +9,7 @@ using Dapper;
 using FeePay.Core.Application.Interface;
 using FeePay.Core.Application.Interface.Common;
 using FeePay.Core.Application.Interface.Repository.School;
+using FeePay.Core.Application.UseCase;
 using FeePay.Core.Domain.Entities.Identity;
 using FeePay.Core.Domain.Entities.School;
 
@@ -102,6 +103,7 @@ namespace FeePay.Infrastructure.Persistence.School
                     {
                         var groupedPost = s.First();
                         groupedPost.Sections = s.Select(g => g.Sections.Single()).ToList();
+                        groupedPost.Sections.RemoveAll(item => item == null);
                         return groupedPost;
                     });
 
@@ -135,6 +137,7 @@ namespace FeePay.Infrastructure.Persistence.School
                     {
                         var groupedPost = s.First();
                         groupedPost.Sections = s.Select(g => g.Sections.Single()).ToList();
+                        groupedPost.Sections.RemoveAll(item => item == null);
                         return groupedPost;
                     });
 
@@ -196,6 +199,7 @@ namespace FeePay.Infrastructure.Persistence.School
                     {
                         var groupedPost = s.First();
                         groupedPost.Sections = s.Select(g => g.Sections.Single()).ToList();
+                        groupedPost.Sections.RemoveAll(item => item == null);
                         return groupedPost;
                     });
 
@@ -217,6 +221,7 @@ namespace FeePay.Infrastructure.Persistence.School
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var courseDictionary = new Dictionary<int, Section>();
                 var list = await connection.QueryAsync<Classes, Section, SchoolAdminUser, SchoolAdminUser, Classes>(
                     _dBVariables.SP_GetAll_ClassesSections_AddEditUser,
                     (_class, section, addedby, modifyby) =>
@@ -229,14 +234,14 @@ namespace FeePay.Infrastructure.Persistence.School
                     splitOn: "Id,Id,Id,Id",
                     commandType: CommandType.StoredProcedure);
 
-                var result = list.GroupBy(g => g.Id).
+                var result = list.GroupBy(g => g.Id, new CustomEqualityComparer<int>()).
                     Select(s =>
                     {
                         var groupedPost = s.First();
                         groupedPost.Sections = s.Select(g => g.Sections.Single()).ToList();
+                        groupedPost.Sections.RemoveAll(item => item == null);
                         return groupedPost;
                     });
-
                 return result;
             }
             catch (TimeoutException ex)

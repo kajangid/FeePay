@@ -27,5 +27,8 @@ namespace FeePay.Core.Application.Interface.Repository
         ISectionRepository SectionRepo { get; }
         IClassSectionRepository ClassSection { get; }
         ISessionRepository Session { get; }
+        IStudentAdmisionRepository StudentAdmision { get; }
+        ICityStateRepository CityState { get; }
+        IStudentFeesRepository StudentFee { get; }
     }
 }

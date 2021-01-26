@@ -27,14 +27,14 @@ BEGIN
 		, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
 		, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive]
 
-		, [t3].[Id],[t3].[Name],[t3].[NormalizedName] --  <-------- Role
+		, [t3].[Id],[t3].[Name],[t3].[NormalizedName],[t3].[Access] --  <-------- Role
 		, [t4].[Id],[t4].[FullName],[t4].[Email] --  <-------- Added by user 
 		, [t5].[Id],[t5].[FullName],[t5].[Email] --  <-------- modify by user
 
 		FROM [dbo].[SchoolAdmin_User] [a] 
 
 		OUTER APPLY (
-			SELECT [r].[Id],[r].[Name],[r].[NormalizedName] 
+			SELECT [r].[Id],[r].[Name],[r].[NormalizedName],[r].[Access]
 			FROM [dbo].[SchoolAdmin_UserRole] [ur] 
 			LEFT JOIN [dbo].[SchoolAdmin_Role] [r]
 			ON [r].[Id] = [ur].[RoleId] AND [r].[IsDelete] = 0 AND [r].[IsActive] = 1

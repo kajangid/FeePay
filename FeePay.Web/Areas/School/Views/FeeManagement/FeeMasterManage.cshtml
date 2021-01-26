@@ -12,7 +12,15 @@
     <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
     <partial name="_ValidationScriptsPartial" />
     <script>
-
+        (function ($) {
+            'use strict';
+            var adDate = $('input[name="DueDate"]');
+            var datepicker = adDate.datepicker().data('datepicker');
+            var dateSelected = adDate.attr("data-key-selected"); // --> yyyy-mm-dd
+            if (typeof (dateSelected) != "undefined" && dateSelected != null && dateSelected != '')
+                datepicker.selectDate(new Date(dateSelected));
+            else datepicker.selectDate(new Date());
+        })(jQuery);
     </script>
 }
 
@@ -87,7 +95,9 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label asp-for="DueDate">Due Date</label>
-                                    <input asp-for="DueDate" type="text" class="datepicker-here form-control" data-language="en" />
+                                    <input asp-for="DueDate" type="text" class="datepicker-here form-control" 
+                                           data-language="en" data-key-selected="@(Model.DueDate?.ToString("yyyy-MM-dd"))" 
+                                           placeholder="dd/mm/yyyy" autocomplete="off" data-date-format="dd/mm/yyyy" />
                                 </div>
                             </div>
                         </div>

@@ -18,6 +18,8 @@ namespace FeePay.Core.Application.Interface.Service
         Task<StudentLoginViewModel> BindStudentLoginModelAsync(StudentLoginViewModel model);
 
 
+        Task<List<string>> GetUserAccessRights(string userName, string areaName);
+
         Task EnsureStudentLogoutAsync();
         Task EnsureSchoolUserLogoutAsync();
         Task EnsureSuperAdminLogoutAsync();

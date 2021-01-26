@@ -1,0 +1,184 @@
+﻿@model StudentLedgerViewModel
+@{
+    StudentAdmissionViewModel student = Model.StudentAdmissionViewModel;
+}
+@section Style{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
+
+
+}
+@section Scripts{
+    <script src="@Url.Content("~/Cuba/js/clipboard/clipboard.min.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/notify/bootstrap-notify.min.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/index_setting.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/index_global.js")"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function ($) {
+            "use strict";
+            $('#studentFeeTable').DataTable({ "order": [[2, 'desc']] });
+        })(jQuery)
+    </script>
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Fee Management</li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="edit-profile">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card custom-card">
+                    <div class="card-profile"><img class="rounded-circle" src="~/Cuba/images/avtar/3.jpg" alt=""></div>
+                    <div class="text-center profile-details">
+                        <h4>@($"{student.FirstName} {student.LastName}")</h4>
+                        <h6>Manager</h6>
+                    </div>
+                    <ul class="card-social">
+                        <li><a href="javascript:void(0)" data-bs-original-title="See Password" title="See Password"><i class="icofont icofont-key"></i></a></li>
+                        <li><a href="javascript:void(0)" data-bs-original-title="Edit Profile" title="Edit Profile"><i class="icofont icofont-edit"></i></a></li>
+                        <li><a href="javascript:void(0)" data-bs-original-title="Share Password" title="Share Password"><i class="icofont icofont-share-alt"></i></a></li>
+                    </ul>
+                    <div class="row">
+                        <div class="col">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Form Number<span class="text-right">@student.FormNo</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Sr/Reg Number<span class="text-right">@student.Sr_RegNo</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Class<span class="text-right">@student.StudentClass?.Name</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Section<span class="text-right">@student.StudentSection?.Name</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Gender<span class="text-right">@student.Gender</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <h6 class="mb-3">Personal Details</h6>
+                            <table class="table table-border-horizontal">
+                                <tbody>
+                                    <tr>
+                                        <td>Admission Date</td>
+                                        <td class="text-right">@(student.AdmissionDate?.ToString("dd/MM/yyyy"))</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of Birth</td>
+                                        <td class="text-right">@(student.DateOfBirth?.ToString("dd/MM/yyyy"))</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td class="text-right">@student.Category</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Student Type</td>
+                                        <td class="text-right">@(student.StudentType)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile Number</td>
+                                        <td class="text-right">@(student.MobileNo)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Religion</td>
+                                        <td class="text-right">@(student.Religion)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h6 class="mt-5 mb-3">Parent / Guardian Details</h6>
+                            <table class="table table-border-horizontal">
+                                <tbody>
+                                    <tr>
+                                        <td>Father's Name</td>
+                                        <td class="text-right">@(student.FatherName)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mother's Name</td>
+                                        <td class="text-right">@(student.MotherName)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Guardian Mobile Number</td>
+                                        <td class="text-right">@(student.GuardianMobileNo)</td>
+                                    </tr>
+                                    <tr class="border-1 border-top-0 border-left-0 border-right-0">
+                                        <td>Guardian Email</td>
+                                        <td class="text-right">@(student.GuardianEmail)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Fees</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="display" id="studentFeeTable">
+                                <thead>
+                                    <tr>
+                                        <th>Fees Group</th>
+                                        <th>Fees Code</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th>Amount (₹)</th>
+                                        <th>Payment Id</th>
+                                        <th>Date</th>
+                                        <th>Discount (₹)</th>
+                                        @*<th>Paid (₹)</th>*@
+                                        @*<th>Balance</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var fee in Model.FeeList)
+                                    {
+                                        <tr>
+                                            <td>@fee.FeeGroupName</td>
+                                            <td>@fee.FeeTypeCode</td>
+                                            <td>@(fee.DueDate?.ToString("dd/MM/yyyy"))</td>
+                                            <td>@fee.FeeStatus</td>
+                                            <td>@fee.FeeAmount</td>
+                                            <td>@fee.FeePaymentId</td>
+                                            <td>@(fee.FeePaymentDate?.ToString("dd/MM/yyyy"))</td>
+                                            <td>-</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

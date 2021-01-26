@@ -25,7 +25,7 @@
 )
 AS
 BEGIN
-    IF NOT EXISTS(SELECT *FROM [dbo].[StudentLogin] WHERE [UserName] = @UserName)
+    IF NOT EXISTS(SELECT *FROM [dbo].[StudentLogin] WHERE [UserName] = @UserName AND [IsDelete] = 0)
     BEGIN 
         INSERT INTO [dbo].[StudentLogin]
                ([UserName],[NormalizedUserName],[Email],[NormalizedEmail],[EmailConfirmed],[PasswordHash],[PhoneNumber],[PhoneNumberConfirmed]
@@ -38,10 +38,10 @@ BEGIN
                ,@LastLoginDate,@LastLoginDevice,@LastLoginLocation,@IsActive,0,GETDATE(),@AddedBy,GETDATE()
                ,@AddedBy)
 
-        RETURN CAST(SCOPE_IDENTITY() AS INT)
+        SELECT CAST(SCOPE_IDENTITY() AS INT)
     END
     ELSE
     BEGIN
-        RETURN 0
+        SELECT 0
     END
 END

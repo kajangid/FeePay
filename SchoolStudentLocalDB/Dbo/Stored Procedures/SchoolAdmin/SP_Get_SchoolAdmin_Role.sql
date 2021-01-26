@@ -19,7 +19,7 @@ BEGIN
 	IF(@Id IS NOT NULL AND @Id != 0)
 	BEGIN	
 	SELECT 
-		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
+		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[Access],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
 		, [r].[AddedBy], [r].[ModifyBy]
 		FROM [dbo].[SchoolAdmin_Role] [r]
 		WHERE
@@ -31,7 +31,7 @@ BEGIN
 	IF(@Name IS NOT NULL)
 	BEGIN	
 	SELECT 
-		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
+		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[Access],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
 		, [r].[AddedBy], [r].[ModifyBy]
 		FROM [dbo].[SchoolAdmin_Role] [r]
 		WHERE
@@ -43,7 +43,7 @@ BEGIN
 	IF(@NormalizedName IS NOT NULL)
 	BEGIN	
 	SELECT 
-		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
+		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[Access],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
 		, [r].[AddedBy], [r].[ModifyBy]
 		FROM [dbo].[SchoolAdmin_Role] [r]
 		WHERE

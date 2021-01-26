@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 using System.Configuration;
 using FeePay.Core.Application.Interface;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,8 +9,9 @@ using FeePay.Core.Application.Services;
 using FeePay.Core.Application.Interface.Service;
 using FeePay.Core.Application.Services.School;
 using FeePay.Core.Application.Interface.Service.School;
-using AutoMapper;
 using FeePay.Core.Application.Mapping;
+using FeePay.Core.Application.Interface.Service.Student;
+using FeePay.Core.Application.Services.Student;
 
 namespace FeePay.Core.Application
 {
@@ -21,12 +23,14 @@ namespace FeePay.Core.Application
             services.AddSingleton<IConnectionStringConfig>
                 (configuration.GetSection("ConnectionStringsConfigration").Get<ConnectionStringConfig>());
             services.AddSingleton<IConnectionStringBuilder, ConnectionStringBuilder>();
+            services.AddSingleton<ICommanDataServices, CommanDataServices>();
+            services.AddSingleton<IPasswordGenerator, PasswordGenerator>();
 
             services.AddTransient<IAppContextAccessor, AppContextAccessor>();
             services.AddScoped<IAdministrationService, AdministrationService>();
             services.AddScoped<IFeeManagementService, FeeManagementService>();
             services.AddScoped<IAcademicServices, AcademicServices>();
-
+            services.AddScoped<IStudentManagementService, StudentManagementService>();
 
 
 

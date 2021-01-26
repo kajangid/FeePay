@@ -6,8 +6,12 @@ using FeePay.Core.Application;
 using FeePay.Infrastructure.Identity;
 using FeePay.Infrastructure.Persistence;
 using FeePay.Web.Extensions;
+using FeePay.Web.Filters;
+using FeePay.Web.Services;
+using FeePay.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +32,8 @@ namespace FeePay.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging();
+            services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidatiomAttributeAdapterProvider>();
+            services.AddSingleton<IMvcControllerDiscovery, MvcControllerDiscovery>();
             services.AddHttpContextAccessor();
             services.AddInfrastructurePersistenceServices();
             services.AddApplicationServices(Configuration);

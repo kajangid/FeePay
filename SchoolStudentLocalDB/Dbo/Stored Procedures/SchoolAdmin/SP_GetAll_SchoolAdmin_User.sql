@@ -28,12 +28,12 @@ BEGIN
 		, [a].[AccessFailedCount], [a].[FirstName], [a].[LastName], [a].[FullName], [a].[AddedDate], [a].[ModifyDate]
 		, [a].[LastLoginIP], [a].[LastLoginDate], [a].[IsActive], [a].[AddedBy], [a].[ModifyBy]
 
-		, [t3].[Id],[t3].[Name],[t3].[NormalizedName]
+		, [t3].[Id],[t3].[Name],[t3].[NormalizedName],[t3].[Access]
 
 		FROM [dbo].[SchoolAdmin_User] [a] 
 
 		OUTER APPLY (
-		SELECT [r].[Id],[r].[Name],[r].[NormalizedName] 
+		SELECT [r].[Id],[r].[Name],[r].[NormalizedName],[r].[Access] 
 		FROM [dbo].[SchoolAdmin_UserRole] [ur] 
 		LEFT JOIN [dbo].[SchoolAdmin_Role] [r]
 		ON [r].[Id] = [ur].[RoleId] AND [r].[IsDelete] = 0 AND [r].[IsActive] = 1

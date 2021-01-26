@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FeePay.Core.Domain.Entities.School;
+using FeePay.Core.Domain.Entities.SuperAdmin;
 using FeePay.Core.Application.Wrapper;
 using FeePay.Core.Application.Interface.Service;
-using Microsoft.AspNetCore.Http;
 using FeePay.Core.Domain.Entities.Common;
 using AutoMapper;
 using FeePay.Core.Application.Interface.Repository;
@@ -21,7 +20,7 @@ namespace FeePay.Infrastructure.Identity.Service
         public LoginService(SignInManager<SchoolAdminUser> SignInManagerSchool, SignInManager<StudentLogin> SignInManagerStudent,
             SignInManager<SuperAdminUser> SignInManagerSuperAdmin, IUnitOfWork UnitOfWork, IAppContextAccessor appContextAccessor,
             UserManager<SchoolAdminUser> UserManagerSchool, UserManager<StudentLogin> UserManagerStudent,
-            UserManager<SuperAdminUser> UserManagerSuperAdmin, IMapper Mapper)
+            UserManager<SuperAdminUser> UserManagerSuperAdmin)
         {
             _SignInManagerSchool = SignInManagerSchool;
             _SignInManagerStudent = SignInManagerStudent;
@@ -31,11 +30,9 @@ namespace FeePay.Infrastructure.Identity.Service
             _UserManagerSchool = UserManagerSchool;
             _UserManagerStudent = UserManagerStudent;
             _UserManagerSuperAdmin = UserManagerSuperAdmin;
-            _Mapper = Mapper;
         }
         private readonly IAppContextAccessor _AppContextAccessor;
         private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _Mapper;
         private readonly SignInManager<SchoolAdminUser> _SignInManagerSchool;
         private readonly SignInManager<StudentLogin> _SignInManagerStudent;
         private readonly SignInManager<SuperAdminUser> _SignInManagerSuperAdmin;
@@ -52,7 +49,7 @@ namespace FeePay.Infrastructure.Identity.Service
 
             // Get the User from School database
             SchoolAdminUser user = await _UnitOfWork.SchoolAdminUser
-                .FindActiveByEmailAsync(model.Email.ToUpper(), model.SchoolUniqueId);
+                .FindActiveByUserNameAsync(model.UserName.ToUpper(), model.SchoolUniqueId);
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
@@ -68,7 +65,7 @@ namespace FeePay.Infrastructure.Identity.Service
                 // TODO: Clear Claim Bug
                 // Identity state does not update with claim factory in this request 
                 // Check for new request to get all the claim
-                var clam = _AppContextAccessor.GetCurrentUserClaims();
+                //var clam = _AppContextAccessor.GetCurrentUserClaims();
                 // TODO: Event will be create for this
                 await _UnitOfWork.SchoolAdminUser.UpdateLoginState(user.Id, _AppContextAccessor.GetUserIP(), model.SchoolUniqueId);
                 return new Response<bool>(true, user.FullName);
@@ -113,7 +110,7 @@ namespace FeePay.Infrastructure.Identity.Service
             if (user == null) return new Response<bool>("Account does not exist with this email address.");
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-            //var result = await _SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            // var result = await _SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
             var result = await _SignInManagerSuperAdmin.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
@@ -147,6 +144,28 @@ namespace FeePay.Infrastructure.Identity.Service
             };
         }
 
+
+
+        public async Task<List<string>> GetUserAccessRights(string userName, string areaName)
+        {
+            List<string> roles_Access = new List<string>();
+            if (areaName == "SuperAdmin")
+            {
+                //var user = await _UnitOfWork.SuperAdminUser.FindActiveByUserNameAsync(userName);
+                //roles_Access = user?.Roles?.Select(r => r.Access).ToList();
+            }
+            else if (areaName == "School")
+            {
+                var SchoolId = _AppContextAccessor.ClaimSchoolUniqueId();
+                var user = await _UnitOfWork.SchoolAdminUser.FindActiveByUserNameAsync(userName, SchoolId);
+                roles_Access = user?.Roles?.Select(r => r.Access).ToList();
+            }
+            else
+            {
+                throw new Exception("not supported area.");
+            }
+            return roles_Access;
+        }
 
 
         public async Task EnsureStudentLogoutAsync()

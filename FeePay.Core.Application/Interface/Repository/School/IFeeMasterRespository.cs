@@ -20,5 +20,6 @@ namespace FeePay.Core.Application.Interface.Repository.School
         Task<FeeMaster> FindActiveById_WithAddEditUserAsync(int Id, string dbId = null);
         Task<IEnumerable<FeeMaster>> GetAll_WithAddEditUserAsync(string dbId = null);
         Task<FeeMaster> FindById_WithAddEditUserAsync(int Id, string dbId = null);
+        Task<IEnumerable<FeeMaster>> GetByFeeGroupIdAsync(int Id, string dbId);
     }
 }

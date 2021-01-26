@@ -1,0 +1,697 @@
+2021-01-24T13:10:44.7007699+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-24T13:10:44.9720805+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-24T13:10:44.9723361+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-24T13:10:44.9723670+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-24T13:10:45.0276464+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-01-24T13:10:45.0802215+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:10:45.1161447+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-01-24T13:10:45.2187612+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:10:45.2227943+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.5423ms.
+2021-01-24T13:10:45.2410302+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T13:10:45.4401439+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 204.1516ms.
+2021-01-24T13:10:45.4410762+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 324.4055ms
+2021-01-24T13:10:45.4416323+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:10:45.4434122+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 410.6599 ms
+2021-01-24T13:10:45.4495999+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 424.1701ms
+2021-01-24T13:10:45.4916866+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - -
+2021-01-24T13:10:45.4932763+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/css/site.css - -
+2021-01-24T13:10:45.4936721+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - -
+2021-01-24T13:10:45.4955240+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/js/site.js - -
+2021-01-24T13:10:45.4957255+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - -
+2021-01-24T13:10:45.4975404+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/jquery/dist/jquery.min.js" responded 404 in 3.7058 ms
+2021-01-24T13:10:45.4975668+05:30 [INF] (/KARAN/) HTTP "GET" "/css/site.css" responded 404 in 4.1789 ms
+2021-01-24T13:10:45.4975404+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/js/bootstrap.bundle.min.js" responded 404 in 1.6848 ms
+2021-01-24T13:10:45.4976004+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/css/bootstrap.min.css" responded 404 in 4.3890 ms
+2021-01-24T13:10:45.5003310+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - - - 404 - - 4.5419ms
+2021-01-24T13:10:45.5003310+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - - - 404 - - 8.6878ms
+2021-01-24T13:10:45.5003310+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/css/site.css - - - 404 - - 7.0048ms
+2021-01-24T13:10:45.5003310+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - - - 404 - - 6.6233ms
+2021-01-24T13:10:45.5008251+05:30 [INF] (/KARAN/) HTTP "GET" "/js/site.js" responded 404 in 5.0863 ms
+2021-01-24T13:10:45.5226615+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/js/site.js - - - 404 - - 9.0880ms
+2021-01-24T13:30:38.8651637+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-24T13:30:39.0808121+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-24T13:30:39.0809331+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-24T13:30:39.0809545+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-24T13:30:39.1287826+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-01-24T13:30:39.1735591+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:30:39.2004216+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-01-24T13:30:39.2747103+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:30:39.2789709+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.5498ms.
+2021-01-24T13:30:39.2959400+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T13:30:39.4224287+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 130.2782ms.
+2021-01-24T13:30:39.4232052+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 222.3691ms
+2021-01-24T13:30:39.4236459+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:30:39.4250487+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 291.8224 ms
+2021-01-24T13:30:39.4296066+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 302.5809ms
+2021-01-24T13:30:39.4547286+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - -
+2021-01-24T13:30:39.4551891+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/css/site.css - -
+2021-01-24T13:30:39.4677908+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - -
+2021-01-24T13:30:39.4678056+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - -
+2021-01-24T13:30:39.4687149+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/jquery/dist/jquery.min.js" responded 404 in 0.7149 ms
+2021-01-24T13:30:39.4687147+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/css/bootstrap.min.css" responded 404 in 12.6557 ms
+2021-01-24T13:30:39.4687172+05:30 [INF] (/KARAN/) HTTP "GET" "/css/site.css" responded 404 in 12.6570 ms
+2021-01-24T13:30:39.4687162+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/js/bootstrap.bundle.min.js" responded 404 in 0.7378 ms
+2021-01-24T13:30:39.4690557+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/js/site.js - -
+2021-01-24T13:30:39.4817707+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - - - 404 - - 27.0206ms
+2021-01-24T13:30:39.4817710+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/css/site.css - - - 404 - - 26.5285ms
+2021-01-24T13:30:39.4818672+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - - - 404 - - 14.1062ms
+2021-01-24T13:30:39.4896811+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - - - 404 - - 14.0802ms
+2021-01-24T13:30:39.5072767+05:30 [INF] (/KARAN/) HTTP "GET" "/js/site.js" responded 404 in 38.0263 ms
+2021-01-24T13:30:39.5079914+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/js/site.js - - - 404 - - 38.9090ms
+2021-01-24T13:39:39.6763218+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-24T13:39:39.9220835+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-24T13:39:39.9222922+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-24T13:39:39.9223283+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-24T13:39:39.9818144+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-01-24T13:39:40.0272540+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:39:40.0545537+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-01-24T13:39:40.1279641+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:39:40.1318340+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.5269ms.
+2021-01-24T13:39:40.1480753+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T13:39:40.2856499+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 141.0237ms.
+2021-01-24T13:39:40.2864729+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 231.3803ms
+2021-01-24T13:39:40.2869888+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:39:40.2884743+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 302.0365 ms
+2021-01-24T13:39:40.2932678+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 313.4300ms
+2021-01-24T13:39:40.3247629+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - -
+2021-01-24T13:39:40.3253694+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/css/site.css - -
+2021-01-24T13:39:40.3290733+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - -
+2021-01-24T13:39:40.3290735+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/js/site.js - -
+2021-01-24T13:39:40.3290785+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - -
+2021-01-24T13:39:40.3302791+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/js/bootstrap.bundle.min.js" responded 404 in 1.0048 ms
+2021-01-24T13:39:40.3302792+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/jquery/dist/jquery.min.js" responded 404 in 1.0661 ms
+2021-01-24T13:39:40.3303179+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/css/bootstrap.min.css" responded 404 in 4.0775 ms
+2021-01-24T13:39:40.3303808+05:30 [INF] (/KARAN/) HTTP "GET" "/css/site.css" responded 404 in 4.1974 ms
+2021-01-24T13:39:40.3302947+05:30 [INF] (/KARAN/) HTTP "GET" "/js/site.js" responded 404 in 1.0950 ms
+2021-01-24T13:39:40.3343251+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - - - 404 - - 9.2840ms
+2021-01-24T13:39:40.3343218+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - - - 404 - - 4.8866ms
+2021-01-24T13:39:40.3369373+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/js/site.js - - - 404 - - 5.3712ms
+2021-01-24T13:39:40.3371630+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - - - 404 - - 8.0787ms
+2021-01-24T13:39:40.3724222+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/css/site.css - - - 404 - - 47.0417ms
+2021-01-24T13:39:42.0831550+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Authentication - -
+2021-01-24T13:39:42.0867809+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T13:39:42.1004960+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String)" on controller "FeePay.Web.Areas.School.Controllers.AuthenticationController" ("FeePay.Web").
+2021-01-24T13:39:42.1333041+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:39:42.1409199+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-01-24T13:39:42.1412777+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-01-24T13:39:42.1421638+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-01-24T13:39:42.1422279+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-01-24T13:39:42.1423336+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.TwoFactorUserId" signed out.
+2021-01-24T13:39:42.1424440+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 9.0837ms.
+2021-01-24T13:39:42.1432503+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T13:39:42.2693606+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 126.7912ms.
+2021-01-24T13:39:42.2694500+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" in 168.9115ms
+2021-01-24T13:39:42.2694694+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T13:39:42.2694920+05:30 [INF] (/KARAN/) HTTP "GET" "/School/Authentication" responded 200 in 186.2607 ms
+2021-01-24T13:39:42.2707805+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/Authentication - - - 200 - text/html;+charset=utf-8 187.6166ms
+2021-01-24T13:39:50.1704222+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 POST http://localhost:57458/School/Authentication application/x-www-form-urlencoded 272
+2021-01-24T13:39:50.1730289+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T13:39:50.1776814+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(FeePay.Core.Application.DTOs.SchoolLoginViewModel, System.String)" on controller "FeePay.Web.Areas.School.Controllers.AuthenticationController" ("FeePay.Web").
+2021-01-24T13:39:50.2190950+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:39:51.3987433+05:30 [WRN] (/KARAN/) Invalid password for user.
+2021-01-24T13:39:51.3989473+05:30 [WRN] (/KARAN/) User failed to provide the correct password.
+2021-01-24T13:39:51.4014099+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 1182.2607ms.
+2021-01-24T13:39:51.4032889+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T13:39:51.4058177+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 2.6068ms.
+2021-01-24T13:39:51.4068826+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" in 1229.143ms
+2021-01-24T13:39:51.4073730+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T13:39:51.4085731+05:30 [INF] (/KARAN/) HTTP "POST" "/School/Authentication" responded 200 in 1238.0661 ms
+2021-01-24T13:39:51.4093211+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 POST http://localhost:57458/School/Authentication application/x-www-form-urlencoded 272 - 200 - text/html;+charset=utf-8 1238.9743ms
+2021-01-24T13:39:56.9572406+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 POST http://localhost:57458/School/Authentication application/x-www-form-urlencoded 273
+2021-01-24T13:39:56.9575999+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T13:39:56.9578021+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(FeePay.Core.Application.DTOs.SchoolLoginViewModel, System.String)" on controller "FeePay.Web.Areas.School.Controllers.AuthenticationController" ("FeePay.Web").
+2021-01-24T13:39:57.0030068+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:39:57.2140547+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed in.
+2021-01-24T13:39:57.6160201+05:30 [INF] (/KARAN/) User logged in.
+2021-01-24T13:39:57.6165446+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.RedirectToActionResult" in 613.4865ms.
+2021-01-24T13:39:57.6169574+05:30 [INF] (/KARAN/) Executing RedirectResult, redirecting to "/School".
+2021-01-24T13:39:57.6262987+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" in 668.4568ms
+2021-01-24T13:39:57.6263403+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T13:39:57.6263725+05:30 [INF] (/KARAN/) HTTP "POST" "/School/Authentication" responded 302 in 669.0497 ms
+2021-01-24T13:39:57.6269215+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 POST http://localhost:57458/School/Authentication application/x-www-form-urlencoded 273 - 302 - - 669.7127ms
+2021-01-24T13:39:57.6312841+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School - -
+2021-01-24T13:39:57.6345559+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:39:57.6359145+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Areas.School.Controllers.HomeController" ("FeePay.Web").
+2021-01-24T13:39:57.6534478+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:39:57.6536653+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.1787ms.
+2021-01-24T13:39:57.6543687+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T13:39:57.6916782+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 37.9539ms.
+2021-01-24T13:39:57.6917390+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)" in 55.7889ms
+2021-01-24T13:39:57.6917527+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:39:57.6917712+05:30 [INF] (/KARAN/) HTTP "GET" "/School" responded 200 in 60.4181 ms
+2021-01-24T13:39:57.6932958+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School - - - 200 - text/html;+charset=utf-8 61.9829ms
+2021-01-24T13:40:06.0948302+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - -
+2021-01-24T13:40:06.0960264+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T13:40:06.0981291+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"ClassList\", controller = \"Academic\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ClassList()" on controller "FeePay.Web.Areas.School.Controllers.AcademicController" ("FeePay.Web").
+2021-01-24T13:40:06.1168779+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:40:06.2275096+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 110.5783ms.
+2021-01-24T13:40:06.2282471+05:30 [INF] (/KARAN/) Executing ViewResult, running view "ClassList".
+2021-01-24T13:40:23.0674722+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" in 16969.2942ms
+2021-01-24T13:40:23.0676332+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T13:40:23.0681706+05:30 [ERR] (/KARAN/) HTTP "GET" "/School/Academics/Classes" responded 500 in 16973.2699 ms
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_School_Views_Academic_ClassList.<>c.<ExecuteAsync>b__21_5(Section s) in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 81
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at AspNetCore.Areas_School_Views_Academic_ClassList.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 81
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-24T13:40:23.0700828+05:30 [ERR] (/KARAN/) An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_School_Views_Academic_ClassList.<>c.<ExecuteAsync>b__21_5(Section s) in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 81
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at AspNetCore.Areas_School_Views_Academic_ClassList.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 81
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-24T13:40:23.1364012+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - - - 500 - text/html;+charset=utf-8 17041.5451ms
+2021-01-24T13:40:52.6186144+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - -
+2021-01-24T13:40:52.6272143+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T13:40:52.6273374+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"ClassList\", controller = \"Academic\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ClassList()" on controller "FeePay.Web.Areas.School.Controllers.AcademicController" ("FeePay.Web").
+2021-01-24T13:40:52.6590842+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:40:52.7722531+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 113.1152ms.
+2021-01-24T13:40:52.7724268+05:30 [INF] (/KARAN/) Executing ViewResult, running view "ClassList".
+2021-01-24T13:45:26.0031607+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-24T13:45:26.2088453+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-24T13:45:26.2089582+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-24T13:45:26.2089741+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-24T13:45:26.2642414+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-01-24T13:45:26.3248344+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:45:26.3502183+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-01-24T13:45:26.4295477+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:45:26.4343056+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.5866ms.
+2021-01-24T13:45:26.4583220+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T13:45:26.5911922+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 142.1921ms.
+2021-01-24T13:45:26.5922791+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 241.5874ms
+2021-01-24T13:45:26.5929051+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:45:26.5944193+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 325.6491 ms
+2021-01-24T13:45:26.5992482+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 336.9544ms
+2021-01-24T13:45:26.6284399+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - -
+2021-01-24T13:45:26.6284397+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/css/site.css - -
+2021-01-24T13:45:26.6735329+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - -
+2021-01-24T13:45:26.6735329+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/js/site.js - -
+2021-01-24T13:45:26.6735332+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - -
+2021-01-24T13:45:26.6929236+05:30 [INF] (/KARAN/) HTTP "GET" "/css/site.css" responded 404 in 63.2319 ms
+2021-01-24T13:45:26.6929236+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/js/bootstrap.bundle.min.js" responded 404 in 19.2147 ms
+2021-01-24T13:45:26.7010709+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/jquery/dist/jquery.min.js" responded 404 in 19.2357 ms
+2021-01-24T13:45:26.7010708+05:30 [INF] (/KARAN/) HTTP "GET" "/js/site.js" responded 404 in 27.3714 ms
+2021-01-24T13:45:26.7024194+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/css/bootstrap.min.css" responded 404 in 72.7291 ms
+2021-01-24T13:45:26.7056559+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/css/site.css - - - 404 - - 77.0274ms
+2021-01-24T13:45:26.7056737+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/js/site.js - - - 404 - - 32.1098ms
+2021-01-24T13:45:26.7056664+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - - - 404 - - 32.0024ms
+2021-01-24T13:45:26.7057952+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - - - 404 - - 77.3946ms
+2021-01-24T13:45:26.7059447+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - - - 404 - - 32.4204ms
+2021-01-24T13:45:26.7703525+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - -
+2021-01-24T13:45:26.7884915+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/js/bootstrap.bundle.min.js" responded 404 in 18.0322 ms
+2021-01-24T13:45:26.7891309+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - - - 404 - - 18.7723ms
+2021-01-24T13:45:26.7937492+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/js/site.js - -
+2021-01-24T13:45:26.7942688+05:30 [INF] (/KARAN/) HTTP "GET" "/js/site.js" responded 404 in 0.4032 ms
+2021-01-24T13:45:26.7948935+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/js/site.js - - - 404 - - 1.1360ms
+2021-01-24T13:45:29.7357711+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Authentication - -
+2021-01-24T13:45:29.7371235+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T13:45:29.7523885+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String)" on controller "FeePay.Web.Areas.School.Controllers.AuthenticationController" ("FeePay.Web").
+2021-01-24T13:45:29.7775371+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:45:29.7806178+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.RedirectToActionResult" in 3ms.
+2021-01-24T13:45:29.7809993+05:30 [INF] (/KARAN/) Executing RedirectResult, redirecting to "/School".
+2021-01-24T13:45:29.7811400+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" in 28.702ms
+2021-01-24T13:45:29.7811666+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T13:45:29.7811828+05:30 [INF] (/KARAN/) HTTP "GET" "/School/Authentication" responded 302 in 45.3383 ms
+2021-01-24T13:45:29.7820095+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/Authentication - - - 302 - - 46.2225ms
+2021-01-24T13:45:29.7853116+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School - -
+2021-01-24T13:45:29.7857891+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:45:29.7868048+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Areas.School.Controllers.HomeController" ("FeePay.Web").
+2021-01-24T13:45:29.8028421+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:45:29.8030975+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.189ms.
+2021-01-24T13:45:29.8039074+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T13:45:29.9182841+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 114.9818ms.
+2021-01-24T13:45:29.9183856+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)" in 131.5289ms
+2021-01-24T13:45:29.9184351+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T13:45:29.9184786+05:30 [INF] (/KARAN/) HTTP "GET" "/School" responded 200 in 133.1052 ms
+2021-01-24T13:45:29.9199229+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School - - - 200 - text/html;+charset=utf-8 134.5718ms
+2021-01-24T13:45:33.5172658+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - -
+2021-01-24T13:45:33.5227992+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T13:45:33.5250122+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"ClassList\", controller = \"Academic\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ClassList()" on controller "FeePay.Web.Areas.School.Controllers.AcademicController" ("FeePay.Web").
+2021-01-24T13:45:33.5446653+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:45:34.2605790+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 715.8637ms.
+2021-01-24T13:45:34.2637792+05:30 [INF] (/KARAN/) Executing ViewResult, running view "ClassList".
+2021-01-24T13:45:54.4173939+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" in 20892.2894ms
+2021-01-24T13:45:54.4181442+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T13:45:54.4199731+05:30 [ERR] (/KARAN/) HTTP "GET" "/School/Academics/Classes" responded 500 in 20902.5713 ms
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_School_Views_Academic_ClassList.<>c.<ExecuteAsync>b__21_9(Section s) in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at AspNetCore.Areas_School_Views_Academic_ClassList.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-24T13:45:54.4234647+05:30 [ERR] (/KARAN/) An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_School_Views_Academic_ClassList.<>c.<ExecuteAsync>b__21_9(Section s) in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at AspNetCore.Areas_School_Views_Academic_ClassList.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-24T13:45:54.4892007+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - - - 500 - text/html;+charset=utf-8 20971.9399ms
+2021-01-24T13:46:06.6411556+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - -
+2021-01-24T13:46:06.6421933+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T13:46:06.6423241+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"ClassList\", controller = \"Academic\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ClassList()" on controller "FeePay.Web.Areas.School.Controllers.AcademicController" ("FeePay.Web").
+2021-01-24T13:46:06.6616224+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" - Validation state: Valid
+2021-01-24T13:46:06.7537538+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 92.0902ms.
+2021-01-24T13:46:06.7539200+05:30 [INF] (/KARAN/) Executing ViewResult, running view "ClassList".
+2021-01-24T13:46:46.9143772+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" in 40272.0102ms
+2021-01-24T13:46:46.9145662+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T13:46:46.9150772+05:30 [ERR] (/KARAN/) HTTP "GET" "/School/Academics/Classes" responded 500 in 40273.8665 ms
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_School_Views_Academic_ClassList.<>c.<ExecuteAsync>b__21_9(Section s) in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at AspNetCore.Areas_School_Views_Academic_ClassList.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-24T13:46:46.9153437+05:30 [ERR] (/KARAN/) An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_School_Views_Academic_ClassList.<>c.<ExecuteAsync>b__21_9(Section s) in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at AspNetCore.Areas_School_Views_Academic_ClassList.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-24T13:46:46.9370072+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - - - 500 - text/html;+charset=utf-8 40295.8716ms
+2021-01-24T13:46:49.9600452+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - -
+2021-01-24T13:46:49.9685900+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T13:46:49.9686863+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"ClassList\", controller = \"Academic\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ClassList()" on controller "FeePay.Web.Areas.School.Controllers.AcademicController" ("FeePay.Web").
+2021-01-24T13:46:49.9909464+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:01:24.1406110+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-24T14:01:24.3961210+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-24T14:01:24.3962439+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-24T14:01:24.3962699+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-24T14:01:24.4471044+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-01-24T14:01:24.5307809+05:30 [INF] (/KARAN/) "Identity.Application" was not authenticated. Failure message: "Ticket expired"
+2021-01-24T14:01:24.5337949+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T14:01:24.5954482+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-01-24T14:01:24.7130575+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:01:24.7197904+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 1.0426ms.
+2021-01-24T14:01:24.7447244+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T14:01:24.8969643+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 158.9109ms.
+2021-01-24T14:01:24.8977946+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 301.5323ms
+2021-01-24T14:01:24.8985836+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T14:01:24.9005408+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 446.9564 ms
+2021-01-24T14:01:24.9057307+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 460.3999ms
+2021-01-24T14:01:24.9332646+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - -
+2021-01-24T14:01:24.9363413+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/css/site.css - -
+2021-01-24T14:01:24.9476389+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - -
+2021-01-24T14:01:24.9476343+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/js/site.js - -
+2021-01-24T14:01:24.9479168+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - -
+2021-01-24T14:01:24.9479907+05:30 [INF] (/KARAN/) "Identity.Application" was not authenticated. Failure message: "Ticket expired"
+2021-01-24T14:01:24.9504159+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/css/bootstrap.min.css" responded 404 in 15.3017 ms
+2021-01-24T14:01:24.9589496+05:30 [INF] (/KARAN/) "Identity.Application" was not authenticated. Failure message: "Ticket expired"
+2021-01-24T14:01:24.9590203+05:30 [INF] (/KARAN/) HTTP "GET" "/css/site.css" responded 404 in 22.3031 ms
+2021-01-24T14:01:24.9631646+05:30 [INF] (/KARAN/) "Identity.Application" was not authenticated. Failure message: "Ticket expired"
+2021-01-24T14:01:24.9631659+05:30 [INF] (/KARAN/) "Identity.Application" was not authenticated. Failure message: "Ticket expired"
+2021-01-24T14:01:24.9631640+05:30 [INF] (/KARAN/) "Identity.Application" was not authenticated. Failure message: "Ticket expired"
+2021-01-24T14:01:24.9632589+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/jquery/dist/jquery.min.js" responded 404 in 15.2257 ms
+2021-01-24T14:01:24.9632590+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/js/bootstrap.bundle.min.js" responded 404 in 15.4040 ms
+2021-01-24T14:01:24.9632591+05:30 [INF] (/KARAN/) HTTP "GET" "/js/site.js" responded 404 in 15.4041 ms
+2021-01-24T14:01:24.9634802+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/css/site.css - - - 404 - - 27.1379ms
+2021-01-24T14:01:24.9834123+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - - - 404 - - 30.3408ms
+2021-01-24T14:01:24.9854525+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - - - 404 - - 37.7423ms
+2021-01-24T14:01:24.9974144+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - - - 404 - - 48.0060ms
+2021-01-24T14:01:24.9974144+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/js/site.js - - - 404 - - 49.7388ms
+2021-01-24T14:01:26.7671539+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Authentication - -
+2021-01-24T14:01:26.7699884+05:30 [INF] (/KARAN/) "Identity.Application" was not authenticated. Failure message: "Ticket expired"
+2021-01-24T14:01:26.7700764+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T14:01:26.7858285+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String)" on controller "FeePay.Web.Areas.School.Controllers.AuthenticationController" ("FeePay.Web").
+2021-01-24T14:01:26.8176824+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:01:26.8249385+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-01-24T14:01:26.8253874+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-01-24T14:01:26.8265838+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-01-24T14:01:26.8266615+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-01-24T14:01:26.8267688+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.TwoFactorUserId" signed out.
+2021-01-24T14:01:26.8268970+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 9.159ms.
+2021-01-24T14:01:26.8279310+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T14:01:26.9457217+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 118.5543ms.
+2021-01-24T14:01:26.9458556+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" in 159.9867ms
+2021-01-24T14:01:26.9458814+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T14:01:26.9459114+05:30 [INF] (/KARAN/) HTTP "GET" "/School/Authentication" responded 200 in 178.6022 ms
+2021-01-24T14:01:26.9470493+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/Authentication - - - 200 - text/html;+charset=utf-8 180.0164ms
+2021-01-24T14:01:32.6774273+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 POST http://localhost:57458/School/Authentication application/x-www-form-urlencoded 273
+2021-01-24T14:01:32.6809174+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T14:01:32.6856096+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(FeePay.Core.Application.DTOs.SchoolLoginViewModel, System.String)" on controller "FeePay.Web.Areas.School.Controllers.AuthenticationController" ("FeePay.Web").
+2021-01-24T14:01:32.7335547+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:01:33.7854012+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed in.
+2021-01-24T14:01:33.9269447+05:30 [INF] (/KARAN/) User logged in.
+2021-01-24T14:01:33.9286186+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.RedirectToActionResult" in 1195.0009ms.
+2021-01-24T14:01:33.9309021+05:30 [INF] (/KARAN/) Executing RedirectResult, redirecting to "/School".
+2021-01-24T14:01:33.9485395+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)" in 1262.8669ms
+2021-01-24T14:01:33.9492358+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-24T14:01:33.9510213+05:30 [INF] (/KARAN/) HTTP "POST" "/School/Authentication" responded 302 in 1273.4714 ms
+2021-01-24T14:01:33.9523701+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 POST http://localhost:57458/School/Authentication application/x-www-form-urlencoded 273 - 302 - - 1275.0184ms
+2021-01-24T14:01:33.9566463+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School - -
+2021-01-24T14:01:33.9592992+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T14:01:33.9600993+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Areas.School.Controllers.HomeController" ("FeePay.Web").
+2021-01-24T14:01:33.9876292+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:01:33.9878595+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.185ms.
+2021-01-24T14:01:33.9886746+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T14:01:34.0294961+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 41.5765ms.
+2021-01-24T14:01:34.0295461+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)" in 69.4157ms
+2021-01-24T14:01:34.0295673+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T14:01:34.0295812+05:30 [INF] (/KARAN/) HTTP "GET" "/School" responded 200 in 72.8921 ms
+2021-01-24T14:01:34.0311966+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School - - - 200 - text/html;+charset=utf-8 74.5150ms
+2021-01-24T14:01:37.0705571+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Academics/Sections - -
+2021-01-24T14:01:37.0728628+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.SectionList (FeePay.Web)"'
+2021-01-24T14:01:37.0751583+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"SectionList\", controller = \"Academic\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] SectionList()" on controller "FeePay.Web.Areas.School.Controllers.AcademicController" ("FeePay.Web").
+2021-01-24T14:01:37.0932916+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AcademicController.SectionList (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:01:37.2000678+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AcademicController.SectionList (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 106.6692ms.
+2021-01-24T14:01:37.2006986+05:30 [INF] (/KARAN/) Executing ViewResult, running view "SectionList".
+2021-01-24T14:01:37.2105188+05:30 [INF] (/KARAN/) Executed ViewResult - view "SectionList" executed in 10.2938ms.
+2021-01-24T14:01:37.2106596+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AcademicController.SectionList (FeePay.Web)" in 135.4681ms
+2021-01-24T14:01:37.2107994+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.SectionList (FeePay.Web)"'
+2021-01-24T14:01:37.2108990+05:30 [INF] (/KARAN/) HTTP "GET" "/School/Academics/Sections" responded 200 in 140.2681 ms
+2021-01-24T14:01:37.2115816+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/Academics/Sections - - - 200 - text/html;+charset=utf-8 141.0154ms
+2021-01-24T14:01:38.6963844+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - -
+2021-01-24T14:01:38.7090022+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T14:01:38.7115494+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"ClassList\", controller = \"Academic\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ClassList()" on controller "FeePay.Web.Areas.School.Controllers.AcademicController" ("FeePay.Web").
+2021-01-24T14:01:38.7288887+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:01:40.4272693+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 1698.3413ms.
+2021-01-24T14:01:40.4277746+05:30 [INF] (/KARAN/) Executing ViewResult, running view "ClassList".
+2021-01-24T14:01:46.2687072+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" in 7557.0823ms
+2021-01-24T14:01:46.2688799+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T14:01:46.2694574+05:30 [ERR] (/KARAN/) HTTP "GET" "/School/Academics/Classes" responded 500 in 7573.0266 ms
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_School_Views_Academic_ClassList.<>c.<ExecuteAsync>b__21_9(Section s) in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at AspNetCore.Areas_School_Views_Academic_ClassList.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-24T14:01:46.2719363+05:30 [ERR] (/KARAN/) An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_School_Views_Academic_ClassList.<>c.<ExecuteAsync>b__21_9(Section s) in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at AspNetCore.Areas_School_Views_Academic_ClassList.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-24T14:01:46.3359945+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - - - 500 - text/html;+charset=utf-8 7639.5830ms
+2021-01-24T14:02:18.5876307+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - -
+2021-01-24T14:02:18.5889406+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T14:02:18.5968506+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"ClassList\", controller = \"Academic\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ClassList()" on controller "FeePay.Web.Areas.School.Controllers.AcademicController" ("FeePay.Web").
+2021-01-24T14:02:18.6119512+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:02:21.8017027+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 3189.7007ms.
+2021-01-24T14:02:21.8018788+05:30 [INF] (/KARAN/) Executing ViewResult, running view "ClassList".
+2021-01-24T14:02:29.8400864+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" in 11243.1617ms
+2021-01-24T14:02:29.8402928+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T14:02:29.8408080+05:30 [ERR] (/KARAN/) HTTP "GET" "/School/Academics/Classes" responded 500 in 11253.1297 ms
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_School_Views_Academic_ClassList.<>c.<ExecuteAsync>b__21_9(Section s) in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at AspNetCore.Areas_School_Views_Academic_ClassList.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-24T14:02:29.8411609+05:30 [ERR] (/KARAN/) An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_School_Views_Academic_ClassList.<>c.<ExecuteAsync>b__21_9(Section s) in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at System.Linq.Enumerable.SelectListIterator`2.ToArray()
+   at AspNetCore.Areas_School_Views_Academic_ClassList.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\School\Views\Academic\ClassList.cshtml:line 89
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-24T14:02:29.8539466+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - - - 500 - text/html;+charset=utf-8 11266.3190ms
+2021-01-24T14:02:30.0428465+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/favicon.ico - -
+2021-01-24T14:02:30.0590565+05:30 [INF] (/KARAN/) Sending file. Request path: '"/favicon.ico"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\favicon.ico"'
+2021-01-24T14:02:30.0594339+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/favicon.ico - - - 200 5430 image/x-icon 16.5592ms
+2021-01-24T14:02:45.4317674+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-24T14:02:45.6558424+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-24T14:02:45.6560031+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-24T14:02:45.6560621+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-24T14:02:45.7108223+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-01-24T14:02:45.7719627+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T14:02:45.7985095+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-01-24T14:02:45.8497433+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:02:45.8535823+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.5297ms.
+2021-01-24T14:02:45.8691603+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T14:02:45.9869353+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 120.9612ms.
+2021-01-24T14:02:45.9879680+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 188.8335ms
+2021-01-24T14:02:45.9886459+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T14:02:45.9901399+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 274.6469 ms
+2021-01-24T14:02:45.9951550+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 286.1937ms
+2021-01-24T14:02:46.0362087+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - -
+2021-01-24T14:02:46.0362755+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/js/site.js - -
+2021-01-24T14:02:46.0362690+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/css/site.css - -
+2021-01-24T14:02:46.0362863+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - -
+2021-01-24T14:02:46.0364816+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - -
+2021-01-24T14:02:46.0510771+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/css/bootstrap.min.css" responded 404 in 13.4924 ms
+2021-01-24T14:02:46.0510772+05:30 [INF] (/KARAN/) HTTP "GET" "/js/site.js" responded 404 in 13.5075 ms
+2021-01-24T14:02:46.0510772+05:30 [INF] (/KARAN/) HTTP "GET" "/css/site.css" responded 404 in 13.4842 ms
+2021-01-24T14:02:46.0512167+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/bootstrap/dist/js/bootstrap.bundle.min.js" responded 404 in 13.6194 ms
+2021-01-24T14:02:46.0664655+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/css/bootstrap.min.css - - - 404 - - 38.7824ms
+2021-01-24T14:02:46.0664653+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/bootstrap/dist/js/bootstrap.bundle.min.js - - - 404 - - 29.9381ms
+2021-01-24T14:02:46.0664654+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/css/site.css - - - 404 - - 30.1289ms
+2021-01-24T14:02:46.0667047+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/js/site.js - - - 404 - - 30.4288ms
+2021-01-24T14:02:46.0839814+05:30 [INF] (/KARAN/) HTTP "GET" "/lib/jquery/dist/jquery.min.js" responded 404 in 46.3496 ms
+2021-01-24T14:02:46.0850266+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/jquery/dist/jquery.min.js - - - 404 - - 48.6625ms
+2021-01-24T14:02:49.3885674+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Account/ManageRole - -
+2021-01-24T14:02:49.4215224+05:30 [INF] (/KARAN/) HTTP "GET" "/School/Account/ManageRole" responded 404 in 32.8493 ms
+2021-01-24T14:02:49.4223549+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/Account/ManageRole - - - 404 - - 33.8293ms
+2021-01-24T14:02:54.6529678+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/ - -
+2021-01-24T14:02:54.6541990+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T14:02:54.6570715+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Areas.School.Controllers.HomeController" ("FeePay.Web").
+2021-01-24T14:02:54.6814493+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:02:54.6817353+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.2199ms.
+2021-01-24T14:02:54.6836306+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-24T14:02:54.8120490+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 129.9138ms.
+2021-01-24T14:02:54.8121662+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)" in 155.0387ms
+2021-01-24T14:02:54.8121907+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-24T14:02:54.8122133+05:30 [INF] (/KARAN/) HTTP "GET" "/School/" responded 200 in 159.1578 ms
+2021-01-24T14:02:54.8141678+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/ - - - 200 - text/html;+charset=utf-8 161.2133ms
+2021-01-24T14:02:58.4289378+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - -
+2021-01-24T14:02:58.4352541+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T14:02:58.4404909+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"ClassList\", controller = \"Academic\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ClassList()" on controller "FeePay.Web.Areas.School.Controllers.AcademicController" ("FeePay.Web").
+2021-01-24T14:02:58.4572759+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:02:59.2458176+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 788.4436ms.
+2021-01-24T14:02:59.2485808+05:30 [INF] (/KARAN/) Executing ViewResult, running view "ClassList".
+2021-01-24T14:03:19.0402045+05:30 [INF] (/KARAN/) Executed ViewResult - view "ClassList" executed in 19792.2327ms.
+2021-01-24T14:03:19.0412385+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)" in 20600.6903ms
+2021-01-24T14:03:19.0416166+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassList (FeePay.Web)"'
+2021-01-24T14:03:19.0429373+05:30 [INF] (/KARAN/) HTTP "GET" "/School/Academics/Classes" responded 200 in 20613.8834 ms
+2021-01-24T14:03:19.0438602+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/School/Academics/Classes - - - 200 - text/html;+charset=utf-8 20614.9267ms
+2021-01-24T14:03:25.9607191+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Academics/Classes/Manage/100 - -
+2021-01-24T14:03:25.9625979+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AcademicController.ClassManage (FeePay.Web)"'
+2021-01-24T14:03:25.9740078+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"ClassManage\", controller = \"Academic\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ClassManage(System.Nullable`1[System.Int32])" on controller "FeePay.Web.Areas.School.Controllers.AcademicController" ("FeePay.Web").
+2021-01-24T14:03:26.0077825+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassManage (FeePay.Web)" - Validation state: Valid
+2021-01-24T14:03:26.3604841+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.School.Controllers.AcademicController.ClassManage (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 352.615ms.
+2021-01-24T14:03:26.3614463+05:30 [INF] (/KARAN/) Executing ViewResult, running view "ClassManage".
+2021-01-24T14:03:26.3953943+05:30 [INF] (/KARAN/) Executed ViewResult - view "ClassManage" executed in 34.7527ms.
+2021-01-24T14:03:26.3954955+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.School.Controllers.AcademicController.ClassManage (FeePay.Web)" in 421.4408ms

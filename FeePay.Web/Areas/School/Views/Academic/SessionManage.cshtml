@@ -2,8 +2,11 @@
 @{
 }
 @section Style{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/date-picker.css")">
 }
 @section Scripts{
+    <script src="@Url.Content("~/Cuba/js/datepicker/date-picker/datepicker.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/datepicker/date-picker/datepicker.en.js")"></script>
     <script src="@Url.Content("~/Cuba/js/clipboard/clipboard.min.js")"></script>
     <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
     <partial name="_ValidationScriptsPartial" />
@@ -52,10 +55,28 @@
                         <input asp-for="Id" type="hidden" />
                         <div class="row">
                             <div class="col">
+                                @if (Model != null && Model.IsActive)
+                                {<label class="badge badge-success">Active</label>}
                                 <div class="form-group">
                                     <label asp-for="Year">Year *</label>
                                     <input asp-for="Year" class="form-control" type="text" placeholder="Name">
                                     <div class="invalid-feedback"><span asp-validation-for="Year"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label asp-for="StartYear">Session Start</label>
+                                    <input asp-for="StartYear" class="datepicker-here form-control" type="text" data-language="en" placeholder="dd/MM/yyyy" autocomplete="off" data-date-format="dd/mm/yyyy">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label asp-for="EndYear">Session End</label>
+                                    <input asp-for="EndYear" class="datepicker-here form-control" type="text" data-language="en" placeholder="dd/MM/yyyy" autocomplete="off" data-date-format="dd/mm/yyyy">
                                 </div>
                             </div>
                         </div>
@@ -67,15 +88,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label asp-for="IsActive">
-                                        <input class="checkbox_animated" asp-for="IsActive" type="checkbox"> Active
-                                    </label>
+                        @*<div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label asp-for="IsActive">
+                                            <input class="checkbox_animated" asp-for="IsActive" type="checkbox"> Active
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div>*@
                     </div>
                     <div class="card-footer">
                         <div class="row">

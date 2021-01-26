@@ -46,12 +46,12 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-form-label">Email Address</label>
-                                    <input asp-for="Email" class="form-control" type="email" required="" placeholder="Test@gmail.com">
-                                    <div class="invalid-feedback"><span asp-validation-for="Email"></span></div>
+                                    <label asp-for="UserName" class="col-form-label">User Name</label>
+                                    <input asp-for="UserName" class="form-control" type="text" required="">
+                                    <div class="invalid-feedback"><span asp-validation-for="UserName"></span></div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-form-label">Password</label>
+                                    <label asp-for="Password" class="col-form-label">Password</label>
                                     <input asp-for="Password" class="form-control" type="password" required="" placeholder="*********">
                                     <div class="invalid-feedback"><span asp-validation-for="Password"></span></div>
                                     <div class="show-hide"><span class="show"></span></div>
@@ -60,6 +60,7 @@
                                     <div class="checkbox p-0">
                                         <input asp-for="RememberMe" type="checkbox">
                                         <label asp-for="RememberMe" class="text-muted">Remember password</label>
+                                        <input asp-for="Email" type="hidden" value="test@test.com" />
                                     </div>
                                     <button class="btn btn-primary btn-block" type="submit">Sign in</button>
                                 </div>

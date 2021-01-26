@@ -1,60 +1,63 @@
-﻿using FeePay.Core.Application.Interface.Repository;
-using FeePay.Core.Domain.Entities.Identity;
-using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using FeePay.Core.Application.Interface.Repository;
+using FeePay.Core.Application.Interface.Service;
+using FeePay.Core.Domain.Entities.Identity;
 
 namespace FeePay.Infrastructure.Identity.IdentityStore
 {
     public class StudentLoginStore : IUserStore<StudentLogin>, IUserEmailStore<StudentLogin>, IUserPhoneNumberStore<StudentLogin>,
         IUserTwoFactorStore<StudentLogin>, IUserPasswordStore<StudentLogin>
     {
-        public StudentLoginStore(IUnitOfWork unitOfWork)
+        public StudentLoginStore(IUnitOfWork unitOfWork, IAppContextAccessor appContextAccessor)
         {
-            _UnitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
+            _appContextAccessor = appContextAccessor;
         }
-        private readonly IUnitOfWork _UnitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAppContextAccessor _appContextAccessor;
         public async Task<IdentityResult> CreateAsync(StudentLogin user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            user.Id = await _UnitOfWork.StudentLogin.AddUserAsync(user);
+            user.Id = await _unitOfWork.StudentLogin.AddUserAsync(user, _appContextAccessor.ClaimSchoolUniqueId());
             return IdentityResult.Success;
         }
 
         public async Task<IdentityResult> UpdateAsync(StudentLogin user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await _UnitOfWork.StudentLogin.UpdateUserAsync(user);
+            await _unitOfWork.StudentLogin.UpdateUserAsync(user, _appContextAccessor.ClaimSchoolUniqueId());
             return IdentityResult.Success;
         }
 
         public async Task<IdentityResult> DeleteAsync(StudentLogin user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await _UnitOfWork.StudentLogin.DeleteUserAsync(user.Id);
+            await _unitOfWork.StudentLogin.DeleteUserAsync(user.Id, _appContextAccessor.ClaimSchoolUniqueId());
             return IdentityResult.Success;
         }
 
         public async Task<StudentLogin> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return await _UnitOfWork.StudentLogin.FindActiveUserByUserIdAsync(Convert.ToInt32(userId));
+            return await _unitOfWork.StudentLogin.FindActiveUserByUserIdAsync(Convert.ToInt32(userId), _appContextAccessor.ClaimSchoolUniqueId());
         }
 
         public async Task<StudentLogin> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return await _UnitOfWork.StudentLogin.FindActiveUserByUserNameAsync(normalizedUserName);
+            return await _unitOfWork.StudentLogin.FindActiveUserByUserNameAsync(normalizedUserName, _appContextAccessor.ClaimSchoolUniqueId());
         }
 
         public async Task<StudentLogin> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return await _UnitOfWork.StudentLogin.FindActiveUserByUserEmailAsync(normalizedEmail);
+            return await _unitOfWork.StudentLogin.FindActiveUserByUserEmailAsync(normalizedEmail, _appContextAccessor.ClaimSchoolUniqueId());
         }
 
         //

@@ -1,4 +1,9 @@
-﻿CREATE PROCEDURE [dbo].[SP_Delete_Section]
+﻿-- =============================================
+-- Author:		Karan
+-- Create date: 21-01-2021
+-- Description:	Sp to delete (isdelete column true) Section data
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_Delete_Section]
 	(
 	@Id INT,
 	@ModifyBy INT = NULL

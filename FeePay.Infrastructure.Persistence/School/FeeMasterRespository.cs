@@ -36,7 +36,7 @@ namespace FeePay.Infrastructure.Persistence.School
                     feeMaster.Amount,
                     feeMaster.DueDate,
                     feeMaster.Description,
-                    feeMaster.IsActive,
+                    IsActive = true,
                     feeMaster.AddedBy
                 };
                 return await connection.ExecuteScalarAsync<int>(_dBVariables.SP_Add_FeeMaster,
@@ -64,7 +64,7 @@ namespace FeePay.Infrastructure.Persistence.School
                     feeMaster.Amount,
                     feeMaster.DueDate,
                     feeMaster.Description,
-                    feeMaster.IsActive,
+                    IsActive = true,
                     feeMaster.ModifyBy
                 };
                 return await connection.ExecuteAsync(_dBVariables.SP_Update_FeeMaster,
@@ -288,6 +288,29 @@ namespace FeePay.Infrastructure.Persistence.School
                     splitOn: "Id,Id,Id,Id,Id",
                     commandType: CommandType.StoredProcedure);
                 return list?.FirstOrDefault();
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+
+        public async Task<IEnumerable<FeeMaster>> GetByFeeGroupIdAsync(int Id, string dbId)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var list = await connection.QueryAsync<FeeMaster, FeeType, FeeGroup, FeeMaster>(_dBVariables.SP_Get_FeeMaster,
+                    (feemaster, feetype, feegroup) => { feemaster.FeeType = feetype; feemaster.FeeGroup = feegroup; return feemaster; },
+                    new { FeeGroupId = Id, IsActive = true }
+                    , splitOn: "Id,Id,Id",
+                    commandType: CommandType.StoredProcedure);
+
+                return list;
             }
             catch (TimeoutException ex)
             {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FeePay.Core.Domain.Entities.School
+namespace FeePay.Core.Domain.Entities.SuperAdmin
 {
     public class RegisteredSchool : BaseEntitie
     {

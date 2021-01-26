@@ -1,15 +1,15 @@
-﻿using Dapper;
-using FeePay.Core.Application.Interface;
-using FeePay.Core.Application.Interface.Common;
-using FeePay.Core.Application.Interface.Repository.SuperAdmin;
-using FeePay.Core.Domain.Entities.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
+using FeePay.Core.Application.Interface;
+using FeePay.Core.Application.Interface.Common;
+using FeePay.Core.Application.Interface.Repository.SuperAdmin;
+using FeePay.Core.Domain.Entities.Identity;
 
 namespace FeePay.Infrastructure.Persistence.SuperAdmin
 {
@@ -17,30 +17,26 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
     { 
         public SuperAdminRoleRepository(IConnectionStringBuilder connectionStringBuilder, IDBVariables dBVariables)
         {
-            _ConnectionStringBuilder = connectionStringBuilder;
             _DefaultConnectionString = connectionStringBuilder.GetDefaultConnectionString();
             _DBVariables = dBVariables;
         }
         private readonly IDBVariables _DBVariables;
         private readonly string _DefaultConnectionString;
-        private readonly IConnectionStringBuilder _ConnectionStringBuilder;
 
         public async Task<int> AddRoleAsync(SuperAdminRole role, string dbId = null)
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
+                using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
                     var SpRequiredParameters = new
                     {
-                        AddedBy = role.AddedBy,
-                        IsActive = role.IsActive,
-                        NormalizedName = role.NormalizedName,
-                        Name = role.Name
+                        role.AddedBy,
+                        role.IsActive,
+                        role.NormalizedName,
+                        role.Name
                     };
                     return await connection.ExecuteAsync(_DBVariables.SP_Add_SuperAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
 
-                }
             }
             catch (TimeoutException ex)
             {
@@ -55,19 +51,17 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
+                using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
                     var SpRequiredParameters = new
                     {
-                        Id = role.Id,
-                        IsActive = role.IsActive,
-                        NormalizedName = role.NormalizedName,
-                        Name = role.Name,
-                        ModifyBy = role.ModifyBy
+                         role.Id,
+                         role.IsActive,
+                         role.NormalizedName,
+                         role.Name,
+                         role.ModifyBy
                     };
                     return await connection.ExecuteAsync(_DBVariables.SP_Update_SuperAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
 
-                }
             }
             catch (TimeoutException ex)
             {
@@ -82,10 +76,9 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
         {
             try
             {
-                await using (var connection = new SqlConnection(_DefaultConnectionString))
-                {
-                    return await connection.ExecuteAsync(_DBVariables.SP_Delete_SuperAdmin_Role, new { Id = Id }, null, null, CommandType.StoredProcedure);
-                }
+                using var connection = new SqlConnection(_DefaultConnectionString);
+                    return await connection.ExecuteAsync(_DBVariables.SP_Delete_SuperAdmin_Role, new { Id }, null, null, CommandType.StoredProcedure);
+                
             }
             catch (TimeoutException ex)
             {
@@ -101,11 +94,10 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
+                using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
                     var SpRequiredParameters = new { Id = roleId };
                     return await connection.QuerySingleOrDefaultAsync<SuperAdminRole>(_DBVariables.SP_Get_SuperAdmin_Role, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
+                
             }
             catch (TimeoutException ex)
             {
@@ -120,11 +112,10 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
+                using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
                     var SpRequiredParameters = new { NormalizedName = normalizedName };
                     return await connection.QuerySingleOrDefaultAsync<SuperAdminRole>(_DBVariables.SP_Get_SuperAdmin_Role, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
+                
             }
             catch (TimeoutException ex)
             {
@@ -139,11 +130,10 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
+                using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
                     var SpRequiredParameters = new { Id = roleId, IsActive = true };
                     return await connection.QuerySingleOrDefaultAsync<SuperAdminRole>(_DBVariables.SP_Get_SuperAdmin_Role, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
+                
             }
             catch (TimeoutException ex)
             {
@@ -158,11 +148,10 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
+                using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
                     var SpRequiredParameters = new { NormalizedName = normalizedName, IsActive = true };
                     return await connection.QuerySingleOrDefaultAsync<SuperAdminRole>(_DBVariables.SP_Get_SuperAdmin_Role, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
+                
             }
             catch (TimeoutException ex)
             {

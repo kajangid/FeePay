@@ -23,6 +23,9 @@ namespace FeePay.Core.Application.DTOs
         public string Name { get; set; }
 
 
+        public IEnumerable<MvcControllerInfo> SelectedControllers { get; set; }
+
+        public string Access { get; set; }
         public List<CheckBoxItem> UserList { get; set; }
 
     }

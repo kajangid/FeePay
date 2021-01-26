@@ -3,6 +3,7 @@
 @Name NVARCHAR(256)
 ,@NormalizedName NVARCHAR(256)
 ,@IsActive BIT = 0
+,@Access NVARCHAR(MAX) = NULL
 ,@AddedBy INT NULL
 )
 AS
@@ -13,6 +14,7 @@ BEGIN
 	    INSERT INTO [dbo].[SchoolAdmin_Role]
                ([Name]
                ,[NormalizedName]
+			   ,[Access]
                ,[IsActive]
                ,[IsDelete]
                ,[ModifyDate]
@@ -22,13 +24,14 @@ BEGIN
          VALUES
                (@Name
                ,@NormalizedName
+			   ,@Access
                ,@IsActive
                ,0
                ,GETDATE()
                ,@AddedBy
                ,GETDATE()
                ,@AddedBy)
-               
+
 			   SELECT CAST(SCOPE_IDENTITY() AS INT)
     END
     ELSE

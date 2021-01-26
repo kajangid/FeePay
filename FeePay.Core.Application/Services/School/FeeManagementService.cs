@@ -3,9 +3,11 @@ using FeePay.Core.Application.DTOs;
 using FeePay.Core.Application.Interface.Repository;
 using FeePay.Core.Application.Interface.Service;
 using FeePay.Core.Application.Interface.Service.School;
+using FeePay.Core.Application.Interface.Service.Student;
 using FeePay.Core.Application.Wrapper;
 using FeePay.Core.Domain.Entities.Common;
 using FeePay.Core.Domain.Entities.School;
+using FeePay.Core.Domain.Entities.Student;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -213,7 +215,72 @@ namespace FeePay.Core.Application.Services.School
 
         #region Fee Assign
 
+        public async Task<AssignFeesViewModel> SearchStudentAndBindAssignViewModel(AssignFeesViewModel data, int id)
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var ress = await GetAllFeeGroupMasterAsync();
+            data.FeeGroup = ress.Data?.SingleOrDefault(w => w.Id == id);
 
+            var students = await _unitOfWork.StudentAdmision.SearchStudentAsync(classId: data.ClassId,
+                sectionId: data.SectionId,
+                seatchString: data.Search,
+                gender: data.Gender,
+                isActive: true,
+                dbId: SchoolId);
+            var modelStudents = _mapper.Map<List<StudentAdmissionViewModel>>(students);
+
+            //TODO: Remove redundant
+            //var StudentList = modelStudents?
+            //    .Where(w => ((data.SectionId != null && data.SectionId != 0) ? w.SectionId == data.SectionId : w.SectionId != 0)
+            //    &&
+            //    (!string.IsNullOrEmpty(data.Category) ? string.Equals(w.Category, data.Category, StringComparison.OrdinalIgnoreCase) : w.Category != "")
+            //    &&
+            //    (!string.IsNullOrEmpty(data.Gender) ? string.Equals(w.Gender, data.Gender, StringComparison.OrdinalIgnoreCase) : w.Gender != ""))
+            //    .ToList();
+            data.StudentAdmissionList = modelStudents;
+
+            var studentsInFeeGroup = (await _unitOfWork.StudentFee.GetStudentsInFeesGroupAsync(id, dbId: SchoolId))?.ToList();
+            var CheckBoxStudentList = data.StudentAdmissionList.Select(s => new CheckBoxItem
+            {
+                Id = s.Id,
+                Name = s.FirstName,
+                IsSelected = (studentsInFeeGroup?.ToList().Any(a => a.Id == s.Id) ?? false)
+            }).ToList();
+            data.CbStudents = CheckBoxStudentList;
+            return data;
+        }
+        public async Task<Response<bool>> AssignFeesToStudents(AssignFeesViewModel data, int feeGroupId)
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            //var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+            List<StudentFees> studentFees = new List<StudentFees>();
+            if (data.CbStudents.Count > 0)
+            {
+                foreach (var CbStudent in data.CbStudents)
+                {
+                    var FeeMasterList = await _unitOfWork.FeeMaster.GetByFeeGroupIdAsync(feeGroupId, SchoolId);
+                    foreach (var feeMaster in FeeMasterList)
+                    {
+                        bool NotAssignThisFee = await _unitOfWork.StudentFee.IsFeeAssignToStudentAsync(CbStudent.Id, feeMaster.Id, SchoolId);
+                        if (CbStudent.IsSelected && !NotAssignThisFee)
+                        {
+                            studentFees.Add(new StudentFees()
+                            {
+                                StudentId = CbStudent.Id,
+                                FeeMasterId = feeMaster.Id,
+                                FeeGroupId = feeGroupId,
+                            });
+                        }
+                    }
+                }
+            }
+            if (studentFees.Count > 0)
+            {
+                var insertedId = await _unitOfWork.StudentFee.BulkAddAsync(studentFees: studentFees, dbId: SchoolId);
+                if (insertedId <= 0) return new Response<bool>("error saving data");
+            }
+            return new Response<bool>(true, "data save successfully. ");
+        }
         #endregion
     }
 }

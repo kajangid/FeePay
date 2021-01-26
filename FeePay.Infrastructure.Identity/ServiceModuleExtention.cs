@@ -10,6 +10,7 @@ using FeePay.Infrastructure.Identity.IdentityStore;
 using FeePay.Infrastructure.Identity.Service;
 using FeePay.Core.Application.Interface.Service;
 using FeePay.Core.Application.Interface.Service.School;
+using FeePay.Core.Application.Interface.Service.Student;
 
 namespace FeePay.Infrastructure.Identity
 {
@@ -84,6 +85,7 @@ namespace FeePay.Infrastructure.Identity
             //login services
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<ISchoolAdminRegistrationService, SchoolAdminRegistrationService>();
+            services.AddScoped<IStudentRegistrationService, StudentRegistrationService>();
 
             // TODO on all Identity validation
             services.Configure<IdentityOptions>(options =>

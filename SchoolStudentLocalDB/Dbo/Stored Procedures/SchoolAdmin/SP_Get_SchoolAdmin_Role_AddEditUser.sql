@@ -19,7 +19,7 @@ BEGIN
 	IF(@Id IS NOT NULL AND @Id != 0)
 	BEGIN	
 	SELECT 
-		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
+		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[Access],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
 		, [r].[AddedBy] AS [Id]
 		, (SELECT [FullName] FROM [SchoolAdmin_User] WHERE Id = [r].[AddedBy] AND [IsDelete] = 0) AS [FullName]
 		, (SELECT [Email] FROM [SchoolAdmin_User] WHERE Id = [r].[AddedBy] AND [IsDelete] = 0) AS [Email]
@@ -36,7 +36,7 @@ BEGIN
 	IF(@Name IS NOT NULL)
 	BEGIN	
 	SELECT 
-		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
+		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[Access],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
 		, [r].[AddedBy] AS [Id]
 		, (SELECT [FullName] FROM [SchoolAdmin_User] WHERE Id = [r].[AddedBy] AND [IsDelete] = 0) AS [FullName]
 		, (SELECT [Email] FROM [SchoolAdmin_User] WHERE Id = [r].[AddedBy] AND [IsDelete] = 0) AS [Email]
@@ -53,7 +53,7 @@ BEGIN
 	IF(@NormalizedName IS NOT NULL)
 	BEGIN	
 	SELECT 
-		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
+		[r].[Id],[r].[Name],[r].[NormalizedName],[r].[Access],[r].[IsActive],[r].[AddedDate],[r].[ModifyDate]
 		, [r].[AddedBy] AS [Id]
 		, (SELECT [FullName] FROM [SchoolAdmin_User] WHERE Id = [r].[AddedBy] AND [IsDelete] = 0) AS [FullName]
 		, (SELECT [Email] FROM [SchoolAdmin_User] WHERE Id = [r].[AddedBy] AND [IsDelete] = 0) AS [Email]

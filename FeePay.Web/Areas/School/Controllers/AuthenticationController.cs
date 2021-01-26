@@ -2,6 +2,7 @@
 using FeePay.Core.Application.Interface.Service;
 using FeePay.Web.Areas.Common;
 using FeePay.Web.Extensions;
+using FeePay.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,20 +21,20 @@ namespace FeePay.Web.Areas.School.Controllers
     [Area("School")]
     public class AuthenticationController : AreaBaseController
     {
-        public AuthenticationController(ILogger<AuthenticationController> Logger, ILoginService LoginService)
+        public AuthenticationController(ILogger<AuthenticationController> logger, ILoginService loginService)
         {
-            _Logger = Logger;
-            _LoginService = LoginService;
+            _logger = logger;
+            _loginService = loginService;
         }
-        private readonly ILogger _Logger;
-        private readonly ILoginService _LoginService;
+        private readonly ILogger _logger;
+        private readonly ILoginService _loginService;
 
         [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Index(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            if (User.Identity.IsAuthenticated && _LoginService.CheckUserIdentityClaim())
+            if (User.Identity.IsAuthenticated && _loginService.CheckUserIdentityClaim())
                 return RedirectToLocal(returnUrl);
 
             // Clear the existing external cookie to ensure a clean login process
@@ -41,7 +42,7 @@ namespace FeePay.Web.Areas.School.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
 
             // Ensure all logout 
-            await _LoginService.EnsureSchoolUserLogoutAsync();
+            await _loginService.EnsureSchoolUserLogoutAsync();
             return View();
         }
 
@@ -52,10 +53,10 @@ namespace FeePay.Web.Areas.School.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var result = await _LoginService.AuthenticateSchoolUserAsync(model);
+                var result = await _loginService.AuthenticateSchoolUserAsync(model);
                 if (result.Succeeded)
                 {
-                    _Logger.LogInformation("User logged in.");
+                    _logger.LogInformation("User logged in.");
                     TostMessage(NotificationType.success, $"Welcome back { result.Message }.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -70,5 +71,17 @@ namespace FeePay.Web.Areas.School.Controllers
 
         }
 
+
+        #region LogOut method
+        [HttpGet]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult Logout()
+        {
+            _loginService.SchoolAdminLogout();
+            _logger.LogInformation("User logged out.");
+            return RedirectToAction(nameof(AuthenticationController.Index), "Authentication");
+        }
+        #endregion
     }
 }

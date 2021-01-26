@@ -35,19 +35,18 @@ namespace FeePay.Infrastructure.Persistence.School
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(GetConStr(dbId)))
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new
                 {
-                    var SpRequiredParameters = new
-                    {
-                        AddedBy = role.AddedBy,
-                        IsActive = role.IsActive,
-                        NormalizedName = role.NormalizedName,
-                        Name = role.Name
-                    };
-                    int id = await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Add_SchoolAdmin_Role
-                        , SpRequiredParameters, commandType: CommandType.StoredProcedure);
-                    return id;
-                }
+                    role.AddedBy,
+                    role.IsActive,
+                    role.NormalizedName,
+                    role.Name,
+                    role.Access
+                };
+                int id = await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Add_SchoolAdmin_Role
+                    , SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                return id;
             }
             catch (TimeoutException ex)
             {
@@ -63,19 +62,18 @@ namespace FeePay.Infrastructure.Persistence.School
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(GetConStr(dbId)))
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var SpRequiredParameters = new
                 {
-                    var SpRequiredParameters = new
-                    {
-                        Id = role.Id,
-                        IsActive = role.IsActive,
-                        NormalizedName = role.NormalizedName,
-                        Name = role.Name,
-                        ModifyBy = role.ModifyBy
-                    };
-                    return await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Update_SchoolAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                    role.Id,
+                    role.IsActive,
+                    role.NormalizedName,
+                    role.Name,
+                    role.ModifyBy,
+                    role.Access
+                };
+                return await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Update_SchoolAdmin_Role, SpRequiredParameters, commandType: CommandType.StoredProcedure);
 
-                }
             }
             catch (TimeoutException ex)
             {

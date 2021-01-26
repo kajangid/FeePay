@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FeePay.Infrastructure.Persistence.School
@@ -20,8 +19,10 @@ namespace FeePay.Infrastructure.Persistence.School
             _ConnectionStringBuilder = connectionStringBuilder;
             _DBVariables = dBVariables;
         }
+
         private readonly IDBVariables _DBVariables;
         private readonly IConnectionStringBuilder _ConnectionStringBuilder;
+
         private string GetConStr(string dbId = null)
         {
             return string.IsNullOrEmpty(dbId) ?
@@ -67,6 +68,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<int> UpdateAsync(SchoolAdminUser user, string dbId = null)
         {
             try
@@ -106,6 +108,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<int> DeleteAsync(int Id, string dbId = null)
         {
             try
@@ -121,7 +124,6 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
-
         }
 
         public async Task UpdateLoginState(int userId, string Ip, string dbId = null)
@@ -131,7 +133,6 @@ namespace FeePay.Infrastructure.Persistence.School
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { Id = userId, LastLoginIP = Ip };
                 await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Add_SchoolAdmin_User_LoginInfo, SpRequiredParameters, commandType: CommandType.StoredProcedure);
-
             }
             catch (TimeoutException ex)
             {
@@ -142,8 +143,6 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-
-
 
         public async Task<SchoolAdminUser> FindByIdAsync(int userId, string dbId = null)
         {
@@ -165,6 +164,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
                 return result?.FirstOrDefault();
@@ -178,6 +178,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminUser> FindByUserNameAsync(string normalizedUserName, string dbId = null)
         {
             try
@@ -197,6 +198,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
                 return result?.FirstOrDefault();
@@ -210,6 +212,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminUser> FindByEmailAsync(string normalizedEmail, string dbId = null)
         {
             try
@@ -229,6 +232,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
                 return result?.FirstOrDefault();
@@ -242,6 +246,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminUser> FindActiveByIdAsync(int userId, string dbId = null)
         {
             try
@@ -261,6 +266,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
                 return result?.FirstOrDefault();
@@ -274,6 +280,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminUser> FindActiveByUserNameAsync(string normalizedUserName, string dbId = null)
         {
             try
@@ -293,6 +300,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
                 return result?.FirstOrDefault();
@@ -306,6 +314,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminUser> FindActiveByEmailAsync(string normalizedEmail, string dbId = null)
         {
             try
@@ -325,6 +334,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
                 return result?.FirstOrDefault();
@@ -338,8 +348,6 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-
-
 
         public async Task<IEnumerable<SchoolAdminUser>> FindAllActiveAsync(string dbId = null)
         {
@@ -360,6 +368,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
 
@@ -374,6 +383,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<IEnumerable<SchoolAdminUser>> FindAllAsync(string dbId = null)
         {
             try
@@ -392,11 +402,11 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
 
                 return result;
-
             }
             catch (TimeoutException ex)
             {
@@ -407,8 +417,6 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-
-
 
         public async Task<SchoolAdminUser> FindById_WithAddEditUserAsync(int userId, string dbId = null)
         {
@@ -427,6 +435,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
 
@@ -441,6 +450,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminUser> FindByUserName_WithAddEditUserAsync(string normalizedUserName, string dbId = null)
         {
             try
@@ -458,6 +468,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
 
@@ -472,6 +483,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminUser> FindByEmail_WithAddEditUserAsync(string normalizedEmail, string dbId = null)
         {
             try
@@ -489,11 +501,11 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
 
                 return result?.FirstOrDefault();
-
             }
             catch (TimeoutException ex)
             {
@@ -504,6 +516,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminUser> FindActiveById_WithAddEditUserAsync(int userId, string dbId = null)
         {
             try
@@ -521,11 +534,11 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
 
                 return result?.FirstOrDefault();
-
             }
             catch (TimeoutException ex)
             {
@@ -536,6 +549,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminUser> FindActiveByUserName_WithAddEditUserAsync(string normalizedUserName, string dbId = null)
         {
             try
@@ -553,11 +567,11 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
 
                 return result?.FirstOrDefault();
-
             }
             catch (TimeoutException ex)
             {
@@ -568,6 +582,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<SchoolAdminUser> FindActiveByEmail_WithAddEditUserAsync(string normalizedEmail, string dbId = null)
         {
             try
@@ -585,11 +600,11 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
 
                 return result?.FirstOrDefault();
-
             }
             catch (TimeoutException ex)
             {
@@ -600,8 +615,6 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-
-
 
         public async Task<IEnumerable<SchoolAdminUser>> FindAllActive_WithAddEditUserAsync(string dbId = null)
         {
@@ -620,6 +633,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
 
@@ -634,6 +648,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
         public async Task<IEnumerable<SchoolAdminUser>> FindAll_WithAddEditUserAsync(string dbId = null)
         {
             try
@@ -651,11 +666,11 @@ namespace FeePay.Infrastructure.Persistence.School
                 {
                     var groupedPost = g.First();
                     groupedPost.Roles = g.Select(p => p.Roles.Single()).ToList();
+                    groupedPost.Roles.RemoveAll(item => item == null);
                     return groupedPost;
                 });
 
                 return result;
-
             }
             catch (TimeoutException ex)
             {

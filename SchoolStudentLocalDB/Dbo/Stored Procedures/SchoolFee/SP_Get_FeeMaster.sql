@@ -31,12 +31,36 @@ BEGIN
 
 			FROM [dbo].[FeeMaster] [fm] 
 			INNER JOIN [dbo].[FeeType] [ft]
-			ON [ft].[Id] = [fm].[FeeTypeId] AND [ft].[IsDelete] = 0
+			ON [ft].[Id] = [fm].[FeeTypeId] AND [ft].[IsDelete] = 1
 			INNER JOIN [dbo].[FeeGroup] [fg]
-			ON [fg].[Id] = [fm].[FeeGroupId] AND [fg].[IsDelete] = 0
+			ON [fg].[Id] = [fm].[FeeGroupId] AND [fg].[IsDelete] = 1
 			WHERE
 			[fm].[IsDelete] = 0 
 			AND [fm].[Id] = @Id 
+			AND [fm].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [fm].[IsActive] END
+
+			RETURN 
+	END
+	Else IF (@FeeGroupId IS NOT NULL AND @FeeGroupId <> 0)
+	BEGIN	
+		SELECT 
+			[fm].[Id], [fm].[FeeGroupId], [fm].[FeeTypeId], [fm].[Amount], [fm].[DueDate], [fm].[Description], [fm].[IsActive],
+			[fm].[IsDelete], [fm].[ModifyDate], [fm].[ModifyBy], [fm].[AddedDate], [fm].[AddedBy],
+
+			[ft].[Id], [ft].[Name], [ft].[NormalizedName], [ft].[Code], [ft].[Description], [ft].[IsActive], [ft].[IsDelete],
+			[ft].[ModifyDate], [ft].[ModifyBy], [ft].[AddedDate], [ft].[AddedBy],
+
+			[fg].[Id], [fg].[Name], [fg].[NormalizedName], [fg].[Description], [fg].[IsActive], [fg].[IsDelete], [fg].[ModifyDate],
+			[fg].[ModifyBy], [fg].[AddedDate], [fg].[AddedBy] 
+
+			FROM [dbo].[FeeMaster] [fm] 
+			INNER JOIN [dbo].[FeeType] [ft]
+			ON [ft].[Id] = [fm].[FeeTypeId] AND [ft].[IsDelete] = 0 AND [ft].[IsActive] = 1
+			INNER JOIN [dbo].[FeeGroup] [fg]
+			ON [fg].[Id] = [fm].[FeeGroupId] AND [fg].[IsDelete] = 0 AND [ft].[IsActive] = 1
+			WHERE
+			[fm].[IsDelete] = 0 
+			AND [fm].[FeeGroupId] = @FeeGroupId 
 			AND [fm].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [fm].[IsActive] END
 
 			RETURN 

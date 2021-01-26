@@ -6,6 +6,7 @@ using FeePay.Core.Application.Interface.Service.School;
 using FeePay.Core.Application.Wrapper;
 using FeePay.Core.Domain.Entities.Common;
 using FeePay.Core.Domain.Entities.Identity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace FeePay.Core.Application.Services.School
         private readonly ILoginService _loginService;
         private readonly IMapper _mapper;
         private readonly ISchoolAdminRegistrationService _schoolAdminRegistrationService;
+
 
 
         #region Staffs 
@@ -113,6 +115,17 @@ namespace FeePay.Core.Application.Services.School
             var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
             SchoolAdminRole role = _mapper.Map<SchoolAdminRole>(model);
+
+            if (model.SelectedControllers != null && model.SelectedControllers.Any())
+            {
+                foreach (var controller in model.SelectedControllers)
+                    foreach (var action in controller.Actions)
+                        action.ControllerId = controller.Id;
+
+                var accessJson = JsonConvert.SerializeObject(model.SelectedControllers);
+                role.Access = accessJson;
+            }
+
             int RoleId = model.Id;
             if (RoleId == 0)
             {
@@ -153,24 +166,14 @@ namespace FeePay.Core.Application.Services.School
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
             IEnumerable<SchoolAdminRole> roles = await _unitOfWork.SchoolAdminRole.GetAllActiveAsync(SchoolId);
-            //List<RoleViewModel> RoleList = _mapper.Map<IList<RoleViewModel>>(allStaffRole).ToList();
-            List<CheckBoxItem> cbList = new List<CheckBoxItem>();
+            List<CheckBoxItem> cbList = roles.Select(s => new CheckBoxItem() { Id = s.Id, Name = s.Name, }).ToList();
             if (unserId != 0)
             {
                 IList<SchoolAdminRole> rolesInStaffMember = await _unitOfWork.SchoolAdminUserRole.GetUserRolesAsync(unserId, SchoolId);
-                roles.ToList().ForEach(f =>
+                cbList.ToList().ForEach(f =>
                 {
-                    cbList.Add(new CheckBoxItem()
-                    {
-
-                        Id = f.Id,
-                        Name = f.Name,
-                        IsSelected = (rolesInStaffMember.Any(a => a.Id == f.Id)) ? true : false
-                    });
-                    //if (userRoles.Any(a => a.Id == f.Id)) f.IsSelected = true;
-                    //else f.IsSelected = false;
+                    f.IsSelected = rolesInStaffMember.Any(a => a.Id == f.Id);
                 });
-                //cbList = RoleList.Select(s => new CheckBoxItem { Id = s.Id, Name = s.Name, IsSelected = s.IsSelected }).ToList();
             }
             return cbList;
         }

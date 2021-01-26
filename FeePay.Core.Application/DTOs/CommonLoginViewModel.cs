@@ -16,7 +16,6 @@ namespace FeePay.Core.Application.DTOs
         [RegularExpression(@"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$", ErrorMessage = "Please enter a valid email.")]
         public string Email { get; set; }
 
-
         // TODO: Clear Validation Bug
         [Required]
         [DisplayName("Password")]

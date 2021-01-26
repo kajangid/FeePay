@@ -2,6 +2,7 @@
 using FeePay.Core.Application.DTOs;
 using FeePay.Core.Domain.Entities.Identity;
 using FeePay.Core.Domain.Entities.School;
+using FeePay.Core.Domain.Entities.Student;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -123,7 +124,22 @@ namespace FeePay.Core.Application.Mapping
 
             // Mapping properties from SessionViewModel to Section 
             CreateMap<SessionViewModel, Session>();
-            #endregion Session
+            #endregion
+
+            #region Student 
+
+            // Mapping properties from StudentAdmission to StudentAdmissionViewModel 
+            CreateMap<StudentAdmission, StudentAdmissionViewModel>()
+                .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+                .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+                .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+
+
+            // Mapping properties from StudentAdmissionViewModel to StudentAdmission 
+            CreateMap<StudentAdmissionViewModel, StudentAdmission>();
+
+            #endregion
 
         }
     }

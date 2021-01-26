@@ -1,5 +1,6 @@
 ﻿using FeePay.Core.Application.DTOs;
 using FeePay.Core.Application.Wrapper;
+using FeePay.Core.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,5 +33,7 @@ namespace FeePay.Core.Application.Interface.Service.School
         Task<Response<bool>> AddOrEditSessionAsync(SessionViewModel model);
 
         #endregion
+        Task<Response<List<DropDownItem>>> GetClassSectionsAsync(int classId);
+        Task<Response<List<DropDownItem>>> GetAllDropDownClassesAsync();
     }
 }

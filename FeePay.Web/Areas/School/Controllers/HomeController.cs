@@ -1,6 +1,7 @@
 ﻿using FeePay.Core.Application.Interface.Service;
 using FeePay.Web.Areas.Common;
 using FeePay.Web.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,17 +13,15 @@ namespace FeePay.Web.Areas.School.Controllers
 {
     [Area("School")]
     [SchoolAdminAuthorize]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class HomeController : AreaBaseController
     {
         private readonly ILogger _logger;
-        private readonly ILoginService _loginService;
-        public HomeController(ILogger<HomeController> logger, ILoginService loginService)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _loginService = loginService;
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index()
         {
             return View();
@@ -35,17 +34,5 @@ namespace FeePay.Web.Areas.School.Controllers
 
 
 
-
-        #region LogOut method
-        [HttpGet]
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult Logout()
-        {
-            _loginService.SchoolAdminLogout();
-            _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(AuthenticationController.Index), "Authentication");
-        }
-        #endregion
     }
 }

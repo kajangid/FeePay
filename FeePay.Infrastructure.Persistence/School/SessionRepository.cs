@@ -62,7 +62,7 @@ namespace FeePay.Infrastructure.Persistence.School
                     session.StartYear,
                     session.EndYear,
                     session.Description,
-                    session.IsActive,
+                    //session.IsActive,
                     session.ModifyBy
                 };
                 return await connection.ExecuteAsync(_dBVariables.SP_Update_Session,

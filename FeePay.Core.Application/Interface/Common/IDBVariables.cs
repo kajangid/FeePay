@@ -142,5 +142,39 @@ namespace FeePay.Core.Application.Interface.Common
         string SP_Get_Session { get; }
         string SP_Get_Session_AddEditUser { get; }
         #endregion
+
+
+        #region StudentAdmission
+        string SP_Add_StudentAdmission { get; }
+        string SP_Update_StudentAdmission { get; }
+        string SP_Delete_StudentAdmission { get; }
+        string SP_Get_StudentAdmission { get; }
+        string SP_Search_Students { get; }
+        string SP_Get_StudentAdmission_AddEditUser { get; }
+        #endregion
+
+
+        #region StudentFees
+        string SP_Add_StudentFees { get; }
+        string SP_Get_StudentFees { get; }
+        string SP_Remove_StudentFees { get; }
+        string QUERY_IsFeeAssignToStudent { get; }
+        string QUERY_StudentFeeList { get; }
+        #endregion
+
+
+
+
+        #region SEARCH DYNAMIC QUERIES
+        string QUERY_StudentSearch_Select_AddEditUser { get; }
+        string QUERY_StudentSearch_Select { get; }
+        string QUERY_StudentSearch_Where_IsActive { get; }
+        string QUERY_StudentSearch_Where_ClassId { get; }
+        string QUERY_StudentSearch_Where_SectionId { get; }
+        string QUERY_StudentSearch_Where_Gender { get; }
+        string QUERY_StudentSearch_Where_SearchIn { get; }
+        string QUERY_StudentSearch_Where_StudentId { get; }
+
+        #endregion
     }
 }

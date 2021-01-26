@@ -1,0 +1,222 @@
+﻿@using FeePay.Core.Application.Interface.Service
+@model StudentAdmissionViewModel
+@inject ICommanDataServices commanDataService
+@{
+}
+@section Style{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/date-picker.css")">
+}
+@section Scripts{
+    <script src="@Url.Content("~/Cuba/js/datepicker/date-picker/datepicker.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/datepicker/date-picker/datepicker.en.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/clipboard/clipboard.min.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            'use strict';
+            var adDate = $('input[name="AdmissionDate"]');
+            var datepicker = adDate.datepicker().data('datepicker');
+            var dateSelected = adDate.attr("data-key-selected"); // --> yyyy-mm-dd
+            if (typeof (dateSelected) != "undefined" && dateSelected != null && dateSelected != '') {
+                datepicker.selectDate(new Date(dateSelected));
+            }
+
+            var selectClass = $('select[name="ClassId"]');
+            var selectedSection = $('select[name="SectionId"]').attr("data-key-selected");
+            bindSectionDropDown(selectClass, selectedSection);
+            selectClass.on('change', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                bindSectionDropDown($this);
+            });
+            function bindSectionDropDown(select, selected) {
+                selected = selected || '0';
+                var selectSectionEle = $('select[name="SectionId"]');
+                var html = '<option value="">-Select-</option>';
+                var classId = select.val();
+                var url = selectSectionEle.attr("data-ajaxurl");
+                if (classId === "") { selectSectionEle.html(html); return true; }
+                //select.prop('disabled', true);
+                $.ajax({
+                    url: `${url}?id=${classId}`,
+                    method: 'get',
+                    dataType: 'json'
+                }).done(function (res) {
+                    if (res.success) {
+                        if (res.data != null && res.data.length > 0) {
+                            html += res.data.map(function (i) {
+                                return `<option value="${i.value}" ${(i.value === selected && typeof (selected) != "undefined" && selected != null && selected != '') ? 'Selected' : ''} >${i.text}</option>`;
+                            }).join('');
+                            selectSectionEle.html(html);
+                        }
+                    } else { }
+                }).fail(function (jqXHR, textStatus) {
+                    console.log("Request failed: " + textStatus);
+                }).always(function () {
+                    //select.prop('disabled', false);
+                });
+            }
+        })(jQuery);
+    </script>
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("StudentList","StudentAdmission")"> Students </a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <form id="manageStudentAdmission" asp-action="StudentEdit" asp-controller="StudentAdmission" method="post" class="needs-validation" novalidate="" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <input asp-for="Id" type="hidden" />
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form theme-form">
+                            <h5>Personal Details</h5>
+                            <hr class="border-2" />
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label asp-for="FirstName"> First Name * </label>
+                                        <input asp-for="FirstName" type="text" placeholder="First Name" class="form-control" data-original-title="" title="" />
+                                        <div class="invalid-feedback"><span asp-validation-for="FirstName"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label asp-for="LastName"> Last Name * </label>
+                                        <input asp-for="LastName" type="text" placeholder="Last Name" class="form-control" data-original-title="" title="" />
+                                        <div class="invalid-feedback"><span asp-validation-for="LastName"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label asp-for="FatherName"> Father's Name * </label>
+                                        <input asp-for="FatherName" class="form-control" type="text" placeholder="Father's Name" data-original-title="" title="">
+                                        <div class="invalid-feedback"><span asp-validation-for="FatherName"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label asp-for="MotherName"> Mother's Name * </label>
+                                        <input asp-for="MotherName" class="form-control" type="text" placeholder="Mother's Name" data-original-title="" title="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label asp-for="Gender"> Gender * </label>
+                                        <select asp-for="Gender" class="form-control" data-original-title="" title="">
+                                            <option value="">-Select-</option>
+                                            <option value="MALE">Male</option>
+                                            <option value="FEMALE">Female</option>
+                                        </select>
+                                        <div class="invalid-feedback"><span asp-validation-for="Gender"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label asp-for="MobileNo"> Student Mobile Number * </label>
+                                        <input asp-for="MobileNo" class="form-control" type="text" placeholder="Student Mobile Number" data-original-title="" title="">
+                                        <div class="invalid-feedback"><span asp-validation-for="MobileNo"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label asp-for="Address"> Address </label>
+                                        <textarea asp-for="Address" placeholder="Address" class="form-control" rows="3" data-original-title="" title=""></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="mt-3">Academy Details</h5>
+                            <hr class="border-2" />
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label asp-for="FormNo"> Form Number * </label>
+                                        <input asp-for="FormNo" type="text" placeholder="Form Number" class="form-control" data-original-title="" title="" />
+                                        <div class="invalid-feedback"><span asp-validation-for="FormNo"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label asp-for="Sr_RegNo"> Sr/Reg Number * </label>
+                                        <input asp-for="Sr_RegNo" type="text" placeholder="Sr/Reg Number" class="form-control" data-original-title="" title="" />
+                                        <div class="invalid-feedback"><span asp-validation-for="Sr_RegNo"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label asp-for="AdmissionDate"> Admission Date * </label>
+                                        <input asp-for="AdmissionDate" type="text" data-key-selected="@(Model.AdmissionDate?.ToString("yyyy-MM-dd"))" class="datepicker-here form-control" data-language="en" placeholder="dd/mm/yyyy" autocomplete="off" data-date-format="dd/mm/yyyy" data-original-title="" title="" />
+                                        <div class="invalid-feedback"><span asp-validation-for="AdmissionDate"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label asp-for="ClassId"> Class * </label>
+                                        <select asp-for="ClassId" asp-items="@(new SelectList(Model.AvaliableClasses,"Value","Text",Model.ClassId))" class="form-control" data-original-title="" title="">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                        <div class="invalid-feedback"><span asp-validation-for="ClassId"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label asp-for="SectionId"> Section * </label>
+                                        <select asp-for="SectionId" data-ajaxurl="@Url.Action("GetClassSection","StudentAdmission")" data-key-selected="@Model.SectionId" class="form-control" data-original-title="" title="">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                        <div class="invalid-feedback"><span asp-validation-for="SectionId"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label asp-for="IsActive">
+                                            <input asp-for="IsActive" class="checkbox_animated" type="checkbox"> Active
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div>
+                            <p>Fee list here</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group mb-0">
+                                    <input type="submit" value="Save" class="btn btn-success mr-3" data-original-title="" title="" />
+                                    <a class="btn btn-danger" href="#" data-original-title="" title="">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

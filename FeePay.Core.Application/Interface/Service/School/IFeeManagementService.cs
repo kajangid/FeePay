@@ -34,6 +34,8 @@ namespace FeePay.Core.Application.Interface.Service.School
         #endregion
 
         #region Fee Assign
+        Task<AssignFeesViewModel> SearchStudentAndBindAssignViewModel(AssignFeesViewModel data, int id);
+        Task<Response<bool>> AssignFeesToStudents(AssignFeesViewModel data, int id);
         #endregion
 
     }

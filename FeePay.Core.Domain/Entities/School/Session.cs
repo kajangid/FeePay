@@ -11,8 +11,8 @@ namespace FeePay.Core.Domain.Entities.School
     {
         public int Id { get; set; }
         public string Year { get; set; }
-        public string StartYear { get; set; }
-        public string EndYear { get; set; }
+        public DateTime? StartYear { get; set; }
+        public DateTime? EndYear { get; set; }
         public string Description { get; set; }
 
 

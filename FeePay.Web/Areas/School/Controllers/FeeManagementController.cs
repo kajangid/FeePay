@@ -12,23 +12,31 @@ using FeePay.Core.Application.Interface.Repository.School;
 using FeePay.Web.Areas.Common;
 using static FeePay.Core.Application.Enums.Notification;
 using FeePay.Core.Application.DTOs;
+using FeePay.Core.Application.Interface.Service.Student;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FeePay.Web.Areas.School.Controllers
 {
     [Area("School")]
-    [SchoolAdminAuthorize(Roles = "Admin,Manager,Teacher")]
+    [SchoolAdminAuthorize]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class FeeManagementController : AreaBaseController
     {
         public FeeManagementController(ILogger<FeeManagementController> logger, ILoginService loginService,
-            IFeeManagementService feeManagementService)
+            IFeeManagementService feeManagementService, IAcademicServices academicServices,
+            IStudentManagementService studentManagementService)
         {
             _logger = logger;
-            _loginService = loginService;
-            _feeManagementService = feeManagementService;
+            _login = loginService;
+            _feeManagement = feeManagementService;
+            _academic = academicServices;
+            _studentManagement = studentManagementService;
         }
         private readonly ILogger<FeeManagementController> _logger;
-        private readonly ILoginService _loginService;
-        private readonly IFeeManagementService _feeManagementService;
+        private readonly ILoginService _login;
+        private readonly IFeeManagementService _feeManagement;
+        private readonly IAcademicServices _academic;
+        private readonly IStudentManagementService _studentManagement;
 
         #region FEE TYPE 
         [HttpGet]
@@ -40,7 +48,7 @@ namespace FeePay.Web.Areas.School.Controllers
             List<FeeTypeViewModel> model = new List<FeeTypeViewModel>();
             try
             {
-                var res = await _feeManagementService.GetAllFeeTypeAsync();
+                var res = await _feeManagement.GetAllFeeTypeAsync();
                 if (res.Succeeded) model = res.Data;
                 else
                 {
@@ -71,7 +79,7 @@ namespace FeePay.Web.Areas.School.Controllers
                 else
                 {
                     ViewData["Title"] = "Update Fee Type";
-                    var res = await _feeManagementService.GetFeeTypeByIdAsync(id ?? 0);
+                    var res = await _feeManagement.GetFeeTypeByIdAsync(id ?? 0);
                     if (res.Succeeded) return View(res.Data);
                     else
                     {
@@ -105,23 +113,23 @@ namespace FeePay.Web.Areas.School.Controllers
             }
             try
             {
-                var res = await _feeManagementService.AddOrEditFeeTypeAsync(model);
+                var res = await _feeManagement.AddOrEditFeeTypeAsync(model);
                 if (res.Succeeded)
                 {
-                    AlertMessage(NotificationType.success, "Success", $"Fee Type is successfully {(id != null && id != 0 ? "added" : "updated")}.");
+                    AlertMessage(NotificationType.success, "Success", $"Fee Type is successfully {(id == null || id == 0 ? "added" : "updated")}.");
                     return RedirectToAction(nameof(FeeTypeList));
                 }
                 else
                 {
-                    AlertMessage(NotificationType.error, "Error", $"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee type.");
-                    _logger.LogError($"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee type.");
+                    AlertMessage(NotificationType.error, "Error", $"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee type.");
+                    _logger.LogError($"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee type.");
                     return View(model);
                 }
             }
             catch (Exception ex)
             {
-                AlertMessage(NotificationType.error, "Error", $"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee type.");
-                _logger.LogError(ex, $"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee type.");
+                AlertMessage(NotificationType.error, "Error", $"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee type.");
+                _logger.LogError(ex, $"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee type.");
                 return View(model);
             }
         }
@@ -146,7 +154,7 @@ namespace FeePay.Web.Areas.School.Controllers
             List<FeeGroupViewModel> model = new List<FeeGroupViewModel>();
             try
             {
-                var res = await _feeManagementService.GetAllFeeGroupAsync();
+                var res = await _feeManagement.GetAllFeeGroupAsync();
                 if (res.Succeeded) model = res.Data;
                 else
                 {
@@ -177,7 +185,7 @@ namespace FeePay.Web.Areas.School.Controllers
                 else
                 {
                     ViewData["Title"] = "Update Fee Group";
-                    var res = await _feeManagementService.GetFeeGroupByIdAsync(id ?? 0);
+                    var res = await _feeManagement.GetFeeGroupByIdAsync(id ?? 0);
                     if (res.Succeeded) return View(res.Data);
                     else
                     {
@@ -210,23 +218,23 @@ namespace FeePay.Web.Areas.School.Controllers
             }
             try
             {
-                var res = await _feeManagementService.AddOrEditFeeGroupAsync(model);
+                var res = await _feeManagement.AddOrEditFeeGroupAsync(model);
                 if (res.Succeeded)
                 {
-                    AlertMessage(NotificationType.success, "Success", $"Fee Group is successfully {(id != null && id != 0 ? "added" : "updated")}.");
+                    AlertMessage(NotificationType.success, "Success", $"Fee Group is successfully {(id == null || id == 0 ? "added" : "updated")}.");
                     return RedirectToAction(nameof(FeeGroupList));
                 }
                 else
                 {
-                    AlertMessage(NotificationType.error, "Error", $"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee group.");
-                    _logger.LogError($"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee group.");
+                    AlertMessage(NotificationType.error, "Error", $"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee group.");
+                    _logger.LogError($"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee group.");
                     return View(model);
                 }
             }
             catch (Exception ex)
             {
-                AlertMessage(NotificationType.error, "Error", $"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee group.");
-                _logger.LogError(ex, $"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee group.");
+                AlertMessage(NotificationType.error, "Error", $"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee group.");
+                _logger.LogError(ex, $"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee group.");
                 return View(model);
             }
         }
@@ -251,7 +259,7 @@ namespace FeePay.Web.Areas.School.Controllers
             List<FeeGroupViewModel> model = new List<FeeGroupViewModel>();
             try
             {
-                var res = await _feeManagementService.GetAllFeeGroupMasterAsync();
+                var res = await _feeManagement.GetAllFeeGroupMasterAsync();
                 if (res.Succeeded) model = res.Data;
                 else
                 {
@@ -277,18 +285,18 @@ namespace FeePay.Web.Areas.School.Controllers
                 if (id == null || id == 0)
                 {
                     ViewData["Title"] = "Create Fee Master";
-                    return View(await _feeManagementService.BindFeeMasterViewModel());
+                    return View(await _feeManagement.BindFeeMasterViewModel());
                 }
                 else
                 {
                     ViewData["Title"] = "Update Fee Master";
-                    var res = await _feeManagementService.GetFeeMasterByIdAsync(id ?? 0);
+                    var res = await _feeManagement.GetFeeMasterByIdAsync(id ?? 0);
                     if (res.Succeeded) return View(res.Data);
                     else
                     {
                         _logger.LogError("Error when getting Fee Master list");
                         AlertMessage(NotificationType.error, "Error", "There is an error when getting data for Fee Master. ");
-                        return View(await _feeManagementService.BindFeeMasterViewModel());
+                        return View(await _feeManagement.BindFeeMasterViewModel());
                     }
                 }
             }
@@ -311,28 +319,28 @@ namespace FeePay.Web.Areas.School.Controllers
             {
                 AlertMessage(NotificationType.warning, "Error", "Please fill all required data fields.");
                 _logger.LogWarning("model state Error for fee master manage");
-                return View(await _feeManagementService.BindFeeMasterViewModel(model));
+                return View(await _feeManagement.BindFeeMasterViewModel(model));
             }
             try
             {
-                var res = await _feeManagementService.AddOrEditFeeMasterAsync(model);
+                var res = await _feeManagement.AddOrEditFeeMasterAsync(model);
                 if (res.Succeeded)
                 {
-                    AlertMessage(NotificationType.success, "Success", $"Fee Master is successfully {(id != null && id != 0 ? "added" : "updated")}.");
+                    AlertMessage(NotificationType.success, "Success", $"Fee Master is successfully {(id == null || id == 0 ? "added" : "updated")}.");
                     return RedirectToAction(nameof(FeeMasterList));
                 }
                 else
                 {
-                    AlertMessage(NotificationType.error, "Error", $"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee master.");
-                    _logger.LogError($"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee master.");
-                    return View(await _feeManagementService.BindFeeMasterViewModel(model));
+                    AlertMessage(NotificationType.error, "Error", $"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee master.");
+                    _logger.LogError($"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee master.");
+                    return View(await _feeManagement.BindFeeMasterViewModel(model));
                 }
             }
             catch (Exception ex)
             {
-                AlertMessage(NotificationType.error, "Error", $"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee master.");
-                _logger.LogError(ex, $"There is an error {(id != null && id != 0 ? "adding" : "updating")} fee master.");
-                return View(await _feeManagementService.BindFeeMasterViewModel(model));
+                AlertMessage(NotificationType.error, "Error", $"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee master.");
+                _logger.LogError(ex, $"There is an error {(id == null || id == 0 ? "adding" : "updating")} fee master.");
+                return View(await _feeManagement.BindFeeMasterViewModel(model));
             }
         }
 
@@ -346,6 +354,64 @@ namespace FeePay.Web.Areas.School.Controllers
         #endregion
 
         #region FEE ASSIGN
+        [HttpGet]
+        [Route("School/Fees/Assign/{id}")]
+        [DisplayName("List Fee Type")]
+        public async Task<IActionResult> FeesAssign(int id) // FeeGroupId
+        {
+            ViewData["Title"] = "Assign Fees";
+            AssignFeesViewModel model = new AssignFeesViewModel();
+            var res = await _academic.GetAllDropDownClassesAsync();
+            model.Classes = res.Data;
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("School/Fees/Assign/{id}")]
+        [ValidateAntiForgeryToken]
+        [DisplayName("List Fee Type")]
+        public async Task<IActionResult> FeesAssign(AssignFeesViewModel data, int id) // FeeGroupId
+        {
+            ViewData["Title"] = "Assign Fees";
+            var res = await _academic.GetAllDropDownClassesAsync();
+            data.Classes = res.Data;
+
+            if (!string.IsNullOrEmpty(data.Search)) ModelState.Remove(nameof(data.ClassId));
+            if (data.ClassId != 0) ModelState.Remove(nameof(data.Search));
+            if (!ModelState.IsValid)
+            {
+                AlertMessage(NotificationType.warning, "Error", "Please fill all required data fields for search.");
+                return View(data);
+            }
+
+            try
+            {
+                data = await _feeManagement.SearchStudentAndBindAssignViewModel(data, id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when getting student list for assign fees.");
+                AlertMessage(NotificationType.error, "Error", "Error when getting student list for assign fees.");
+            }
+            return View(data);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [DisplayName("List Fee Type")]
+        public async Task<IActionResult> AssignToStudent(AssignFeesViewModel data, int id)
+        {
+            try
+            {
+                var res = await _feeManagement.AssignFeesToStudents(data, id);
+                return Json(new { Success = res.Data, res.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when assign fees");
+                return Json(new { Success = false, Message = "Error when assign fees" });
+            }
+        }
         #endregion
     }
 }

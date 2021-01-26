@@ -12,13 +12,16 @@ using FeePay.Core.Domain.Entities.Common;
 using FeePay.Core.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using FeePay.Core.Application.UseCase;
+using FeePay.Core.Application.Interface;
 
 namespace FeePay.Infrastructure.Identity.Service
 {
     public class SchoolAdminRegistrationService : ISchoolAdminRegistrationService
     {
         public SchoolAdminRegistrationService(IUnitOfWork unitOfWork, IAppContextAccessor appContextAccessor, ILoginService loginService,
-            UserManager<SchoolAdminUser> userManager, IMapper mapper, ILogger<SchoolAdminRegistrationService> logger)
+            UserManager<SchoolAdminUser> userManager, IMapper mapper, ILogger<SchoolAdminRegistrationService> logger, 
+            IPasswordHasher<SchoolAdminUser> passwordHasher, IPasswordGenerator passwordGenerator)
         {
             _unitOfWork = unitOfWork;
             _appContextAccessor = appContextAccessor;
@@ -26,6 +29,8 @@ namespace FeePay.Infrastructure.Identity.Service
             _userManager = userManager;
             _mapper = mapper;
             _logger = logger;
+            _passwordHasher = passwordHasher;
+            _passwordGenerator = passwordGenerator;
         }
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAppContextAccessor _appContextAccessor;
@@ -33,6 +38,8 @@ namespace FeePay.Infrastructure.Identity.Service
         private readonly UserManager<SchoolAdminUser> _userManager;
         private readonly IMapper _mapper;
         private readonly ILogger<SchoolAdminRegistrationService> _logger;
+        public readonly IPasswordHasher<SchoolAdminUser> _passwordHasher;
+        public readonly IPasswordGenerator _passwordGenerator;
 
 
         public async Task<bool> RegisterSchoolUserWithPhoneNumberAsync(StaffMemberViewModel model)
@@ -41,11 +48,16 @@ namespace FeePay.Infrastructure.Identity.Service
             {
                 var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
                 var User = _mapper.Map<SchoolAdminUser>(model);
-                User.UserName = model.PhoneNumber;
-                if (string.IsNullOrEmpty(model.Password?.Trim())) User.Password = model.PhoneNumber;
+
+                User.UserName = GeneratorToken.GenerateUserName(8);
+                if (string.IsNullOrEmpty(model.Password?.Trim())) User.Password = _passwordGenerator.Generate();
                 User.AddedBy = UserId;
+
+
                 IdentityResult identityResult = await _userManager.CreateAsync(User, User.Password);
                 _logger.LogInformation("new school admin user created.....");
+
+
                 if (model.RoleList != null && model.RoleList.Any(a => a.IsSelected == true))
                 {
                     SchoolAdminUser UserInserted = await _unitOfWork.SchoolAdminUser.FindByUserNameAsync(User.UserName, _appContextAccessor.ClaimSchoolUniqueId());
@@ -66,11 +78,16 @@ namespace FeePay.Infrastructure.Identity.Service
             {
                 var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
                 var User = _mapper.Map<SchoolAdminUser>(model);
-                User.UserName = model.PhoneNumber;
-                if (string.IsNullOrEmpty(model.Password?.Trim())) User.Password = model.PhoneNumber;
+
+                //User.UserName = GeneratorToken.GenerateUserName(8);
+                //User.Password = _passwordGenerator.Generate();
+                //if (string.IsNullOrEmpty(model.Password?.Trim())) User.Password = model.PhoneNumber;
                 User.ModifyBy = UserId;
+
                 IdentityResult identityResult = await _userManager.UpdateAsync(User);
                 _logger.LogInformation("school admin user updated.....");
+
+
                 if (model.RoleList != null)
                 {
                     SchoolAdminUser UserInserted = await _unitOfWork.SchoolAdminUser.FindByUserNameAsync(User.UserName, _appContextAccessor.ClaimSchoolUniqueId());
@@ -95,6 +112,15 @@ namespace FeePay.Infrastructure.Identity.Service
             await _userManager.AddPasswordAsync(user, newPassword);
             _logger.LogInformation($"New password is added to school admin user with UserId = {user.Id}");
         }
+        public SchoolAdminUser GetNewHashSchoolUserPasswordAsync(SchoolAdminUser user, string newPassword)
+        {
+            var hasedPassword = _passwordHasher.HashPassword(user, newPassword);
+            user.SecurityStamp = Guid.NewGuid().ToString();
+            user.PasswordHash = hasedPassword;
+            return user;
+        }
+
+
         public async Task AssignRolesToSchoolUserAsync(SchoolAdminUser user, List<CheckBoxItem> roleList)
         {
             foreach (var f in roleList)

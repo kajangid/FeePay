@@ -7,7 +7,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT 
-		[r].[Id], [r].[Name], [r].[NormalizedName]
+		[r].[Id], [r].[Name], [r].[NormalizedName],[r].[Access]
 	FROM [dbo].[SchoolAdmin_Role] [r] 
 		INNER JOIN [dbo].[SchoolAdmin_UserRole] [ur] 
 	ON [ur].[RoleId] = [r].[Id]

@@ -10,6 +10,11 @@ namespace FeePay.Core.Application.DTOs
 {
     public class SchoolLoginViewModel : CommonLoginViewModel
     {
+
+        [Required]
+        [StringLength(30)]
+        public string UserName { get; set; }
+
         [Required]
         [DisplayName("School Code")]
         [StringLength(30)]

@@ -15,7 +15,8 @@ using static FeePay.Core.Application.Enums.Notification;
 namespace FeePay.Web.Areas.School.Controllers
 {
     [Area("School")]
-    [SchoolAdminAuthorize(Roles = "Admin,Teacher,Manager")]
+    [SchoolAdminAuthorize]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class AcademicController : AreaBaseController
     {
         public AcademicController(ILogger<AcademicController> logger, IAcademicServices academicServices)
@@ -114,7 +115,7 @@ namespace FeePay.Web.Areas.School.Controllers
         [HttpDelete]
         [Route("School/Academics/Classes/Delete")]
         [DisplayName("Delete Class")]
-        public IActionResult ClassDelete(int id)
+        public IActionResult ClassDelete()
         {
             return View();
         }
@@ -206,7 +207,7 @@ namespace FeePay.Web.Areas.School.Controllers
         [HttpDelete]
         [DisplayName("Delete Class")]
         [Route("School/Academics/Sections/Delete")]
-        public IActionResult SectionDelete(int id)
+        public IActionResult SectionDelete()
         {
             return View();
         }
@@ -298,7 +299,7 @@ namespace FeePay.Web.Areas.School.Controllers
         [HttpDelete]
         [DisplayName("Delete Class")]
         [Route("School/Academics/Sessions/Delete")]
-        public IActionResult SessionDelete(int id)
+        public IActionResult SessionDelete()
         {
             return View();
         }
