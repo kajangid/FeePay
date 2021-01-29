@@ -10,6 +10,7 @@ using FeePay.Core.Application.Interface.Service;
 using FeePay.Core.Application.Interface.Service.Student;
 using FeePay.Core.Application.Wrapper;
 using FeePay.Core.Domain.Entities.Common;
+using FeePay.Core.Domain.Entities.Identity;
 using FeePay.Core.Domain.Entities.Student;
 
 namespace FeePay.Core.Application.Services.Student
@@ -77,16 +78,31 @@ namespace FeePay.Core.Application.Services.Student
             StudentAdmission studentAdmission = _mapper.Map<StudentAdmission>(model);
             studentAdmission.DateOfBirth = null;
             bool res;
-            if (model.Id != 0)
-            {
-                studentAdmission.ModifyBy = UserId;
-                var updatedId = await _unitOfWork.StudentAdmision.UpdateAsync(studentAdmission, SchoolId);
-                res = (updatedId > 0);
-            }
-            else
+            if (model.Id == 0)
             {
                 studentAdmission.AddedBy = UserId;
                 res = await _studentRegistrationService.AddStudentAsync(studentAdmission);
+            }
+            else
+            {
+                var studentAdmissionEntity = await _unitOfWork.StudentAdmision.FindByIdAsync(model.Id, SchoolId);
+                if (studentAdmissionEntity == null) return new Response<bool>($"Could not find data for id={model.Id}");
+                studentAdmissionEntity.AdmissionDate = studentAdmission.AdmissionDate;
+                studentAdmissionEntity.FirstName = studentAdmission.FirstName;
+                studentAdmissionEntity.LastName = studentAdmission.LastName;
+                studentAdmissionEntity.FatherName = studentAdmission.FatherName;
+                studentAdmissionEntity.MotherName = studentAdmission.MotherName;
+                studentAdmissionEntity.Gender = studentAdmission.Gender;
+                studentAdmissionEntity.MobileNo = studentAdmission.MobileNo;
+                studentAdmissionEntity.Address = studentAdmission.Address;
+                studentAdmissionEntity.FormNo = studentAdmission.FormNo;
+                studentAdmissionEntity.Sr_RegNo = studentAdmission.Sr_RegNo;
+                studentAdmissionEntity.ClassId = studentAdmission.ClassId;
+                studentAdmissionEntity.SectionId = studentAdmission.SectionId;
+                studentAdmissionEntity.IsActive = studentAdmission.IsActive;
+                studentAdmission.ModifyBy = UserId;
+                var updatedId = await _unitOfWork.StudentAdmision.UpdateAsync(studentAdmission, SchoolId);
+                res = (updatedId > 0);
             }
             if (res) return new Response<bool>(res);
             return new Response<bool>("student is already present with same formNo.");
@@ -120,17 +136,25 @@ namespace FeePay.Core.Application.Services.Student
             return new Response<List<StudentAdmissionViewModel>>(model);
         }
 
-        public async Task<Response<StudentLedgerViewModel>> StudentLedgerAsync(int id)
+        public async Task<Response<StudentLedgerViewModel>> StudentLedgerAsync(int studentId)
         {
             string SchoolKey = _appContextAccessor.ClaimSchoolUniqueId();
-            var student = await _unitOfWork.StudentAdmision.SearchStudentAsync(dbId: SchoolKey, studentId: id);
-            var fees = await _unitOfWork.StudentFee.GetStudentFeeListAsync(id, SchoolKey);
+            var student = await _unitOfWork.StudentAdmision.SearchStudentAsync(dbId: SchoolKey, studentId: studentId);
+            var fees = await _unitOfWork.StudentFee.GetStudentFeeListAsync(studentId, SchoolKey);
             StudentLedgerViewModel model = new StudentLedgerViewModel
             {
                 StudentAdmissionViewModel = _mapper.Map<StudentAdmissionViewModel>(student.SingleOrDefault()),
                 FeeList = fees.ToList()
             };
             return new Response<StudentLedgerViewModel>(model);
+        }
+
+        public async Task<Response<UserPasswordViewModel>> GetStudentPassword(int studentId)
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            StudentLogin Student = await _unitOfWork.StudentLogin.FindPasswordByIdAsync(id: studentId, dbId: SchoolId);
+            UserPasswordViewModel StudentNamePass = _mapper.Map<UserPasswordViewModel>(Student);
+            return new Response<UserPasswordViewModel>(StudentNamePass);
         }
     }
 }

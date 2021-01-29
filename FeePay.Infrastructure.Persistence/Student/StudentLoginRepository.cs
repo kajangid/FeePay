@@ -351,5 +351,53 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
+        public async Task<StudentLogin> FindPasswordByIdAsync(string dbId, int id, bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                DynamicParameters tempParams = new DynamicParameters();
+                tempParams.Add("@UserId", id, DbType.Int32, ParameterDirection.Input);
+                tempParams.Add("@IsActive", (object)isActive ?? DBNull.Value, DbType.Boolean, ParameterDirection.Input);
+                return await connection.QuerySingleOrDefaultAsync<StudentLogin>(
+                    _dBVariables.QUERY_FindUserPassword_StudentLogin,
+                    tempParams,
+                    commandType: CommandType.Text);
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+        public async Task<StudentLogin> GetAllUserPasswordAsync(string dbId, bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                DynamicParameters tempParams = new DynamicParameters();
+                tempParams.Add("@IsActive", (object)isActive ?? DBNull.Value, DbType.Boolean, ParameterDirection.Input);
+                return await connection.QuerySingleOrDefaultAsync<StudentLogin>(
+                    _dBVariables.QUERY_GetAllUserPassword_StudentLogin,
+                    tempParams,
+                    commandType: CommandType.Text);
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
+
+
     }
 }

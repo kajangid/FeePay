@@ -8,15 +8,11 @@
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
 }
 @section Scripts{
-    <script src="@Url.Content("~/Cuba/js/clipboard/clipboard.min.js")"></script>
-    <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
-    <script src="@Url.Content("~/Cuba/js/notify/bootstrap-notify.min.js")"></script>
     <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
-    <script src="@Url.Content("~/Cuba/js/index_global.js")"></script>
     <script>
         (function () {
             "use strict";
-            $('#studentListTable').DataTable({ "order": [[8, 'desc']]});
+            $('#studentListTable').DataTable({ "order": [[8, 'desc']] });
             $('#studentListTable').reArrangeDatatableSerialNumber();
         })(jQuery);
     </script>
@@ -94,12 +90,15 @@
                                                 <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
                                                 <td><label class="badge badge-success">soon</label></td>
                                                 <td>
-                                                    <div style="width:100px">
+                                                    <div style="width:130px">
                                                         <a asp-action="StudentEdit" asp-controller="StudentAdmission" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Student" class="d-inline-block mr-1">
                                                             <i data-feather="edit-3"></i>
                                                         </a>
                                                         <a asp-action="StudentProfile" asp-controller="StudentAdmission" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="View Student" class="d-inline-block mr-1">
                                                             <i data-feather="user"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0)" data-ajaxurl="@Url.Action("GetUserPassword","StudentAdmission",new { id = item.Id })" data-onclilck="showPassword" data-container="body" data-toggle="popover" data-placement="top" title="See Password" class="d-inline-block mr-1">
+                                                            <i data-feather="unlock"></i>
                                                         </a>
                                                         <a data-action="deleterow" data-actionmag="Class" asp-action="StudentDelete" asp-controller="StudentAdmission" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Student" class="d-inline-block">
                                                             <i data-feather="trash-2"></i>
@@ -120,3 +119,7 @@
 </div>
 
 
+
+@section Models{
+    @{ await Html.RenderPartialAsync("_Partial_ShowUserNamePassword"); }
+}

@@ -31,6 +31,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #region Classes
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/Academics/Classes")]
         [DisplayName("List Classes")]
         public async Task<IActionResult> ClassList()
@@ -50,6 +51,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/Academics/Classes/Manage/{id?}")]
         [DisplayName("Manage Classes")]
         public async Task<IActionResult> ClassManage(int? id)
@@ -79,6 +81,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpPost]
+        [MvcDiscovery]
         [ValidateAntiForgeryToken]
         [Route("School/Academics/Classes/Manage/{id?}")]
         [DisplayName("Manage Classes")]
@@ -113,6 +116,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpDelete]
+        [MvcDiscovery]
         [Route("School/Academics/Classes/Delete")]
         [DisplayName("Delete Class")]
         public IActionResult ClassDelete()
@@ -123,6 +127,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #region Sections
         [HttpGet]
+        [MvcDiscovery]
         [DisplayName("List Sections")]
         [Route("School/Academics/Sections")]
         public async Task<IActionResult> SectionList()
@@ -142,6 +147,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpGet]
+        [MvcDiscovery]
         [DisplayName("Manage Classes")]
         [Route("School/Academics/Sections/Manage/{id?}")]
         public async Task<IActionResult> SectionManage(int? id)
@@ -171,6 +177,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpPost]
+        [MvcDiscovery]
         [ValidateAntiForgeryToken]
         [DisplayName("Manage Classes")]
         [Route("School/Academics/Sections/Manage/{id?}")]
@@ -205,6 +212,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpDelete]
+        [MvcDiscovery]
         [DisplayName("Delete Class")]
         [Route("School/Academics/Sections/Delete")]
         public IActionResult SectionDelete()
@@ -215,6 +223,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #region Session
         [HttpGet]
+        [MvcDiscovery]
         [DisplayName("List Sessions")]
         [Route("School/Academics/Sessions")]
         public async Task<IActionResult> SessionList()
@@ -234,6 +243,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpGet]
+        [MvcDiscovery]
         [DisplayName("Manage Classes")]
         [Route("School/Academics/Sessions/Manage/{id?}")]
         public async Task<IActionResult> SessionManage(int? id)
@@ -263,6 +273,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpPost]
+        [MvcDiscovery]
         [ValidateAntiForgeryToken]
         [DisplayName("Manage Classes")]
         [Route("School/Academics/Sessions/Manage/{id?}")]
@@ -297,6 +308,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpDelete]
+        [MvcDiscovery]
         [DisplayName("Delete Class")]
         [Route("School/Academics/Sessions/Delete")]
         public IActionResult SessionDelete()

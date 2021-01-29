@@ -17,5 +17,8 @@ namespace FeePay.Core.Application.Interface.Service.School
 
         Task AssignRolesToSchoolUserAsync(SchoolAdminUser user, List<CheckBoxItem> roleList);
         Task AssignRolesToSchoolUserAsync(SchoolAdminRole role, List<CheckBoxItem> userList);
+
+
+        SchoolAdminUser GetNewHashSchoolUserPasswordAsync(SchoolAdminUser user, string newPassword);
     }
 }

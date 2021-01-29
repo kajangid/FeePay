@@ -9,23 +9,28 @@
 @section Scripts{
     <script src="@Url.Content("~/Cuba/js/datepicker/date-picker/datepicker.js")"></script>
     <script src="@Url.Content("~/Cuba/js/datepicker/date-picker/datepicker.en.js")"></script>
-    <script src="@Url.Content("~/Cuba/js/clipboard/clipboard.min.js")"></script>
-    <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
     <partial name="_ValidationScriptsPartial" />
     <script>
         (function () {
             'use strict';
             var datepicker = $('input[name="AdmissionDate"]').datepicker().data('datepicker');
             datepicker.selectDate(new Date());
-            $('select[name="ClassId"]').on('change', function (e) {
+            var selectClass = $('select[name="ClassId"]');
+            var selectedSection = selectClass.val();
+            bindSectionDropDown(selectClass, selectedSection);
+            selectClass.on('change', function (e) {
                 e.preventDefault();
                 var $this = $(this);
+                bindSectionDropDown($this);
+            });
+            function bindSectionDropDown(select, selected) {
+                selected = selected || '0';
                 var selectSectionEle = $('select[name="SectionId"]');
-                var html = '<option value="">Select</option>';
-                var classId = $this.val();
+                var html = '<option value="">-Select-</option>';
+                var classId = select.val();
                 var url = selectSectionEle.attr("data-ajaxurl");
                 if (classId === "") { selectSectionEle.html(html); return true; }
-                $this.prop('disabled', true);
+                //select.prop('disabled', true);
                 $.ajax({
                     url: `${url}?id=${classId}`,
                     method: 'get',
@@ -33,17 +38,18 @@
                 }).done(function (res) {
                     if (res.success) {
                         if (res.data != null && res.data.length > 0) {
-                            html += res.data.map(function (i) { return `<option value="${i.value}">${i.text}</option>`; });
+                            html += res.data.map(function (i) {
+                                return `<option value="${i.value}" ${(i.value === selected && typeof (selected) != "undefined" && selected != null && selected != '') ? 'Selected' : ''} >${i.text}</option>`;
+                            }).join('');
                             selectSectionEle.html(html);
                         }
                     } else { }
                 }).fail(function (jqXHR, textStatus) {
                     console.log("Request failed: " + textStatus);
                 }).always(function () {
-                    $this.prop('disabled', false);
+                    //select.prop('disabled', false);
                 });
-                return true;
-            });
+            }
         })(jQuery);
     </script>
 }
@@ -192,11 +198,13 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-sm-6">
                                 <div class="form-group mb-0">
                                     <input type="submit" value="Save" class="btn btn-success mr-3" data-original-title="" title="" />
-                                    <a class="btn btn-danger" href="#" data-original-title="" title="">Cancel</a>
                                 </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div id="form-validation-summary" class="my-2 txt-danger" style="font-size: 12px;line-height: 1;letter-spacing: 0.9px;" asp-validation-summary="All"></div>
                             </div>
                         </div>
                     </div>

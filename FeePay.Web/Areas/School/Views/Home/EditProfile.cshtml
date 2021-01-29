@@ -1,0 +1,112 @@
+﻿@model UserProfileViewModel
+@{
+    ViewData["Title"] = "EditProfile";
+}
+@section Style{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/animate.css")">
+}
+@section Scripts{
+    <script src="@Url.Content("~/Cuba/js/modal-animated.js")"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function ($) {
+            "use strict";
+        })(jQuery)
+    </script>
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Setting</li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("UserProfile","Home")">Profile</a></li>
+                    <li class="breadcrumb-item active">@ViewData["BreadCrumb_Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="edit-profile">
+        <div class="row">
+            <div class="col-xl-8 col-lg-4 col-md-6 col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h6>Edit Profile</h6>
+                        <hr />
+                        <form method="post" asp-action="EditProfile" asp-controller="Home" class="needs-validation" novalidate="">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3 row">
+                                        <label asp-for="FirstName" class="col-sm-3 col-form-label">First Name</label>
+                                        <div class="col-sm-9 position-relative">
+                                            <input asp-for="FirstName" class="form-control" type="text" placeholder="First Name" data-inputtype="readonly" readonly="" data-bs-original-title="" title="">
+                                            <div class="invalid-feedback"><span asp-validation-for="FirstName"></span></div>
+                                            <div data-onclick="editreadonly" class="input-right-icon top-20px" style="display:none"><i class="fa fa-shield"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label asp-for="LastName" class="col-sm-3 col-form-label">Last Name</label>
+                                        <div class="col-sm-9 position-relative">
+                                            <input asp-for="LastName" class="form-control" type="text" placeholder="Last Name" data-inputtype="readonly" readonly="" data-bs-original-title="" title="">
+                                            <div class="invalid-feedback"><span asp-validation-for="LastName"></span></div>
+                                            <div data-onclick="editreadonly" class="input-right-icon top-20px" style="display:none"><i class="fa fa-shield"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label asp-for="UserName" class="col-sm-3 col-form-label">Username</label>
+                                        <div class="col-sm-9 position-relative">
+                                            <input asp-for="UserName" class="form-control" type="text" placeholder="Username" data-inputtype="readonly" readonly="" data-bs-original-title="" title="">
+                                            <div class="invalid-feedback"><span asp-validation-for="UserName"></span></div>
+                                            <div data-onclick="editreadonly" class="input-right-icon top-20px" style="display:none"><i class="fa fa-shield"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label asp-for="PhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
+                                        <div class="col-sm-9 position-relative">
+                                            <input asp-for="PhoneNumber" class="form-control" type="text" placeholder="Phone Number" data-inputtype="readonly" readonly="" data-bs-original-title="" title="">
+                                            <div class="invalid-feedback"><span asp-validation-for="PhoneNumber"></span></div>
+                                            <div data-onclick="editreadonly" class="input-right-icon top-20px" style="display:none"><i class="fa fa-shield"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label asp-for="Email" class="col-sm-3 col-form-label">Email address</label>
+                                        <div class="col-sm-9 position-relative">
+                                            <input asp-for="Email" class="form-control" type="email" placeholder="Email" data-inputtype="readonly" readonly="" data-bs-original-title="" title="">
+                                            <div class="invalid-feedback"><span asp-validation-for="Email"></span></div>
+                                            <div data-onclick="editreadonly" class="input-right-icon top-20px" style="display:none"><i class="fa fa-shield"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 text-right">
+                                    <button class="btn btn-primary" type="submit" data-bs-original-title="" title="">Update Profile</button>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div id="form-validation-summary" class="txt-danger" asp-validation-summary="All"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        @{ await Html.RenderPartialAsync("_Partial_ResetPassword", new ResetPasswordViewModel()); }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

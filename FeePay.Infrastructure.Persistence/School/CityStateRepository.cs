@@ -28,7 +28,7 @@ namespace FeePay.Infrastructure.Persistence.School
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QuerySingleAsync<States>("SELECT *FROM [dbo].[States] WHERE Id = @Id AND IsActive = @IsActive",
+                return await connection.QuerySingleAsync<States>(_dBVariables.QUERY_Find_Active_StateByIdAsync,
                     new { Id = id, IsActive = true },
                     commandType: CommandType.Text);
             }
@@ -39,6 +39,10 @@ namespace FeePay.Infrastructure.Persistence.School
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
         public async Task<Cities> FindActiveCityByIdAsync(int id, string dbId = null)
@@ -46,7 +50,7 @@ namespace FeePay.Infrastructure.Persistence.School
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QuerySingleAsync<Cities>("SELECT *FROM [dbo].[Cities] WHERE Id = @Id AND IsActive = @IsActive",
+                return await connection.QuerySingleAsync<Cities>(_dBVariables.QUERY_Find_Active_CityByIdAsync,
                     new { Id = id, IsActive = true },
                     commandType: CommandType.Text);
             }
@@ -58,13 +62,17 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
         public async Task<IEnumerable<Cities>> FindActiveCitiesByStateIdAsync(int id, string dbId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QueryAsync<Cities>("SELECT *FROM [dbo].[Cities] WHERE [StateId] = @StateId AND IsActive = @IsActive",
+                return await connection.QueryAsync<Cities>(_dBVariables.QUERY_Find_Active_Cities_ByStateId,
                     new { StateId = id, IsActive = true },
                     commandType: CommandType.Text);
             }
@@ -76,6 +84,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
 
         public async Task<IEnumerable<States>> GetAllActiveStatesAsync(string dbId = null)
@@ -83,7 +95,7 @@ namespace FeePay.Infrastructure.Persistence.School
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QueryAsync<States>("SELECT *FROM [dbo].[States] WHERE IsActive = @IsActive",
+                return await connection.QueryAsync<States>(_dBVariables.QUERY_GetAll_Active_States,
                     new { IsActive = true },
                     commandType: CommandType.Text);
             }
@@ -94,6 +106,10 @@ namespace FeePay.Infrastructure.Persistence.School
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
         public async Task<IEnumerable<Cities>> GetAllActiveCitiesAsync(string dbId = null)
@@ -101,7 +117,7 @@ namespace FeePay.Infrastructure.Persistence.School
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QueryAsync<Cities>("SELECT *FROM [dbo].[Cities] WHERE IsActive = @IsActive",
+                return await connection.QueryAsync<Cities>(_dBVariables.QUERY_GetAll_Active_Cities,
                     new { IsActive = true },
                     commandType: CommandType.Text);
             }
@@ -112,6 +128,10 @@ namespace FeePay.Infrastructure.Persistence.School
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
 

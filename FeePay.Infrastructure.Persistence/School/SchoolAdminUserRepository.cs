@@ -17,10 +17,10 @@ namespace FeePay.Infrastructure.Persistence.School
         public SchoolAdminUserRepository(IConnectionStringBuilder connectionStringBuilder, IDBVariables dBVariables)
         {
             _ConnectionStringBuilder = connectionStringBuilder;
-            _DBVariables = dBVariables;
+            _dbVariables = dBVariables;
         }
 
-        private readonly IDBVariables _DBVariables;
+        private readonly IDBVariables _dbVariables;
         private readonly IConnectionStringBuilder _ConnectionStringBuilder;
 
         private string GetConStr(string dbId = null)
@@ -57,7 +57,7 @@ namespace FeePay.Infrastructure.Persistence.School
                     TwoFactorEnabled = user.TwoFactorEnabled,
                     UserName = user.UserName
                 };
-                return await connection.ExecuteAsync(_DBVariables.SP_Add_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                return await connection.ExecuteAsync(_dbVariables.SP_Add_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
             }
             catch (TimeoutException ex)
             {
@@ -97,7 +97,7 @@ namespace FeePay.Infrastructure.Persistence.School
                     TwoFactorEnabled = user.TwoFactorEnabled,
                     UserName = user.UserName
                 };
-                return await connection.ExecuteAsync(_DBVariables.SP_Update_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                return await connection.ExecuteAsync(_dbVariables.SP_Update_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
             }
             catch (TimeoutException ex)
             {
@@ -114,7 +114,7 @@ namespace FeePay.Infrastructure.Persistence.School
             try
             {
                 using var connection = new SqlConnection(GetConStr(dbId));
-                return await connection.ExecuteAsync(_DBVariables.SP_Delete_SchoolAdmin_User, new { Id = Id }, commandType: CommandType.StoredProcedure);
+                return await connection.ExecuteAsync(_dbVariables.SP_Delete_SchoolAdmin_User, new { Id = Id }, commandType: CommandType.StoredProcedure);
             }
             catch (TimeoutException ex)
             {
@@ -132,7 +132,7 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { Id = userId, LastLoginIP = Ip };
-                await connection.ExecuteScalarAsync<int>(_DBVariables.SP_Add_SchoolAdmin_User_LoginInfo, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                await connection.ExecuteScalarAsync<int>(_dbVariables.SP_Add_SchoolAdmin_User_LoginInfo, SpRequiredParameters, commandType: CommandType.StoredProcedure);
             }
             catch (TimeoutException ex)
             {
@@ -154,7 +154,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
 
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    _dbVariables.SP_Get_SchoolAdmin_User,
                     (user, role) => { user.Roles.Add(role); return user; },
                     SpRequiredParameters,
                     splitOn: "Id,Id",
@@ -188,7 +188,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 //return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
                 //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    _dbVariables.SP_Get_SchoolAdmin_User,
                     (user, role) => { user.Roles.Add(role); return user; },
                     SpRequiredParameters,
                     splitOn: "Id,Id",
@@ -222,7 +222,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 //return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
                 //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    _dbVariables.SP_Get_SchoolAdmin_User,
                     (user, role) => { user.Roles.Add(role); return user; },
                     SpRequiredParameters,
                     splitOn: "Id,Id",
@@ -256,7 +256,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 //return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
                 //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    _dbVariables.SP_Get_SchoolAdmin_User,
                     (user, role) => { user.Roles.Add(role); return user; },
                     SpRequiredParameters,
                     splitOn: "Id,Id",
@@ -290,7 +290,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 //return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
                 //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    _dbVariables.SP_Get_SchoolAdmin_User,
                     (user, role) => { user.Roles.Add(role); return user; },
                     SpRequiredParameters,
                     splitOn: "Id,Id",
@@ -324,7 +324,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 //return await connection.QuerySingleOrDefaultAsync<SchoolAdminUser>(
                 //    _DBVariables.SP_Get_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
-                    _DBVariables.SP_Get_SchoolAdmin_User,
+                    _dbVariables.SP_Get_SchoolAdmin_User,
                     (user, role) => { user.Roles.Add(role); return user; },
                     SpRequiredParameters,
                     splitOn: "Id,Id",
@@ -358,7 +358,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 //return await connection.QueryAsync<SchoolAdminUser>
                 //    (_DBVariables.SP_GetAll_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
-                    _DBVariables.SP_GetAll_SchoolAdmin_User,
+                    _dbVariables.SP_GetAll_SchoolAdmin_User,
                     (user, role) => { user.Roles.Add(role); return user; },
                     SpRequiredParameters,
                     splitOn: "Id,Id",
@@ -393,7 +393,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 //return await connection.QueryAsync<SchoolAdminUser>
                 //    (_DBVariables.SP_GetAll_SchoolAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser>(
-                    _DBVariables.SP_GetAll_SchoolAdmin_User,
+                    _dbVariables.SP_GetAll_SchoolAdmin_User,
                     (user, role) => { user.Roles.Add(role); return user; },
                     splitOn: "Id,Id",
                     commandType: CommandType.StoredProcedure);
@@ -425,7 +425,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { Id = userId };
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
-                (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
+                (_dbVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
                 (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
                 , SpRequiredParameters
                 , splitOn: "Id,Id,Id,Id"
@@ -458,7 +458,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedUserName = normalizedUserName };
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
-                (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
+                (_dbVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
                 (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
                 , SpRequiredParameters
                 , splitOn: "Id,Id,Id,Id"
@@ -491,7 +491,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedEmail = normalizedEmail };
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
-                (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
+                (_dbVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
                 (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
                 , SpRequiredParameters
                 , splitOn: "Id,Id,Id,Id"
@@ -524,7 +524,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { Id = userId, IsActive = true };
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
-                    (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
+                    (_dbVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
                     (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
                     , SpRequiredParameters
                     , splitOn: "Id,Id,Id,Id"
@@ -557,7 +557,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedUserName = normalizedUserName, IsActive = true };
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
-                (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
+                (_dbVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
                 (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
                 , SpRequiredParameters
                 , splitOn: "Id,Id,Id,Id"
@@ -590,7 +590,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { NormalizedEmail = normalizedEmail, IsActive = true };
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
-                (_DBVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
+                (_dbVariables.SP_Get_SchoolAdmin_User_With_AddEditUser,
                 (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
                 , SpRequiredParameters
                 , splitOn: "Id,Id,Id,Id"
@@ -623,7 +623,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { IsActive = true };
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
-                    (_DBVariables.SP_GetAll_SchoolAdmin_User_With_AddEditUser,
+                    (_dbVariables.SP_GetAll_SchoolAdmin_User_With_AddEditUser,
                     (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
                     , SpRequiredParameters
                     , splitOn: "Id,Id,Id,Id"
@@ -656,7 +656,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new { };
                 var users = await connection.QueryAsync<SchoolAdminUser, SchoolAdminRole, SchoolAdminUser, SchoolAdminUser, SchoolAdminUser>
-                    (_DBVariables.SP_GetAll_SchoolAdmin_User_With_AddEditUser,
+                    (_dbVariables.SP_GetAll_SchoolAdmin_User_With_AddEditUser,
                     (user, role, addedbyuser, modifybyuser) => { user.Roles.Add(role); user.AddedByUser = addedbyuser; user.ModifyByUser = modifybyuser; return user; }
                     , SpRequiredParameters
                     , splitOn: "Id,Id,Id,Id"
@@ -680,6 +680,61 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+        }
+        public async Task<SchoolAdminUser> FindUserPasswordByIdAsync(string dbId, int id, bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                DynamicParameters tempParams = new DynamicParameters();
+                tempParams.Add("@UserId", id, DbType.Int32, ParameterDirection.Input);
+                tempParams.Add("@IsActive", (object)isActive ?? DBNull.Value, DbType.Boolean, ParameterDirection.Input);
+                var user = await connection.QuerySingleAsync<SchoolAdminUser>
+                    (_dbVariables.QUERY_FindUserPassword_SchoolAdminUser,
+                     tempParams,
+                     commandType: CommandType.Text);
+                return user;
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
+
+        }
+        public async Task<IEnumerable<SchoolAdminUser>> GetAllUserPasswordAsync(string dbId, bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                DynamicParameters tempParams = new DynamicParameters();
+                tempParams.Add("@IsActive", (object)isActive ?? DBNull.Value, DbType.Boolean, ParameterDirection.Input);
+                var user = await connection.QueryAsync<SchoolAdminUser>
+                    (_dbVariables.QUERY_GetAllUserPassword_SchoolAdminUser,
+                     tempParams,
+                     commandType: CommandType.Text);
+                return user;
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
+
         }
     }
 }

@@ -8,11 +8,7 @@
 }
 
 @section Scripts{
-    <script src="@Url.Content("~/Cuba/js/clipboard/clipboard.min.js")"></script>
-    <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
-    <script src="@Url.Content("~/Cuba/js/notify/bootstrap-notify.min.js")"></script>
     <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
-    <script src="@Url.Content("~/Cuba/js/index_global.js")"></script>
     <script>
         (function () {
             "use strict";
@@ -96,13 +92,17 @@
                                                 <td><a href="@Url.Action("StaffManage","Account",new { id = item.ModifyById })" class="btn btn-@(color) btn-xs">@item.ModifyBy</a></td>
                                                 <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
                                                 <td>
-                                                    <a asp-action="StaffManage" asp-controller="Account" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Staff" class="d-inline-block mr-2">
-                                                        <i data-feather="edit-3"></i>
-                                                    </a>
-                                                    <a data-action="deleterow" data-actionmag="Staff" asp-action="StaffDelete" asp-controller="Account" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Staff" class="d-inline-block">
-                                                        <i data-feather="trash-2"></i>
-                                                    </a>
-
+                                                    <div style="width:100px">
+                                                        <a asp-action="StaffManage" asp-controller="Account" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Staff" class="d-inline-block mr-2">
+                                                            <i data-feather="edit-3"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0)" data-ajaxurl="@Url.Action("StaffPassword","Account",new { id = item.Id })" data-onclilck="showPassword" data-container="body" data-toggle="popover" data-placement="top" title="See Password" class="d-inline-block mr-2">
+                                                            <i data-feather="unlock"></i>
+                                                        </a>
+                                                        <a data-action="deleterow" data-actionmag="Staff" asp-action="StaffDelete" asp-controller="Account" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Staff" class="d-inline-block">
+                                                            <i data-feather="trash-2"></i>
+                                                        </a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         }
@@ -116,4 +116,8 @@
         </div>
     </div>
 </div>
+
+@section Models{
+    @{ await Html.RenderPartialAsync("_Partial_ShowUserNamePassword"); }
+}
 

@@ -47,6 +47,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
         public async Task<int> DeleteAsync(int Id, string dbId = null)
         {
@@ -65,6 +69,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
         public async Task<int> DeleteAsync(int ClassId, int SectionId, string dbId = null)
         {
@@ -82,6 +90,10 @@ namespace FeePay.Infrastructure.Persistence.School
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
 
@@ -117,6 +129,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
 
 
@@ -151,6 +167,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
         public async Task<Section> FindClassesInSectionBySectionIdAsync(int SectionId, string dbId = null)
         {
@@ -182,6 +202,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
         public async Task<IEnumerable<Classes>> GetAll_Class_SectionAsync(string dbId = null)
         {
@@ -212,6 +236,10 @@ namespace FeePay.Infrastructure.Persistence.School
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
 
@@ -251,6 +279,10 @@ namespace FeePay.Infrastructure.Persistence.School
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
 

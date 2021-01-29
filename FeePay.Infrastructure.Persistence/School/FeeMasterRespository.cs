@@ -50,6 +50,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
         public async Task<int> UpdateAsync(FeeMaster feeMaster, string dbId = null)
         {
@@ -78,6 +82,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
         public async Task<int> DeleteAsync(int Id, int? changeBy, string dbId = null)
         {
@@ -95,6 +103,10 @@ namespace FeePay.Infrastructure.Persistence.School
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
 
@@ -117,6 +129,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
         public async Task<FeeMaster> FindByIdAsync(int Id, string dbId = null)
         {
@@ -137,6 +153,10 @@ namespace FeePay.Infrastructure.Persistence.School
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
 
@@ -159,6 +179,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
         public async Task<FeeMaster> FindActiveByIdAsync(int Id, string dbId = null)
         {
@@ -179,6 +203,10 @@ namespace FeePay.Infrastructure.Persistence.School
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
 
@@ -210,6 +238,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
         public async Task<FeeMaster> FindActiveById_WithAddEditUserAsync(int Id, string dbId = null)
         {
@@ -240,6 +272,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
 
         public async Task<IEnumerable<FeeMaster>> GetAll_WithAddEditUserAsync(string dbId = null)
@@ -267,6 +303,10 @@ namespace FeePay.Infrastructure.Persistence.School
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
         public async Task<FeeMaster> FindById_WithAddEditUserAsync(int Id, string dbId = null)
@@ -297,6 +337,10 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
 
         public async Task<IEnumerable<FeeMaster>> GetByFeeGroupIdAsync(int Id, string dbId)
@@ -319,6 +363,10 @@ namespace FeePay.Infrastructure.Persistence.School
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
 

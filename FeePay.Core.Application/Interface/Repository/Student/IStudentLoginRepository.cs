@@ -21,5 +21,8 @@ namespace FeePay.Core.Application.Interface.Repository.Student
         Task<IList<StudentLogin>> FindAllActiveUserAsync(string dbId = null);
         Task UpdateLoginState(int userId, string Ip, string dbId = null);
 
+        Task<StudentLogin> FindPasswordByIdAsync(string dbId, int id, bool? isActive = null);
+        Task<StudentLogin> GetAllUserPasswordAsync(string dbId, bool? isActive = null);
+
     }
 }

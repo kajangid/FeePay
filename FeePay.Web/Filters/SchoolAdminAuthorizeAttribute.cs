@@ -18,9 +18,6 @@ namespace FeePay.Web.Filters
 {
     public class SchoolAdminAuthorizeAttribute : Attribute, IAuthorizationFilter
     {
-#nullable enable
-        //public string? Roles { get; set; }
-#nullable disable
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {

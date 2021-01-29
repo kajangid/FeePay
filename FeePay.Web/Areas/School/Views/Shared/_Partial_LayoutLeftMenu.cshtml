@@ -1,6 +1,11 @@
-﻿
+﻿@using FeePay.Core.Application.Interface.Service
+@inject ILoginService _loginService
+@{
+    var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+}
 
 
+@Html.AntiForgeryToken()
 <div class="sidebar-wrapper">
     <div class="logo-wrapper">
         <a href="@Url.Action("~")"><img class="img-fluid for-light" src="~/Cuba/images/logo/logo.png" alt=""><img class="img-fluid for-dark" src="~/Cuba/images/logo/logo_dark.png" alt=""></a>
@@ -56,7 +61,7 @@
                         <i data-feather="airplay"></i> <span> Setting </span>
                     </a>
                     <ul class="sidebar-submenu">
-                        <li><a href="javascript:void(0)">Profile</a></li>
+                        <li><a href="@Url.Action("UserProfile","Home",new { id = UserId})">Profile</a></li>
                         <li><a href="@Url.Action("StaffList","Account")">User Creation</a></li>
                         <li><a href="@Url.Action("RoleList","Account")">User Rights</a></li>
                         <li><a href="@Url.Action("SessionList","Academic")">Create New Session</a></li>

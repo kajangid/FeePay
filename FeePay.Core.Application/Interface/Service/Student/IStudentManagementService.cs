@@ -23,5 +23,6 @@ namespace FeePay.Core.Application.Interface.Service.Student
         Task<Response<List<StudentAdmissionViewModel>>> GetListOfActiveStudentsByClassIdAsync(int classId);
         Task<Response<List<StudentAdmissionViewModel>>> SearchStudentAsync(string searchParam);
         Task<Response<StudentLedgerViewModel>> StudentLedgerAsync(int id);
+        Task<Response<UserPasswordViewModel>> GetStudentPassword(int studentId);
     }
 }

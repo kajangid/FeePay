@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +72,15 @@ namespace FeePay.Web.Areas.Common
         {
             if (Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
             else return RedirectToAction("Index", "Home");
+        }
+
+        public static List<string> GetErrorListFromModelState(ModelStateDictionary modelState)
+        {
+            var query = from state in modelState.Values
+                        from error in state.Errors
+                        select error.ErrorMessage;
+            var errorList = query.ToList();
+            return errorList;
         }
     }
 }

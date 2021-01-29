@@ -29,6 +29,7 @@ namespace FeePay.Web.Controllers
             // -> Event written to log-Bob.txt
 
             //_logger.LogInformation("Shutting down");
+
             return View();
         }
 

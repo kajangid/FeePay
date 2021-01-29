@@ -53,6 +53,8 @@ namespace FeePay.Core.Application.Interface.Common
         string SP_Get_SchoolAdmin_UsersInRole { get; }
         string SP_GetAll_SchoolAdmin_UserRole { get; }
         string SP_Add_SchoolAdmin_User_LoginInfo { get; }
+        string QUERY_FindUserPassword_SchoolAdminUser { get; }
+        string QUERY_GetAllUserPassword_SchoolAdminUser { get; }
         #endregion
 
 
@@ -63,6 +65,8 @@ namespace FeePay.Core.Application.Interface.Common
         string SP_Get_StudentLogin { get; }
         string SP_GetAll_StudentLogin { get; }
         string SP_Add_StudentLogin_LoginInfo { get; }
+        string QUERY_FindUserPassword_StudentLogin { get; }
+        string QUERY_GetAllUserPassword_StudentLogin { get; }
         #endregion
 
 
@@ -151,6 +155,15 @@ namespace FeePay.Core.Application.Interface.Common
         string SP_Get_StudentAdmission { get; }
         string SP_Search_Students { get; }
         string SP_Get_StudentAdmission_AddEditUser { get; }
+        #endregion
+
+
+        #region STATE & CITY
+        string QUERY_GetAll_Active_Cities { get; }
+        string QUERY_GetAll_Active_States { get; }
+        string QUERY_Find_Active_Cities_ByStateId { get; }
+        string QUERY_Find_Active_CityByIdAsync { get; }
+        string QUERY_Find_Active_StateByIdAsync { get; }
         #endregion
 
 

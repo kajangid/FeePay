@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -56,7 +57,16 @@ namespace FeePay.Web
                             loggerConfiguration
                                 .ReadFrom.Configuration(hostingContext.Configuration, sectionName: "Slog")
                                 // To get the specific log data
-                                .WriteTo.Map("Name", (name, wt) => wt.File($"./logs/log-{name}.txt"), sinkMapCountLimit: 10)
+                                .WriteTo.Map("Name", (name, wt) => wt.File($"./Logs/log-{name}.log"), sinkMapCountLimit: 10)
+                                .WriteTo.Logger(c =>
+                                    c.Filter.ByIncludingOnly(e => e.Level == LogEventLevel.Warning)
+                                        .WriteTo.File("./Logs/Warning.log"))
+                                .WriteTo.Logger(c =>
+                                    c.Filter.ByIncludingOnly(e => e.Level == LogEventLevel.Error)
+                                        .WriteTo.File("./Logs/Error.log"))
+                                .WriteTo.Logger(c =>
+                                    c.Filter.ByIncludingOnly(e => e.Level == LogEventLevel.Fatal)
+                                        .WriteTo.File("./Logs/Fatal.log"))
                                 .Enrich.FromLogContext()
                                 .Enrich.WithProperty("ApplicationName", typeof(Program).Assembly.GetName().Name)
                                 .Enrich.WithProperty("Environment", hostingContext.HostingEnvironment);

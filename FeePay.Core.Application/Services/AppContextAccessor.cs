@@ -45,5 +45,14 @@ namespace FeePay.Core.Application.Services
             var user = _HttpContextAccessor.HttpContext.User;
             return user;
         }
+
+        public List<string> ClaimSchoolUserRoles()
+        {
+            var claims = _HttpContextAccessor.HttpContext.User?.Claims;
+            var uniqueIdClaim = claims?.Where(w => w.Type == "Role"
+            && w.ValueType.Equals("role_name", StringComparison.InvariantCultureIgnoreCase)
+            && w.Issuer.Equals("school", StringComparison.InvariantCultureIgnoreCase));
+            return uniqueIdClaim?.Select(s => s.Value).ToList();
+        }
     }
 }

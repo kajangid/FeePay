@@ -6,4 +6,3 @@ window.global_swanMixin = {
     },
     buttonsStyling: false
 }
-window.a_href = $(this).attr('href');

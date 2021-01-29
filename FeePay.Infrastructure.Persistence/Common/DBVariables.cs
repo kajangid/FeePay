@@ -48,6 +48,10 @@
 		public string SP_Get_SchoolAdmin_UsersInRole { get; } = "SP_Get_SchoolAdmin_UsersInRole";
 		public string SP_GetAll_SchoolAdmin_UserRole { get; } = "SP_GetAll_SchoolAdmin_UserRole";
 		public string SP_Add_SchoolAdmin_User_LoginInfo { get; } = "SP_Add_SchoolAdmin_User_LoginInfo";
+		public string QUERY_FindUserPassword_SchoolAdminUser { get; } = @"SELECT [Password],[UserName] FROM [dbo].[SchoolAdmin_User] WHERE [Id] = @UserId AND 
+								[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE  [IsActive] END";
+		public string QUERY_GetAllUserPassword_SchoolAdminUser { get; } = @"SELECT [Password],[UserName] FROM [dbo].[SchoolAdmin_User] WHERE 
+								[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE  [IsActive] END";
 		#endregion
 
 
@@ -58,6 +62,13 @@
 		public string SP_GetAll_StudentLogin { get; } = "SP_GetAll_StudentLogin";
 		public string SP_Update_StudentLogin { get; } = "SP_Update_StudentLogin";
 		public string SP_Add_StudentLogin_LoginInfo { get; } = "SP_Add_StudentLogin_LoginInfo";
+		public string QUERY_FindUserPassword_StudentLogin { get; } = @"SELECT [sa].[Id],[sl].[Password],[sl].[UserName] FROM [dbo].[StudentLogin] [sl]
+						INNER JOIN [dbo].[StudentAdmission] [sa] ON [sa].[StudentLoginId] = [sl].[Id] AND [sa].[IsDelete] = 0
+						WHERE [sa].[Id] = @UserId AND [sl].[IsDelete] = 0 AND 
+						[sl].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [sl].[IsActive] END";
+		public string QUERY_GetAllUserPassword_StudentLogin { get; } = @"SELECT [sa].[Id],[sl].[Password],[sl].[UserName] FROM [dbo].[StudentLogin] [sl]
+						INNER JOIN [dbo].[StudentAdmission] [sa] ON [sa].[StudentLoginId] = [sl].[Id] AND [sa].[IsDelete] = 0
+						WHERE [sl].[IsDelete] = 0 AND [sl].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [sl].[IsActive] END";
 		#endregion
 
 
@@ -147,6 +158,17 @@
 		public string SP_Search_Students { get; } = "SP_Search_Students";
 		public string SP_Get_StudentAdmission_AddEditUser { get; } = "SP_Get_StudentAdmission_AddEditUser";
 		#endregion
+
+
+		#region STATE & CITY
+
+		public string QUERY_GetAll_Active_Cities { get; } = "SELECT *FROM [dbo].[Cities] WHERE IsActive = @IsActive";
+		public string QUERY_GetAll_Active_States { get; } = "SELECT *FROM [dbo].[States] WHERE IsActive = @IsActive";
+		public string QUERY_Find_Active_Cities_ByStateId { get; } = "SELECT *FROM [dbo].[Cities] WHERE [StateId] = @StateId AND IsActive = @IsActive";
+		public string QUERY_Find_Active_CityByIdAsync { get; } = "SELECT *FROM [dbo].[Cities] WHERE Id = @Id AND IsActive = @IsActive";
+		public string QUERY_Find_Active_StateByIdAsync { get; } = "SELECT *FROM [dbo].[States] WHERE Id = @Id AND IsActive = @IsActive";
+		#endregion
+
 
 
 		#region STUDENT_FEES

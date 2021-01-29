@@ -1,0 +1,86 @@
+﻿@model UserProfileViewModel
+@{
+    var Roles = Model.Roles?.Select(s => s.Name).ToList();
+    var FirstRole = Model.Roles?.OrderBy(o => o.Name).FirstOrDefault().Name;
+}
+@section Style{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/animate.css")">
+}
+@section Scripts{
+    <script src="@Url.Content("~/Cuba/js/modal-animated.js")"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function ($) {
+            "use strict";
+        })(jQuery)
+    </script>
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["BreadCrumb_Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Setting</li>
+                    <li class="breadcrumb-item active">@ViewData["BreadCrumb_Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="edit-profile">
+        <div class="row justify-content-md-center">
+            <div class="col-xl-4">
+                <div class="card custom-card">
+                    <div class="card-profile"><img class="rounded-circle" src="~/Cuba/images/avtar/3.jpg" alt=""></div>
+                    <div class="text-center profile-details">
+                        <h4>@($"{Model.FirstName} {Model.LastName}")</h4>
+                        <h6>@FirstRole</h6>
+                    </div>
+                    <ul class="card-social">
+                        <li><a href="javascript:void(0)" data-ajaxurl="@Url.Action("GetUserPassword","Home")" data-onclilck="showPassword" data-bs-original-title="See Password" title="See Password"><i class="icofont icofont-ui-password"></i></a></li>
+                        <li><a href="@Url.Action("EditProfile","Home")" data-bs-original-title="Edit Profile" title="Edit Profile"><i class="icofont icofont-edit"></i></a></li>
+                    </ul>
+                    <div class="row">
+                        <div class="col">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Staff Id<span class="text-right">@Model.Id</span>
+                                </li>
+                                @*<li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Sr/Reg Number<span class="text-right">@student.Sr_RegNo</span>
+                                    </li>*@
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Email:<span class="text-right">@Model.Email</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Phone Number:<span class="text-right">@Model.PhoneNumber</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Last Login:<span class="text-right">@(Model.LastLoginDate?.ToString("dd/MM/yyyy | hh:mm tt"))</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Role/s <span class="text-right">
+                                        @foreach (var role in Roles)
+                                        {
+                                            @role <br />
+                                        }
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Models{
+    @{ await Html.RenderPartialAsync("_Partial_ShowUserNamePassword"); }
+}

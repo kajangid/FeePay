@@ -46,7 +46,7 @@ namespace FeePay.Core.Application.Mapping
 
             #endregion
 
-            #region FeeManagement
+            #region Fee Management
 
             // Mapping properties from FeeType to FeeTypeViewModel 
             CreateMap<FeeType, FeeTypeViewModel>()
@@ -124,6 +124,15 @@ namespace FeePay.Core.Application.Mapping
 
             // Mapping properties from SessionViewModel to Section 
             CreateMap<SessionViewModel, Session>();
+            #endregion
+
+            #region School Management
+            // Mapping properties from SchoolAdminUser to UserProfileViewModel  
+            CreateMap<SchoolAdminUser, UserProfileViewModel>();
+            CreateMap<SchoolAdminUser, UserPasswordViewModel>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+            CreateMap<StudentLogin, UserPasswordViewModel>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
             #endregion
 
             #region Student 

@@ -1,6 +1,4 @@
-﻿using FeePay.Core.Domain.Entities.Common;
-using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,51 +8,50 @@ using System.Threading.Tasks;
 
 namespace FeePay.Core.Application.DTOs
 {
-    public class StaffMemberViewModel : BaseViewModel
+    public class UserProfileViewModel
     {
-        public StaffMemberViewModel()
+        public UserProfileViewModel()
         {
-            RoleList = new List<CheckBoxItem>();
+            Roles = new List<RoleViewModel>();
         }
+
         [DisplayName("User Id")]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "First Name is required for adding a staff member.")]
-        [StringLength(49)]
+        [Required(ErrorMessage = "Please fill Username field.")]
+        [DisplayName("Username")]
+        [RegularExpression(@"^[a-zA-Z][a-zA-Z0-9\._\-]{0,18}?[a-zA-Z0-9]{0,2}$", ErrorMessage = "Please enter a valid Username.")]
+        public string UserName { get; set; }
+
+        [Required]
         [DisplayName("First Name")]
         public string FirstName { get; set; }
 
-        [StringLength(49)]
         [DisplayName("Last Name")]
         public string LastName { get; set; }
 
         [Phone]
         [DisplayName("Mobile Number")]
-        [Required(ErrorMessage = "Mobile Number is required for adding a staff member.")]
         [RegularExpression(@"((\+){0,1}91(\s){0,1}(\-){0,1}(\s){0,1}){0,1}[0-9][0-9](\s){0,1}(\-){0,1}(\s){0,1}[1-9]{1}(\s){0,1}(\-){0,1}(\s){0,1}([0-9]{1}(\s){0,1}(\-){0,1}(\s){0,1}){1,6}[0-9]{1}", ErrorMessage = "Please enter a valid mobile number.")]
         public string PhoneNumber { get; set; }
-
-        [StringLength(49)]
-        [DisplayName("User Name")]
-        public string UserName { get; set; }
 
         [EmailAddress]
         [DisplayName("Email Address")]
         [RegularExpression(@"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$", ErrorMessage = "Please enter a valid email.")]
         public string Email { get; set; }
 
-        [DisplayName("A Initial Password")]
-        public string Password { get; set; }
-
         [DisplayName("Last Login Time")]
         public DateTime? LastLoginDate { get; set; }
 
 
 
-        public string RoleListString { get; set; }
-        public List<CheckBoxItem> RoleList { get; set; }
 
-        [DisplayName("User Image")]
-        public IFormFile FormFile { get; set; }
+
+        [DisplayName("User Roles")]
+        public List<RoleViewModel> Roles { get; set; }
+
+        public ResetPasswordViewModel ResetPassword { get; set; }
+
+        public UserPasswordViewModel UserNamePass { get; set; }
     }
 }

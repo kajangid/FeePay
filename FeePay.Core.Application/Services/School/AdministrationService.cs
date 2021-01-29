@@ -52,8 +52,8 @@ namespace FeePay.Core.Application.Services.School
         public async Task<Response<StaffMemberViewModel>> GetStaffByIdAsync(int unserId)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            SchoolAdminUser schoolAdminUser = await _unitOfWork.SchoolAdminUser.FindByIdAsync(unserId, SchoolId);
-            StaffMemberViewModel StaffModel = _mapper.Map<StaffMemberViewModel>(schoolAdminUser);
+            SchoolAdminUser SchoolAdminUser = await _unitOfWork.SchoolAdminUser.FindByIdAsync(unserId, SchoolId);
+            StaffMemberViewModel StaffModel = _mapper.Map<StaffMemberViewModel>(SchoolAdminUser);
             return new Response<StaffMemberViewModel>(await BindStaffMemberViewModel(StaffModel));
         }
         public async Task<Response<StaffMemberViewModel>> AddOrEditStaffMemberAsync(StaffMemberViewModel model)
@@ -70,7 +70,7 @@ namespace FeePay.Core.Application.Services.School
             }
             return new Response<StaffMemberViewModel>(model);
         }
-        public async Task<Response<bool>> deleteStaffMemberAsync(int userId)
+        public async Task<Response<bool>> DeleteStaffMemberAsync(int userId)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
             var roles = await _unitOfWork.SchoolAdminUserRole.GetUserRolesAsync(userId, SchoolId);
@@ -85,6 +85,13 @@ namespace FeePay.Core.Application.Services.School
             if (res > 0) return new Response<bool>(true);
 
             return new Response<bool>("Error deleting school staff member");
+        }
+        public async Task<Response<UserPasswordViewModel>> GetStaffMemberPassword(int userId)
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            SchoolAdminUser SchoolAdminUser_NamePass = await _unitOfWork.SchoolAdminUser.FindUserPasswordByIdAsync(id: userId, dbId: SchoolId);
+            UserPasswordViewModel UserNamePass = _mapper.Map<UserPasswordViewModel>(SchoolAdminUser_NamePass);
+            return new Response<UserPasswordViewModel>(UserNamePass);
         }
         #endregion
 
@@ -143,7 +150,7 @@ namespace FeePay.Core.Application.Services.School
 
             return new Response<RoleViewModel>(model);
         }
-        public async Task<Response<bool>> deleteStaffRoleAsync(int roleId)
+        public async Task<Response<bool>> DeleteStaffRoleAsync(int roleId)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
             var staffs = await _unitOfWork.SchoolAdminUserRole.GetUsersInRoleAsync(roleId, SchoolId);
@@ -160,6 +167,71 @@ namespace FeePay.Core.Application.Services.School
             return new Response<bool>("Error deleting school staff member");
         }
         #endregion
+
+        #region User Profile
+        public async Task<Response<UserProfileViewModel>> GetUserProfileData()
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+            SchoolAdminUser SchoolAdminUser = await _unitOfWork.SchoolAdminUser.FindByIdAsync(UserId, SchoolId);
+            if (SchoolAdminUser == null) return new Response<UserProfileViewModel>();
+            UserProfileViewModel Staff = _mapper.Map<UserProfileViewModel>(SchoolAdminUser);
+            return new Response<UserProfileViewModel>(Staff);
+        }
+        public async Task<Response<UserPasswordViewModel>> GetUserPassword()
+        {
+            var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+            return await GetStaffMemberPassword(UserId);
+        }
+        public async Task<Response<bool>> EditProfile(UserProfileViewModel model)
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+            SchoolAdminUser SchoolAdminUser = await _unitOfWork.SchoolAdminUser.FindByIdAsync(UserId, SchoolId);
+            SchoolAdminUser.Email = model.Email;
+            SchoolAdminUser.PhoneNumber = model.PhoneNumber;
+            SchoolAdminUser.FirstName = model.FirstName;
+            SchoolAdminUser.LastName = model.LastName;
+            SchoolAdminUser.ModifyBy = UserId;
+            // Check for username change 
+            if (SchoolAdminUser.NormalizedUserName != model.UserName.ToUpper())
+            {
+                var NewUsername = model.UserName;
+                SchoolAdminUser SchoolAdminUser_username = await _unitOfWork.SchoolAdminUser.FindByUserNameAsync(NewUsername.ToUpper(), SchoolId);
+                if (SchoolAdminUser_username != null)
+                {
+                    return new Response<bool>("Username already present.");
+                }
+                SchoolAdminUser.UserName = model.UserName;
+                SchoolAdminUser.NormalizedUserName = model.UserName.ToUpper();
+            }
+            var res = await _unitOfWork.SchoolAdminUser.UpdateAsync(SchoolAdminUser, SchoolId);
+            if (res > 0) return new Response<bool>(res > 0);
+            return new Response<bool>("Error updating profile.");
+        }
+        public async Task<Response<bool>> ChangeUserPassword(ResetPasswordViewModel model)
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+            SchoolAdminUser SchoolAdminUser_NamePass = await _unitOfWork.SchoolAdminUser.FindUserPasswordByIdAsync(id: UserId, dbId: SchoolId);
+            UserPasswordViewModel UserNamePass = _mapper.Map<UserPasswordViewModel>(SchoolAdminUser_NamePass);
+            if (model.CurrentPassword == UserNamePass.Password)
+            {
+                SchoolAdminUser user = await _unitOfWork.SchoolAdminUser.FindByIdAsync(UserId, dbId: SchoolId);
+                user = _schoolAdminRegistrationService.GetNewHashSchoolUserPasswordAsync(user, model.NewPassword);
+                user.Password = model.NewPassword;
+                user.ModifyBy = UserId;
+                var res = await _unitOfWork.SchoolAdminUser.UpdateAsync(user, SchoolId);
+                if (res > 0) return new Response<bool>(res > 0);
+                return new Response<bool>("Error Changing password.");
+            }
+            return new Response<bool>("Current password doesn't match.");
+        }
+
+        #endregion
+
+
+
 
 
         private async Task<List<CheckBoxItem>> GetCheckBoxRoleListAsync(int unserId = 0)

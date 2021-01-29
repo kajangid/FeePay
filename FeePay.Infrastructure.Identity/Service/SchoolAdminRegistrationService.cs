@@ -11,7 +11,6 @@ using FeePay.Core.Application.Interface.Service.School;
 using FeePay.Core.Domain.Entities.Common;
 using FeePay.Core.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
 using FeePay.Core.Application.UseCase;
 using FeePay.Core.Application.Interface;
 
@@ -20,7 +19,7 @@ namespace FeePay.Infrastructure.Identity.Service
     public class SchoolAdminRegistrationService : ISchoolAdminRegistrationService
     {
         public SchoolAdminRegistrationService(IUnitOfWork unitOfWork, IAppContextAccessor appContextAccessor, ILoginService loginService,
-            UserManager<SchoolAdminUser> userManager, IMapper mapper, ILogger<SchoolAdminRegistrationService> logger, 
+            UserManager<SchoolAdminUser> userManager, IMapper mapper,
             IPasswordHasher<SchoolAdminUser> passwordHasher, IPasswordGenerator passwordGenerator)
         {
             _unitOfWork = unitOfWork;
@@ -28,7 +27,6 @@ namespace FeePay.Infrastructure.Identity.Service
             _loginService = loginService;
             _userManager = userManager;
             _mapper = mapper;
-            _logger = logger;
             _passwordHasher = passwordHasher;
             _passwordGenerator = passwordGenerator;
         }
@@ -37,70 +35,48 @@ namespace FeePay.Infrastructure.Identity.Service
         private readonly ILoginService _loginService;
         private readonly UserManager<SchoolAdminUser> _userManager;
         private readonly IMapper _mapper;
-        private readonly ILogger<SchoolAdminRegistrationService> _logger;
         public readonly IPasswordHasher<SchoolAdminUser> _passwordHasher;
         public readonly IPasswordGenerator _passwordGenerator;
 
 
         public async Task<bool> RegisterSchoolUserWithPhoneNumberAsync(StaffMemberViewModel model)
         {
-            try
+            var CurrentUserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var User = _mapper.Map<SchoolAdminUser>(model);
+
+            User.UserName = GeneratorToken.GenerateUserName(8);
+            if (string.IsNullOrEmpty(model.Password?.Trim())) User.Password = _passwordGenerator.Generate();
+            User.AddedBy = CurrentUserId;
+
+            IdentityResult identityResult = await _userManager.CreateAsync(User, User.Password);
+
+            if (identityResult.Succeeded && model.RoleList != null && model.RoleList.Any(a => a.IsSelected == true))
             {
-                var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
-                var User = _mapper.Map<SchoolAdminUser>(model);
-
-                User.UserName = GeneratorToken.GenerateUserName(8);
-                if (string.IsNullOrEmpty(model.Password?.Trim())) User.Password = _passwordGenerator.Generate();
-                User.AddedBy = UserId;
-
-
-                IdentityResult identityResult = await _userManager.CreateAsync(User, User.Password);
-                _logger.LogInformation("new school admin user created.....");
-
-
-                if (model.RoleList != null && model.RoleList.Any(a => a.IsSelected == true))
-                {
-                    SchoolAdminUser UserInserted = await _unitOfWork.SchoolAdminUser.FindByUserNameAsync(User.UserName, _appContextAccessor.ClaimSchoolUniqueId());
-                    // _userManager.FindByNameAsync(User.UserName);
-                    await AssignRolesToSchoolUserAsync(UserInserted, model.RoleList);
-                }
-                return identityResult.Succeeded;
+                SchoolAdminUser UserInserted = await _unitOfWork.SchoolAdminUser.FindByUserNameAsync(User.UserName, SchoolId);
+                await AssignRolesToSchoolUserAsync(UserInserted, model.RoleList);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError("Error adding school admin user.....", ex);
-                throw;
-            }
+            return identityResult.Succeeded;
         }
         public async Task<bool> UpdateSchoolUserWithPhoneNumberAsync(StaffMemberViewModel model)
         {
-            try
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var CurrentUserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+            //var User = _mapper.Map<SchoolAdminUser>(model);
+
+            SchoolAdminUser UserEntity = await _unitOfWork.SchoolAdminUser.FindByIdAsync(model.Id, SchoolId);
+            UserEntity.ModifyBy = CurrentUserId;
+            UserEntity.PhoneNumber = model.PhoneNumber;
+            UserEntity.Email = model.Email;
+            UserEntity.FirstName = model.FirstName;
+            UserEntity.LastName = model.LastName;
+            IdentityResult identityResult = await _userManager.UpdateAsync(UserEntity);
+
+            if (model.RoleList != null)
             {
-                var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
-                var User = _mapper.Map<SchoolAdminUser>(model);
-
-                //User.UserName = GeneratorToken.GenerateUserName(8);
-                //User.Password = _passwordGenerator.Generate();
-                //if (string.IsNullOrEmpty(model.Password?.Trim())) User.Password = model.PhoneNumber;
-                User.ModifyBy = UserId;
-
-                IdentityResult identityResult = await _userManager.UpdateAsync(User);
-                _logger.LogInformation("school admin user updated.....");
-
-
-                if (model.RoleList != null)
-                {
-                    SchoolAdminUser UserInserted = await _unitOfWork.SchoolAdminUser.FindByUserNameAsync(User.UserName, _appContextAccessor.ClaimSchoolUniqueId());
-                    // _userManager.FindByNameAsync(User.UserName);
-                    await AssignRolesToSchoolUserAsync(UserInserted, model.RoleList);
-                }
-                return identityResult.Succeeded;
+                await AssignRolesToSchoolUserAsync(UserEntity, model.RoleList);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError("Error updating school admin user.....", ex);
-                throw;
-            }
+            return identityResult.Succeeded;
         }
 
 
@@ -108,9 +84,7 @@ namespace FeePay.Infrastructure.Identity.Service
         public async Task ChangeSchoolUserPasswordAsync(SchoolAdminUser user, string newPassword)
         {
             await _userManager.RemovePasswordAsync(user);
-            _logger.LogInformation($"Password is removed from school admin user with UserId = {user.Id}");
             await _userManager.AddPasswordAsync(user, newPassword);
-            _logger.LogInformation($"New password is added to school admin user with UserId = {user.Id}");
         }
         public SchoolAdminUser GetNewHashSchoolUserPasswordAsync(SchoolAdminUser user, string newPassword)
         {
@@ -129,12 +103,10 @@ namespace FeePay.Infrastructure.Identity.Service
                 if (f.IsSelected && !isInRole)
                 {
                     await _userManager.AddToRoleAsync(user, f.Name);
-                    _logger.LogInformation($"Role Added to school admin user with UserId = {user.Id} and RoleName = {f.Name}");
                 }
                 else if (!f.IsSelected && isInRole)
                 {
                     await _userManager.RemoveFromRoleAsync(user, f.Name);
-                    _logger.LogInformation($"Role Remove from school admin user with UserId = {user.Id} and RoleName = {f.Name}");
                 }
             }
         }
@@ -147,12 +119,10 @@ namespace FeePay.Infrastructure.Identity.Service
                 if (f.IsSelected && !isInRole)
                 {
                     await _userManager.AddToRoleAsync(user, role.Name);
-                    _logger.LogInformation($"Role Added to school admin user with UserId = {user.Id} and RoleName = {role.Name}");
                 }
                 else if (!f.IsSelected && isInRole)
                 {
                     await _userManager.RemoveFromRoleAsync(user, role.Name);
-                    _logger.LogInformation($"Role Remove from school admin user with UserId = {user.Id} and RoleName = {role.Name}");
                 }
             }
         }

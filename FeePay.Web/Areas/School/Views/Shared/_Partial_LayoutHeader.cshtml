@@ -1,4 +1,17 @@
-﻿<div class="page-header">
+﻿@using Microsoft.AspNetCore.Identity;
+@using FeePay.Core.Domain.Entities.Identity;
+@using FeePay.Core.Application.Interface.Service;
+@inject SignInManager<SchoolAdminUser> SignInManager
+@inject UserManager<SchoolAdminUser> UserManager
+@inject IAppContextAccessor _appContext
+
+@{
+    string firstRole = "";
+    var roles = _appContext.ClaimSchoolUserRoles();
+    if (roles != null) { firstRole = roles.FirstOrDefault(); }
+}
+
+<div class="page-header">
     <div class="header-wrapper row m-0">
         <form class="form-inline search-full" action="#" method="get">
             <div class="form-group w-100">
@@ -18,10 +31,8 @@
         <div class="left-header col horizontal-wrapper pl-0">
             <ul class="horizontal-menu">
                 <li class="mega-menu outside">
-                    <a class="nav-link" href="#!"><i data-feather="layers"></i><span>Option 1</span></a>
                 </li>
                 <li class="level-menu outside">
-                    <a class="nav-link" href="#!"><i data-feather="inbox"></i><span>Option 2</span></a>
                 </li>
             </ul>
         </div>
@@ -201,8 +212,8 @@
                     <div class="media profile-media">
                         <img class="b-r-10" src="~/Cuba/images/dashboard/profile.jpg" alt="">
                         <div class="media-body">
-                            <span>Emay Walter</span>
-                            <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
+                            <span>@UserManager.GetUserName(User)</span>
+                            <p class="mb-0 font-roboto">@firstRole <i class="middle fa fa-angle-down"></i></p>
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">

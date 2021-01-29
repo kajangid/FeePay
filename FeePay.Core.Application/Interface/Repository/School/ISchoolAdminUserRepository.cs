@@ -43,5 +43,8 @@ namespace FeePay.Core.Application.Interface.Repository.School
 
         Task<IEnumerable<SchoolAdminUser>> FindAllActive_WithAddEditUserAsync(string dbId = null);
         Task<IEnumerable<SchoolAdminUser>> FindAll_WithAddEditUserAsync(string dbId = null);
+
+        Task<SchoolAdminUser> FindUserPasswordByIdAsync(string dbId, int id, bool? isActive = null);
+        Task<IEnumerable<SchoolAdminUser>> GetAllUserPasswordAsync(string dbId, bool? isActive = null);
     }
 }

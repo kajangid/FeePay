@@ -18,5 +18,6 @@ namespace FeePay.Core.Application.Interface.Service
         /// <returns> tenant db id </returns>
         string ClaimSchoolUniqueId();
         ClaimsPrincipal getCurrentUser();
+        List<string> ClaimSchoolUserRoles();
     }
 }

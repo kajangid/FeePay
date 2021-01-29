@@ -11,6 +11,7 @@ using FeePay.Core.Application.DTOs;
 using FeePay.Core.Application.Interface.Service.Student;
 using static FeePay.Core.Application.Enums.Notification;
 using Microsoft.AspNetCore.Authorization;
+using FeePay.Core.Application.Interface.Service;
 
 namespace FeePay.Web.Areas.School.Controllers
 {
@@ -21,11 +22,13 @@ namespace FeePay.Web.Areas.School.Controllers
     {
         private readonly ILogger<StudentAdmissionController> _logger;
         private readonly IStudentManagementService _studentManagementService;
-        public StudentAdmissionController(ILogger<StudentAdmissionController> logger,
+        private readonly ILoginService _loginService;
+        public StudentAdmissionController(ILogger<StudentAdmissionController> logger, ILoginService loginService,
             IStudentManagementService studentManagementService)
         {
             _logger = logger;
             _studentManagementService = studentManagementService;
+            _loginService = loginService;
         }
 
         public IActionResult Index()
@@ -35,6 +38,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #region Student Admission
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/Students")]
         [DisplayName("List Students")]
         public async Task<IActionResult> StudentList()
@@ -54,6 +58,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/Student/Add")]
         [DisplayName("Add Student")]
         public async Task<IActionResult> StudentAdd()
@@ -63,6 +68,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpPost]
+        [MvcDiscovery]
         [ValidateAntiForgeryToken]
         [Route("School/Student/Add")]
         [DisplayName("Add Student")]
@@ -71,6 +77,7 @@ namespace FeePay.Web.Areas.School.Controllers
             if (!ModelState.IsValid)
             {
                 AlertMessage(NotificationType.error, "Error", "Please fill all required fields and save again.");
+                _logger.LogWarning($"Model State Error..... ActoinName = {nameof(StudentAdd)}, Error: {string.Join(", ", GetErrorListFromModelState(ModelState).ToArray())}");
                 return View(await _studentManagementService.BindStudentAdmissionViewModelAsync(model));
             }
             try
@@ -96,6 +103,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/Student/Edit/{id}")]
         [DisplayName("Edit Student")]
         public async Task<IActionResult> StudentEdit(int id)
@@ -118,6 +126,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpPost]
+        [MvcDiscovery]
         [ValidateAntiForgeryToken]
         [Route("School/Student/Edit/{id}")]
         [DisplayName("Edit Student")]
@@ -126,6 +135,7 @@ namespace FeePay.Web.Areas.School.Controllers
             if (!ModelState.IsValid)
             {
                 AlertMessage(NotificationType.error, "Error", "Please fill all required fields and save again.");
+                _logger.LogWarning($"Model State Error..... ActoinName = {nameof(StudentEdit)}, Error: {string.Join(", ", GetErrorListFromModelState(ModelState).ToArray())}");
                 return View(await _studentManagementService.BindStudentAdmissionViewModelAsync(model));
             }
             try
@@ -151,6 +161,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpDelete]
+        [MvcDiscovery]
         [Route("School/Student/Delete")]
         [DisplayName("Delete Student")]
         public IActionResult StudentDelete()
@@ -159,6 +170,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/Student/Ledger/{id}")]
         [DisplayName("Student Ledger")]
         public async Task<IActionResult> StudentProfile(int id)
@@ -180,7 +192,30 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
 
-        
+        [HttpGet]
+        [MvcDiscovery]
+        [DisplayName("Profile GetPassword")]
+        [Route("Student/Profile/Password")]
+        public async Task<JsonResult> GetUserPassword(int id)
+        {
+            try
+            {
+                var res = await _studentManagementService.GetStudentPassword(id);
+                if (res.Succeeded)
+                {
+                    return Json(new { success = true, data = res.Data });
+                }
+                _logger.LogWarning("Error editing user profile for id = {0}", id);
+                return Json(new { success = false, message = res.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error editing user profile for id = {0}", id);
+            }
+            return Json(new { success = false, message = "no data found" });
+        }
+
+
         #endregion
 
         [HttpGet]

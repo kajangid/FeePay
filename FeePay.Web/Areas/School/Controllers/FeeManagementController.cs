@@ -40,6 +40,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #region FEE TYPE 
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/FeeTypes")]
         [DisplayName("List Fee Type")]
         public async Task<IActionResult> FeeTypeList()
@@ -65,6 +66,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/ManageFeeType/{id?}")]
         [DisplayName("Add Or Edit Fee Type")]
         public async Task<IActionResult> FeeTypeManage(int? id)
@@ -99,6 +101,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpPost]
+        [MvcDiscovery]
         [ValidateAntiForgeryToken]
         [Route("School/ManageFeeType/{id?}")]
         [DisplayName("Add Or Edit Fee Type")]
@@ -135,6 +138,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpDelete]
+        [MvcDiscovery]
         [Route("School/DeleteFeeType/{id}")]
         [DisplayName("Delete Fee Type")]
         public IActionResult FeeTypeDelete(int id)
@@ -146,6 +150,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #region FEE GROUP 
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/FeeGroups")]
         [DisplayName("List Fee Group")]
         public async Task<IActionResult> FeeGroupList()
@@ -171,6 +176,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/ManageFeeGroup/{id?}")]
         [DisplayName("Add Or Edit Fee Group")]
         public async Task<IActionResult> FeeGroupManage(int? id)
@@ -204,6 +210,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpPost]
+        [MvcDiscovery]
         [ValidateAntiForgeryToken]
         [Route("School/ManageFeeGroup/{id?}")]
         [DisplayName("Add Or Edit Fee Group")]
@@ -240,6 +247,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpDelete]
+        [MvcDiscovery]
         [Route("School/DeleteFeeGroup/{id}")]
         [DisplayName("Delete Fee Group")]
         public IActionResult FeeGroupDelete(int id)
@@ -251,6 +259,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #region FEE MASTER 
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/FeeMasters")]
         [DisplayName("List Fee Master")]
         public async Task<IActionResult> FeeMasterList()
@@ -276,6 +285,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/ManageFeeMaster/{id?}")]
         [DisplayName("Add Or Edit Fee Master")]
         public async Task<IActionResult> FeeMasterManage(int? id)
@@ -309,6 +319,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpPost]
+        [MvcDiscovery]
         [ValidateAntiForgeryToken]
         [Route("School/ManageFeeMaster/{id?}")]
         [DisplayName("Add Or Edit Fee Master")]
@@ -345,6 +356,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpDelete]
+        [MvcDiscovery]
         [Route("School/DeleteFeeMaster/{id}")]
         [DisplayName("Delete Fee Master")]
         public IActionResult FeeMasterDelete(int id)
@@ -355,8 +367,9 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #region FEE ASSIGN
         [HttpGet]
+        [MvcDiscovery]
         [Route("School/Fees/Assign/{id}")]
-        [DisplayName("List Fee Type")]
+        [DisplayName("Assign Fees")]
         public async Task<IActionResult> FeesAssign(int id) // FeeGroupId
         {
             ViewData["Title"] = "Assign Fees";
@@ -367,9 +380,10 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpPost]
+        [MvcDiscovery]
         [Route("School/Fees/Assign/{id}")]
         [ValidateAntiForgeryToken]
-        [DisplayName("List Fee Type")]
+        [DisplayName("Assign Fees")]
         public async Task<IActionResult> FeesAssign(AssignFeesViewModel data, int id) // FeeGroupId
         {
             ViewData["Title"] = "Assign Fees";
@@ -397,9 +411,10 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         [HttpPost]
+        [MvcDiscovery]
         [ValidateAntiForgeryToken]
-        [DisplayName("List Fee Type")]
-        public async Task<IActionResult> AssignToStudent(AssignFeesViewModel data, int id)
+        [DisplayName("Assign Fees Submit")]
+        public async Task<JsonResult> AssignToStudent(AssignFeesViewModel data, int id)
         {
             try
             {

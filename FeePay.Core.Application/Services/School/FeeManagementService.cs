@@ -61,8 +61,15 @@ namespace FeePay.Core.Application.Services.School
             }
             else
             {
-                feeType.ModifyBy = UserId;
-                int res = await _unitOfWork.FeeType.UpdateAsync(feeType, SchoolId);
+                var feeTypeEntity = await _unitOfWork.FeeType.FindByIdAsync(model.Id, SchoolId);
+                if (feeTypeEntity == null) return new Response<FeeTypeViewModel>($"Could not find data for id={model.Id}");
+                feeTypeEntity.Name = feeType.Name?.Trim();
+                feeTypeEntity.NormalizedName = feeType.Name?.ToUpper().Trim();
+                feeTypeEntity.IsActive = feeType.IsActive;
+                feeTypeEntity.Code = feeType.Code;
+                feeTypeEntity.Description = feeType.Description;
+                feeTypeEntity.ModifyBy = UserId;
+                int res = await _unitOfWork.FeeType.UpdateAsync(feeTypeEntity, SchoolId);
                 if (res <= 0) return new Response<FeeTypeViewModel>("Fee Type is already exist with same name or a error is accord while updating fee type.");
             }
             return new Response<FeeTypeViewModel>(model);
@@ -110,8 +117,14 @@ namespace FeePay.Core.Application.Services.School
             }
             else
             {
-                feeGroup.ModifyBy = UserId;
-                int res = await _unitOfWork.FeeGroup.UpdateAsync(feeGroup, SchoolId);
+                var feeGroupEntity = await _unitOfWork.FeeGroup.FindByIdAsync(model.Id, SchoolId);
+                if (feeGroupEntity == null) return new Response<FeeGroupViewModel>($"Could not find data for id={model.Id}");
+                feeGroupEntity.Name = feeGroup.Name?.Trim();
+                feeGroupEntity.NormalizedName = feeGroup.Name?.ToUpper().Trim();
+                feeGroupEntity.IsActive = feeGroup.IsActive;
+                feeGroupEntity.Description = feeGroup.Description;
+                feeGroupEntity.ModifyBy = UserId;
+                int res = await _unitOfWork.FeeGroup.UpdateAsync(feeGroupEntity, SchoolId);
                 if (res <= 0) return new Response<FeeGroupViewModel>("Fee Type is already exist with same name or a error is accord while updating fee type.");
             }
             return new Response<FeeGroupViewModel>(model);
@@ -190,8 +203,16 @@ namespace FeePay.Core.Application.Services.School
             }
             else
             {
-                feeMaster.ModifyBy = UserId;
-                int res = await _unitOfWork.FeeMaster.UpdateAsync(feeMaster, SchoolId);
+                var feeMasterEntity = await _unitOfWork.FeeMaster.FindByIdAsync(model.Id, SchoolId);
+                if (feeMasterEntity == null) return new Response<FeeMasterViewModel>($"Could not find data for id={model.Id}");
+                feeMasterEntity.FeeGroupId = feeMaster.FeeGroupId;
+                feeMasterEntity.FeeTypeId = feeMaster.FeeTypeId;
+                feeMasterEntity.IsActive = feeMaster.IsActive;
+                feeMasterEntity.DueDate = feeMaster.DueDate;
+                feeMasterEntity.Amount = feeMaster.Amount;
+                feeMasterEntity.Description = feeMaster.Description;
+                feeMasterEntity.ModifyBy = UserId;
+                int res = await _unitOfWork.FeeMaster.UpdateAsync(feeMasterEntity, SchoolId);
                 if (res <= 0) return new Response<FeeMasterViewModel>("Fee Master is already exist with same name or a error is accord while updating fee master.");
             }
             return new Response<FeeMasterViewModel>(model);
@@ -227,17 +248,9 @@ namespace FeePay.Core.Application.Services.School
                 gender: data.Gender,
                 isActive: true,
                 dbId: SchoolId);
-            var modelStudents = _mapper.Map<List<StudentAdmissionViewModel>>(students);
 
-            //TODO: Remove redundant
-            //var StudentList = modelStudents?
-            //    .Where(w => ((data.SectionId != null && data.SectionId != 0) ? w.SectionId == data.SectionId : w.SectionId != 0)
-            //    &&
-            //    (!string.IsNullOrEmpty(data.Category) ? string.Equals(w.Category, data.Category, StringComparison.OrdinalIgnoreCase) : w.Category != "")
-            //    &&
-            //    (!string.IsNullOrEmpty(data.Gender) ? string.Equals(w.Gender, data.Gender, StringComparison.OrdinalIgnoreCase) : w.Gender != ""))
-            //    .ToList();
-            data.StudentAdmissionList = modelStudents;
+            data.StudentAdmissionList = students != null && students.Count() > 0 ?
+                _mapper.Map<List<StudentAdmissionViewModel>>(students) : new List<StudentAdmissionViewModel>();
 
             var studentsInFeeGroup = (await _unitOfWork.StudentFee.GetStudentsInFeesGroupAsync(id, dbId: SchoolId))?.ToList();
             var CheckBoxStudentList = data.StudentAdmissionList.Select(s => new CheckBoxItem

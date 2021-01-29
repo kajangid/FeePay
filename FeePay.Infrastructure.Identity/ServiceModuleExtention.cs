@@ -100,6 +100,8 @@ namespace FeePay.Infrastructure.Identity
                 // SignIn settings.
                 options.SignIn.RequireConfirmedEmail = false;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
+
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._";
             });
 
             services.ConfigureApplicationCookie(options =>
