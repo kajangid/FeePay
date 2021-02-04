@@ -1,0 +1,628 @@
+2021-02-04T13:39:24.8651532+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-02-04T13:39:25.5140841+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-02-04T13:39:25.5143524+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-02-04T13:39:25.5144281+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-02-04T13:39:25.5671696+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-02-04T13:39:25.7196469+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-02-04T13:39:25.7675105+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-02-04T13:39:25.8321056+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-02-04T13:39:26.0979750+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 277.2079ms.
+2021-02-04T13:39:26.0987206+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 330.235ms
+2021-02-04T13:39:26.0999188+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-02-04T13:39:26.1066498+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 525.8050 ms
+2021-02-04T13:39:26.1201987+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 556.7478ms
+2021-02-04T13:39:33.9787722+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/Authentication - -
+2021-02-04T13:39:33.9828624+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-02-04T13:39:34.0226835+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String)" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController" ("FeePay.Web").
+2021-02-04T13:39:34.0778017+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-02-04T13:39:34.0786191+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-02-04T13:39:34.0808391+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-02-04T13:39:34.0810435+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-02-04T13:39:34.0813202+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.TwoFactorUserId" signed out.
+2021-02-04T13:39:34.1538457+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-02-04T13:39:34.4542609+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 372.3106ms.
+2021-02-04T13:39:34.4544436+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)" in 431.6337ms
+2021-02-04T13:39:34.4545398+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-02-04T13:39:34.4546547+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/Authentication" responded 200 in 475.6531 ms
+2021-02-04T13:39:34.4582664+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/Authentication - - - 200 - text/html;+charset=utf-8 479.3650ms
+2021-02-04T13:39:34.5566754+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Page_css/login.css - -
+2021-02-04T13:39:34.5671786+05:30 [INF] (/KARAN/) The file "/Page_css/login.css" was not modified
+2021-02-04T13:39:34.5725846+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Page_css/login.css - - - 304 - text/css 15.8509ms
+2021-02-04T13:39:34.6648170+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Page_js/index_login.js - -
+2021-02-04T13:39:34.6661218+05:30 [INF] (/KARAN/) The file "/Page_js/index_login.js" was not modified
+2021-02-04T13:39:34.6669280+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Page_js/index_login.js - - - 304 - application/javascript 2.2136ms
+2021-02-04T13:39:41.1699975+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 POST http://localhost:57458/SuperAdmin/Authentication application/x-www-form-urlencoded 240
+2021-02-04T13:39:41.1785704+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-02-04T13:39:41.1898341+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(FeePay.Core.Application.DTOs.SuperAdminLoginViewModel, System.String)" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController" ("FeePay.Web").
+2021-02-04T13:39:43.1959800+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed in.
+2021-02-04T13:39:43.2304076+05:30 [INF] (/KARAN/) update system for login
+2021-02-04T13:39:43.2476425+05:30 [INF] (/KARAN/) Executing RedirectResult, redirecting to "/SuperAdmin".
+2021-02-04T13:39:43.3122418+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)" in 2122.2299ms
+2021-02-04T13:39:43.3148630+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-02-04T13:39:43.3202495+05:30 [INF] (/KARAN/) HTTP "POST" "/SuperAdmin/Authentication" responded 302 in 2150.0693 ms
+2021-02-04T13:39:43.3233134+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 POST http://localhost:57458/SuperAdmin/Authentication application/x-www-form-urlencoded 240 - 302 - - 2153.2411ms
+2021-02-04T13:39:43.3415248+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin - -
+2021-02-04T13:39:43.3557730+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.HomeController.Index (FeePay.Web)"'
+2021-02-04T13:39:43.3594011+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.HomeController" ("FeePay.Web").
+2021-02-04T13:39:43.3687416+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-02-04T13:39:43.6218537+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 255.0354ms.
+2021-02-04T13:39:43.6221748+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.HomeController.Index (FeePay.Web)" in 262.6149ms
+2021-02-04T13:39:43.6222728+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.HomeController.Index (FeePay.Web)"'
+2021-02-04T13:39:43.6223595+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin" responded 200 in 280.6317 ms
+2021-02-04T13:39:43.6261775+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin - - - 200 - text/html;+charset=utf-8 284.6173ms
+2021-02-04T13:39:43.8103516+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/sidebar-menu.js - -
+2021-02-04T13:39:43.8106122+05:30 [INF] (/KARAN/) The file "/Cuba/js/sidebar-menu.js" was not modified
+2021-02-04T13:39:43.8111095+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/sidebar-menu.js - - - 304 - application/javascript 0.7791ms
+2021-02-04T13:39:43.8348702+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Page_js/index_global.js - -
+2021-02-04T13:39:43.8351805+05:30 [INF] (/KARAN/) The file "/Page_js/index_global.js" was not modified
+2021-02-04T13:39:43.8355712+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Page_js/index_global.js - - - 304 - application/javascript 0.6837ms
+2021-02-04T13:40:01.0698508+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - -
+2021-02-04T13:40:01.0719852+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T13:40:01.0808239+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserList\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserList()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T13:40:01.4070047+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserList".
+2021-02-04T13:40:01.6393897+05:30 [INF] (/KARAN/) Executed ViewResult - view "UserList" executed in 235.5203ms.
+2021-02-04T13:40:01.6397153+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)" in 558.7303ms
+2021-02-04T13:40:01.6398267+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T13:40:01.6400103+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/List" responded 200 in 570.0300 ms
+2021-02-04T13:40:01.6425886+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - - - 200 - text/html;+charset=utf-8 572.7199ms
+2021-02-04T13:40:05.4862503+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/Add - -
+2021-02-04T13:40:05.5112974+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserAdd (FeePay.Web)"'
+2021-02-04T13:40:05.5130566+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserAdd\", controller = \"Account\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult UserAdd()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T13:40:05.5148348+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserAdd".
+2021-02-04T13:40:05.6518392+05:30 [INF] (/KARAN/) Executed ViewResult - view "UserAdd" executed in 137.9849ms.
+2021-02-04T13:40:05.6520613+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserAdd (FeePay.Web)" in 138.9021ms
+2021-02-04T13:40:05.6521811+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserAdd (FeePay.Web)"'
+2021-02-04T13:40:05.6523325+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/Add" responded 200 in 165.9576 ms
+2021-02-04T13:40:05.6588828+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/Add - - - 200 - text/html;+charset=utf-8 172.5572ms
+2021-02-04T13:40:08.5686417+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - -
+2021-02-04T13:40:08.5695371+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T13:40:08.5698519+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserList\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserList()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T13:40:08.5753873+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserList".
+2021-02-04T13:40:08.5797701+05:30 [INF] (/KARAN/) Executed ViewResult - view "UserList" executed in 4.3098ms.
+2021-02-04T13:40:08.5800964+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)" in 10.1896ms
+2021-02-04T13:40:08.5802173+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T13:40:08.5803120+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/List" responded 200 in 11.5435 ms
+2021-02-04T13:40:08.5818019+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - - - 200 - text/html;+charset=utf-8 13.0588ms
+2021-02-04T13:40:12.5134952+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/Credentials/100 - -
+2021-02-04T13:40:12.5144994+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserCredentials (FeePay.Web)"'
+2021-02-04T13:40:12.5196743+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserCredentials\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.JsonResult] UserCredentials(Int32)" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T13:40:12.5584631+05:30 [INF] (/KARAN/) Executing JsonResult, writing value of type '"<>f__AnonymousType1`2[[System.Boolean, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[FeePay.Core.Application.DTOs.UserPasswordViewModel, FeePay.Core.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'.
+2021-02-04T13:40:12.6175883+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserCredentials (FeePay.Web)" in 97.7936ms
+2021-02-04T13:40:12.6177263+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserCredentials (FeePay.Web)"'
+2021-02-04T13:40:12.6178489+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/Credentials/100" responded 200 in 104.2102 ms
+2021-02-04T13:40:12.6182421+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/Credentials/100 - - - 200 - application/json;+charset=utf-8 104.7747ms
+2021-02-04T13:40:16.0075546+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/Credentials/101 - -
+2021-02-04T13:40:16.0087172+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserCredentials (FeePay.Web)"'
+2021-02-04T13:40:16.0089078+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserCredentials\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.JsonResult] UserCredentials(Int32)" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T13:40:16.0105960+05:30 [INF] (/KARAN/) Executing JsonResult, writing value of type '"<>f__AnonymousType1`2[[System.Boolean, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[FeePay.Core.Application.DTOs.UserPasswordViewModel, FeePay.Core.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'.
+2021-02-04T13:40:16.0108776+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserCredentials (FeePay.Web)" in 1.9029ms
+2021-02-04T13:40:16.0109433+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserCredentials (FeePay.Web)"'
+2021-02-04T13:40:16.0109754+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/Credentials/101" responded 200 in 3.3032 ms
+2021-02-04T13:40:16.0112112+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/Credentials/101 - - - 200 - application/json;+charset=utf-8 3.6401ms
+2021-02-04T13:40:20.7686504+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/Edit/101 - -
+2021-02-04T13:40:20.7694782+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserEdit (FeePay.Web)"'
+2021-02-04T13:40:20.7752077+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserEdit\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserEdit(Int32)" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T13:40:20.8079986+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserEdit".
+2021-02-04T13:40:20.8745680+05:30 [INF] (/KARAN/) Executed ViewResult - view "UserEdit" executed in 68.0126ms.
+2021-02-04T13:40:20.8747185+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserEdit (FeePay.Web)" in 99.3806ms
+2021-02-04T13:40:20.8747906+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserEdit (FeePay.Web)"'
+2021-02-04T13:40:20.8748958+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/Edit/101" responded 200 in 106.1591 ms
+2021-02-04T13:40:20.8765930+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/Edit/101 - - - 200 - text/html;+charset=utf-8 107.8878ms
+2021-02-04T13:40:22.8728000+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - -
+2021-02-04T13:40:22.8737122+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T13:40:22.8739038+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserList\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserList()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T13:40:22.8753850+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserList".
+2021-02-04T13:40:22.8806296+05:30 [INF] (/KARAN/) Executed ViewResult - view "UserList" executed in 5.3273ms.
+2021-02-04T13:40:22.8807764+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)" in 6.7803ms
+2021-02-04T13:40:22.8808181+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T13:40:22.8808767+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/List" responded 200 in 7.9942 ms
+2021-02-04T13:40:22.8822079+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - - - 200 - text/html;+charset=utf-8 9.3616ms
+2021-02-04T13:40:37.1551292+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/Profile/101 - -
+2021-02-04T13:40:37.1560975+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserProfile (FeePay.Web)"'
+2021-02-04T13:40:37.1650319+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserProfile\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserProfile(Int32)" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T13:40:37.1690279+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserProfile".
+2021-02-04T13:40:37.1768273+05:30 [ERR] (/KARAN/) The view '"UserProfile"' was not found. Searched locations: ["/Areas/SuperAdmin/Views/Account/UserProfile.cshtml", "/Areas/SuperAdmin/Views/Shared/UserProfile.cshtml", "/Views/Shared/UserProfile.cshtml"]
+2021-02-04T13:40:37.2525526+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserProfile (FeePay.Web)" in 87.3868ms
+2021-02-04T13:40:37.2532094+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserProfile (FeePay.Web)"'
+2021-02-04T13:40:37.2536365+05:30 [ERR] (/KARAN/) HTTP "GET" "/SuperAdmin/User/Profile/101" responded 500 in 98.3668 ms
+System.InvalidOperationException: The view 'UserProfile' was not found. The following locations were searched:
+/Areas/SuperAdmin/Views/Account/UserProfile.cshtml
+/Areas/SuperAdmin/Views/Shared/UserProfile.cshtml
+/Views/Shared/UserProfile.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-02-04T13:40:37.3490558+05:30 [ERR] (/KARAN/) An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'UserProfile' was not found. The following locations were searched:
+/Areas/SuperAdmin/Views/Account/UserProfile.cshtml
+/Areas/SuperAdmin/Views/Shared/UserProfile.cshtml
+/Views/Shared/UserProfile.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-02-04T13:40:37.4198988+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/Profile/101 - - - 500 - text/html;+charset=utf-8 264.7231ms
+2021-02-04T13:40:48.8463418+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - -
+2021-02-04T13:40:48.8473463+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T13:40:48.8475282+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserList\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserList()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T13:40:48.8491178+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserList".
+2021-02-04T13:40:48.8522703+05:30 [INF] (/KARAN/) Executed ViewResult - view "UserList" executed in 3.1633ms.
+2021-02-04T13:40:48.8523962+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)" in 4.8217ms
+2021-02-04T13:40:48.8524501+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T13:40:48.8525402+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/List" responded 200 in 5.9721 ms
+2021-02-04T13:40:48.8540160+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - - - 200 - text/html;+charset=utf-8 7.7109ms
+2021-02-04T13:40:52.0760912+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - -
+2021-02-04T13:40:52.0769121+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T13:40:52.0771320+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserList\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserList()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T13:40:52.0789388+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserList".
+2021-02-04T13:40:52.0823408+05:30 [INF] (/KARAN/) Executed ViewResult - view "UserList" executed in 3.4207ms.
+2021-02-04T13:40:52.0824461+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)" in 5.2165ms
+2021-02-04T13:40:52.0825101+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T13:40:52.0825671+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/List" responded 200 in 6.3702 ms
+2021-02-04T13:40:52.0839032+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - - - 200 - text/html;+charset=utf-8 7.8052ms
+2021-02-04T13:40:53.0971304+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/favicon.png - -
+2021-02-04T13:40:53.2120683+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/favicon.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\favicon.png"'
+2021-02-04T13:40:53.2128128+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/favicon.png - - - 200 4406 image/png 115.5032ms
+2021-02-04T14:20:02.9875663+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-02-04T14:20:03.2919376+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-02-04T14:20:03.2922205+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-02-04T14:20:03.2922717+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-02-04T14:20:03.3298917+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - -
+2021-02-04T14:20:03.3298733+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-02-04T14:20:03.4447087+05:30 [INF] (/KARAN/) "Identity.Application" was not authenticated. Failure message: "Ticket expired"
+2021-02-04T14:20:03.4447089+05:30 [INF] (/KARAN/) "Identity.Application" was not authenticated. Failure message: "Ticket expired"
+2021-02-04T14:20:03.4487186+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-02-04T14:20:03.4487280+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T14:20:03.4905641+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-02-04T14:20:03.4989815+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserList\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserList()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T14:20:03.5042818+05:30 [INF] (/KARAN/) Authorization failed for the request at filter '"FeePay.Web.Filters.SuperAdminAuthorizeAttribute"'.
+2021-02-04T14:20:03.5322277+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-02-04T14:20:03.5832836+05:30 [INF] (/KARAN/) Executing RedirectToRouteResult, redirecting to "/SuperAdmin/Authentication?returnUrl=%2FSuperAdmin%2FUser%2FList" from route null.
+2021-02-04T14:20:03.5922272+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)" in 84.3895ms
+2021-02-04T14:20:03.5934089+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T14:20:03.5972812+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/List" responded 302 in 257.2533 ms
+2021-02-04T14:20:03.6200590+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - - - 302 - - 295.3880ms
+2021-02-04T14:20:03.6219278+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/Authentication?returnUrl=%2FSuperAdmin%2FUser%2FList - -
+2021-02-04T14:20:03.6327096+05:30 [INF] (/KARAN/) "Identity.Application" was not authenticated. Failure message: "Ticket expired"
+2021-02-04T14:20:03.6330611+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-02-04T14:20:03.6330483+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 116.6778ms.
+2021-02-04T14:20:03.6333574+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 142.4368ms
+2021-02-04T14:20:03.6334967+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-02-04T14:20:03.6336600+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 296.3274 ms
+2021-02-04T14:20:03.6396689+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 315.6826ms
+2021-02-04T14:20:03.6580402+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String)" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController" ("FeePay.Web").
+2021-02-04T14:20:03.7162924+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-02-04T14:20:03.7170054+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-02-04T14:20:03.7196444+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-02-04T14:20:03.7199401+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-02-04T14:20:03.7202966+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.TwoFactorUserId" signed out.
+2021-02-04T14:20:03.7228507+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-02-04T14:20:03.9736951+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 252.7761ms.
+2021-02-04T14:20:03.9738958+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)" in 315.7193ms
+2021-02-04T14:20:03.9739660+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-02-04T14:20:03.9740222+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/Authentication?returnUrl=%2FSuperAdmin%2FUser%2FList" responded 200 in 351.8022 ms
+2021-02-04T14:20:03.9757980+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/Authentication?returnUrl=%2FSuperAdmin%2FUser%2FList - - - 200 - text/html;+charset=utf-8 353.8650ms
+2021-02-04T14:20:08.5815725+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 POST http://localhost:57458/SuperAdmin/Authentication?returnurl=%2FSuperAdmin%2FUser%2FList application/x-www-form-urlencoded 240
+2021-02-04T14:20:08.5826326+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-02-04T14:20:08.5958234+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(FeePay.Core.Application.DTOs.SuperAdminLoginViewModel, System.String)" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController" ("FeePay.Web").
+2021-02-04T14:20:09.8679306+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed in.
+2021-02-04T14:20:09.8913064+05:30 [INF] (/KARAN/) update system for login
+2021-02-04T14:20:09.9033686+05:30 [INF] (/KARAN/) Executing RedirectResult, redirecting to "/SuperAdmin/User/List".
+2021-02-04T14:20:09.9347800+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)" in 1338.7711ms
+2021-02-04T14:20:09.9365530+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-02-04T14:20:09.9399069+05:30 [INF] (/KARAN/) HTTP "POST" "/SuperAdmin/Authentication?returnurl=%2FSuperAdmin%2FUser%2FList" responded 302 in 1358.1708 ms
+2021-02-04T14:20:09.9410974+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 POST http://localhost:57458/SuperAdmin/Authentication?returnurl=%2FSuperAdmin%2FUser%2FList application/x-www-form-urlencoded 240 - 302 - - 1359.5167ms
+2021-02-04T14:20:09.9522392+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - -
+2021-02-04T14:20:09.9620040+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T14:20:09.9704875+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserList\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserList()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T14:20:10.1701235+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserList".
+2021-02-04T14:20:10.4500182+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)" in 479.3211ms
+2021-02-04T14:20:10.4505188+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T14:20:10.4520420+05:30 [ERR] (/KARAN/) HTTP "GET" "/SuperAdmin/User/List" responded 500 in 499.6385 ms
+System.InvalidOperationException: The model item passed into the ViewDataDictionary is of type 'System.Collections.Generic.List`1[FeePay.Core.Application.DTOs.SuperAdmin_UserViewModel]', but this ViewDataDictionary instance requires a model item of type 'FeePay.Core.Application.DTOs.ResetPasswordViewModel'.
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary.EnsureCompatible(Object value)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary..ctor(ViewDataDictionary source, Object model, Type declaredModelType)
+   at lambda_method114(Closure , ViewDataDictionary )
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.CreateViewDataDictionary(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.Activate(Object page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPageActivator.Activate(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.HtmlHelper.RenderPartialCoreAsync(String partialViewName, Object model, ViewDataDictionary viewData, TextWriter writer)
+   at AspNetCore.Areas_SuperAdmin_Views_Account_UserList.<>c__DisplayClass26_0.<<ExecuteAsync>b__4>d.MoveNext() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\SuperAdmin\Views\Account\UserList.cshtml:line 142
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPage.RenderSectionAsyncCore(String sectionName, Boolean required)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPage.RenderSection(String name, Boolean required)
+   at AspNetCore.Areas_SuperAdmin_Views_Shared__Layout.<ExecuteAsync>b__13_1() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\SuperAdmin\Views\Shared\_Layout.cshtml:line 62
+   at Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperExecutionContext.SetOutputContentAsync()
+   at AspNetCore.Areas_SuperAdmin_Views_Shared__Layout.ExecuteAsync()
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderLayoutAsync(ViewContext context, ViewBufferTextWriter bodyWriter)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-02-04T14:20:10.5921487+05:30 [ERR] (/KARAN/) An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The model item passed into the ViewDataDictionary is of type 'System.Collections.Generic.List`1[FeePay.Core.Application.DTOs.SuperAdmin_UserViewModel]', but this ViewDataDictionary instance requires a model item of type 'FeePay.Core.Application.DTOs.ResetPasswordViewModel'.
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary.EnsureCompatible(Object value)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary..ctor(ViewDataDictionary source, Object model, Type declaredModelType)
+   at lambda_method114(Closure , ViewDataDictionary )
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.CreateViewDataDictionary(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.Activate(Object page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPageActivator.Activate(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.HtmlHelper.RenderPartialCoreAsync(String partialViewName, Object model, ViewDataDictionary viewData, TextWriter writer)
+   at AspNetCore.Areas_SuperAdmin_Views_Account_UserList.<>c__DisplayClass26_0.<<ExecuteAsync>b__4>d.MoveNext() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\SuperAdmin\Views\Account\UserList.cshtml:line 142
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPage.RenderSectionAsyncCore(String sectionName, Boolean required)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPage.RenderSection(String name, Boolean required)
+   at AspNetCore.Areas_SuperAdmin_Views_Shared__Layout.<ExecuteAsync>b__13_1() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\SuperAdmin\Views\Shared\_Layout.cshtml:line 62
+   at Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperExecutionContext.SetOutputContentAsync()
+   at AspNetCore.Areas_SuperAdmin_Views_Shared__Layout.ExecuteAsync()
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderLayoutAsync(ViewContext context, ViewBufferTextWriter bodyWriter)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-02-04T14:20:10.7347048+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - - - 500 - text/html;+charset=utf-8 782.3505ms
+2021-02-04T14:21:17.5087670+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-02-04T14:21:17.7354129+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-02-04T14:21:17.7355947+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-02-04T14:21:17.7356278+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-02-04T14:21:17.7671587+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-02-04T14:21:17.8809842+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-02-04T14:21:17.9171333+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-02-04T14:21:17.9456300+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-02-04T14:21:18.1220630+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 177.4112ms.
+2021-02-04T14:21:18.1230222+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 205.1096ms
+2021-02-04T14:21:18.1239950+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-02-04T14:21:18.1283544+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 351.4565 ms
+2021-02-04T14:21:18.1410045+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 376.7517ms
+2021-02-04T14:21:18.4993966+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - -
+2021-02-04T14:21:18.5049971+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T14:21:18.5237983+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserList\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserList()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T14:21:19.0615786+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserList".
+2021-02-04T14:21:19.4003605+05:30 [INF] (/KARAN/) Executed ViewResult - view "UserList" executed in 340.665ms.
+2021-02-04T14:21:19.4020868+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)" in 878.1514ms
+2021-02-04T14:21:19.4028891+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T14:21:19.4053320+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/List" responded 200 in 905.6680 ms
+2021-02-04T14:21:19.4090236+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - - - 200 - text/html;+charset=utf-8 909.7155ms
+2021-02-04T14:21:54.1445971+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - -
+2021-02-04T14:21:54.2407370+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T14:21:54.2411869+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserList\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserList()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T14:21:54.2644844+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserList".
+2021-02-04T14:21:54.2828431+05:30 [INF] (/KARAN/) Executed ViewResult - view "UserList" executed in 18.5334ms.
+2021-02-04T14:21:54.2833336+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)" in 41.8481ms
+2021-02-04T14:21:54.2835365+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T14:21:54.2837640+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/List" responded 200 in 138.6641 ms
+2021-02-04T14:21:54.2869581+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - - - 200 - text/html;+charset=utf-8 142.9615ms
+2021-02-04T14:21:54.4594523+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/fontawesome.css - -
+2021-02-04T14:21:54.4633451+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/icofont.css - -
+2021-02-04T14:21:54.4761183+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/themify.css - -
+2021-02-04T14:21:54.4772291+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/flag-icon.css - -
+2021-02-04T14:21:54.4816738+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/feather-icon.css - -
+2021-02-04T14:21:54.4849053+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/animate.css - -
+2021-02-04T14:21:54.5109132+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/feather-icon.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\feather-icon.css"'
+2021-02-04T14:21:54.5124402+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/feather-icon.css - - - 200 2953 text/css 30.4624ms
+2021-02-04T14:21:54.5198313+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/flag-icon.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\flag-icon.css"'
+2021-02-04T14:21:54.5198295+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/animate.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\animate.css"'
+2021-02-04T14:21:54.5222727+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/fontawesome.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\fontawesome.css"'
+2021-02-04T14:21:54.5222466+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/icofont.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\icofont.css"'
+2021-02-04T14:21:54.5222742+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/themify.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\themify.css"'
+2021-02-04T14:21:54.5222168+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/flag-icon.css - - - 200 44960 text/css 44.7696ms
+2021-02-04T14:21:54.5228782+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/fontawesome.css - - - 200 29581 text/css 63.3761ms
+2021-02-04T14:21:54.5231960+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/themify.css - - - 200 23176 text/css 46.9983ms
+2021-02-04T14:21:54.5292210+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/icofont.css - - - 200 119207 text/css 65.7578ms
+2021-02-04T14:21:54.5346755+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/chartist.css - -
+2021-02-04T14:21:54.5359384+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/animate.css - - - 200 90574 text/css 49.9069ms
+2021-02-04T14:21:54.5367387+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/bootstrap.css - -
+2021-02-04T14:21:54.5370238+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/chartist.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\chartist.css"'
+2021-02-04T14:21:54.5419773+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/style.css - -
+2021-02-04T14:21:54.5432576+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/chartist.css - - - 200 14199 text/css 8.6584ms
+2021-02-04T14:21:54.5453610+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/color-1.css - -
+2021-02-04T14:21:54.5458811+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/color-1.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\color-1.css"'
+2021-02-04T14:21:54.5460822+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/responsive.css - -
+2021-02-04T14:21:54.5468866+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/datatables.css - -
+2021-02-04T14:21:54.5480817+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/bootstrap.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\bootstrap.css"'
+2021-02-04T14:21:54.5482055+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/color-1.css - - - 200 0 text/css 2.8137ms
+2021-02-04T14:21:54.5519327+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/datatables.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\datatables.css"'
+2021-02-04T14:21:54.5540916+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/datatables.css - - - 200 56559 text/css 7.0626ms
+2021-02-04T14:21:54.5552103+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/responsive.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\responsive.css"'
+2021-02-04T14:21:54.5557720+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/bootstrap.css - - - 200 262533 text/css 18.9716ms
+2021-02-04T14:21:54.5577892+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/responsive.css - - - 200 89142 text/css 11.5561ms
+2021-02-04T14:21:54.5631657+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/style.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\style.css"'
+2021-02-04T14:21:54.5823058+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/style.css - - - 200 1149213 text/css 40.2858ms
+2021-02-04T14:21:54.6529567+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/jquery-3.5.1.min.js - -
+2021-02-04T14:21:54.6584184+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/popper.min.js - -
+2021-02-04T14:21:54.6602111+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/bootstrap.js - -
+2021-02-04T14:21:54.6602502+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather.min.js - -
+2021-02-04T14:21:54.6611520+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather-icon.js - -
+2021-02-04T14:21:54.6627253+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/bootstrap/bootstrap.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\bootstrap\bootstrap.js"'
+2021-02-04T14:21:54.6664252+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/bootstrap.js - - - 200 140702 application/javascript 6.1257ms
+2021-02-04T14:21:54.6701571+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/config.js - -
+2021-02-04T14:21:54.6735548+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/icons/feather-icon/feather-icon.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\icons\feather-icon\feather-icon.js"'
+2021-02-04T14:21:54.6739577+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather-icon.js - - - 200 17 application/javascript 12.8823ms
+2021-02-04T14:21:54.6774557+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/sidebar-menu.js - -
+2021-02-04T14:21:54.6913052+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/config.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\config.js"'
+2021-02-04T14:21:54.6917211+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/config.js - - - 200 256 application/javascript 21.5361ms
+2021-02-04T14:21:54.6965564+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/tooltip-init.js - -
+2021-02-04T14:21:54.7098270+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/sidebar-menu.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\sidebar-menu.js"'
+2021-02-04T14:21:54.7107414+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/sidebar-menu.js - - - 200 10168 application/javascript 33.2341ms
+2021-02-04T14:21:54.7168522+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/clipboard/clipboard.min.js - -
+2021-02-04T14:21:54.7204721+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/tooltip-init.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\tooltip-init.js"'
+2021-02-04T14:21:54.7209574+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/tooltip-init.js - - - 200 222 application/javascript 24.3669ms
+2021-02-04T14:21:54.7254904+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/custom-card/custom-card.js - -
+2021-02-04T14:21:54.7448440+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/bootstrap/popper.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\bootstrap\popper.min.js"'
+2021-02-04T14:21:54.7466987+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/popper.min.js - - - 200 20458 application/javascript 88.1623ms
+2021-02-04T14:21:54.7527816+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/notify/bootstrap-notify.min.js - -
+2021-02-04T14:21:54.7618604+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/custom-card/custom-card.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\custom-card\custom-card.js"'
+2021-02-04T14:21:54.7623463+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/icons/feather-icon/feather.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\icons\feather-icon\feather.min.js"'
+2021-02-04T14:21:54.7625090+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/custom-card/custom-card.js - - - 200 2880 application/javascript 36.9699ms
+2021-02-04T14:21:54.7647789+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather.min.js - - - 200 65256 application/javascript 104.4284ms
+2021-02-04T14:21:54.7680450+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/clipboard/clipboard.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\clipboard\clipboard.min.js"'
+2021-02-04T14:21:54.7694068+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/clipboard/clipboard.min.js - - - 200 10668 application/javascript 52.5036ms
+2021-02-04T14:21:54.7714888+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.min.css - -
+2021-02-04T14:21:54.7721793+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2-material-ui.min.css - -
+2021-02-04T14:21:54.7724738+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/sweetalert2/sweetalert2.min.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\sweetalert2\sweetalert2.min.css"'
+2021-02-04T14:21:54.7730680+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/sweetalert2/sweetalert2-material-ui.min.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\sweetalert2\sweetalert2-material-ui.min.css"'
+2021-02-04T14:21:54.7732990+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.min.css - - - 200 24951 text/css 1.8085ms
+2021-02-04T14:21:54.7762402+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2-material-ui.min.css - - - 200 29564 text/css 2.1424ms
+2021-02-04T14:21:54.7802388+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.all.min.js - -
+2021-02-04T14:21:54.7866530+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/script.js - -
+2021-02-04T14:21:54.7871458+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/theme-customizer/customizer.js - -
+2021-02-04T14:21:54.7926951+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/datatable/datatables/jquery.dataTables.min.js - -
+2021-02-04T14:21:54.8078108+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/notify/bootstrap-notify.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\notify\bootstrap-notify.min.js"'
+2021-02-04T14:21:54.8085289+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/notify/bootstrap-notify.min.js - - - 200 8990 application/javascript 55.7269ms
+2021-02-04T14:21:54.8128677+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Page_js/index_setting.js - -
+2021-02-04T14:21:54.8163710+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/theme-customizer/customizer.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\theme-customizer\customizer.js"'
+2021-02-04T14:21:54.8164158+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/jquery-3.5.1.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\jquery-3.5.1.min.js"'
+2021-02-04T14:21:54.8164939+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/script.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\script.js"'
+2021-02-04T14:21:54.8170520+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/theme-customizer/customizer.js - - - 200 12436 application/javascript 29.8320ms
+2021-02-04T14:21:54.8172225+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/script.js - - - 200 11377 application/javascript 30.5493ms
+2021-02-04T14:21:54.8202454+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/jquery-3.5.1.min.js - - - 200 89478 application/javascript 167.2159ms
+2021-02-04T14:21:54.8276869+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Page_js/index_global.js - -
+2021-02-04T14:21:54.8283998+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Page_js/index_global.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Page_js\index_global.js"'
+2021-02-04T14:21:54.8292291+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Page_js/index_global.js - - - 200 13397 application/javascript 1.5616ms
+2021-02-04T14:21:54.8292316+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo.png - -
+2021-02-04T14:21:54.8293028+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/ecommerce/01.jpg - -
+2021-02-04T14:21:54.8358489+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/ecommerce/03.jpg - -
+2021-02-04T14:21:54.8402973+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Page_js/index_setting.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Page_js\index_setting.js"'
+2021-02-04T14:21:54.8406083+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Page_js/index_setting.js - - - 200 191 application/javascript 27.7321ms
+2021-02-04T14:21:54.8448686+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/user/1.jpg - -
+2021-02-04T14:21:54.8582437+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/sweetalert2/sweetalert2.all.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\sweetalert2\sweetalert2.all.min.js"'
+2021-02-04T14:21:54.8602651+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.all.min.js - - - 200 66038 application/javascript 80.3226ms
+2021-02-04T14:21:54.8642450+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/user/2.jpg - -
+2021-02-04T14:21:54.8729119+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/ecommerce/01.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\ecommerce\01.jpg"'
+2021-02-04T14:21:54.8737144+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/ecommerce/01.jpg - - - 200 20714 image/jpeg 44.2312ms
+2021-02-04T14:21:54.8767588+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/logo/logo.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\logo\logo.png"'
+2021-02-04T14:21:54.8773061+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo.png - - - 200 4927 image/png 48.0515ms
+2021-02-04T14:21:54.8806034+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/user/4.jpg - -
+2021-02-04T14:21:54.8848477+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/datatable/datatables/jquery.dataTables.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\datatable\datatables\jquery.dataTables.min.js"'
+2021-02-04T14:21:54.8866321+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/ecommerce/03.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\ecommerce\03.jpg"'
+2021-02-04T14:21:54.8871957+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/dashboard/profile.jpg - -
+2021-02-04T14:21:54.8892718+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/ecommerce/03.jpg - - - 200 20714 image/jpeg 53.3890ms
+2021-02-04T14:21:54.8892949+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/datatable/datatables/jquery.dataTables.min.js - - - 200 82070 application/javascript 96.5950ms
+2021-02-04T14:21:54.8969950+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo_dark.png - -
+2021-02-04T14:21:54.8971702+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo-icon.png - -
+2021-02-04T14:21:54.8986361+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/dashboard/profile.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\dashboard\profile.jpg"'
+2021-02-04T14:21:54.8991074+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/dashboard/profile.jpg - - - 200 941 image/jpeg 11.7914ms
+2021-02-04T14:21:54.9220155+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/user/1.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\user\1.jpg"'
+2021-02-04T14:21:54.9220155+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/user/2.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\user\2.jpg"'
+2021-02-04T14:21:54.9224898+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/user/1.jpg - - - 200 10422 image/jpeg 77.5997ms
+2021-02-04T14:21:54.9225383+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/user/2.jpg - - - 200 1006 image/jpeg 58.3067ms
+2021-02-04T14:21:54.9230370+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/user/4.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\user\4.jpg"'
+2021-02-04T14:21:54.9233003+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/user/4.jpg - - - 200 2185 image/jpeg 42.6969ms
+2021-02-04T14:21:54.9288220+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/logo/logo-icon.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\logo\logo-icon.png"'
+2021-02-04T14:21:54.9289297+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/logo/logo_dark.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\logo\logo_dark.png"'
+2021-02-04T14:21:54.9291353+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo-icon.png - - - 200 4406 image/png 31.8982ms
+2021-02-04T14:21:54.9293677+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo_dark.png - - - 200 21577 image/png 32.4155ms
+2021-02-04T14:21:54.9484690+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/fonts/flag-icon/us.svg - -
+2021-02-04T14:21:54.9660828+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/fonts/font-awesome/fontawesome-webfont.woff2?v=4.7.0 - -
+2021-02-04T14:21:54.9749818+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/fonts/ico/icofont.ttf?v=1.0.0-beta - -
+2021-02-04T14:21:54.9892822+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/fonts/flag-icon/us.svg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\fonts\flag-icon\us.svg"'
+2021-02-04T14:21:54.9895833+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/fonts/flag-icon/us.svg - - - 200 6200 image/svg+xml 41.1193ms
+2021-02-04T14:21:55.0101491+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/fonts/font-awesome/fontawesome-webfont.woff2"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\fonts\font-awesome\fontawesome-webfont.woff2"'
+2021-02-04T14:21:55.0106533+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/fonts/font-awesome/fontawesome-webfont.woff2?v=4.7.0 - - - 200 77160 font/woff2 44.5325ms
+2021-02-04T14:21:55.0504682+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/fonts/ico/icofont.ttf"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\fonts\ico\icofont.ttf"'
+2021-02-04T14:21:55.0595655+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/fonts/ico/icofont.ttf?v=1.0.0-beta - - - 200 1018620 application/x-font-ttf 84.5249ms
+2021-02-04T14:21:55.9744816+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/other-images/boxbg.jpg - -
+2021-02-04T14:21:55.9798767+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/fonts/themify/themify.woff?-fvbane - -
+2021-02-04T14:21:55.9994612+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/other-images/boxbg.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\other-images\boxbg.jpg"'
+2021-02-04T14:21:56.0000243+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/other-images/boxbg.jpg - - - 200 45094 image/jpeg 25.4772ms
+2021-02-04T14:21:56.0427294+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/fonts/themify/themify.woff"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\fonts\themify\themify.woff"'
+2021-02-04T14:21:56.0431640+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/fonts/themify/themify.woff?-fvbane - - - 200 56108 application/font-woff 63.2804ms
+2021-02-04T14:21:56.0717931+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/sort_both.png - -
+2021-02-04T14:21:56.0817610+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/sort_both.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\sort_both.png"'
+2021-02-04T14:21:56.0819645+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/sort_both.png - - - 200 95 image/png 10.1576ms
+2021-02-04T14:21:56.1049761+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/sort_desc.png - -
+2021-02-04T14:21:56.1081063+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/sort_desc.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\sort_desc.png"'
+2021-02-04T14:21:56.1094743+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/sort_desc.png - - - 200 95 image/png 4.3227ms
+2021-02-04T14:21:56.4834117+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/favicon.png - -
+2021-02-04T14:21:56.4844220+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/favicon.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\favicon.png"'
+2021-02-04T14:21:56.4848421+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/favicon.png - - - 200 4406 image/png 1.4389ms
+2021-02-04T14:22:27.5464345+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - -
+2021-02-04T14:22:27.5490805+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T14:22:27.5494249+05:30 [INF] (/KARAN/) Route matched with "{area = \"SuperAdmin\", action = \"UserList\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UserList()" on controller "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController" ("FeePay.Web").
+2021-02-04T14:22:27.6594674+05:30 [INF] (/KARAN/) Executing ViewResult, running view "UserList".
+2021-02-04T14:22:27.6704233+05:30 [INF] (/KARAN/) Executed ViewResult - view "UserList" executed in 11.1234ms.
+2021-02-04T14:22:27.6705651+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)" in 121.0309ms
+2021-02-04T14:22:27.6706499+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.SuperAdmin.Controllers.AccountController.UserList (FeePay.Web)"'
+2021-02-04T14:22:27.6707461+05:30 [INF] (/KARAN/) HTTP "GET" "/SuperAdmin/User/List" responded 200 in 124.0542 ms
+2021-02-04T14:22:27.6731162+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/SuperAdmin/User/List - - - 200 - text/html;+charset=utf-8 126.6562ms
+2021-02-04T14:22:27.7993549+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/fontawesome.css - -
+2021-02-04T14:22:27.8088637+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/fontawesome.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\fontawesome.css"'
+2021-02-04T14:22:27.8099471+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/icofont.css - -
+2021-02-04T14:22:27.8173927+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/themify.css - -
+2021-02-04T14:22:27.8184883+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/fontawesome.css - - - 200 29581 text/css 19.1027ms
+2021-02-04T14:22:27.8185310+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/icofont.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\icofont.css"'
+2021-02-04T14:22:27.8191218+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/themify.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\themify.css"'
+2021-02-04T14:22:27.8235242+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/themify.css - - - 200 23176 text/css 5.9766ms
+2021-02-04T14:22:27.8251668+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/flag-icon.css - -
+2021-02-04T14:22:27.8258863+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/animate.css - -
+2021-02-04T14:22:27.8271371+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/flag-icon.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\flag-icon.css"'
+2021-02-04T14:22:27.8295470+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/animate.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\animate.css"'
+2021-02-04T14:22:27.8362221+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/icofont.css - - - 200 119207 text/css 26.1179ms
+2021-02-04T14:22:27.8362816+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/chartist.css - -
+2021-02-04T14:22:27.8400990+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/animate.css - - - 200 90574 text/css 14.1563ms
+2021-02-04T14:22:27.8406983+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/flag-icon.css - - - 200 44960 text/css 15.4760ms
+2021-02-04T14:22:27.8409525+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/feather-icon.css - -
+2021-02-04T14:22:27.8452602+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/chartist.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\chartist.css"'
+2021-02-04T14:22:27.8470492+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/feather-icon.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\feather-icon.css"'
+2021-02-04T14:22:27.8534599+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/bootstrap.css - -
+2021-02-04T14:22:27.8536164+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/feather-icon.css - - - 200 2953 text/css 6.9038ms
+2021-02-04T14:22:27.8540095+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/style.css - -
+2021-02-04T14:22:27.8540888+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/chartist.css - - - 200 14199 text/css 18.0077ms
+2021-02-04T14:22:27.8564834+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/responsive.css - -
+2021-02-04T14:22:27.8568172+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/color-1.css - -
+2021-02-04T14:22:27.8576323+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/color-1.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\color-1.css"'
+2021-02-04T14:22:27.8586454+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/color-1.css - - - 200 0 text/css 2.3003ms
+2021-02-04T14:22:27.8592094+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/responsive.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\responsive.css"'
+2021-02-04T14:22:27.8595500+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/bootstrap.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\bootstrap.css"'
+2021-02-04T14:22:27.8620779+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/responsive.css - - - 200 89142 text/css 5.8659ms
+2021-02-04T14:22:27.8636400+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/datatables.css - -
+2021-02-04T14:22:27.8648378+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/datatables.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\datatables.css"'
+2021-02-04T14:22:27.8670292+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/datatables.css - - - 200 56559 text/css 3.3783ms
+2021-02-04T14:22:27.8679693+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/bootstrap.css - - - 200 262533 text/css 14.5296ms
+2021-02-04T14:22:27.8689478+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/style.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\style.css"'
+2021-02-04T14:22:27.8932703+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/style.css - - - 200 1149213 text/css 39.2559ms
+2021-02-04T14:22:27.9709336+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/jquery-3.5.1.min.js - -
+2021-02-04T14:22:27.9733214+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/jquery-3.5.1.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\jquery-3.5.1.min.js"'
+2021-02-04T14:22:27.9761037+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/jquery-3.5.1.min.js - - - 200 89478 application/javascript 5.1655ms
+2021-02-04T14:22:27.9768440+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/popper.min.js - -
+2021-02-04T14:22:27.9777179+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/bootstrap/popper.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\bootstrap\popper.min.js"'
+2021-02-04T14:22:27.9785342+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/popper.min.js - - - 200 20458 application/javascript 1.6968ms
+2021-02-04T14:22:27.9859256+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/bootstrap.js - -
+2021-02-04T14:22:27.9869079+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather.min.js - -
+2021-02-04T14:22:27.9888333+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/icons/feather-icon/feather.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\icons\feather-icon\feather.min.js"'
+2021-02-04T14:22:27.9892297+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/bootstrap/bootstrap.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\bootstrap\bootstrap.js"'
+2021-02-04T14:22:27.9905154+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather.min.js - - - 200 65256 application/javascript 3.5962ms
+2021-02-04T14:22:27.9910030+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather-icon.js - -
+2021-02-04T14:22:27.9914332+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/icons/feather-icon/feather-icon.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\icons\feather-icon\feather-icon.js"'
+2021-02-04T14:22:27.9917320+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather-icon.js - - - 200 17 application/javascript 0.7008ms
+2021-02-04T14:22:27.9925279+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/bootstrap.js - - - 200 140702 application/javascript 6.5676ms
+2021-02-04T14:22:27.9939216+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/config.js - -
+2021-02-04T14:22:27.9945873+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/config.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\config.js"'
+2021-02-04T14:22:27.9948952+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/config.js - - - 200 256 application/javascript 0.9619ms
+2021-02-04T14:22:27.9959781+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/sidebar-menu.js - -
+2021-02-04T14:22:27.9966996+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/sidebar-menu.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\sidebar-menu.js"'
+2021-02-04T14:22:27.9972713+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/sidebar-menu.js - - - 200 10168 application/javascript 1.3822ms
+2021-02-04T14:22:28.0041547+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/tooltip-init.js - -
+2021-02-04T14:22:28.0046711+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/tooltip-init.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\tooltip-init.js"'
+2021-02-04T14:22:28.0050663+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/tooltip-init.js - - - 200 222 application/javascript 0.8982ms
+2021-02-04T14:22:28.0082781+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/clipboard/clipboard.min.js - -
+2021-02-04T14:22:28.0092266+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/custom-card/custom-card.js - -
+2021-02-04T14:22:28.0093442+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/clipboard/clipboard.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\clipboard\clipboard.min.js"'
+2021-02-04T14:22:28.0099102+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/custom-card/custom-card.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\custom-card\custom-card.js"'
+2021-02-04T14:22:28.0102988+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/clipboard/clipboard.min.js - - - 200 10668 application/javascript 2.0323ms
+2021-02-04T14:22:28.0103190+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/custom-card/custom-card.js - - - 200 2880 application/javascript 1.1199ms
+2021-02-04T14:22:28.0122167+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/notify/bootstrap-notify.min.js - -
+2021-02-04T14:22:28.0122502+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.min.css - -
+2021-02-04T14:22:28.0127067+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/notify/bootstrap-notify.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\notify\bootstrap-notify.min.js"'
+2021-02-04T14:22:28.0128272+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/sweetalert2/sweetalert2.min.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\sweetalert2\sweetalert2.min.css"'
+2021-02-04T14:22:28.0132533+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/notify/bootstrap-notify.min.js - - - 200 8990 application/javascript 1.0398ms
+2021-02-04T14:22:28.0133226+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.min.css - - - 200 24951 text/css 1.1072ms
+2021-02-04T14:22:28.0194109+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2-material-ui.min.css - -
+2021-02-04T14:22:28.0235209+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/sweetalert2/sweetalert2-material-ui.min.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\sweetalert2\sweetalert2-material-ui.min.css"'
+2021-02-04T14:22:28.0261698+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2-material-ui.min.css - - - 200 29564 text/css 6.7267ms
+2021-02-04T14:22:28.0284434+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/script.js - -
+2021-02-04T14:22:28.0322842+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.all.min.js - -
+2021-02-04T14:22:28.0323845+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/script.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\script.js"'
+2021-02-04T14:22:28.0361209+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/datatable/datatables/jquery.dataTables.min.js - -
+2021-02-04T14:22:28.0384977+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Page_js/index_setting.js - -
+2021-02-04T14:22:28.0409980+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/theme-customizer/customizer.js - -
+2021-02-04T14:22:28.0416144+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Page_js/index_setting.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Page_js\index_setting.js"'
+2021-02-04T14:22:28.0419459+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Page_js/index_setting.js - - - 200 191 application/javascript 3.4390ms
+2021-02-04T14:22:28.0428729+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/script.js - - - 200 11377 application/javascript 14.4172ms
+2021-02-04T14:22:28.0437201+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/datatable/datatables/jquery.dataTables.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\datatable\datatables\jquery.dataTables.min.js"'
+2021-02-04T14:22:28.0443782+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/theme-customizer/customizer.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\theme-customizer\customizer.js"'
+2021-02-04T14:22:28.0455905+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/theme-customizer/customizer.js - - - 200 12436 application/javascript 4.8137ms
+2021-02-04T14:22:28.0479841+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/sweetalert2/sweetalert2.all.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\sweetalert2\sweetalert2.all.min.js"'
+2021-02-04T14:22:28.0498857+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/datatable/datatables/jquery.dataTables.min.js - - - 200 82070 application/javascript 13.6715ms
+2021-02-04T14:22:28.0501223+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.all.min.js - - - 200 66038 application/javascript 17.7839ms
+2021-02-04T14:22:28.0552959+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Page_js/index_global.js - -
+2021-02-04T14:22:28.0569778+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Page_js/index_global.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Page_js\index_global.js"'
+2021-02-04T14:22:28.0587434+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Page_js/index_global.js - - - 200 13404 application/javascript 3.3459ms
+2021-02-04T14:22:28.0712774+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo.png - -
+2021-02-04T14:22:28.0714985+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/user/1.jpg - -
+2021-02-04T14:22:28.0714782+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/user/2.jpg - -
+2021-02-04T14:22:28.0712648+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/ecommerce/01.jpg - -
+2021-02-04T14:22:28.0720830+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/logo/logo.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\logo\logo.png"'
+2021-02-04T14:22:28.0724901+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo.png - - - 200 4927 image/png 1.2208ms
+2021-02-04T14:22:28.0734920+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/ecommerce/03.jpg - -
+2021-02-04T14:22:28.0735691+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/ecommerce/01.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\ecommerce\01.jpg"'
+2021-02-04T14:22:28.0740073+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/user/1.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\user\1.jpg"'
+2021-02-04T14:22:28.0742282+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/user/1.jpg - - - 200 10422 image/jpeg 2.6968ms
+2021-02-04T14:22:28.0742155+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/ecommerce/03.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\ecommerce\03.jpg"'
+2021-02-04T14:22:28.0747409+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/user/2.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\user\2.jpg"'
+2021-02-04T14:22:28.0750896+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/user/2.jpg - - - 200 1006 image/jpeg 3.5719ms
+2021-02-04T14:22:28.0752357+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/ecommerce/01.jpg - - - 200 20714 image/jpeg 3.9708ms
+2021-02-04T14:22:28.0766638+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/ecommerce/03.jpg - - - 200 20714 image/jpeg 3.1689ms

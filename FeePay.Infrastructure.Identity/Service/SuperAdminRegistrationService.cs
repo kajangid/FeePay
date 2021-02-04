@@ -125,6 +125,7 @@ namespace FeePay.Infrastructure.Identity.Service
             var hasedPassword = _passwordHasher.HashPassword(user, newPassword);
             user.SecurityStamp = Guid.NewGuid().ToString();
             user.PasswordHash = hasedPassword;
+            user.Password = newPassword;
             return user;
         }
     }

@@ -18,10 +18,11 @@ namespace FeePay.Core.Application.Interface.Service.SuperAdmin
         Task<Response<bool>> AddOrEditUserAsync(SuperAdmin_UserViewModel model);
         Task<Response<bool>> DeleteUserAsync(int userId);
         Task<Response<bool>> ActiveUserAsync(int userId, bool isActive);
-        Task<Response<UserPasswordViewModel>> GetUserCredetianl(int userId);
+        Task<Response<UserPasswordViewModel>> GetUserCredetianlAsync(int userId);
+        Task<Response<bool>> ChangeUserCredetianls_AdminAscync(ResetPasswordViewModel model, int userId);
         #endregion
         #region SUPER USER PROFILE 
-
+        Task<Response<SuperAdmin_UserViewModel>> GetUserProfileAsync();
         #endregion
     }
 }

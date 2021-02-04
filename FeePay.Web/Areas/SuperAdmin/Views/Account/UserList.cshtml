@@ -110,9 +110,9 @@
                                                            title="User Login Credentials" class="d-inline-block mr-1">
                                                             <i data-feather="log-in"></i>
                                                         </a>
-                                                        <a data-ajaxurl="@Url.Action("ChangePassword","Account",new { id = item.Id })"
-                                                           href="javascript:void(0)" data-onclilck="changePassword" data-actionmag="change credentials"
-                                                           data-container="body" data-toggle="popover" data-placement="top"
+                                                        <a data-ajaxurl="@Url.Action("ChnageCredentials","Account",new { id = item.Id })"
+                                                           href="javascript:void(0)" data-onclilck="changePasswordAdmin" data-actionmag="change credentials"
+                                                           data-ajaxkey="@item.Id" data-container="body" data-toggle="popover" data-placement="top"
                                                            title="Change Credentials" class="d-inline-block mr-1">
                                                             <i data-feather="unlock"></i>
                                                         </a>
@@ -139,6 +139,7 @@
 
 @section Models{
     @{ await Html.RenderPartialAsync("_Area_Partial_ShowUserNamePassword"); }
+    @{ await Html.RenderPartialAsync("_Area_Partial_ChangePassword", new ResetPasswordViewModel()); }
 }
 
 

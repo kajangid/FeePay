@@ -158,8 +158,8 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
         {
             try
             {
-                var res = await _administrativeServices.GetUserCredetianl(id);
-                if (res.Succeeded) return Json(new { success = true, data= res.Data });
+                var res = await _administrativeServices.GetUserCredetianlAsync(id);
+                if (res.Succeeded) return Json(new { success = true, data = res.Data });
                 _logger.LogError("Error Getting User Credential Error:{0}", res.Message);
                 return Json(new { success = false, message = res.Message });
             }
@@ -183,6 +183,25 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error {0} User Data", type);
+                return Json(new { success = false, message = "Error Activating User Data." });
+            }
+        }
+        [HttpPost("{Area}/User/ChangeCredentials/{id:int}")]
+        public async Task<JsonResult> ChnageCredentials(ResetPasswordViewModel model, int id)
+        {
+            if (!ModelState.IsValid)
+                return Json(new { success = false, message = $"Error: {string.Join(", ", GetErrorListFromModelState(ModelState).ToArray())}" });
+
+            try
+            {
+                var res = await _administrativeServices.ChangeUserCredetianls_AdminAscync(model, id);
+                if (res.Succeeded) return Json(new { success = true });
+                _logger.LogError("Error Changing Credentials User Data Error:{0}", res.Message);
+                return Json(new { success = false, message = res.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error Changing Credentials User Data");
                 return Json(new { success = false, message = "Error Activating User Data." });
             }
         }

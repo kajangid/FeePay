@@ -65,6 +65,8 @@ namespace FeePay.Core.Application.Services.SuperAdmin
         }
         public async Task<Response<bool>> DeleteUserAsync(int userId)
         {
+            int identityUserId = Convert.ToInt32(_loginService.GetLogedInSuperAdminId());
+            if (userId == identityUserId) return new Response<bool>("Cannot delete user which you are logged in.");
             var res = await _unitOfWork.SuperAdminUser.DeleteAsync(userId);
             if (res <= 0) return new Response<bool>("No data found.");
             return new Response<bool>(res > 0);
@@ -80,37 +82,24 @@ namespace FeePay.Core.Application.Services.SuperAdmin
             if (res <= 0) return new Response<bool>($"Error {(isActive ? "activating" : "inactivating")} school.");
             return new Response<bool>(res > 0);
         }
-        public async Task<Response<UserPasswordViewModel>> GetUserCredetianl(int userId)
+        public async Task<Response<UserPasswordViewModel>> GetUserCredetianlAsync(int userId)
         {
             SuperAdminUser user = await _unitOfWork.SuperAdminUser.FindPasswordByIdAsync(userId);
             if (user == null) return new Response<UserPasswordViewModel>("No data found.");
             UserPasswordViewModel userNamePass = _mapper.Map<UserPasswordViewModel>(user);
             return new Response<UserPasswordViewModel>(userNamePass);
         }
+        public async Task<Response<bool>> ChangeUserCredetianls_AdminAscync(ResetPasswordViewModel model, int userId)
+        {
+            SuperAdminUser user = await _unitOfWork.SuperAdminUser.FindByIdAsync(userId);
+            if (user == null) return new Response<bool>("No data found.");
+            user = _superAdminRegistrationService.GetNewHashPasswordAsync(user, model.NewPassword);
+            var res = await _unitOfWork.SuperAdminUser.UpdateAsync(user);
+            if (res <= 0) return new Response<bool>("Error changing password.");
+            return new Response<bool>(res > 0);
+        }
         #endregion
         #region SUPER USER PROFILE 
-        public async Task<Response<bool>> ChangeUserNameAsync(SuperAdmin_UserViewModel model)
-        {
-            SuperAdminUser superUser = new SuperAdminUser()
-            {
-                Id = model.Id,
-                UserName = model.UserName,
-                NormalizedUserName = model.UserName.ToUpper()
-            };
-            superUser.NormalizedUserName = superUser.UserName?.ToUpper().Trim();
-            return await _superAdminRegistrationService.UpdateUserNameAsync(superUser);
-        }
-        public async Task<Response<bool>> CheckUsernameAsync(string name) // can use to check client side username exist with ajax
-        {
-            var school = await _unitOfWork.SuperAdminUser.FindByUserNameAsync(name);
-            if (school != null) return new Response<bool>("Username already in use.");
-            return new Response<bool>(true);
-        }
-        public async Task<Response<bool>> ChangePasswordAsync(ResetPasswordViewModel model)
-        {
-            SuperAdminUser superUser = new SuperAdminUser();
-            return await _superAdminRegistrationService.UpdateUserNameAsync(superUser);
-        }
         public async Task<Response<SuperAdmin_UserViewModel>> GetUserProfileAsync()
         {
             var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());

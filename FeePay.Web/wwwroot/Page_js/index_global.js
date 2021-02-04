@@ -181,23 +181,18 @@ var modal_animate_custom = {
             contentType: 'application/json',
             //data: { name: "John", location: "Boston" },
             //dataType : 'json'
-        })
-            .done(function (data) {
-                if (data.success) {
-                    swalWithBootstrapButtons.fire('Deleted!', txtmsg + ' has been deleted.', 'success');
-                    if (parentRow) {
-                        table.DataTable().row(parentRow).remove().draw();
-                        table.reArrangeDatatableSerialNumber();
-                    }
-                } else {
-                    swalWithBootstrapButtons.fire('Fail!', 'there is an error deleting ' + txtmsg + '...', 'warning');
+        }).done(function (data) {
+            if (data.success) {
+                swalWithBootstrapButtons.fire('Deleted!', txtmsg + ' has been deleted.', 'success');
+                if (parentRow) {
+                    table.DataTable().row(parentRow).remove().draw();
+                    table.reArrangeDatatableSerialNumber();
                 }
-            })
-            .fail(function (jqXHR, textStatus) {
-                console.log("Request failed: " + textStatus);
-            })
-            .always(function () {
-            });
+            } else {
+                var error = (data != null && data.message != null) ? data.message : 'there is an error deleting ' + txtmsg + '...';
+                swalWithBootstrapButtons.fire('Fail!', error, 'warning');
+            }
+        }).fail(function (jqXHR, textStatus) { console.log("Request failed: " + textStatus); }).always(function () { });
     }
     function dataTableRowActive(buttonClicked) {
         swalWithBootstrapButtons.fire('Not Available', 'This service temporarily not available.', 'info');
@@ -298,5 +293,36 @@ var modal_animate_custom = {
             indicator.attr('class', hideClass);
         }
     });
-
+    $('a[data-onclilck="changePasswordAdmin"]').on('click', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var form = $('form[id="changePass_adminForm"]');
+        form.find('input[name="Id"]').val($this.attr('data-ajaxkey'));
+        form.find('input[name="CurrentPassword"]').val('admin');
+        form.attr("action", $this.attr('data-ajaxurl'));
+        $('#changePass_admin').modal({ backdrop: 'static', keyboard: false }).modal('show');
+    });
+    modal_animate_custom.init('changePass_admin');
+    $('form[id="changePass_adminForm"]').on('submit', function (e) {
+        var $this = $(this);
+        if ($this.valid()) {
+            e.preventDefault();
+            var postData = $this.serialize();
+            $.ajax({
+                url: $this.attr('action'),
+                dataType: 'json',
+                method: $this.attr('method'),
+                data: postData,
+            }).done(function (res) {
+                if (res && res.success) {
+                    $this.find('input').val('');
+                    $this.attr('action', '');
+                    swalWithBootstrapButtons.fire('Password Change!', 'New Password has been set.', 'success');
+                } else {
+                    addErrorMsgToValidatonSummery(res.message);
+                    swalWithBootstrapButtons.fire('Fail!', 'there is an error changing password...', 'warning');
+                }
+            }).fail(function (jrhx, status) { console.log(jrhx, status); });
+        }
+    });
 })(jQuery);

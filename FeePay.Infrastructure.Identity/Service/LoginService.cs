@@ -109,7 +109,7 @@ namespace FeePay.Infrastructure.Identity.Service
         public async Task<Response<bool>> AuthenticateSuperAdminAsync(SuperAdminLoginViewModel model)
         {
             SuperAdminUser user = await _unitOfWork.SuperAdminUser
-                .FindByEmailAsync(model.Email.ToUpper(), isActive: true);
+                .FindByUserNameAsync(model.UserName.ToUpper(), isActive: true);
             if (user == null) return new Response<bool>("Account does not exist with this email address.");
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
@@ -172,6 +172,7 @@ namespace FeePay.Infrastructure.Identity.Service
             catch { }
             return dic;
         }
+
         public async Task<string> GetCurrentStudentName()
         {
             try
@@ -179,7 +180,31 @@ namespace FeePay.Infrastructure.Identity.Service
                 string SchoolUniqueId = _appContextAccessor.ClaimSchoolUniqueId();
                 int UserId = Convert.ToInt32(GetLogedInStudentId());
                 var studentProfile = await _unitOfWork.StudentAdmision.FindByStudentLoginIdAsync(UserId, SchoolUniqueId);
-                if (studentProfile != null) return studentProfile.FirstName;
+                if (studentProfile != null) return $"{studentProfile.FirstName} {studentProfile.LastName}";
+            }
+            catch { }
+            return "";
+        }
+        public async Task<string> GetCurrentSchoolAdminUser_Name()
+        {
+            try
+            {
+                string SchoolUniqueId = _appContextAccessor.ClaimSchoolUniqueId();
+                int UserId = Convert.ToInt32(GetLogedInSchoolAdminId());
+                var school = await _unitOfWork.SchoolAdminUser.FindByIdAsync(UserId, SchoolUniqueId);
+                if (school != null) return $"{school.FirstName} {school.LastName}";
+            }
+            catch { }
+            return "";
+        }
+        public async Task<string> GetCurrentSuperAdminUser_Name()
+        {
+            try
+            {
+                string SchoolUniqueId = _appContextAccessor.ClaimSchoolUniqueId();
+                int UserId = Convert.ToInt32(GetLogedInSuperAdminId());
+                var sAdmin = await _unitOfWork.SuperAdminUser.FindByIdAsync(UserId);
+                if (sAdmin != null) return $"{sAdmin.FirstName} {sAdmin.LastName}";
             }
             catch { }
             return "";

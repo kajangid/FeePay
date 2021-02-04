@@ -21,19 +21,23 @@
                     </a>
                 </li>
                 <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title link-nav" asp-action="List" asp-controller="RegisterSchool">
-                        <i data-feather="list"> </i><span>Registered Schools</span>
+                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                        <i data-feather="list"></i> <span> Schools </span>
                     </a>
+                    <ul class="sidebar-submenu">
+                        <li><a asp-action="Add" asp-controller="RegisterSchool">Register School</a></li>
+                        <li><a asp-action="List" asp-controller="RegisterSchool">List Schools</a></li>
+                        <li><a href="javascript:void(0)">Plan Status</a></li>
+                    </ul>
                 </li>
                 <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)">
-                        <i data-feather="check-square"> </i><span>Payment Gateway Change/Active Requests</span>
+                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                        <i data-feather="check-square"></i> <span> Payment Gateway </span>
                     </a>
-                </li>
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)">
-                        <i data-feather="calendar"> </i><span>Upgrades/Renewals Plans Enquiries</span>
-                    </a>
+                    <ul class="sidebar-submenu">
+                        <li><a href="javascript:void(0)">Change/Active Requests</a></li>
+                        <li><a href="javascript:void(0)">List Payment Gateway</a></li>
+                    </ul>
                 </li>
                 <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -45,12 +49,21 @@
                     </ul>
                 </li>
                 <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                        <i data-feather="calendar"></i> <span> Enquiries </span>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li><a href="javascript:void(0)">Upgrades/Renewals Plans</a></li>
+                        <li><a href="javascript:void(0)">New Registration</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title link-nav" asp-action="Profile" asp-controller="Home">
                         <i data-feather="zap"> </i><span>Profile</span>
                     </a>
                 </li>
                 <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title link-nav" asp-action="ProfileEdit" asp-controller="Home">
+                    <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)">
                         <i data-feather="clock"> </i><span>To-Do</span>
                     </a>
                 </li>

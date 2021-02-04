@@ -10,11 +10,17 @@ namespace FeePay.Core.Application.DTOs
 {
     public class CommonLoginViewModel
     {
-        [Required]
-        [EmailAddress]
-        [DisplayName("Email")]
-        [RegularExpression(@"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$", ErrorMessage = "Please enter a valid email.")]
-        public string Email { get; set; }
+        //[Required]
+        //[EmailAddress]
+        //[DisplayName("Email")]
+        //[RegularExpression(@"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$", ErrorMessage = "Please enter a valid email.")]
+        //public string Email { get; set; }
+
+        [StringLength(30)]
+        [DisplayName("Username")]
+        [Required(ErrorMessage = "Please fill Username field.")]
+        //[RegularExpression(@"^[a-zA-Z][a-zA-Z0-9\._\-]{0,18}?[a-zA-Z0-9]{0,2}$", ErrorMessage = "Please enter a valid Username.")]
+        public string UserName { get; set; }
 
         // TODO: Clear Validation Bug
         [Required]

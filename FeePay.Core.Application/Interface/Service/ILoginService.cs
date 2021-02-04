@@ -19,6 +19,8 @@ namespace FeePay.Core.Application.Interface.Service
 
         Task<Dictionary<string, string>> GetCurrentStudentClassSection();
         Task<string> GetCurrentStudentName();
+        Task<string> GetCurrentSchoolAdminUser_Name();
+        Task<string> GetCurrentSuperAdminUser_Name();
 
         Task EnsureStudentLogoutAsync();
         Task EnsureSchoolUserLogoutAsync();

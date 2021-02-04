@@ -59,7 +59,9 @@
         <!-- Page Body Ends-->
     </div>
     <!-- page-wrapper ends-->
+    <!-- bootstrap modal-->
     @RenderSection("Models", false)
+    <!-- bootstrap modal ends-->
     <!-- latest jquery-->
     <script src="@Url.Content("~/Cuba/js/jquery-3.5.1.min.js")"></script>
     <!-- Bootstrap js-->
@@ -77,6 +79,7 @@
     <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
     <script src="@Url.Content("~/Cuba/js/notify/bootstrap-notify.min.js")"></script>
     <!-- Plugins JS Ends-->
+    <partial name="_ValidationScriptsPartial" />
     <partial name="_Partial_AlertMessage" />
     <!-- Theme js-->
     <script src="@Url.Content("~/Cuba/js/script.js")"></script>
@@ -86,8 +89,5 @@
     <script src="@Url.Content("~/Page_js/index_setting.js")"></script>
     <script src="@Url.Content("~/Page_js/index_global.js")"></script>
     @RenderSection("Scripts", required: false)
-
-
-    Models
 </body>
 </html>
