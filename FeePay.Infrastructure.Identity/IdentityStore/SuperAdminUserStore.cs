@@ -26,40 +26,40 @@ namespace FeePay.Infrastructure.Identity.IdentityStore
         public async Task<IdentityResult> CreateAsync(SuperAdminUser user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            user.Id = await _UnitOfWork.SuperAdminUser.AddUserAsync(user);
+            user.Id = await _UnitOfWork.SuperAdminUser.AddAsync(user);
             return IdentityResult.Success;
         }
 
         public async Task<IdentityResult> UpdateAsync(SuperAdminUser user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await _UnitOfWork.SuperAdminUser.UpdateUserAsync(user);
+            await _UnitOfWork.SuperAdminUser.UpdateAsync(user);
             return IdentityResult.Success;
         }
 
         public async Task<IdentityResult> DeleteAsync(SuperAdminUser user, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await _UnitOfWork.SuperAdminUser.DeleteUserAsync(user.Id);
+            await _UnitOfWork.SuperAdminUser.DeleteAsync(user.Id);
             return IdentityResult.Success;
         }
 
         public async Task<SuperAdminUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return await _UnitOfWork.SuperAdminUser.FindActiveUserByUserIdAsync(Convert.ToInt32(userId));
+            return await _UnitOfWork.SuperAdminUser.FindByIdAsync(Convert.ToInt32(userId), isActive: true);
         }
 
         public async Task<SuperAdminUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return await _UnitOfWork.SuperAdminUser.FindActiveUserByUserNameAsync(normalizedUserName);
+            return await _UnitOfWork.SuperAdminUser.FindByUserNameAsync(normalizedUserName, isActive: true);
         }
 
         public async Task<SuperAdminUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return await _UnitOfWork.SuperAdminUser.FindActiveUserByUserEmailAsync(normalizedEmail);
+            return await _UnitOfWork.SuperAdminUser.FindByEmailAsync(normalizedEmail, isActive: true);
         }
 
         // other fetch methods

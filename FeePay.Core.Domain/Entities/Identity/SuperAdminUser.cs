@@ -15,5 +15,10 @@ namespace FeePay.Core.Domain.Entities.Identity
         public string LastLoginIP { get; set; }
         public DateTime? LastLoginDate { get; set; }
 
+
+
+
+        public SuperAdminUser AddedByUser { get; set; }
+        public SuperAdminUser ModifyByUser { get; set; }
     }
 }

@@ -16,6 +16,7 @@ using FeePay.Core.Application.Interface.Service;
 namespace FeePay.Web.Areas.School.Controllers
 {
     [Area("School")]
+    [Route("School/Student")]
     [SchoolAdminAuthorize]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class StudentAdmissionController : AreaBaseController
@@ -37,9 +38,8 @@ namespace FeePay.Web.Areas.School.Controllers
         }
 
         #region Student Admission
-        [HttpGet]
         [MvcDiscovery]
-        [Route("School/Students")]
+        [HttpGet("List")]
         [DisplayName("List Students")]
         public async Task<IActionResult> StudentList()
         {
@@ -57,9 +57,8 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
 
-        [HttpGet]
         [MvcDiscovery]
-        [Route("School/Student/Add")]
+        [HttpGet("Add")]
         [DisplayName("Add Student")]
         public async Task<IActionResult> StudentAdd()
         {
@@ -67,10 +66,9 @@ namespace FeePay.Web.Areas.School.Controllers
             return View(await _studentManagementService.BindStudentAdmissionViewModelAsync());
         }
 
-        [HttpPost]
         [MvcDiscovery]
         [ValidateAntiForgeryToken]
-        [Route("School/Student/Add")]
+        [HttpPost("Add")]
         [DisplayName("Add Student")]
         public async Task<IActionResult> StudentAdd(StudentAdmissionViewModel model)
         {
@@ -102,9 +100,8 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
 
-        [HttpGet]
         [MvcDiscovery]
-        [Route("School/Student/Edit/{id}")]
+        [HttpGet("Edit/{id:int}")]
         [DisplayName("Edit Student")]
         public async Task<IActionResult> StudentEdit(int id)
         {
@@ -125,10 +122,9 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
 
-        [HttpPost]
         [MvcDiscovery]
         [ValidateAntiForgeryToken]
-        [Route("School/Student/Edit/{id}")]
+        [HttpPost("Edit/{id:int}")]
         [DisplayName("Edit Student")]
         public async Task<IActionResult> StudentEdit(StudentAdmissionViewModel model, int id)
         {
@@ -160,18 +156,16 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
 
-        [HttpDelete]
         [MvcDiscovery]
-        [Route("School/Student/Delete")]
+        [HttpDelete("Delete/{id:int}")]
         [DisplayName("Delete Student")]
-        public IActionResult StudentDelete()
+        public IActionResult StudentDelete(int id)
         {
             return View();
         }
 
-        [HttpGet]
         [MvcDiscovery]
-        [Route("School/Student/Ledger/{id}")]
+        [HttpGet("Ledger/{id:int}")]
         [DisplayName("Student Ledger")]
         public async Task<IActionResult> StudentProfile(int id)
         {
@@ -192,10 +186,9 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
 
-        [HttpGet]
         [MvcDiscovery]
         [DisplayName("Profile GetPassword")]
-        [Route("Student/Profile/Password")]
+        [HttpGet("Password/{id:int}")]
         public async Task<JsonResult> GetUserPassword(int id)
         {
             try
@@ -218,7 +211,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #endregion
 
-        [HttpGet]
+        [HttpGet("GetClassSection/{id:int}")]
         public async Task<JsonResult> GetClassSection(int id)
         {
             try
@@ -232,7 +225,7 @@ namespace FeePay.Web.Areas.School.Controllers
                 return Json(new { success = false, message = "Oh, Snap! Something went wrong." });
             }
         }
-        [HttpGet]
+        [HttpGet("GetStateCities/{id:int}")]
         public async Task<JsonResult> GetStateCities(int id)
         {
             try

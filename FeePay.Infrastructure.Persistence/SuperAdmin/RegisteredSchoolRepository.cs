@@ -9,6 +9,7 @@ using Dapper;
 using FeePay.Core.Application.Interface;
 using FeePay.Core.Application.Interface.Common;
 using FeePay.Core.Application.Interface.Repository.SuperAdmin;
+using FeePay.Core.Domain.Entities.Identity;
 using FeePay.Core.Domain.Entities.SuperAdmin;
 
 namespace FeePay.Infrastructure.Persistence.SuperAdmin
@@ -41,7 +42,10 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
                     school.PrincipalName,
                     school.IsApproved
                 };
-                return await connection.ExecuteAsync(_DBVariables.SP_Add_RegisteredSchool, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                return await connection.ExecuteScalarAsync<int>(
+                    _DBVariables.SP_Add_RegisteredSchool,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure);
 
             }
             catch (TimeoutException ex)
@@ -72,7 +76,10 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
                     school.PrincipalName,
                     school.IsApproved
                 };
-                return await connection.ExecuteAsync(_DBVariables.SP_Update_RegisteredSchool, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                return await connection.ExecuteScalarAsync<int>(
+                    _DBVariables.SP_Update_RegisteredSchool,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure);
 
             }
             catch (TimeoutException ex)
@@ -82,6 +89,10 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
             }
         }
         public async Task<int> DeleteAsync(int Id)
@@ -89,7 +100,10 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             try
             {
                 IDbConnection connection = new SqlConnection(_DefaultConnectionString);
-                return await connection.ExecuteAsync(_DBVariables.SP_Delete_RegisteredSchool, new { Id }, null, null, CommandType.StoredProcedure);
+                return await connection.ExecuteAsync(
+                    _DBVariables.SP_Delete_RegisteredSchool,
+                    new { Id },
+                    commandType: CommandType.StoredProcedure);
 
             }
             catch (TimeoutException ex)
@@ -100,14 +114,21 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
         }
-        public async Task<RegisteredSchool> GetByNameAsync(string normalizedName)
+        public async Task<RegisteredSchool> FindByNameAsync(string normalizedName, bool? isActive = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
-                var SpRequiredParameters = new { NormalizedName = normalizedName };
-                return await connection.QuerySingleOrDefaultAsync<RegisteredSchool>(_DBVariables.SP_Get_RegisteredSchool, SpRequiredParameters, null, null, CommandType.StoredProcedure);
+                var SpRequiredParameters = new { NormalizedName = normalizedName.ToUpper(), IsActive = isActive };
+                return await connection.QuerySingleOrDefaultAsync<RegisteredSchool>(
+                    _DBVariables.SP_Get_RegisteredSchool,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure);
 
             }
             catch (TimeoutException ex)
@@ -118,14 +139,21 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
         }
-        public async Task<RegisteredSchool> GetByIdAsync(int schoolId)
+        public async Task<RegisteredSchool> FindByIdAsync(int schoolId, bool? isActive = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
-                var SpRequiredParameters = new { Id = schoolId };
-                return await connection.QuerySingleOrDefaultAsync<RegisteredSchool>(_DBVariables.SP_Get_RegisteredSchool, SpRequiredParameters, null, null, CommandType.StoredProcedure);
+                var SpRequiredParameters = new { Id = schoolId, IsActive = isActive };
+                return await connection.QuerySingleOrDefaultAsync<RegisteredSchool>(
+                    _DBVariables.SP_Get_RegisteredSchool,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure);
 
             }
             catch (TimeoutException ex)
@@ -136,14 +164,21 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
-        public async Task<RegisteredSchool> GetByUniqueIdAsync(string schoolUniqueId)
+        public async Task<RegisteredSchool> FindByUniqueIdAsync(string schoolUniqueId, bool? isActive = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
-                var SpRequiredParameters = new { UniqueId = schoolUniqueId };
-                return await connection.QuerySingleOrDefaultAsync<RegisteredSchool>(_DBVariables.SP_Get_RegisteredSchool, SpRequiredParameters, null, null, CommandType.StoredProcedure);
+                var SpRequiredParameters = new { UniqueId = schoolUniqueId, IsActive = isActive };
+                return await connection.QuerySingleOrDefaultAsync<RegisteredSchool>(
+                    _DBVariables.SP_Get_RegisteredSchool,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure);
 
             }
             catch (TimeoutException ex)
@@ -154,15 +189,27 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
-        public async Task<RegisteredSchool> GetActiveByNameAsync(string normalizedName)
+        public async Task<IEnumerable<RegisteredSchool>> GetAllAsync(bool? isActive = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
-                var SpRequiredParameters = new { NormalizedName = normalizedName, IsActive = true };
-                return await connection.QuerySingleOrDefaultAsync<RegisteredSchool>(_DBVariables.SP_Get_RegisteredSchool, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-
+                var SpRequiredParameters = new { IsActive = isActive };
+                var list = await connection.QueryAsync<RegisteredSchool, SuperAdminUser, SuperAdminUser, RegisteredSchool>(
+                    _DBVariables.SP_GetAll_RegisteredSchool,
+                    (rSchool, add, modify) =>
+                    {
+                        return rSchool;
+                    },
+                    SpRequiredParameters,
+                    splitOn: "Id,Id,Id",
+                    commandType: CommandType.StoredProcedure);
+                return list;
             }
             catch (TimeoutException ex)
             {
@@ -172,15 +219,29 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
         }
-        public async Task<RegisteredSchool> GetActiveByIdAsync(int schoolId)
+        public async Task<IEnumerable<RegisteredSchool>> GetAll_WithAddEditUserAsync(bool? isActive = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
-                var SpRequiredParameters = new { Id = schoolId, IsActive = true };
-                return await connection.QuerySingleOrDefaultAsync<RegisteredSchool>(_DBVariables.SP_Get_RegisteredSchool, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-
+                var SpRequiredParameters = new { IsActive = isActive };
+                var list = await connection.QueryAsync<RegisteredSchool, SuperAdminUser, SuperAdminUser, RegisteredSchool>(
+                    _DBVariables.SP_GetAll_RegisteredSchool,
+                    (rSchool, add, modify) =>
+                    {
+                        rSchool.AddedByUser = add;
+                        rSchool.ModifyByUser = modify;
+                        return rSchool;
+                    },
+                    SpRequiredParameters,
+                    splitOn: "Id,Id,Id",
+                    commandType: CommandType.StoredProcedure);
+                return list;
             }
             catch (TimeoutException ex)
             {
@@ -190,41 +251,9 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
-        }
-        public async Task<RegisteredSchool> GetActiveByUniqueIdAsync(string schoolUniqueId)
-        {
-            try
+            catch (Exception ex)
             {
-                using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
-                var SpRequiredParameters = new { UniqueId = schoolUniqueId, IsActive = true };
-                return await connection.QuerySingleOrDefaultAsync<RegisteredSchool>(_DBVariables.SP_Get_RegisteredSchool, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-        }
-        public async Task<IList<RegisteredSchool>> GetAllActiveAsync()
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(_DefaultConnectionString);
-                var SpRequiredParameters = new { IsActive = true };
-                return (await connection.QueryAsync<RegisteredSchool>(_DBVariables.SP_GetAll_RegisteredSchool, SpRequiredParameters, null, null, CommandType.StoredProcedure)).ToList();
-
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
     }

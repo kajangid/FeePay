@@ -88,7 +88,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 var parameters = studentFees.Select(s =>
                 {
                     var tempParams = new DynamicParameters();
-                    tempParams.Add("@StudentAdmissionId", s.StudentId, DbType.Int32, ParameterDirection.Input);
+                    tempParams.Add("@StudentAdmissionId", s.StudentAdmissionId, DbType.Int32, ParameterDirection.Input);
                     tempParams.Add("@FeeMasterId", s.FeeMasterId, DbType.Int32, ParameterDirection.Input);
                     tempParams.Add("@FeeGroupId", s.FeeGroupId, DbType.Int32, ParameterDirection.Input);
                     tempParams.Add("@IsActive", true, DbType.Boolean, ParameterDirection.Input);
@@ -165,6 +165,27 @@ namespace FeePay.Infrastructure.Persistence.School
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+        }
+        public async Task<StudentFees> FindByIdAsync(int id, string dbId)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var q = await connection.QuerySingleAsync<StudentFees>(
+                    _dBVariables.QUERY_Find_StudentFee,
+                    new { Id = id },
+                    commandType: CommandType.Text);
+                return q;
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+
         }
 
 

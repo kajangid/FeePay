@@ -1,43 +1,82 @@
-﻿CREATE PROCEDURE [dbo].[SP_Get_SuperAdmin_User]
-@Id INT = 0
-,@UserName NVARCHAR(256) = NULL
-,@NormalizedUserName NVARCHAR(256) = NULL
-,@Email NVARCHAR(256) = NULL
-,@NormalizedEmail NVARCHAR(256) = NULL
-,@PhoneNumber NVARCHAR(50) = NULL
-,@IsActive BIT = 1
+﻿-- =============================================
+-- Author:		Karan
+-- Create date: 26-12-2020
+-- Description:	Sp to find super user data
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_Get_SuperAdmin_User]
+@Id							INT					= NULL
+,@NormalizedUserName		NVARCHAR(256)		= NULL
+,@NormalizedEmail			NVARCHAR(256)		= NULL
+,@PhoneNumber				NVARCHAR(50)		= NULL
+,@IsActive					BIT					= NULL
 AS
 BEGIN
-	IF(@Id != 0)
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	IF(@Id IS NOT NULL AND @Id <> 0)
 	BEGIN
-		SELECT *FROM [dbo].[SuperAdmin_User] WHERE [Id] = @id AND [IsActive] = @IsActive AND [IsDelete] = 0
+		SELECT [Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash],
+		[PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDate], [LockoutEnabled], [AccessFailedCount],
+		[SecurityStamp], [FirstName], [LastName], [FullName], [Photo], [City], [LastLoginIP], [LastLoginDate],
+		[IsActive], [IsDelete], [ModifyDate], [ModifyBy], [AddedDate], [AddedBy]
+		FROM [dbo].[SuperAdmin_User] 
+		WHERE 
+		[IsDelete] = 0 AND 
+		[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [IsActive] END AND
+		[Id] = @Id
+		RETURN
+	END
+	ELSE IF(@NormalizedUserName IS NOT NULL)
+	BEGIN
+		SELECT [Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash],
+		[PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDate], [LockoutEnabled], [AccessFailedCount],
+		[SecurityStamp], [FirstName], [LastName], [FullName], [Photo], [City], [LastLoginIP], [LastLoginDate],
+		[IsActive], [IsDelete], [ModifyDate], [ModifyBy], [AddedDate], [AddedBy]
+		FROM [dbo].[SuperAdmin_User] 
+		WHERE 
+		[IsDelete] = 0 AND 
+		[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [IsActive] END AND		
+		[NormalizedUserName] = @NormalizedUserName
 		RETURN 
 	END
-	IF(@UserName IS NOT NULL)
+	ELSE IF(@NormalizedEmail IS NOT NULL)
 	BEGIN
-		SELECT *FROM [dbo].[SuperAdmin_User] WHERE [UserName] = @UserName AND [IsActive] = @IsActive AND [IsDelete] = 0
+		SELECT [Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash],
+		[PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDate], [LockoutEnabled], [AccessFailedCount],
+		[SecurityStamp], [FirstName], [LastName], [FullName], [Photo], [City], [LastLoginIP], [LastLoginDate],
+		[IsActive], [IsDelete], [ModifyDate], [ModifyBy], [AddedDate], [AddedBy]
+		FROM [dbo].[SuperAdmin_User] 
+		WHERE 
+		[IsDelete] = 0 AND 
+		[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [IsActive] END AND		
+		[NormalizedEmail] = @NormalizedEmail
 		RETURN 
 	END
-	IF(@NormalizedUserName IS NOT NULL)
+	ELSE IF(@PhoneNumber IS NOT NULL)
 	BEGIN
-		SELECT *FROM [dbo].[SuperAdmin_User] WHERE [NormalizedUserName] = @NormalizedUserName AND [IsActive] = @IsActive AND [IsDelete] = 0
+		SELECT [Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash],
+		[PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDate], [LockoutEnabled], [AccessFailedCount],
+		[SecurityStamp], [FirstName], [LastName], [FullName], [Photo], [City], [LastLoginIP], [LastLoginDate],
+		[IsActive], [IsDelete], [ModifyDate], [ModifyBy], [AddedDate], [AddedBy]
+		FROM [dbo].[SuperAdmin_User] 
+		WHERE 
+		[IsDelete] = 0 AND 
+		[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [IsActive] END AND		
+		[PhoneNumber] = @PhoneNumber
 		RETURN 
 	END
-	IF(@Email IS NOT NULL)
+	ELSE 
 	BEGIN
-		SELECT *FROM [dbo].[SuperAdmin_User] WHERE [Email] = @Email AND [IsActive] = @IsActive AND [IsDelete] = 0
-		RETURN 
+		SELECT [Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash],
+		[PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDate], [LockoutEnabled], [AccessFailedCount],
+		[SecurityStamp], [FirstName], [LastName], [FullName], [Photo], [City], [LastLoginIP], [LastLoginDate],
+		[IsActive], [IsDelete], [ModifyDate], [ModifyBy], [AddedDate], [AddedBy]
+		FROM [dbo].[SuperAdmin_User] 
+		WHERE 
+		[IsDelete] = 0 AND 
+		[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [IsActive] END 
+		RETURN 		
 	END
-	IF(@NormalizedEmail IS NOT NULL)
-	BEGIN
-		SELECT *FROM [dbo].[SuperAdmin_User] WHERE [NormalizedEmail] = @NormalizedEmail AND [IsActive] = @IsActive AND [IsDelete] = 0
-		RETURN 
-	END
-	IF(@PhoneNumber IS NOT NULL)
-	BEGIN
-		SELECT *FROM [dbo].[SuperAdmin_User] WHERE [PhoneNumber] = @PhoneNumber AND [IsActive] = @IsActive AND [IsDelete] = 0
-		RETURN 
-	END
-	--SELECT TOP(1) *FROM [dbo].[SuperAdmin_User] WHERE [IsDelete] = 0 ORDER BY [Id] DESC
-	--RETURN 
 END

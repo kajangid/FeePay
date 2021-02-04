@@ -1,12 +1,12 @@
-﻿using FeePay.Web.Filters;
-using FeePay.Core.Application.Interface.Service;
-using FeePay.Web.Areas.Common;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using FeePay.Web.Filters;
+using FeePay.Core.Application.Interface.Service;
+using FeePay.Web.Areas.Common;
 
 namespace FeePay.Web.Areas.Student.Controllers
 {
@@ -16,26 +16,16 @@ namespace FeePay.Web.Areas.Student.Controllers
     {
         public AccountController(ILogger<AccountController> logger, ILoginService loginService)
         {
-            _ILogger = logger;
-            _LoginService = loginService;
+            _logger = logger;
+            _loginService = loginService;
         }
-        private readonly ILogger _ILogger;
-        private readonly ILoginService _LoginService;
+        private readonly ILogger<AccountController> _logger;
+        private readonly ILoginService _loginService;
 
 
         public IActionResult Index()
         {
             return View();
-        }
-
-        [HttpGet]
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult Logout()
-        {
-            _LoginService.SchoolAdminLogout();
-            _ILogger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(AuthenticationController.Index), "Authentication");
         }
     }
 }

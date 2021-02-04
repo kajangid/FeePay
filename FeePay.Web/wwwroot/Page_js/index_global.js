@@ -126,13 +126,13 @@ var modal_animate_custom = {
         }
     });
 
-    $('table[data-type="datatable"]').on('click', 'a[data-action="isactiverow"]', function (e) {
+    $('table[data-type="datatable"]').on('click', 'input[data-action="isactiverow"]', function (e) {
         e.preventDefault();
         var $this = $(this);
         try {
             swalWithBootstrapButtons.fire({
                 title: 'Are you sure?',
-                //text: "You won't be able to revert this!",
+                text: "Do you want to apply this change!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes',
@@ -140,11 +140,33 @@ var modal_animate_custom = {
                 reverseButtons: true
             }).then((result) => {
                 if (result.value) {
-                    dataTableRowActive($this, swalWithBootstrapButtons);
+                    dataTableRowActive($this);
                 } else if (result.dismiss === Swal.DismissReason.cancel) { }
             }).catch(swal.noop);
         } catch (ex) {
-            console.log("catch an error..", ex);
+            console.log("Ah, Snap!. Catch an error..", ex);
+        }
+    });
+
+    $('table[data-type="datatable"]').on('click', 'input[data-action="approverow"]', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        try {
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "Do you want to apply this change!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    dataTableRowApprove($this);
+                } else if (result.dismiss === Swal.DismissReason.cancel) { }
+            }).catch(swal.noop);
+        } catch (ex) {
+            console.log("Ah, Snap!. Catch an error..", ex);
         }
     });
 
@@ -168,7 +190,7 @@ var modal_animate_custom = {
                         table.reArrangeDatatableSerialNumber();
                     }
                 } else {
-                    swalWithBootstrapButtons.fire('Fail!', 'there is an error deleting role...', 'warning');
+                    swalWithBootstrapButtons.fire('Fail!', 'there is an error deleting ' + txtmsg + '...', 'warning');
                 }
             })
             .fail(function (jqXHR, textStatus) {
@@ -178,7 +200,10 @@ var modal_animate_custom = {
             });
     }
     function dataTableRowActive(buttonClicked) {
-
+        swalWithBootstrapButtons.fire('Not Available', 'This service temporarily not available.', 'info');
+    }
+    function dataTableRowApprove(buttonClicked) {
+        swalWithBootstrapButtons.fire('Not Available', 'This service temporarily not available.', 'info');
     }
 
     modal_animate_custom.init('showUserNamePass');

@@ -279,7 +279,7 @@ namespace FeePay.Core.Application.Services.School
                         {
                             studentFees.Add(new StudentFees()
                             {
-                                StudentId = CbStudent.Id,
+                                StudentAdmissionId = CbStudent.Id,
                                 FeeMasterId = feeMaster.Id,
                                 FeeGroupId = feeGroupId,
                             });

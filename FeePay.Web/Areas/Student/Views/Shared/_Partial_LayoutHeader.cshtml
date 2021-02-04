@@ -1,0 +1,67 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using FeePay.Core.Domain.Entities.Identity;
+@using FeePay.Core.Application.Interface.Service;
+
+@inject SignInManager<StudentLogin> SignInManager
+@inject UserManager<StudentLogin> UserManager
+@inject ILoginService _loginService
+@{
+    var dic = await _loginService.GetCurrentStudentClassSection();
+    string _class;
+    string section;
+    string ClassSection = "";
+    if (dic.TryGetValue("class", out _class))
+    {
+        ClassSection += _class;
+    }
+    if (dic.TryGetValue("section", out section))
+    {
+        ClassSection += $"({section})";
+    }
+    string displayName = await _loginService.GetCurrentStudentName();
+    if (string.IsNullOrEmpty(displayName)) displayName = @UserManager.GetUserName(User);
+}
+<div class="page-header">
+    <div class="header-wrapper row m-0">
+        <div class="header-logo-wrapper">
+            <div class="logo-wrapper">
+                <a href="@Url.Action("~")">
+                    <img class="img-fluid for-light" src="/Cuba/images/logo/logo.png" alt="" data-original-title="" title="">
+                    <img class="img-fluid for-dark" src="/Cuba/images/logo/logo_dark.png" alt="" data-original-title="" title="">
+                </a>
+            </div>
+            <div class="toggle-sidebar">
+                <i class="status_toggle middle sidebar-toggle" data-feather="sliders"></i>
+            </div>
+        </div>
+        <div class="left-header col horizontal-wrapper pl-0">
+            <ul class="horizontal-menu"></ul>
+        </div>
+        <div class="nav-right col-8 pull-right right-header p-0">
+            <ul class="nav-menus">
+                <li>
+                    <div class="mode">
+                        <i class="fa fa-moon-o"></i>
+                    </div>
+                </li>
+                <li class="maximize">
+                    <a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()">
+                        <i data-feather="maximize"></i>
+                    </a>
+                </li>
+                <li class="profile-nav onhover-dropdown p-0 mr-0">
+                    <div class="media profile-media">
+                        <img class="b-r-10" src="~/Cuba/images/dashboard/profile.jpg" alt="">
+                        <div class="media-body">
+                            <span>@displayName</span>
+                            <p class="mb-0 font-roboto"> Class: @ClassSection &nbsp;<i class="middle fa fa-angle-down"></i></p>
+                        </div>
+                    </div>
+                    <ul class="profile-dropdown onhover-show-div">
+                        <li><a href="@Url.Action("Logout","Authentication")"><i data-feather="log-out"> </i><span>Log Out</span></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

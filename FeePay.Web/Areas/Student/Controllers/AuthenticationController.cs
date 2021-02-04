@@ -13,19 +13,17 @@ using static FeePay.Core.Application.Enums.Notification;
 
 namespace FeePay.Web.Areas.Student.Controllers
 {
-    /// <summary>
-    /// Authenticate Student to enter.
-    /// </summary>
     [Area("Student")]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class AuthenticationController : AreaBaseController
     {
-        public AuthenticationController(ILogger<AuthenticationController> Logger, ILoginService LoginService)
+        private readonly ILogger _logger;
+        private readonly ILoginService _loginService;
+        public AuthenticationController(ILogger<AuthenticationController> logger, ILoginService loginService)
         {
-            _Logger = Logger;
-            _LoginService = LoginService;
+            _logger = logger;
+            _loginService = loginService;
         }
-        private readonly ILogger _Logger;
-        private readonly ILoginService _LoginService;
 
 
         [HttpGet]
@@ -33,7 +31,7 @@ namespace FeePay.Web.Areas.Student.Controllers
         public async Task<IActionResult> Index(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            if (User.Identity.IsAuthenticated && _LoginService.CheckUserIdentityClaim())
+            if (User.Identity.IsAuthenticated && _loginService.CheckUserIdentityClaim())
                 return RedirectToLocal(returnUrl);
 
             // Clear the existing external cookie to ensure a clean login process
@@ -41,34 +39,52 @@ namespace FeePay.Web.Areas.Student.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
 
             // Ensure all logout 
-            await _LoginService.EnsureStudentLogoutAsync();
-            return View(await _LoginService.BindStudentLoginModelAsync());
+            await _loginService.EnsureStudentLogoutAsync();
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(StudentLoginViewModel model, string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;          
-            if (ModelState.IsValid)
+            ViewData["ReturnUrl"] = returnUrl;
+            if (!ModelState.IsValid)
             {
-                var result = await _LoginService.AuthenticateStudentAsync(model);
+                AlertMessage(NotificationType.warning, "Warning", "Please fill all required field.");
+                return View(model);
+            }
+            try
+            {
+                var result = await _loginService.AuthenticateStudentAsync(model);
                 if (result.Succeeded)
                 {
-                    _Logger.LogInformation("User logged in.");
+                    _logger.LogInformation("User logged in.");
                     TostMessage(NotificationType.success, $"Welcome back { result.Message }.");
                     return RedirectToLocal(returnUrl);
                 }
                 else
                 {
-                    _Logger.LogInformation(result.Message);
+                    _logger.LogWarning(result.Message);
                     ModelState.AddModelError(string.Empty, result.Message);
                     AlertMessage(NotificationType.error, "Error", result.Message);
-                    return View(await _LoginService.BindStudentLoginModelAsync(model));
                 }
             }
-            return View(await _LoginService.BindStudentLoginModelAsync(model));
+            catch(Exception ex)
+            {
+                _logger.LogError(ex,"Error Login user with schoolcode={0} and username={1}",model.SchoolUniqueId,model.UserName);
+                AlertMessage(NotificationType.error, "Error", "Error when logging user.");
+            }
+            return View(model);
+        }
 
+        [HttpGet]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult Logout()
+        {
+            _loginService.SchoolAdminLogout();
+            _logger.LogInformation("User logged out.");
+            return RedirectToAction(nameof(AuthenticationController.Index), "Authentication");
         }
     }
 }

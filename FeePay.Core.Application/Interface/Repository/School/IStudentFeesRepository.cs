@@ -18,5 +18,6 @@ namespace FeePay.Core.Application.Interface.Repository.School
         Task<IEnumerable<StudentAdmission>> GetStudentFeesAsync(string dbId);
         Task<bool> IsFeeAssignToStudentAsync(int studentAdmissionId, int feeGroupId, string dbId);
         Task<IEnumerable<StudentFees>> GetStudentFeeListAsync(int StudentAdmissionId, string dbId);
+        Task<StudentFees> FindByIdAsync(int id, string dbId);
     }
 }

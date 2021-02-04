@@ -1,0 +1,652 @@
+2021-01-31T00:13:13.0569138+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-31T00:13:13.2165140+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-31T00:13:13.2166880+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-31T00:13:13.2167266+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-31T00:13:13.2455121+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-01-31T00:13:13.3250937+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:13:13.3525359+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:13:13.3799579+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:13:13.5025782+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 127.5281ms.
+2021-01-31T00:13:13.5031053+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 150.0956ms
+2021-01-31T00:13:13.5037800+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:13:13.5063777+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 253.6871 ms
+2021-01-31T00:13:13.5120791+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 269.7533ms
+2021-01-31T00:13:14.3913937+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:13:14.3957220+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:13:14.4079221+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:13:14.7828734+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:13:14.7960558+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 388.0138ms
+2021-01-31T00:13:14.7966401+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:13:14.7982872+05:30 [ERR] (/KARAN/) HTTP "GET" "/Student" responded 500 in 406.6515 ms
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_Student_Views_Home_Index.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\Student\Views\Home\Index.cshtml:line 43
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-31T00:13:14.8314345+05:30 [ERR] (/KARAN/) An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Areas_Student_Views_Home_Index.ExecuteAsync() in F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\Areas\Student\Views\Home\Index.cshtml:line 43
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-31T00:13:14.8822262+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 500 - text/html;+charset=utf-8 490.7922ms
+2021-01-31T00:15:38.2312880+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-31T00:15:38.4984338+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-31T00:15:38.4986187+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-31T00:15:38.4986561+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-31T00:15:38.5808779+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:15:38.5808778+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-01-31T00:15:38.7381506+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:15:38.7381520+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:15:38.7784651+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:15:38.7826051+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:15:38.9428647+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-31T00:15:38.9428763+05:30 [INF] (/KARAN/) Executing action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" - Validation state: Valid
+2021-01-31T00:15:46.4961794+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.9355ms.
+2021-01-31T00:15:48.1798049+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:15:48.3744386+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 196.0641ms.
+2021-01-31T00:15:48.3755843+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 9596.4245ms
+2021-01-31T00:15:48.3764124+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:15:48.3790415+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 9790.9361 ms
+2021-01-31T00:15:48.3856348+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 9807.0437ms
+2021-01-31T00:15:51.5296999+05:30 [INF] (/KARAN/) Executed action method "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 12586.7045ms.
+2021-01-31T00:15:51.5337037+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:15:51.9050704+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 13122.3392ms
+2021-01-31T00:15:51.9059996+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:15:51.9080338+05:30 [ERR] (/KARAN/) HTTP "GET" "/Student" responded 500 in 13322.4510 ms
+System.InvalidOperationException: The following sections have been defined but have not been rendered by the page at '/Areas/Student/Views/Shared/_Layout.cshtml': 'Style'. To ignore an unrendered section call IgnoreSection("sectionName").
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPage.EnsureRenderedBodyOrSections()
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderLayoutAsync(ViewContext context, ViewBufferTextWriter bodyWriter)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultFilters>g__Awaited|27_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.<Invoke>g__AwaitMatcher|8_0(EndpointRoutingMiddleware middleware, HttpContext httpContext, Task`1 matcherTask)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2021-01-31T00:15:51.9530323+05:30 [ERR] (/KARAN/) An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The following sections have been defined but have not been rendered by the page at '/Areas/Student/Views/Shared/_Layout.cshtml': 'Style'. To ignore an unrendered section call IgnoreSection("sectionName").
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPage.EnsureRenderedBodyOrSections()
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderLayoutAsync(ViewContext context, ViewBufferTextWriter bodyWriter)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|21_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultFilters>g__Awaited|27_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.<Invoke>g__AwaitMatcher|8_0(EndpointRoutingMiddleware middleware, HttpContext httpContext, Task`1 matcherTask)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-31T00:15:51.9884923+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 500 - text/html;+charset=utf-8 13410.5240ms
+2021-01-31T00:23:44.7502012+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-31T00:23:44.9447681+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-31T00:23:44.9449830+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-31T00:23:44.9450202+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-31T00:23:44.9746388+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-01-31T00:23:45.0540987+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:23:45.0812466+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:23:45.1068269+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:23:45.2105515+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 106.6819ms.
+2021-01-31T00:23:45.2110034+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 129.2795ms
+2021-01-31T00:23:45.2115775+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:23:45.2135748+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 231.1516 ms
+2021-01-31T00:23:45.2184744+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 248.4591ms
+2021-01-31T00:23:46.5024180+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:23:46.5051960+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:23:46.5171815+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:23:46.8070633+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:23:46.9348254+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 417.5258ms
+2021-01-31T00:23:46.9353336+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:23:46.9368079+05:30 [ERR] (/KARAN/) HTTP "GET" "/Student" responded 500 in 434.2720 ms
+System.InvalidOperationException: The following sections have been defined but have not been rendered by the page at '/Areas/Student/Views/Shared/_Layout.cshtml': 'Style'. To ignore an unrendered section call IgnoreSection("sectionName").
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPage.EnsureRenderedBodyOrSections()
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderLayoutAsync(ViewContext context, ViewBufferTextWriter bodyWriter)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultFilters>g__Awaited|27_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2021-01-31T00:23:46.9572778+05:30 [ERR] (/KARAN/) An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The following sections have been defined but have not been rendered by the page at '/Areas/Student/Views/Shared/_Layout.cshtml': 'Style'. To ignore an unrendered section call IgnoreSection("sectionName").
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPage.EnsureRenderedBodyOrSections()
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderLayoutAsync(ViewContext context, ViewBufferTextWriter bodyWriter)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultFilters>g__Awaited|27_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-01-31T00:23:46.9846441+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 500 - text/html;+charset=utf-8 482.2032ms
+2021-01-31T00:24:28.6009097+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-31T00:24:28.7285891+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-31T00:24:28.7287321+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-31T00:24:28.7287522+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-31T00:24:28.7466732+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:24:28.8048529+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:24:28.8347697+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:24:29.1646658+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:24:29.3873873+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 224.3986ms.
+2021-01-31T00:24:29.3904316+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 555.1006ms
+2021-01-31T00:24:29.3917643+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:24:29.3945277+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 643.4392 ms
+2021-01-31T00:24:29.3985024+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 653.8279ms
+2021-01-31T00:24:29.5268431+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/avtar/3.jpg - -
+2021-01-31T00:24:29.5752717+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/avtar/3.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\avtar\3.jpg"'
+2021-01-31T00:24:29.5760221+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/avtar/3.jpg - - - 200 2878 image/jpeg 49.1257ms
+2021-01-31T00:24:29.7527258+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/fonts/ico/icofont.ttf?v=1.0.0-beta - -
+2021-01-31T00:24:29.7543002+05:30 [INF] (/KARAN/) The file "/Cuba/fonts/ico/icofont.ttf" was not modified
+2021-01-31T00:24:29.7549295+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/fonts/ico/icofont.ttf?v=1.0.0-beta - - - 304 - application/x-font-ttf 2.2289ms
+2021-01-31T00:24:33.6060221+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:24:33.6084557+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:24:33.6086808+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:24:33.6116790+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:24:33.6166384+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 5.0369ms.
+2021-01-31T00:24:33.6167769+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 8.0408ms
+2021-01-31T00:24:33.6168502+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:24:33.6169573+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 10.8201 ms
+2021-01-31T00:24:33.6173728+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 11.3481ms
+2021-01-31T00:24:35.0687409+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:24:35.0848577+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:24:35.0849997+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:24:35.0962799+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:24:35.0988611+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 2.6273ms.
+2021-01-31T00:24:35.0989129+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 13.869ms
+2021-01-31T00:24:35.0989316+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:24:35.0989536+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 30.1085 ms
+2021-01-31T00:24:35.0996972+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 30.9702ms
+2021-01-31T00:26:02.0150010+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-31T00:26:02.1368728+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-31T00:26:02.1371172+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-31T00:26:02.1371534+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-31T00:26:02.1554518+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:26:02.2145325+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:26:02.2421386+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:26:02.5377611+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:26:02.7444266+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 210.3442ms.
+2021-01-31T00:26:02.7476056+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 505.1083ms
+2021-01-31T00:26:02.7486512+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:26:02.7517240+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 591.2408 ms
+2021-01-31T00:26:02.7564373+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 603.0627ms
+2021-01-31T00:26:02.7769759+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/fontawesome.css - -
+2021-01-31T00:26:02.7835243+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/icofont.css - -
+2021-01-31T00:26:02.7864530+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/flag-icon.css - -
+2021-01-31T00:26:02.7873197+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/feather-icon.css - -
+2021-01-31T00:26:02.7875414+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/themify.css - -
+2021-01-31T00:26:02.7881501+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/animate.css - -
+2021-01-31T00:26:02.7961038+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/icofont.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\icofont.css"'
+2021-01-31T00:26:02.7961038+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/fontawesome.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\fontawesome.css"'
+2021-01-31T00:26:02.7961234+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/animate.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\animate.css"'
+2021-01-31T00:26:02.7965597+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/fontawesome.css - - - 200 29581 text/css 19.5304ms
+2021-01-31T00:26:02.7966581+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/flag-icon.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\flag-icon.css"'
+2021-01-31T00:26:02.7966879+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/feather-icon.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\feather-icon.css"'
+2021-01-31T00:26:02.7969202+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/feather-icon.css - - - 200 2953 text/css 9.5931ms
+2021-01-31T00:26:02.7971497+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/themify.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\themify.css"'
+2021-01-31T00:26:02.7977000+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/themify.css - - - 200 23176 text/css 10.1022ms
+2021-01-31T00:26:02.7984729+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/animate.css - - - 200 90574 text/css 10.2694ms
+2021-01-31T00:26:02.7984731+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/icofont.css - - - 200 119207 text/css 14.9398ms
+2021-01-31T00:26:02.7985272+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/flag-icon.css - - - 200 44960 text/css 12.0810ms
+2021-01-31T00:26:02.8015589+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/chartist.css - -
+2021-01-31T00:26:02.8022031+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/chartist.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\chartist.css"'
+2021-01-31T00:26:02.8025753+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/chartist.css - - - 200 14199 text/css 1.0009ms
+2021-01-31T00:26:02.8030202+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/bootstrap.css - -
+2021-01-31T00:26:02.8034416+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/style.css - -
+2021-01-31T00:26:02.8038226+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/color-1.css - -
+2021-01-31T00:26:02.8042676+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/color-1.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\color-1.css"'
+2021-01-31T00:26:02.8049988+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/css/responsive.css - -
+2021-01-31T00:26:02.8051057+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/color-1.css - - - 200 0 text/css 1.2792ms
+2021-01-31T00:26:02.8055779+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/vendors/bootstrap.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\vendors\bootstrap.css"'
+2021-01-31T00:26:02.8078375+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/responsive.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\responsive.css"'
+2021-01-31T00:26:02.8097518+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/responsive.css - - - 200 89142 text/css 4.6807ms
+2021-01-31T00:26:02.8106959+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/vendors/bootstrap.css - - - 200 262533 text/css 7.6204ms
+2021-01-31T00:26:02.8161730+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/css/style.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\css\style.css"'
+2021-01-31T00:26:02.8315526+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/css/style.css - - - 200 1149213 text/css 28.0606ms
+2021-01-31T00:26:02.8621880+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/jquery-3.5.1.min.js - -
+2021-01-31T00:26:02.8636194+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/jquery-3.5.1.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\jquery-3.5.1.min.js"'
+2021-01-31T00:26:02.8645482+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/popper.min.js - -
+2021-01-31T00:26:02.8650957+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/bootstrap/popper.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\bootstrap\popper.min.js"'
+2021-01-31T00:26:02.8656015+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/jquery-3.5.1.min.js - - - 200 89478 application/javascript 3.4152ms
+2021-01-31T00:26:02.8658146+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/popper.min.js - - - 200 20458 application/javascript 1.2359ms
+2021-01-31T00:26:02.8699979+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/bootstrap.js - -
+2021-01-31T00:26:02.8700749+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather.min.js - -
+2021-01-31T00:26:02.8706295+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather-icon.js - -
+2021-01-31T00:26:02.8708464+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/icons/feather-icon/feather.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\icons\feather-icon\feather.min.js"'
+2021-01-31T00:26:02.8710463+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/icons/feather-icon/feather-icon.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\icons\feather-icon\feather-icon.js"'
+2021-01-31T00:26:02.8712245+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather-icon.js - - - 200 17 application/javascript 0.5781ms
+2021-01-31T00:26:02.8714486+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/bootstrap/bootstrap.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\bootstrap\bootstrap.js"'
+2021-01-31T00:26:02.8720853+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/icons/feather-icon/feather.min.js - - - 200 65256 application/javascript 1.9926ms
+2021-01-31T00:26:02.8736514+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/bootstrap/bootstrap.js - - - 200 140702 application/javascript 3.6060ms
+2021-01-31T00:26:02.8757970+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/config.js - -
+2021-01-31T00:26:02.8758569+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/sidebar-menu.js - -
+2021-01-31T00:26:02.8762894+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/config.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\config.js"'
+2021-01-31T00:26:02.8762963+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/sidebar-menu.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\sidebar-menu.js"'
+2021-01-31T00:26:02.8769913+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/sidebar-menu.js - - - 200 10168 application/javascript 1.0608ms
+2021-01-31T00:26:02.8771593+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/config.js - - - 200 256 application/javascript 1.0291ms
+2021-01-31T00:26:02.8811276+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/tooltip-init.js - -
+2021-01-31T00:26:02.8815977+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/tooltip-init.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\tooltip-init.js"'
+2021-01-31T00:26:02.8818204+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/tooltip-init.js - - - 200 222 application/javascript 0.7173ms
+2021-01-31T00:26:02.8825754+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/clipboard/clipboard.min.js - -
+2021-01-31T00:26:02.8830982+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/clipboard/clipboard.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\clipboard\clipboard.min.js"'
+2021-01-31T00:26:02.8832837+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/custom-card/custom-card.js - -
+2021-01-31T00:26:02.8837135+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/custom-card/custom-card.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\custom-card\custom-card.js"'
+2021-01-31T00:26:02.8837625+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/clipboard/clipboard.min.js - - - 200 10668 application/javascript 1.1700ms
+2021-01-31T00:26:02.8839668+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/custom-card/custom-card.js - - - 200 2880 application/javascript 0.6846ms
+2021-01-31T00:26:02.8855854+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/notify/bootstrap-notify.min.js - -
+2021-01-31T00:26:02.8861677+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/notify/bootstrap-notify.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\notify\bootstrap-notify.min.js"'
+2021-01-31T00:26:02.8866760+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/notify/bootstrap-notify.min.js - - - 200 8990 application/javascript 1.0683ms
+2021-01-31T00:26:02.8873995+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.min.css - -
+2021-01-31T00:26:02.8897706+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/sweetalert2/sweetalert2.min.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\sweetalert2\sweetalert2.min.css"'
+2021-01-31T00:26:02.8904770+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.min.css - - - 200 24951 text/css 3.0303ms
+2021-01-31T00:26:02.8908918+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2-material-ui.min.css - -
+2021-01-31T00:26:02.8914722+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/sweetalert2/sweetalert2-material-ui.min.css"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\sweetalert2\sweetalert2-material-ui.min.css"'
+2021-01-31T00:26:02.8926165+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2-material-ui.min.css - - - 200 29564 text/css 1.7042ms
+2021-01-31T00:26:02.8930433+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.all.min.js - -
+2021-01-31T00:26:02.8943299+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/sweetalert2/sweetalert2.all.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\sweetalert2\sweetalert2.all.min.js"'
+2021-01-31T00:26:02.8956564+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/script.js - -
+2021-01-31T00:26:02.8962552+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/script.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\script.js"'
+2021-01-31T00:26:02.8962614+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/sweetalert2/sweetalert2.all.min.js - - - 200 66038 application/javascript 3.1709ms
+2021-01-31T00:26:02.8964592+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/index_setting.js - -
+2021-01-31T00:26:02.8969038+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/index_setting.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\index_setting.js"'
+2021-01-31T00:26:02.8972362+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/js/index_global.js - -
+2021-01-31T00:26:02.8972364+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/index_setting.js - - - 200 191 application/javascript 0.7795ms
+2021-01-31T00:26:02.8975997+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/script.js - - - 200 11377 application/javascript 1.9273ms
+2021-01-31T00:26:02.8977248+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/js/index_global.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\js\index_global.js"'
+2021-01-31T00:26:02.8982135+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/js/index_global.js - - - 200 10816 application/javascript 0.9357ms
+2021-01-31T00:26:02.9003054+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/jquery-validation/dist/jquery.validate.min.js - -
+2021-01-31T00:26:02.9014989+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/jquery-validation/dist/jquery.validate.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js"'
+2021-01-31T00:26:02.9014817+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/jquery-validation/dist/additional-methods.js - -
+2021-01-31T00:26:02.9020501+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/jquery-validation/dist/jquery.validate.min.js - - - 200 23261 application/javascript 1.7345ms
+2021-01-31T00:26:02.9025689+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/jquery-validation/dist/additional-methods.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\jquery-validation\dist\additional-methods.js"'
+2021-01-31T00:26:02.9036170+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/jquery-validation/dist/additional-methods.js - - - 200 43184 application/javascript 2.0953ms
+2021-01-31T00:26:02.9059970+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js - -
+2021-01-31T00:26:02.9065389+05:30 [INF] (/KARAN/) Sending file. Request path: '"/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js"'
+2021-01-31T00:26:02.9080025+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js - - - 200 5867 application/javascript 1.9186ms
+2021-01-31T00:26:02.9110661+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo.png - -
+2021-01-31T00:26:02.9111941+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo_dark.png - -
+2021-01-31T00:26:02.9116156+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/logo/logo.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\logo\logo.png"'
+2021-01-31T00:26:02.9116961+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/logo/logo_dark.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\logo\logo_dark.png"'
+2021-01-31T00:26:02.9121292+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo_dark.png - - - 200 21577 image/png 0.9147ms
+2021-01-31T00:26:02.9123939+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo.png - - - 200 4927 image/png 1.3261ms
+2021-01-31T00:26:02.9124566+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/dashboard/profile.jpg - -
+2021-01-31T00:26:02.9131061+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/dashboard/profile.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\dashboard\profile.jpg"'
+2021-01-31T00:26:02.9133151+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/dashboard/profile.jpg - - - 200 941 image/jpeg 0.8442ms
+2021-01-31T00:26:02.9144518+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo-icon.png - -
+2021-01-31T00:26:02.9148905+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/logo/logo-icon.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\logo\logo-icon.png"'
+2021-01-31T00:26:02.9151140+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/logo/logo-icon.png - - - 200 4406 image/png 0.6616ms
+2021-01-31T00:26:02.9214385+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/avtar/3.jpg - -
+2021-01-31T00:26:02.9220148+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/avtar/3.jpg"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\avtar\3.jpg"'
+2021-01-31T00:26:02.9222391+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/avtar/3.jpg - - - 200 2878 image/jpeg 0.8443ms
+2021-01-31T00:26:03.0574855+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/fonts/font-awesome/fontawesome-webfont.woff2?v=4.7.0 - -
+2021-01-31T00:26:03.0576047+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/fonts/ico/icofont.ttf?v=1.0.0-beta - -
+2021-01-31T00:26:03.0581745+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/fonts/font-awesome/fontawesome-webfont.woff2"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\fonts\font-awesome\fontawesome-webfont.woff2"'
+2021-01-31T00:26:03.0584671+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/fonts/font-awesome/fontawesome-webfont.woff2?v=4.7.0 - - - 200 77160 font/woff2 0.9637ms
+2021-01-31T00:26:03.0939839+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/fonts/ico/icofont.ttf"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\fonts\ico\icofont.ttf"'
+2021-01-31T00:26:03.0987735+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/fonts/ico/icofont.ttf?v=1.0.0-beta - - - 200 1018620 application/x-font-ttf 41.1224ms
+2021-01-31T00:26:03.2714390+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/favicon.png - -
+2021-01-31T00:26:03.2722106+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/favicon.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\favicon.png"'
+2021-01-31T00:26:03.2731466+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/favicon.png - - - 200 4406 image/png 1.5608ms
+2021-01-31T00:27:08.8621282+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-31T00:27:08.9826625+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-31T00:27:08.9828108+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-31T00:27:08.9828327+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-31T00:27:09.0000931+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:27:09.0621904+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:27:09.0864659+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:27:09.4226196+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:27:09.7422226+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 326.5911ms.
+2021-01-31T00:27:09.7454854+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 658.6408ms
+2021-01-31T00:27:09.7464075+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:27:09.7494858+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 743.8377 ms
+2021-01-31T00:27:09.7570002+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 758.7584ms
+2021-01-31T00:27:10.2446760+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Cuba/images/favicon.png - -
+2021-01-31T00:27:10.2592810+05:30 [INF] (/KARAN/) Sending file. Request path: '"/Cuba/images/favicon.png"'. Physical path: '"F:\Projects\TravelTechSoftware\FeePay\FeePay.Web\wwwroot\Cuba\images\favicon.png"'
+2021-01-31T00:27:10.2599960+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Cuba/images/favicon.png - - - 200 4406 image/png 15.1634ms
+2021-01-31T00:27:13.2794364+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage - -
+2021-01-31T00:27:13.2835271+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:27:13.2898391+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:27:13.3532320+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:27:13.4132194+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 61.0911ms.
+2021-01-31T00:27:13.4133875+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 123.478ms
+2021-01-31T00:27:13.4134250+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:27:13.4134858+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage" responded 200 in 133.9081 ms
+2021-01-31T00:27:13.4140438+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage - - - 200 - text/html;+charset=utf-8 134.7007ms
+2021-01-31T00:27:20.0140168+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:27:20.0311495+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:27:20.0313142+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:27:20.0334406+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:27:20.0381858+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 4.8179ms.
+2021-01-31T00:27:20.0382497+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 6.8993ms
+2021-01-31T00:27:20.0382834+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:27:20.0383185+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 24.1207 ms
+2021-01-31T00:27:20.0386950+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 24.9117ms
+2021-01-31T00:27:21.3201748+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage - -
+2021-01-31T00:27:21.3223528+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:27:21.3224482+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:27:21.3315436+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:27:21.3396620+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 8.1321ms.
+2021-01-31T00:27:21.3397601+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 17.2772ms
+2021-01-31T00:27:21.3398241+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:27:21.3398603+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage" responded 200 in 19.5337 ms
+2021-01-31T00:27:21.3403341+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage - - - 200 - text/html;+charset=utf-8 20.1625ms
+2021-01-31T00:27:53.2245654+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage/Transaction - -
+2021-01-31T00:27:53.2260465+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage/Transaction" responded 404 in 1.3606 ms
+2021-01-31T00:27:53.2275261+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage/Transaction - - - 404 - - 2.9377ms
+2021-01-31T00:27:54.4912327+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage - -
+2021-01-31T00:27:54.4916965+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:27:54.4918224+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:27:54.5208685+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:27:54.5351287+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 14.2926ms.
+2021-01-31T00:27:54.5351964+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 43.3206ms
+2021-01-31T00:27:54.5352473+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:27:54.5353003+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage" responded 200 in 43.9868 ms
+2021-01-31T00:27:54.5357784+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage - - - 200 - text/html;+charset=utf-8 44.5743ms
+2021-01-31T00:27:55.9857031+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:27:55.9863393+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:27:55.9865481+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:27:55.9908839+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:27:55.9936944+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 2.8939ms.
+2021-01-31T00:27:55.9938044+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 7.1881ms
+2021-01-31T00:27:55.9938242+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:27:55.9938579+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 8.0784 ms
+2021-01-31T00:27:55.9943469+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 8.6580ms
+2021-01-31T00:27:56.7813973+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage - -
+2021-01-31T00:27:56.7817990+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:27:56.7819666+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:27:56.7832126+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:27:56.7873218+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 4.1268ms.
+2021-01-31T00:27:56.7874621+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 5.4348ms
+2021-01-31T00:27:56.7875174+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:27:56.7875922+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage" responded 200 in 6.1182 ms
+2021-01-31T00:27:56.7889946+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage - - - 200 - text/html;+charset=utf-8 7.5238ms
+2021-01-31T00:27:57.7812140+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:27:57.7816381+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:27:57.7817863+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:27:57.7830201+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:27:57.7849079+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 1.9049ms.
+2021-01-31T00:27:57.7849908+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 3.152ms
+2021-01-31T00:27:57.7850182+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:27:57.7850816+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 3.8127 ms
+2021-01-31T00:27:57.7854140+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 4.2081ms
+2021-01-31T00:27:59.1085984+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage - -
+2021-01-31T00:27:59.1090436+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:27:59.1091652+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:27:59.1106106+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:27:59.1153862+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 4.8374ms.
+2021-01-31T00:27:59.1154335+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 6.2243ms
+2021-01-31T00:27:59.1154487+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:27:59.1154690+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage" responded 200 in 6.8034 ms
+2021-01-31T00:27:59.1159438+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage - - - 200 - text/html;+charset=utf-8 7.3829ms
+2021-01-31T00:27:59.9102045+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:27:59.9105549+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:27:59.9106615+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:27:59.9130766+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:27:59.9156309+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 2.6585ms.
+2021-01-31T00:27:59.9156917+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 4.9884ms
+2021-01-31T00:27:59.9157220+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:27:59.9157702+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 5.5049 ms
+2021-01-31T00:27:59.9161830+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 5.9923ms
+2021-01-31T00:28:00.5733081+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage - -
+2021-01-31T00:28:00.5737731+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:28:00.5738866+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:28:00.5749982+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:28:00.5801351+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 5.0646ms.
+2021-01-31T00:28:00.5802101+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 6.2957ms
+2021-01-31T00:28:00.5802464+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:28:00.5802763+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage" responded 200 in 6.9008 ms
+2021-01-31T00:28:00.5815260+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage - - - 200 - text/html;+charset=utf-8 8.1705ms
+2021-01-31T00:28:19.6214915+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:28:19.6220954+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:28:19.6221928+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:28:19.6246596+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:28:19.6278226+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 3.2027ms.
+2021-01-31T00:28:19.6278771+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 5.6528ms
+2021-01-31T00:28:19.6278986+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:28:19.6279384+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 6.3744 ms
+2021-01-31T00:28:19.6284818+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 6.9769ms
+2021-01-31T00:28:32.4309033+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage - -
+2021-01-31T00:28:32.4327026+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:28:32.4333936+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:28:32.4503559+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:28:32.4877984+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 37.4841ms.
+2021-01-31T00:28:32.4880113+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 53.7036ms
+2021-01-31T00:28:32.4881397+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:28:32.4902162+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage" responded 200 in 58.7827 ms
+2021-01-31T00:28:32.4953482+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage - - - 200 - text/html;+charset=utf-8 64.0009ms
+2021-01-31T00:30:17.7463478+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:30:17.7470892+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:30:17.7472447+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:30:17.8000817+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:30:17.8047488+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 4.724ms.
+2021-01-31T00:30:17.8048899+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 57.5877ms
+2021-01-31T00:30:17.8049873+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:30:17.8050321+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 58.5485 ms
+2021-01-31T00:30:17.8060301+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 59.6879ms
+2021-01-31T00:30:34.3955487+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/Home/Profile - -
+2021-01-31T00:30:34.3962678+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/Home/Profile" responded 404 in 0.6431 ms
+2021-01-31T00:30:34.3968307+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/Home/Profile - - - 404 - - 1.2728ms
+2021-01-31T00:30:36.1679545+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:30:36.1692180+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:30:36.1694050+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:30:36.1729794+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:30:36.1776532+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 4.6862ms.
+2021-01-31T00:30:36.1778045+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 8.3129ms
+2021-01-31T00:30:36.1778941+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:30:36.1779835+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 9.8206 ms
+2021-01-31T00:30:36.1789823+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 11.0055ms
+2021-01-31T00:33:56.3147540+05:30 [INF] (/KARAN/) User profile is available. Using '"C:\Users\Karan\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-01-31T00:33:56.5397271+05:30 [INF] (/KARAN/) Application started. Press Ctrl+C to shut down.
+2021-01-31T00:33:56.5399439+05:30 [INF] (/KARAN/) Hosting environment: "Development"
+2021-01-31T00:33:56.5399806+05:30 [INF] (/KARAN/) Content root path: "F:\Projects\TravelTechSoftware\FeePay\FeePay.Web"
+2021-01-31T00:33:56.5748988+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/Authentication/Logout - -
+2021-01-31T00:33:56.6838994+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.AuthenticationController.Logout (FeePay.Web)"'
+2021-01-31T00:33:56.7153609+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Logout\", controller = \"Authentication\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Logout()" on controller "FeePay.Web.Areas.Student.Controllers.AuthenticationController" ("FeePay.Web").
+2021-01-31T00:33:56.7337414+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-01-31T00:33:56.7362149+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-01-31T00:33:56.7369721+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.TwoFactorUserId" signed out.
+2021-01-31T00:33:56.7374864+05:30 [INF] (/KARAN/) User logged out.
+2021-01-31T00:33:56.7564500+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student - -
+2021-01-31T00:33:56.7607105+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:33:56.7746494+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Home\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:33:56.7853553+05:30 [INF] (/KARAN/) Executing RedirectResult, redirecting to "/Student/Authentication".
+2021-01-31T00:33:56.7916572+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.AuthenticationController.Logout (FeePay.Web)" in 70.2052ms
+2021-01-31T00:33:56.7923759+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.AuthenticationController.Logout (FeePay.Web)"'
+2021-01-31T00:33:56.7947575+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/Authentication/Logout" responded 302 in 211.1937 ms
+2021-01-31T00:33:56.7997382+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/Authentication/Logout - - - 0 - - 228.3666ms
+2021-01-31T00:33:57.6171646+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:33:58.1546614+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 560.0969ms.
+2021-01-31T00:33:58.1639250+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)" in 1389.1304ms
+2021-01-31T00:33:58.1656403+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:33:58.1715276+05:30 [INF] (/KARAN/) HTTP "GET" "/Student" responded 200 in 1414.7950 ms
+2021-01-31T00:33:58.1840612+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student - - - 200 - text/html;+charset=utf-8 1427.4299ms
+2021-01-31T00:34:29.8349145+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage - -
+2021-01-31T00:34:29.8794709+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:34:29.8881543+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:34:30.0924607+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:34:30.2435656+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 152.9544ms.
+2021-01-31T00:34:30.2439573+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 355.6139ms
+2021-01-31T00:34:30.2440889+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:34:30.2443522+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage" responded 200 in 409.2829 ms
+2021-01-31T00:34:30.2452833+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage - - - 200 - text/html;+charset=utf-8 410.5413ms
+2021-01-31T00:34:32.1453269+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage/Transaction - -
+2021-01-31T00:34:32.1462075+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage/Transaction" responded 404 in 0.7384 ms
+2021-01-31T00:34:32.1480931+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage/Transaction - - - 404 - - 2.7263ms
+2021-01-31T00:34:33.8445620+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage - -
+2021-01-31T00:34:33.8453027+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:34:33.8455781+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:34:33.8483082+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:34:33.8579294+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 9.7648ms.
+2021-01-31T00:34:33.8580437+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 12.3679ms
+2021-01-31T00:34:33.8580914+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:34:33.8581347+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage" responded 200 in 13.4824 ms
+2021-01-31T00:34:33.8590584+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage - - - 200 - text/html;+charset=utf-8 14.4795ms
+2021-01-31T00:34:41.9847514+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 POST http://localhost:57458/Student/FeeManage application/x-www-form-urlencoded 468
+2021-01-31T00:34:41.9852662+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:34:42.0153878+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(FeePay.Core.Application.DTOs.SelectedFeeDepositViewModel)" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:34:42.1246058+05:30 [INF] (/KARAN/) Executing ViewResult, running view "~/Areas/Student/Views/FeeManage/FeeDeposit.cshtml".
+2021-01-31T00:34:42.1424146+05:30 [INF] (/KARAN/) Executed ViewResult - view "~/Areas/Student/Views/FeeManage/FeeDeposit.cshtml" executed in 18.8532ms.
+2021-01-31T00:34:42.1425752+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 127.0643ms
+2021-01-31T00:34:42.1426357+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:34:42.1426921+05:30 [INF] (/KARAN/) HTTP "POST" "/Student/FeeManage" responded 200 in 157.8447 ms
+2021-01-31T00:34:42.1438100+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 POST http://localhost:57458/Student/FeeManage application/x-www-form-urlencoded 468 - 200 - text/html;+charset=utf-8 159.0657ms
+2021-01-31T00:34:57.0863736+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage - -
+2021-01-31T00:34:57.0872218+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:34:57.0873800+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:34:57.0894239+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:34:57.0986671+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 9.3012ms.
+2021-01-31T00:34:57.0987521+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 11.3023ms
+2021-01-31T00:34:57.0987914+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:34:57.0988265+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage" responded 200 in 12.3366 ms
+2021-01-31T00:34:57.0998926+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage - - - 200 - text/html;+charset=utf-8 13.5222ms
+2021-01-31T00:34:59.2898935+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 POST http://localhost:57458/Student/FeeManage application/x-www-form-urlencoded 517
+2021-01-31T00:34:59.2904155+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:34:59.2906938+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(FeePay.Core.Application.DTOs.SelectedFeeDepositViewModel)" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:34:59.2963554+05:30 [INF] (/KARAN/) Executing ViewResult, running view "~/Areas/Student/Views/FeeManage/FeeDeposit.cshtml".
+2021-01-31T00:34:59.3004124+05:30 [INF] (/KARAN/) Executed ViewResult - view "~/Areas/Student/Views/FeeManage/FeeDeposit.cshtml" executed in 4.1109ms.
+2021-01-31T00:34:59.3005250+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 9.7542ms
+2021-01-31T00:34:59.3005970+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:34:59.3006508+05:30 [INF] (/KARAN/) HTTP "POST" "/Student/FeeManage" responded 200 in 10.6775 ms
+2021-01-31T00:34:59.3017299+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 POST http://localhost:57458/Student/FeeManage application/x-www-form-urlencoded 517 - 200 - text/html;+charset=utf-8 11.8308ms
+2021-01-31T00:35:04.7708856+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/FeeManage - -
+2021-01-31T00:35:04.7714758+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:35:04.7716885+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"FeeManage\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index()" on controller "FeePay.Web.Areas.Student.Controllers.FeeManageController" ("FeePay.Web").
+2021-01-31T00:35:04.7740502+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:35:04.7810344+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 7.014ms.
+2021-01-31T00:35:04.7811836+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)" in 9.4304ms
+2021-01-31T00:35:04.7812659+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.FeeManageController.Index (FeePay.Web)"'
+2021-01-31T00:35:04.7813187+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/FeeManage" responded 200 in 10.2900 ms
+2021-01-31T00:35:04.7822163+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/FeeManage - - - 200 - text/html;+charset=utf-8 11.3284ms
+2021-01-31T00:35:11.4454384+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/Authentication/Logout - -
+2021-01-31T00:35:11.4485279+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.AuthenticationController.Logout (FeePay.Web)"'
+2021-01-31T00:35:11.4486520+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Logout\", controller = \"Authentication\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Logout()" on controller "FeePay.Web.Areas.Student.Controllers.AuthenticationController" ("FeePay.Web").
+2021-01-31T00:35:11.4490229+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-01-31T00:35:11.4492251+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-01-31T00:35:11.4493606+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.TwoFactorUserId" signed out.
+2021-01-31T00:35:11.4493984+05:30 [INF] (/KARAN/) User logged out.
+2021-01-31T00:35:11.4497698+05:30 [INF] (/KARAN/) Executing RedirectResult, redirecting to "/Student/Authentication".
+2021-01-31T00:35:11.4499876+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.AuthenticationController.Logout (FeePay.Web)" in 1.2447ms
+2021-01-31T00:35:11.4500910+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.AuthenticationController.Logout (FeePay.Web)"'
+2021-01-31T00:35:11.4501538+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/Authentication/Logout" responded 302 in 4.6117 ms
+2021-01-31T00:35:11.4511664+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/Authentication/Logout - - - 302 - - 5.6146ms
+2021-01-31T00:35:11.4588283+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/Student/Authentication - -
+2021-01-31T00:35:11.4594527+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.Student.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-31T00:35:11.4651657+05:30 [INF] (/KARAN/) Route matched with "{area = \"Student\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String)" on controller "FeePay.Web.Areas.Student.Controllers.AuthenticationController" ("FeePay.Web").
+2021-01-31T00:35:11.4675247+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-01-31T00:35:11.4676470+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-01-31T00:35:11.4688715+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-01-31T00:35:11.4689459+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-01-31T00:35:11.4690528+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.TwoFactorUserId" signed out.
+2021-01-31T00:35:11.4705167+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:35:11.5627112+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 93.4616ms.
+2021-01-31T00:35:11.5628161+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Areas.Student.Controllers.AuthenticationController.Index (FeePay.Web)" in 97.59ms
+2021-01-31T00:35:11.5628841+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Areas.Student.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-31T00:35:11.5629439+05:30 [INF] (/KARAN/) HTTP "GET" "/Student/Authentication" responded 200 in 103.9840 ms
+2021-01-31T00:35:11.5637632+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/Student/Authentication - - - 200 - text/html;+charset=utf-8 104.9584ms
+2021-01-31T00:35:17.1354291+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/ - -
+2021-01-31T00:35:17.1357695+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:35:17.1382759+05:30 [INF] (/KARAN/) Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult Index()" on controller "FeePay.Web.Controllers.HomeController" ("FeePay.Web").
+2021-01-31T00:35:17.1407502+05:30 [INF] (/KARAN/) Executing ViewResult, running view "Index".
+2021-01-31T00:35:17.1621373+05:30 [INF] (/KARAN/) Executed ViewResult - view "Index" executed in 23.1276ms.
+2021-01-31T00:35:17.1622376+05:30 [INF] (/KARAN/) Executed action "FeePay.Web.Controllers.HomeController.Index (FeePay.Web)" in 23.8866ms
+2021-01-31T00:35:17.1623054+05:30 [INF] (/KARAN/) Executed endpoint '"FeePay.Web.Controllers.HomeController.Index (FeePay.Web)"'
+2021-01-31T00:35:17.1623476+05:30 [INF] (/KARAN/) HTTP "GET" "/" responded 200 in 26.8150 ms
+2021-01-31T00:35:17.1627338+05:30 [INF] (/KARAN/) Request finished HTTP/1.1 GET http://localhost:57458/ - - - 200 - text/html;+charset=utf-8 27.2401ms
+2021-01-31T00:35:18.9029504+05:30 [INF] (/KARAN/) Request starting HTTP/1.1 GET http://localhost:57458/School/Authentication - -
+2021-01-31T00:35:18.9034357+05:30 [INF] (/KARAN/) Executing endpoint '"FeePay.Web.Areas.School.Controllers.AuthenticationController.Index (FeePay.Web)"'
+2021-01-31T00:35:18.9098768+05:30 [INF] (/KARAN/) Route matched with "{area = \"School\", action = \"Index\", controller = \"Authentication\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String)" on controller "FeePay.Web.Areas.School.Controllers.AuthenticationController" ("FeePay.Web").
+2021-01-31T00:35:18.9129976+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.External" signed out.
+2021-01-31T00:35:18.9131032+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.
+2021-01-31T00:35:18.9146559+05:30 [INF] (/KARAN/) AuthenticationScheme: "Identity.Application" signed out.

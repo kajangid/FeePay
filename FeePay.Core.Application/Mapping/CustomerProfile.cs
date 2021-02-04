@@ -3,6 +3,7 @@ using FeePay.Core.Application.DTOs;
 using FeePay.Core.Domain.Entities.Identity;
 using FeePay.Core.Domain.Entities.School;
 using FeePay.Core.Domain.Entities.Student;
+using FeePay.Core.Domain.Entities.SuperAdmin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -142,14 +143,74 @@ namespace FeePay.Core.Application.Mapping
                 .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
                 .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
                 .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
-                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)))
+                .ForMember(dest => dest.Fullname, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
 
 
             // Mapping properties from StudentAdmissionViewModel to StudentAdmission 
             CreateMap<StudentAdmissionViewModel, StudentAdmission>();
 
+
+            CreateMap<StudentFees, StudentFeesViewModel>();
+            CreateMap<StudentFeesViewModel, StudentFees>();
+
+
             #endregion
 
+            #region Super Admin Identity
+
+            //// Mapping properties from SchoolAdminRole to RoleViewModel 
+            //CreateMap<SuperAdminRole, RoleViewModel>()
+            //    .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+            //    .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+            //    .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+            //    .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+
+
+            //// Mapping properties from RoleViewModel to SchoolAdminRole 
+            //CreateMap<RoleViewModel, SchoolAdminRole>()
+            //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name.Trim()))
+            //    .ForMember(dest => dest.NormalizedName, opt => opt.MapFrom(src => src.Name.ToUpper().Trim()));
+
+
+            //// Mapping properties from SchoolAdminUser to StaffMemberViewModel 
+            //CreateMap<SuperAdminUser, StaffMemberViewModel>()
+            //    .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+            //    .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+            //    .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+            //    .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)))
+            //    .ForMember(dest => dest.RoleListString, opt => opt.MapFrom(src => (src.Roles != null && src.Roles.Count > 0 ? string.Join(",", src.Roles.Select(s => s.Name).ToArray()) : "")));
+
+
+            //// Mapping properties from StaffMemberViewModel to SchoolAdminUser 
+            //CreateMap<StaffMemberViewModel, SuperAdminUser>()
+            //    .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => (src.FirstName + " " + src.LastName)));
+
+            #endregion
+
+            #region SUPER ADMIN
+            // Mapping properties from SuperAdminUser to SuperAdmin_UserViewModel 
+            CreateMap<SuperAdminUser, SuperAdmin_UserViewModel>()
+                .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+                .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+                .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+            // Mapping properties from SuperAdmin_UserViewModel to SuperAdminUser 
+            CreateMap<SuperAdmin_UserViewModel, SuperAdminUser>();
+
+            // Mapping properties from StudentAdmission to StudentAdmissionViewModel 
+            CreateMap<RegisteredSchool, RegisterSchoolViewModel>()
+                .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+                .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+                .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+            // Mapping properties from StudentAdmissionViewModel to StudentAdmission 
+            CreateMap<RegisterSchoolViewModel, RegisteredSchool>();
+
+            // Mapping properties from SuperAdminUser to UserPasswordViewModel 
+            CreateMap<SuperAdminUser, UserPasswordViewModel>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+            #endregion
         }
     }
 }

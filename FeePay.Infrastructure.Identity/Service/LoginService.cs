@@ -22,34 +22,36 @@ namespace FeePay.Infrastructure.Identity.Service
             UserManager<SchoolAdminUser> UserManagerSchool, UserManager<StudentLogin> UserManagerStudent,
             UserManager<SuperAdminUser> UserManagerSuperAdmin)
         {
-            _SignInManagerSchool = SignInManagerSchool;
-            _SignInManagerStudent = SignInManagerStudent;
-            _SignInManagerSuperAdmin = SignInManagerSuperAdmin;
-            _UnitOfWork = UnitOfWork;
-            _AppContextAccessor = appContextAccessor;
-            _UserManagerSchool = UserManagerSchool;
-            _UserManagerStudent = UserManagerStudent;
-            _UserManagerSuperAdmin = UserManagerSuperAdmin;
+            _signInManagerSchool = SignInManagerSchool;
+            _signInManagerStudent = SignInManagerStudent;
+            _signInManagerSuperAdmin = SignInManagerSuperAdmin;
+            _unitOfWork = UnitOfWork;
+            _appContextAccessor = appContextAccessor;
+            _userManagerSchool = UserManagerSchool;
+            _userManagerStudent = UserManagerStudent;
+            _userManagerSuperAdmin = UserManagerSuperAdmin;
         }
-        private readonly IAppContextAccessor _AppContextAccessor;
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly SignInManager<SchoolAdminUser> _SignInManagerSchool;
-        private readonly SignInManager<StudentLogin> _SignInManagerStudent;
-        private readonly SignInManager<SuperAdminUser> _SignInManagerSuperAdmin;
-        private readonly UserManager<SchoolAdminUser> _UserManagerSchool;
-        private readonly UserManager<StudentLogin> _UserManagerStudent;
-        private readonly UserManager<SuperAdminUser> _UserManagerSuperAdmin;
+        private readonly IAppContextAccessor _appContextAccessor;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly SignInManager<SchoolAdminUser> _signInManagerSchool;
+        private readonly SignInManager<StudentLogin> _signInManagerStudent;
+        private readonly SignInManager<SuperAdminUser> _signInManagerSuperAdmin;
+        private readonly UserManager<SchoolAdminUser> _userManagerSchool;
+        private readonly UserManager<StudentLogin> _userManagerStudent;
+        private readonly UserManager<SuperAdminUser> _userManagerSuperAdmin;
 
 
         public async Task<Response<bool>> AuthenticateSchoolUserAsync(SchoolLoginViewModel model)
         {
             // Validate SchoolUniqueId
-            RegisteredSchool t = await _UnitOfWork.RegisteredSchool.GetActiveByUniqueIdAsync(model.SchoolUniqueId);
+
+            RegisteredSchool t = await _unitOfWork.RegisteredSchool.FindByUniqueIdAsync(model.SchoolUniqueId, isActive: true);
             if (t == null) return new Response<bool>("Invalid School Id");
 
             // Get the User from School database
-            SchoolAdminUser user = await _UnitOfWork.SchoolAdminUser
+            SchoolAdminUser user = await _unitOfWork.SchoolAdminUser
                 .FindActiveByUserNameAsync(model.UserName.ToUpper(), model.SchoolUniqueId);
+            if (user == null) return new Response<bool>("Account does not exist with this username.");
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
@@ -58,7 +60,7 @@ namespace FeePay.Infrastructure.Identity.Service
             user.SchoolName = t.Name;
             //user.RolesName = (await _UnitOfWork.SchoolAdminUserRole.GetUserRolesAsync(user.Id, model.SchoolUniqueId))?.Select(s => s.Name).ToList();
             // Authorize User
-            var result = await _SignInManagerSchool.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManagerSchool.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
@@ -67,23 +69,24 @@ namespace FeePay.Infrastructure.Identity.Service
                 // Check for new request to get all the claim
                 //var clam = _AppContextAccessor.GetCurrentUserClaims();
                 // TODO: Event will be create for this
-                await _UnitOfWork.SchoolAdminUser.UpdateLoginState(user.Id, _AppContextAccessor.GetUserIP(), model.SchoolUniqueId);
+                await _unitOfWork.SchoolAdminUser.UpdateLoginState(user.Id, _appContextAccessor.GetUserIP(), model.SchoolUniqueId);
                 return new Response<bool>(true, user.FullName);
             }
-            return new Response<bool>("Invalid Email or Password.");
+            return new Response<bool>("Invalid Username or Password.");
         }
 
         public async Task<Response<bool>> AuthenticateStudentAsync(StudentLoginViewModel model)
         {
 
             // Validate SchoolUniqueId
-            RegisteredSchool t = await _UnitOfWork.RegisteredSchool.GetActiveByUniqueIdAsync(model.SchoolUniqueId);
+            RegisteredSchool t = await _unitOfWork.RegisteredSchool.FindByUniqueIdAsync(model.SchoolUniqueId, isActive: true);
             if (t == null) return new Response<bool>("Invalid School Id");
 
             // Get the User from School database
-            StudentLogin user = await _UnitOfWork.StudentLogin
-                .FindActiveUserByUserEmailAsync(model.Email.ToUpper(), model.SchoolUniqueId);
-            if (user == null) return new Response<bool>("Account does not exist with this email address.");
+            StudentLogin user = await _unitOfWork
+                .StudentLogin
+                .FindActiveUserByUserNameAsync(model.UserName.ToUpper(), model.SchoolUniqueId);
+            if (user == null) return new Response<bool>("Account does not exist with this username.");
 
 
             // This doesn't count login failures towards account lockout
@@ -93,57 +96,33 @@ namespace FeePay.Infrastructure.Identity.Service
             user.SchoolName = t.Name;
 
             // Authorize User
-            var result = await _SignInManagerStudent.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManagerStudent.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
-                await _UnitOfWork.StudentLogin.UpdateLoginState(user.Id, _AppContextAccessor.GetUserIP(), model.SchoolUniqueId);
+                await _unitOfWork.StudentLogin.UpdateLoginState(user.Id, _appContextAccessor.GetUserIP(), model.SchoolUniqueId);
                 return new Response<bool>(true, user.UserName);
             }
-            return new Response<bool>("Invalid Email or Password.");
+            return new Response<bool>("Invalid Username or Password.");
         }
 
         public async Task<Response<bool>> AuthenticateSuperAdminAsync(SuperAdminLoginViewModel model)
         {
-            SuperAdminUser user = await _UnitOfWork.SuperAdminUser
-                .FindActiveUserByUserEmailAsync(model.Email.ToUpper());
+            SuperAdminUser user = await _unitOfWork.SuperAdminUser
+                .FindByEmailAsync(model.Email.ToUpper(), isActive: true);
             if (user == null) return new Response<bool>("Account does not exist with this email address.");
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
             // var result = await _SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-            var result = await _SignInManagerSuperAdmin.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManagerSuperAdmin.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
-                await _UnitOfWork.SuperAdminUser.UpdateLoginState(user.Id, _AppContextAccessor.GetUserIP());
+                await _unitOfWork.SuperAdminUser.UpdateLoginState(user.Id, _appContextAccessor.GetUserIP());
                 return new Response<bool>(true, user.FirstName);
             }
             return new Response<bool>("Invalid Email or Password.");
         }
-
-
-        public async Task<StudentLoginViewModel> BindStudentLoginModelAsync()
-        {
-            var allschool = await _UnitOfWork.RegisteredSchool.GetAllActiveAsync();
-
-            return new StudentLoginViewModel()
-            {
-                ActiveSchools = allschool.Select(s => new DropDownItem { Text = s.Name, Value = s.UniqueId }).ToList()
-            };
-        }
-
-        public async Task<StudentLoginViewModel> BindStudentLoginModelAsync(StudentLoginViewModel model)
-        {
-            var allschool = await _UnitOfWork.RegisteredSchool.GetAllActiveAsync();
-
-            return new StudentLoginViewModel()
-            {
-                Email = model.Email,
-                SchoolUniqueId = model.SchoolUniqueId,
-                ActiveSchools = allschool.Select(s => new DropDownItem { Text = s.Name, Value = s.UniqueId }).ToList()
-            };
-        }
-
 
 
         public async Task<List<string>> GetUserAccessRights(string userName, string areaName)
@@ -156,8 +135,8 @@ namespace FeePay.Infrastructure.Identity.Service
             }
             else if (areaName == "School")
             {
-                var SchoolId = _AppContextAccessor.ClaimSchoolUniqueId();
-                var user = await _UnitOfWork.SchoolAdminUser.FindActiveByUserNameAsync(userName, SchoolId);
+                var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+                var user = await _unitOfWork.SchoolAdminUser.FindActiveByUserNameAsync(userName, SchoolId);
                 roles_Access = user?.Roles?.Select(r => r.Access).ToList();
             }
             else
@@ -167,37 +146,76 @@ namespace FeePay.Infrastructure.Identity.Service
             return roles_Access;
         }
 
+        public async Task<Dictionary<string, string>> GetCurrentStudentClassSection()
+        {
+            var dic = new Dictionary<string, string>();
+            try
+            {
+                string SchoolUniqueId = _appContextAccessor.ClaimSchoolUniqueId();
+                int UserId = Convert.ToInt32(GetLogedInStudentId());
+                var studentProfile = await _unitOfWork.StudentAdmision.FindByStudentLoginIdAsync(UserId, SchoolUniqueId);
+                if (studentProfile != null)
+                {
+                    if (studentProfile.ClassId > 0)
+                    {
+                        var _class = await _unitOfWork.ClassRepo.FindActiveByIdAsync(studentProfile.ClassId, SchoolUniqueId);
+                        dic.Add("class", _class?.Name);
+                    }
+                    if (studentProfile.SectionId > 0)
+                    {
+                        var section = await _unitOfWork.SectionRepo.FindActiveByIdAsync(studentProfile.SectionId, SchoolUniqueId);
+                        dic.Add("section", section?.Name);
+                    }
+                }
+
+            }
+            catch { }
+            return dic;
+        }
+        public async Task<string> GetCurrentStudentName()
+        {
+            try
+            {
+                string SchoolUniqueId = _appContextAccessor.ClaimSchoolUniqueId();
+                int UserId = Convert.ToInt32(GetLogedInStudentId());
+                var studentProfile = await _unitOfWork.StudentAdmision.FindByStudentLoginIdAsync(UserId, SchoolUniqueId);
+                if (studentProfile != null) return studentProfile.FirstName;
+            }
+            catch { }
+            return "";
+        }
+
 
         public async Task EnsureStudentLogoutAsync()
         {
             // Ensure all logout 
-            await _SignInManagerStudent.SignOutAsync();
+            await _signInManagerStudent.SignOutAsync();
         }
         public async Task EnsureSchoolUserLogoutAsync()
         {
             // Ensure all logout 
-            await _SignInManagerSchool.SignOutAsync();
+            await _signInManagerSchool.SignOutAsync();
         }
         public async Task EnsureSuperAdminLogoutAsync()
         {
             // Ensure all logout 
-            await _SignInManagerSuperAdmin.SignOutAsync();
+            await _signInManagerSuperAdmin.SignOutAsync();
         }
 
         public async Task LogoutAll()
         {
-            await _SignInManagerStudent.SignOutAsync();
-            await _SignInManagerSchool.SignOutAsync();
-            await _SignInManagerSuperAdmin.SignOutAsync();
+            await _signInManagerStudent.SignOutAsync();
+            await _signInManagerSchool.SignOutAsync();
+            await _signInManagerSuperAdmin.SignOutAsync();
         }
-        public async Task SchoolAdminLogout() => await _SignInManagerSchool.SignOutAsync();
-        public async Task SuperAdminLogout() => await _SignInManagerSuperAdmin.SignOutAsync();
-        public async Task StudentLogout() => await _SignInManagerStudent.SignOutAsync();
+        public async Task SchoolAdminLogout() => await _signInManagerSchool.SignOutAsync();
+        public async Task SuperAdminLogout() => await _signInManagerSuperAdmin.SignOutAsync();
+        public async Task StudentLogout() => await _signInManagerStudent.SignOutAsync();
 
         public bool CheckUserIdentityClaim()
         {
-            var allClaims = _AppContextAccessor.GetCurrentUserClaims();
-            var currentArea = _AppContextAccessor.GetRequestPath();
+            var allClaims = _appContextAccessor.GetCurrentUserClaims();
+            var currentArea = _appContextAccessor.GetRequestPath();
             if (allClaims != null)
             {
                 var SuperAdminIdentity = allClaims.FirstOrDefault(claim => claim.Type == "SuperAdminAuthRoute" && claim.Issuer.Equals("SuperAdmin", StringComparison.InvariantCultureIgnoreCase));
@@ -214,15 +232,15 @@ namespace FeePay.Infrastructure.Identity.Service
 
         public string GetLogedInStudentId()
         {
-            return _UserManagerStudent.GetUserId(_AppContextAccessor.getCurrentUser());
+            return _userManagerStudent.GetUserId(_appContextAccessor.getCurrentUser());
         }
         public string GetLogedInSchoolAdminId()
         {
-            return _UserManagerSchool.GetUserId(_AppContextAccessor.getCurrentUser());
+            return _userManagerSchool.GetUserId(_appContextAccessor.getCurrentUser());
         }
         public string GetLogedInSuperAdminId()
         {
-            return _UserManagerSuperAdmin.GetUserId(_AppContextAccessor.getCurrentUser());
+            return _userManagerSuperAdmin.GetUserId(_appContextAccessor.getCurrentUser());
         }
     }
 }

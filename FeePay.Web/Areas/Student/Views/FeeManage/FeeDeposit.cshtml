@@ -1,0 +1,130 @@
+﻿@using FeePay.Core.Application.Interface;
+@using FeePay.Core.Application.Interface.Service;
+@model FeeDepositSummeryViewModel
+
+
+@inject ILoginService _loginService
+@inject ICultureFormatProvider _cultureFormatProvider
+@{
+    var studentclass = $"{Model?.Student?.StudentClass?.Name}({Model?.Student?.StudentSection?.Name})";
+}
+
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","FeeManage")"> Fees </a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="invoice">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <img class="media-object rounded-circle img-60" src="~/Cuba/images/user/1.jpg" alt="">
+                                        </div>
+                                        <div class="media-body m-l-20">
+                                            <h4 class="media-heading">@Model?.Student?.Fullname</h4>
+                                            <p>
+                                                Class: @studentclass <br /><span>Sr/Reg: @Model?.Student?.Sr_RegNo </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-md-end" id="project">
+                                        <ul class="list-group list-group-flush">
+                                            @*<li class="list-group-item d-flex justify-content-between align-items-center p-0 pb-1 border-0">
+                                                    Sr/Reg Number<span class="text-right">@Model?.Student?.Sr_RegNo</span>
+                                                </li>*@
+                                            <li class="list-group-item d-flex justify-content-between align-items-center p-0 pb-1 border-0">
+                                                Father's Name: <span class="text-right">@Model?.Student?.FatherName</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center p-0 pb-1 border-0">
+                                                Mother's Name: <span class="text-right">@Model?.Student?.MotherName</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center p-0 border-0">
+                                                Mobile Number: <span class="text-right">@Model?.Student?.MobileNo</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="table-responsive invoice-table" id="table">
+                                    <table class="table table-bordered table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <td class="w-75 item">
+                                                    <h6 class="p-2 mb-0">Fees</h6>
+                                                </td>
+                                                <td class="Rate">
+                                                    <h6 class="p-2 mb-0">Due Date</h6>
+                                                </td>
+                                                <td class="subtotal">
+                                                    <h6 class="p-2 mb-0">Amount</h6>
+                                                </td>
+                                            </tr>
+                                            @if (Model != null && Model.Fees != null && Model.Fees.Count > 0)
+                                            {
+                                                foreach (var fee in Model.Fees)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <label>@fee.FeeTypeName ( <span>@fee.FeeTypeCode</span> )</label>
+                                                        </td>
+                                                        <td>
+                                                            <p class="itemtext">@(fee.DueDate?.ToString("dd/MM/yyyy"))</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="itemtext">@(_cultureFormatProvider.FormatCurrencyIntoIndianCalture(fee.FeeAmount))</p>
+                                                        </td>
+                                                    </tr>
+
+                                                }
+                                                <tr>
+                                                    <td></td>
+                                                    <td class="Rate">
+                                                        <h6 class="mb-0 p-2">Total</h6>
+                                                    </td>
+                                                    <td class="payment">
+                                                        <h6 class="mb-0 p-2">@(_cultureFormatProvider.FormatCurrencyIntoIndianCalture(Model.Fees.Sum(s => s.FeeAmount)))</h6>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <a asp-action="Index" asp-controller="FeeManage" asp-area="Student" class="btn btn-outline-secondary">Back</a>
+                                        <a href="javascript:void(0)" class="btn btn-outline-primary ml-1">Pay Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

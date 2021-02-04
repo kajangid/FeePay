@@ -39,7 +39,7 @@
             <div class="card">
                 <div class="card-header b-r-info b-l-info border-3">
                     <h5>
-                        <a asp-action="SectionManage" asp-controller="Academic">
+                        <a asp-action="SectionAdd" asp-controller="Academic">
                             <i class="fa fa-plus"></i> Add Section
                         </a>
                     </h5>
@@ -84,7 +84,7 @@
                                                 <td><a href="@Url.Action("StaffManage","Account",new { id = item.AddedById })" class="btn btn-@(color1) btn-xs">@item.AddedBy</a></td>
                                                 <td>@item.AddedDate?.ToString("dd/MM/yyyy")</td>
                                                 <td>
-                                                    <a asp-action="SectionManage" asp-controller="Academic" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Section" class="d-inline-block mr-1">
+                                                    <a asp-action="SectionEdit" asp-controller="Academic" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Section" class="d-inline-block mr-1">
                                                         <i data-feather="edit-3"></i>
                                                     </a>
                                                     <a data-action="deleterow" data-actionmag="Section" asp-action="SectionDelete" asp-controller="Academic" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Section" class="d-inline-block">

@@ -14,11 +14,11 @@ namespace FeePay.Core.Application.Interface.Service
         Task<Response<bool>> AuthenticateStudentAsync(StudentLoginViewModel model);
         Task<Response<bool>> AuthenticateSuperAdminAsync(SuperAdminLoginViewModel model);
 
-        Task<StudentLoginViewModel> BindStudentLoginModelAsync();
-        Task<StudentLoginViewModel> BindStudentLoginModelAsync(StudentLoginViewModel model);
-
 
         Task<List<string>> GetUserAccessRights(string userName, string areaName);
+
+        Task<Dictionary<string, string>> GetCurrentStudentClassSection();
+        Task<string> GetCurrentStudentName();
 
         Task EnsureStudentLogoutAsync();
         Task EnsureSchoolUserLogoutAsync();

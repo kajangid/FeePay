@@ -9,20 +9,28 @@ namespace FeePay.Core.Domain.Entities.Student
 {
     public class StudentFees
     {
-        public int StudentId { get; set; }
-        public int FeeGroupId { get; set; }
+        public int Id { get; set; }
+        public int StudentAdmissionId { get; set; }
         public int FeeMasterId { get; set; }
-        public string FeePaymentId { get; set; }
+        public string Status { get; set; }
+        public string Mode { get; set; }
+        public string PaymentId { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public bool IsDelete { get; set; }
+        public bool IsActive { get; set; }
+
+
+
+
+        public int FeeGroupId { get; set; }
         public int FeeTypeId { get; set; }
         public string FeeTypeName { get; set; }
         public string FeeTypeCode { get; set; }
         public string FeeGroupName { get; set; }
-        public string FeeStatus { get; set; }
 
         public decimal FeeAmount { get; set; }
-        public DateTime? FeePaymentDate { get; set; }
         public DateTime? DueDate { get; set; }
-        public string Mode { get; set; }
+
 
     }
 }

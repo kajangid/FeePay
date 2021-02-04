@@ -40,7 +40,7 @@
             <div class="card">
                 <div class="card-header b-r-info b-l-info border-3">
                     <h5>
-                        <a asp-action="SessionManage" asp-controller="Academic">
+                        <a asp-action="SessionAdd" asp-controller="Academic">
                             <i class="fa fa-plus"></i> Add Session
                         </a>
                     </h5>
@@ -86,7 +86,7 @@
                                                 <td><a href="@Url.Action("StaffManage","Account",new { id = item.ModifyById })" class="btn btn-@(color) btn-xs">@item.ModifyBy</a></td>
                                                 <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
                                                 <td>
-                                                    <a asp-action="SessionManage" asp-controller="Academic" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Session" class="d-inline-block mr-1">
+                                                    <a asp-action="SessionEdit" asp-controller="Academic" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Session" class="d-inline-block mr-1">
                                                         <i data-feather="edit-3"></i>
                                                     </a>
                                                     <a data-action="deleterow" data-actionmag="Class" asp-action="SessionDelete" asp-controller="Academic" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Session" class="d-inline-block">

@@ -22,6 +22,11 @@
 		public string SP_Get_SuperAdmin_UsersInRole { get; } = "SP_Get_SuperAdmin_UsersInRole";
 		public string SP_GetAll_SuperAdmin_UserRole { get; } = "SP_GetAll_SuperAdmin_UserRole";
 		public string SP_AddLoginInfo_SuperAdmin { get; } = "SP_AddLoginInfo_SuperAdmin";
+		public string QUERY_Password_SuperAdmin { get; } = @"SELECT [Id],[UserName],[Password]
+						FROM [dbo].[SuperAdmin_User]
+						WHERE 
+						[IsDelete] = 0 AND 
+						[IsActive] = CASE WHEN @IsActive IS NOT NULL THEN @IsActive ELSE [IsActive] END";
 		#endregion
 
 
@@ -180,17 +185,18 @@
 													WHERE 
 													StudentAdmissionId = @StudentAdmissionId AND 
 													FeeMasterId = @FeeMasterId";
-		public string QUERY_StudentFeeList { get; } = @"SELECT 
-		[sf].[Id] AS [StudentId],
-		[fg].[Id] AS [FeeGroupId],
+		public string QUERY_StudentFeeList { get; } = @"SELECT
+		[sf].[Id],
+		[sf].[StudentAdmissionId],
+		[sf].[FeeMasterId], 
+		[sf].[Status],		
+		[sf].[FeeGroupId],
+		[sf].[PaymentId],
+		[sf].[Mode],
+		[sf].[PaymentDate],
 		[fg].[Name] AS [FeeGroupName],
-		[fm].[Id] AS [FeeMasterId], 
 		[fm].[Amount] AS [FeeAmount],
-		[fm].[DueDate] AS [FeeDueDate],
-		[fm].[Status] AS [FeeStatus],
-		[fm].[PaymentId] AS [FeePaymentId],
-		[fm].[Mode] AS [Mode],
-		[fm].[PaymentDate] AS [FeePaymentDate],						
+		[fm].[DueDate] AS [FeeDueDate],				
 		[ft].[Id] AS [FeeTypeId], 
 		[ft].[Name] AS [FeeTypeName], 
 		[ft].[Code] AS [FeeTypeCode]
@@ -204,6 +210,19 @@
 		ON [fg].[Id] = [fm].[FeeGroupId] AND [fg].[IsDelete] = 0 AND [fg].[IsActive] = 1
 		WHERE 
 		[sf].[StudentAdmissionId] = @StudentAdmissionId";
+		public string QUERY_Find_StudentFee { get; } = @"SELECT 
+							[sf].[Id],[sf].[StudentAdmissionId],[sf].[FeeMasterId],[sf].[Status],[sf].[FeeGroupId],[sf].[PaymentId],
+							[sf].[Mode],[sf].[PaymentDate],[fg].[Name] AS [FeeGroupName],[fm].[Amount] AS [FeeAmount],
+							[fm].[DueDate] AS [FeeDueDate],[ft].[Id] AS [FeeTypeId],[ft].[Name] AS [FeeTypeName],[ft].[Code] AS [FeeTypeCode]
+							FROM 
+							[dbo].[StudentFees] [sf] 
+							INNER JOIN [dbo].[FeeMaster] AS [fm] 
+							ON [fm].[Id] = [sf].[FeeMasterId] AND [fm].[IsDelete] = 0 AND [fm].[IsActive] = 1
+							INNER JOIN [dbo].[FeeType] AS [ft] 
+							ON [ft].[Id] = [fm].[FeeTypeId] AND [ft].[IsDelete] = 0  AND [ft].[IsActive] = 1
+							INNER JOIN [dbo].[FeeGroup] AS [fg]  
+							ON [fg].[Id] = [fm].[FeeGroupId] AND [fg].[IsDelete] = 0 AND [fg].[IsActive] = 1
+							WHERE [sf].[Id] = @Id AND [sf].[IsActive] = 1 AND [sf].[IsDelete] = 0";
 		#endregion
 
 

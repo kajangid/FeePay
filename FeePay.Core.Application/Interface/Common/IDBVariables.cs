@@ -27,6 +27,7 @@ namespace FeePay.Core.Application.Interface.Common
         string SP_Get_SuperAdmin_UsersInRole { get; }
         string SP_GetAll_SuperAdmin_UserRole { get; }
         string SP_AddLoginInfo_SuperAdmin { get; }
+        string QUERY_Password_SuperAdmin { get; }
         #endregion
 
 
@@ -173,6 +174,7 @@ namespace FeePay.Core.Application.Interface.Common
         string SP_Remove_StudentFees { get; }
         string QUERY_IsFeeAssignToStudent { get; }
         string QUERY_StudentFeeList { get; }
+        string QUERY_Find_StudentFee { get; }
         #endregion
 
 

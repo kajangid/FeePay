@@ -5,12 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using FeePay.Core.Domain.Entities.Identity;
-using FeePay.Infrastructure.Identity.ClaimsPrincipalFactory;
-using FeePay.Infrastructure.Identity.IdentityStore;
-using FeePay.Infrastructure.Identity.Service;
 using FeePay.Core.Application.Interface.Service;
 using FeePay.Core.Application.Interface.Service.School;
 using FeePay.Core.Application.Interface.Service.Student;
+using FeePay.Core.Application.Interface.Service.SuperAdmin;
+using FeePay.Infrastructure.Identity.Service;
+using FeePay.Infrastructure.Identity.IdentityStore;
+using FeePay.Infrastructure.Identity.ClaimsPrincipalFactory;
 
 namespace FeePay.Infrastructure.Identity
 {
@@ -86,6 +87,7 @@ namespace FeePay.Infrastructure.Identity
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<ISchoolAdminRegistrationService, SchoolAdminRegistrationService>();
             services.AddScoped<IStudentRegistrationService, StudentRegistrationService>();
+            services.AddScoped<ISuperAdminRegistrationService, SuperAdminRegistrationService>();
 
             // TODO on all Identity validation
             services.Configure<IdentityOptions>(options =>
@@ -101,7 +103,7 @@ namespace FeePay.Infrastructure.Identity
                 options.SignIn.RequireConfirmedEmail = false;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
 
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._";
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@";
             });
 
             services.ConfigureApplicationCookie(options =>

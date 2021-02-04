@@ -18,6 +18,7 @@ namespace FeePay.Web.Areas.School.Controllers
 {
     [Area("School")]
     [SchoolAdminAuthorize]
+    [Route("School/Administration")]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class AccountController : AreaBaseController
     {
@@ -37,9 +38,8 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #region Staff Section
 
-        [HttpGet]
         [MvcDiscovery]
-        [Route("School/Users")]
+        [HttpGet("User/List")]
         [DisplayName("User List")]
         public async Task<IActionResult> StaffList()
         {
@@ -48,9 +48,8 @@ namespace FeePay.Web.Areas.School.Controllers
             return View(result.Data);
         }
 
-        [HttpGet]
         [MvcDiscovery]
-        [Route("School/User/Manage/{id?}")]
+        [HttpGet("User/Manage/{id?}")]
         [DisplayName("Add Or Update User")]
         public async Task<IActionResult> StaffManage(int? id)
         {
@@ -64,10 +63,9 @@ namespace FeePay.Web.Areas.School.Controllers
             return View(result.Data);
         }
 
-        [HttpPost]
         [MvcDiscovery]
         [ValidateAntiForgeryToken]
-        [Route("School/User/Manage/{id?}")]
+        [HttpPost("User/Manage/{id?}")]
         [DisplayName("Add Or Update User")]
         public async Task<IActionResult> StaffManage(StaffMemberViewModel model, int? id)
         {
@@ -92,9 +90,8 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
 
-        [HttpDelete]
         [MvcDiscovery]
-        [Route("School/User/Delete/{id}")]
+        [HttpDelete("User/Delete/{id:int}")]
         [DisplayName("Delete User")]
         public async Task<JsonResult> StaffDelete(int id)
         {
@@ -106,9 +103,8 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #region Role Section
 
-        [HttpGet]
         [MvcDiscovery]
-        [Route("School/Roles")]
+        [HttpGet("Role/List")]
         [DisplayName("Roles")]
         public async Task<IActionResult> RoleList()
         {
@@ -117,9 +113,8 @@ namespace FeePay.Web.Areas.School.Controllers
             return View(result.Data);
         }
 
-        [HttpGet]
         [MvcDiscovery]
-        [Route("School/Role/Manage/{id?}")]
+        [HttpGet("Role/Manage/{id?}")]
         [DisplayName("Add Or Update Role")]
         public async Task<IActionResult> RoleManage(int? id)
         {
@@ -136,10 +131,9 @@ namespace FeePay.Web.Areas.School.Controllers
             return View(role);
         }
 
-        [HttpPost]
         [MvcDiscovery]
         [ValidateAntiForgeryToken]
-        [Route("School/Role/Manage/{id?}")]
+        [HttpPost("Role/Manage/{id?}")]
         [DisplayName("Add Or Update Role")]
         public async Task<IActionResult> RoleManage(RoleViewModel model, int? id)
         {
@@ -160,9 +154,8 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
 
-        [HttpDelete]
         [MvcDiscovery]
-        [Route("School/Role/Delete/{id}")]
+        [HttpDelete("Role/Delete/{id:int}")]
         [DisplayName("Delete Role")]
         public async Task<JsonResult> RoleDelete(int id)
         {
@@ -172,9 +165,8 @@ namespace FeePay.Web.Areas.School.Controllers
 
         #endregion
 
-        [HttpGet]
         [MvcDiscovery]
-        [Route("School/User/Password/{id}")]
+        [HttpGet("User/Password/{id:int}")]
         [DisplayName("Show Staff Password")]
         public async Task<JsonResult> StaffPassword(int id)
         {

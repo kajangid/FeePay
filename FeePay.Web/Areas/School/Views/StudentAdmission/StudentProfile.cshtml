@@ -158,10 +158,10 @@
                                             <td>@fee.FeeGroupName</td>
                                             <td>@fee.FeeTypeCode</td>
                                             <td>@(fee.DueDate?.ToString("dd/MM/yyyy"))</td>
-                                            <td>@fee.FeeStatus</td>
+                                            <td>@fee.Status</td>
                                             <td>@fee.FeeAmount</td>
-                                            <td>@fee.FeePaymentId</td>
-                                            <td>@(fee.FeePaymentDate?.ToString("dd/MM/yyyy"))</td>
+                                            <td>@fee.PaymentId</td>
+                                            <td>@(fee.PaymentDate?.ToString("dd/MM/yyyy"))</td>
                                             <td>-</td>
                                         </tr>
                                     }
@@ -176,5 +176,5 @@
 </div>
 
 @section Models{
-    @{ await Html.RenderPartialAsync("_Partial_ShowUserNamePassword"); }
+    @{ await Html.RenderPartialAsync("_Area_Partial_ShowUserNamePassword"); }
 }

@@ -1,4 +1,5 @@
-﻿using FeePay.Web.Areas.Common;
+﻿using FeePay.Core.Application.DTOs;
+using FeePay.Web.Areas.Common;
 using FeePay.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -21,6 +22,22 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet("{Area}/Profile")]
+        public IActionResult Profile()
+        {
+            return View();
+        }
+        [HttpGet("{Area}/Profile/Edit")]
+        public IActionResult ProfileEdit()
+        {
+            return View();
+        }
+        [HttpPost("{Area}/Profile/Edit")]
+        public IActionResult ProfileEdit(SuperAdmin_UserViewModel model)// change to new view model
         {
             return View();
         }

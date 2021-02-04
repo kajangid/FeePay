@@ -1,8 +1,126 @@
-﻿
+﻿@model StudentAdmissionViewModel
 @{
-    ViewData["Title"] = "Index";
 }
+@section Styles{
+}
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function ($) {
+            "use strict";
+        })(jQuery)
+    </script>
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h1>Index</h1>
-
-<a asp-action="Logout" asp-controller="Account" asp-area="Student">Logout</a>
+<div class="container-fluid">
+    <div class="edit-profile">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card custom-card">
+                    <div class="card-profile" style="z-index:0;"><img class="rounded-circle" src="~/Cuba/images/avtar/3.jpg" alt=""></div>
+                    <div class="text-center profile-details">
+                        <h4>@($"{Model?.FirstName} {Model?.LastName}")</h4>
+                    </div>
+                    <ul class="card-social">
+                        <li><a href="javascript:void(0)" data-ajaxurl="" data-onclilck="changePassword" data-bs-original-title="Change Password" title="Change Password"><i class="icofont icofont-ui-password"></i></a></li>
+                        <li><a href="javascript:void(0)" data-bs-original-title="Edit Profile" title="Edit Profile"><i class="icofont icofont-edit"></i></a></li>
+                    </ul>
+                    <div class="row">
+                        <div class="col">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Form Number<span class="text-right">@Model?.FormNo</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Sr/Reg Number<span class="text-right">@Model?.Sr_RegNo</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Class<span class="text-right">@Model?.StudentClass?.Name</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Section<span class="text-right">@Model?.StudentSection?.Name</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Gender<span class="text-right">@Model?.Gender</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <h6 class="mb-3">Personal Details</h6>
+                            <table class="table table-border-horizontal">
+                                <tbody>
+                                    <tr>
+                                        <td>Admission Date</td>
+                                        <td class="text-right">@(Model?.AdmissionDate?.ToString("dd/MM/yyyy"))</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of Birth</td>
+                                        <td class="text-right">@(Model?.DateOfBirth?.ToString("dd/MM/yyyy"))</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td class="text-right">@Model?.Category</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Model Type</td>
+                                        <td class="text-right">@(Model?.StudentType)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile Number</td>
+                                        <td class="text-right">@(Model?.MobileNo)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Religion</td>
+                                        <td class="text-right">@(Model?.Religion)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h6 class="mt-5 mb-3">Parent / Guardian Details</h6>
+                            <table class="table table-border-horizontal">
+                                <tbody>
+                                    <tr>
+                                        <td>Father's Name</td>
+                                        <td class="text-right">@(Model?.FatherName)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mother's Name</td>
+                                        <td class="text-right">@(Model?.MotherName)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Guardian Mobile Number</td>
+                                        <td class="text-right">@(Model?.GuardianMobileNo)</td>
+                                    </tr>
+                                    <tr class="border-1 border-top-0 border-left-0 border-right-0">
+                                        <td>Guardian Email</td>
+                                        <td class="text-right">@(Model?.GuardianEmail)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

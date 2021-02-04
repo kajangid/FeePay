@@ -25,6 +25,7 @@
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/style.css")">
     <link id="color" rel="stylesheet" href="@Url.Content("~/Cuba/css/color-1.css")" media="screen">
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/responsive.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Page_css/login.css")" />
 </head>
 <body>
     <div class="container-fluid">
@@ -33,28 +34,28 @@
             <div class="col-xl-7 p-0">
                 <div class="login-card">
                     <div>
-                        <div><a class="logo text-left" href="index.html"><img class="img-fluid for-light" src="~/Cuba/images/logo/login.png" alt="looginpage"><img class="img-fluid for-dark" src="~/Cuba/images/logo/logo_dark.png" alt="looginpage"></a></div>
+                        <div><a class="logo text-left" href="@Url.Action("")"><img class="img-fluid for-light" src="~/Cuba/images/logo/login.png" alt="looginpage"><img class="img-fluid for-dark" src="~/Cuba/images/logo/logo_dark.png" alt="looginpage"></a></div>
                         <div class="login-main">
                             <form id="login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="theme-form needs-validation" novalidate="">
                                 <h4>Sign in to account</h4>
                                 <p>Enter your email & password to login</p>
 
-                                <div class="form-group">
+                                <div class="form-group mb-4">
                                     <label asp-for="SchoolUniqueId" class="col-form-label"></label>
-                                    <input asp-for="SchoolUniqueId" class="form-control" type="text" required="" placeholder="#######">
-                                    <div class="invalid-feedback"><span asp-validation-for="SchoolUniqueId"></span></div>
+                                    <input asp-for="SchoolUniqueId" class="form-control" type="text" required="" placeholder="" data-palceholder="label">
+                                    <div class="invalid-feedback text-danger"><span asp-validation-for="SchoolUniqueId"></span></div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group mb-4">
                                     <label asp-for="UserName" class="col-form-label">User Name</label>
-                                    <input asp-for="UserName" class="form-control" type="text" required="">
-                                    <div class="invalid-feedback"><span asp-validation-for="UserName"></span></div>
+                                    <input asp-for="UserName" class="form-control" type="text" required="" placeholder="" data-palceholder="label">
+                                    <div class="invalid-feedback text-danger"><span asp-validation-for="UserName"></span></div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group mb-4">
                                     <label asp-for="Password" class="col-form-label">Password</label>
-                                    <input asp-for="Password" class="form-control" type="password" required="" placeholder="*********">
-                                    <div class="invalid-feedback"><span asp-validation-for="Password"></span></div>
-                                    <div class="show-hide"><span class="show"></span></div>
+                                    <input asp-for="Password" class="form-control" type="password" required="" placeholder="" data-palceholder="label" data-inputtype="password">
+                                    <div data-onclick="showhidepass" class="input-right-icon" style="display:none"><i class="fa fa-eye-slash"></i></div>
+                                    <div class="invalid-feedback text-danger"><span asp-validation-for="Password"></span></div>
                                 </div>
                                 <div class="form-group mb-0">
                                     <div class="checkbox p-0">
@@ -65,7 +66,6 @@
                                     <button class="btn btn-primary btn-block" type="submit">Sign in</button>
                                 </div>
                                 <div class="my-2 txt-danger" style="font-size: 12px;line-height: 1;letter-spacing: 0.9px;" asp-validation-summary="All"></div>
-                                <p class="mt-4 mb-0">Don't have account?<a class="ml-2" href="sign-up.html">Create Account</a></p>
                             </form>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
         <script src="@Url.Content("~/Cuba/js/config.js")"></script>
         <partial name="_Partial_AlertMessage" />
         <partial name="_ValidationScriptsPartial" />
-        <script src="@Url.Content("~/Cuba/js/index_login.js")"></script>
+        <script src="@Url.Content("~/Page_js/index_login.js")"></script>
     </div>
 </body>
 </html>

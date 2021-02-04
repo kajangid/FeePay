@@ -24,6 +24,8 @@ namespace FeePay.Core.Application.DTOs
 
 
         [DisplayName("Due Date")]
+        [DataType(DataType.Date, ErrorMessage = "Invalid Date Format")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DueDate { get; set; }
 
         [Required]

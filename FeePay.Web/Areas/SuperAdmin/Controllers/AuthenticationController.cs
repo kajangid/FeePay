@@ -69,6 +69,14 @@ namespace FeePay.Web.Areas.SuperAdmin.Controllers
             return View(model);
         }
 
-
+        [HttpGet]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _LoginService.SuperAdminLogout();
+            _ILogger.LogInformation("User logged out.");
+            return RedirectToAction(nameof(AuthenticationController.Index), "Authentication");
+        }
     }
 }

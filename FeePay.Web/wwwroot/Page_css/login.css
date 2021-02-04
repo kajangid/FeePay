@@ -1,0 +1,58 @@
+﻿.form-group {
+    position: relative;
+}
+
+.login-card .login-main .form-group label.col-form-label {
+    transition: all 0.2s ease-in-out;
+}
+
+.login-card .login-main .form-group label.col-form-label {
+    position: absolute;
+    top: 15px;
+    left: 12px;
+    padding: 0 2px;
+    margin: 0;
+    line-height: 1;
+    background-color: #fff;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    font-size: 18px;
+    color: #6c757d;
+    z-index: 0;
+}
+
+.login-card .login-main .form-group input[type=text].form-control,
+.login-card .login-main .form-group input[type=email].form-control,
+.login-card .login-main .form-group input[type=password].form-control {
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+    color: #292D31;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    padding-right: 3.6rem;
+    height: 45px;
+    font-size: 18px;
+}
+
+.input-right-icon {
+    position: absolute;
+    top: 22px;
+    right: 15px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 15;
+}
+
+.login-card .login-main .form-group input[type=text].is-valid + .input-right-icon,
+.login-card .login-main .form-group input[type=password].is-valid + .input-right-icon,
+.login-card .login-main .form-group input[type=text].is-invalid + .input-right-icon,
+.login-card .login-main .form-group input[type=password].is-invalid + .input-right-icon {
+    right: 35px;
+}
+
+.input-right-icon {
+    transition: all 0.2s ease-in-out;
+}

@@ -15,24 +15,24 @@ using static FeePay.Core.Application.Enums.Notification;
 namespace FeePay.Web.Areas.School.Controllers
 {
     [Area("School")]
+    [Route("School/Academics")]
     [SchoolAdminAuthorize]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class AcademicController : AreaBaseController
     {
+        private readonly ILogger _logger;
+        private readonly IAcademicServices _academicServices;
         public AcademicController(ILogger<AcademicController> logger, IAcademicServices academicServices)
         {
             _logger = logger;
             _academicServices = academicServices;
         }
-        private readonly ILogger _logger;
-        private readonly IAcademicServices _academicServices;
 
 
 
         #region Classes
-        [HttpGet]
         [MvcDiscovery]
-        [Route("School/Academics/Classes")]
+        [HttpGet("Class/List")]
         [DisplayName("List Classes")]
         public async Task<IActionResult> ClassList()
         {
@@ -50,44 +50,22 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
 
-        [HttpGet]
         [MvcDiscovery]
-        [Route("School/Academics/Classes/Manage/{id?}")]
-        [DisplayName("Manage Classes")]
-        public async Task<IActionResult> ClassManage(int? id)
+        [HttpGet("Class/Add")]
+        [DisplayName("Add Class")]
+        public async Task<IActionResult> ClassAdd()
         {
-            if (id != null && id != 0)
-            {
-                ViewData["Title"] = "Update Class";
-                try
-                {
-                    var res = await _academicServices.FindClassByIdAsync(id ?? 0);
-                    if (res.Succeeded) return View(res.Data);
-                    AlertMessage(NotificationType.warning, "Warning", $"There is no data available for id = {id}");
-                    return RedirectToAction(nameof(ClassList));
-                }
-                catch (Exception ex)
-                {
-                    AlertMessage(NotificationType.error, "Error", $"error when getting Class data for id = {id}");
-                    _logger.LogError(ex, $"error when getting Class data for id = {id}");
-                    return RedirectToAction(nameof(ClassList));
-                }
-            }
-            else
-            {
-                ViewData["Title"] = "Create Class";
-                return View(await _academicServices.BindClassViewModelAsync());
-            }
+            ViewData["Title"] = "Create Class";
+            return View(await _academicServices.BindClassViewModelAsync());
         }
 
-        [HttpPost]
         [MvcDiscovery]
         [ValidateAntiForgeryToken]
-        [Route("School/Academics/Classes/Manage/{id?}")]
-        [DisplayName("Manage Classes")]
-        public async Task<IActionResult> ClassManage(ClassViewModel model, int? id)
+        [HttpPost("Class/Add")]
+        [DisplayName("Add Classes")]
+        public async Task<IActionResult> ClassAdd(ClassViewModel model)
         {
-            var IdPres = (model.Id == 0);
+            ViewData["Title"] = "Create Class";
             if (!ModelState.IsValid)
             {
                 AlertMessage(NotificationType.error, "Error", "Please fill all required fields and save again.");
@@ -98,38 +76,92 @@ namespace FeePay.Web.Areas.School.Controllers
                 var res = await _academicServices.AddOrEditClassAsync(model);
                 if (res.Succeeded)
                 {
-                    AlertMessage(NotificationType.success, "Success", $"Class is done {(IdPres ? "creating" : "updating")}");
+                    AlertMessage(NotificationType.success, "Success", $"Class is added.");
                     return RedirectToAction(nameof(ClassList));
                 }
                 else
                 {
                     AlertMessage(NotificationType.warning, "", "Class is already present with same name.");
-                    return View(await _academicServices.BindClassViewModelAsync(model));
+                    _logger.LogWarning("Could not add class  :: Error: {0} ", res.Message);
                 }
             }
             catch (Exception ex)
             {
-                AlertMessage(NotificationType.error, "Error", $"error when {(IdPres ? "creating" : "updating")} class for id = {id}");
-                _logger.LogError(ex, $"error when {(IdPres ? "creating" : "updating")} class for id = {id}");
-                return View(await _academicServices.BindClassViewModelAsync(model));
+                AlertMessage(NotificationType.error, "Error", $"error when adding new class.");
+                _logger.LogError(ex, $"Error Adding new class.");
+            }
+            return View(await _academicServices.BindClassViewModelAsync(model));
+        }
+
+        [MvcDiscovery]
+        [HttpGet("Class/Edit/{id:int}")]
+        [DisplayName("Edit Class")]
+        public async Task<IActionResult> ClassEdit(int id)
+        {
+            ViewData["Title"] = "Update Class";
+            try
+            {
+                var res = await _academicServices.FindClassByIdAsync(id);
+                if (res.Succeeded) return View(res.Data);
+                AlertMessage(NotificationType.warning, "Warning", $"There is no data available.");
+                return RedirectToAction(nameof(ClassList));
+            }
+            catch (Exception ex)
+            {
+                AlertMessage(NotificationType.error, "Error", $"error when getting Class data.");
+                _logger.LogError(ex, $"error when getting Class data for id = {id}");
+                return RedirectToAction(nameof(ClassList));
             }
         }
 
-        [HttpDelete]
         [MvcDiscovery]
-        [Route("School/Academics/Classes/Delete")]
+        [ValidateAntiForgeryToken]
+        [HttpPost("Class/Edit/{id:int}")]
+        [DisplayName("Edit Class")]
+        public async Task<IActionResult> ClassEdit(ClassViewModel model, int id)
+        {
+            ViewData["Title"] = "Update Class";
+            if (!ModelState.IsValid)
+            {
+                AlertMessage(NotificationType.error, "Error", "Please fill all required fields and save again.");
+                return View(await _academicServices.BindClassViewModelAsync(model));
+            }
+            try
+            {
+                var res = await _academicServices.AddOrEditClassAsync(model);
+                if (res.Succeeded)
+                {
+                    AlertMessage(NotificationType.success, "Success", $"Class is updated.");
+                    return RedirectToAction(nameof(ClassList));
+                }
+                else
+                {
+                    AlertMessage(NotificationType.warning, "", "Class is already present with same name.");
+                    _logger.LogWarning("Could not update class  :: Error: {0} ", res.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                AlertMessage(NotificationType.error, "Error", $"error when updating new class.");
+                _logger.LogError(ex, $"Error updating new class.");
+            }
+            return View(await _academicServices.BindClassViewModelAsync(model));
+        }
+
+
+        [MvcDiscovery]
+        [HttpDelete("Class/Delete/{id:int}")]
         [DisplayName("Delete Class")]
-        public IActionResult ClassDelete()
+        public IActionResult ClassDelete(int id)
         {
             return View();
         }
         #endregion
 
         #region Sections
-        [HttpGet]
         [MvcDiscovery]
-        [DisplayName("List Sections")]
-        [Route("School/Academics/Sections")]
+        [DisplayName("List Section")]
+        [HttpGet("Section/List")]
         public async Task<IActionResult> SectionList()
         {
             try
@@ -146,44 +178,21 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
 
-        [HttpGet]
         [MvcDiscovery]
-        [DisplayName("Manage Classes")]
-        [Route("School/Academics/Sections/Manage/{id?}")]
-        public async Task<IActionResult> SectionManage(int? id)
+        [DisplayName("Add Section")]
+        [HttpGet("Section/Add")]
+        public IActionResult SectionAdd()
         {
-            if (id != null && id != 0)
-            {
-                ViewData["Title"] = "Update Section";
-                try
-                {
-                    var res = await _academicServices.FindSectionByIdAsync(id ?? 0);
-                    if (res.Succeeded) return View(res.Data);
-                    AlertMessage(NotificationType.warning, "Warning", $"There is no data available for id = {id}");
-                    return RedirectToAction(nameof(SectionList));
-                }
-                catch (Exception ex)
-                {
-                    AlertMessage(NotificationType.error, "Error", $"error when getting section data for id = {id}");
-                    _logger.LogError(ex, $"error when getting section data for id = {id}");
-                    return RedirectToAction(nameof(SectionList));
-                }
-            }
-            else
-            {
-                ViewData["Title"] = "Create Section";
-                return View(new SectionViewModel());
-            }
+            ViewData["Title"] = "Create Section";
+            return View(new SectionViewModel());
         }
 
-        [HttpPost]
         [MvcDiscovery]
         [ValidateAntiForgeryToken]
-        [DisplayName("Manage Classes")]
-        [Route("School/Academics/Sections/Manage/{id?}")]
-        public async Task<IActionResult> SectionManage(SectionViewModel model, int? id)
+        [DisplayName("Add Section")]
+        [HttpPost("Section/Add")]
+        public async Task<IActionResult> SectionAdd(SectionViewModel model)
         {
-            var IdPres = (model.Id == 0);
             if (!ModelState.IsValid)
             {
                 AlertMessage(NotificationType.error, "Error", "Please fill all required fields and save again.");
@@ -194,38 +203,91 @@ namespace FeePay.Web.Areas.School.Controllers
                 var res = await _academicServices.AddOrEditSectionAsync(model);
                 if (res.Succeeded)
                 {
-                    AlertMessage(NotificationType.success, "Success", $"Section is done {(IdPres ? "creating" : "updating")}");
+                    AlertMessage(NotificationType.success, "Success", $"Section Added.");
                     return RedirectToAction(nameof(SectionList));
                 }
                 else
                 {
                     AlertMessage(NotificationType.warning, "", "Section is already present with same name.");
-                    return View(model);
+                    _logger.LogWarning("error when adding section.{0}", res.Message, res.Errors);
                 }
             }
             catch (Exception ex)
             {
-                AlertMessage(NotificationType.error, "Error", $"error when {(IdPres ? "creating" : "updating")} section for id = {id}");
-                _logger.LogError(ex, $"error when {(IdPres ? "creating" : "updating")} section for id = {id}");
-                return View(model);
+                AlertMessage(NotificationType.error, "Error", "error when adding section.");
+                _logger.LogError(ex, "error when adding section.");
+            }
+            return View(model);
+        }
+
+        [MvcDiscovery]
+        [DisplayName("Edit Section")]
+        [HttpGet("Section/Edit/{id:int}")]
+        public async Task<IActionResult> SectionEdit(int id)
+        {
+            ViewData["Title"] = "Update Section";
+            try
+            {
+                var res = await _academicServices.FindSectionByIdAsync(id);
+                if (res.Succeeded) return View(res.Data);
+                AlertMessage(NotificationType.warning, "Error", $"Section Not Found.");
+                _logger.LogWarning("Error when getting section data for id = {0} :: Error:{1}", id, res.Message);
+                return RedirectToAction(nameof(SectionList));
+            }
+            catch (Exception ex)
+            {
+                AlertMessage(NotificationType.error, "Error", $"Error Getting Section Data.");
+                _logger.LogError(ex, $"error when getting section data.");
+                return RedirectToAction(nameof(SectionList));
             }
         }
 
-        [HttpDelete]
         [MvcDiscovery]
-        [DisplayName("Delete Class")]
-        [Route("School/Academics/Sections/Delete")]
-        public IActionResult SectionDelete()
+        [ValidateAntiForgeryToken]
+        [DisplayName("Edit Section")]
+        [HttpPost("Section/Edit/{id:int}")]
+        public async Task<IActionResult> SectionEdit(SectionViewModel model, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                AlertMessage(NotificationType.error, "Error", "Please fill all required fields and save again.");
+                return View(model);
+            }
+            try
+            {
+                var res = await _academicServices.AddOrEditSectionAsync(model);
+                if (res.Succeeded)
+                {
+                    AlertMessage(NotificationType.success, "Success", $"Section Edited.");
+                    return RedirectToAction(nameof(SectionList));
+                }
+                else
+                {
+                    AlertMessage(NotificationType.warning, "", "Section is already present with same name.");
+                    _logger.LogWarning("error when editing section.sectionId={1}::{0}", res.Message, id);
+                }
+            }
+            catch (Exception ex)
+            {
+                AlertMessage(NotificationType.error, "Error", "error when editing section.");
+                _logger.LogError(ex, "error when editing section.sectioId={0}", id);
+            }
+            return View(model);
+        }
+
+        [MvcDiscovery]
+        [DisplayName("Delete Section")]
+        [HttpDelete("Section/Delete/{id:int}")]
+        public IActionResult SectionDelete(int id)
         {
             return View();
         }
         #endregion
 
         #region Session
-        [HttpGet]
         [MvcDiscovery]
-        [DisplayName("List Sessions")]
-        [Route("School/Academics/Sessions")]
+        [DisplayName("List Session")]
+        [HttpGet("Session/List")]
         public async Task<IActionResult> SessionList()
         {
             try
@@ -242,44 +304,22 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
 
-        [HttpGet]
         [MvcDiscovery]
-        [DisplayName("Manage Classes")]
-        [Route("School/Academics/Sessions/Manage/{id?}")]
-        public async Task<IActionResult> SessionManage(int? id)
+        [DisplayName("Add Session")]
+        [HttpGet("Session/Add")]
+        public IActionResult SessionAdd()
         {
-            if (id != null && id != 0)
-            {
-                ViewData["Title"] = "Update Session";
-                try
-                {
-                    var res = await _academicServices.FindSessionByIdAsync(id ?? 0);
-                    if (res.Succeeded) return View(res.Data);
-                    AlertMessage(NotificationType.warning, "Warning", $"There is no data available for id = {id}");
-                    return RedirectToAction(nameof(SessionList));
-                }
-                catch (Exception ex)
-                {
-                    AlertMessage(NotificationType.error, "Error", $"error when getting session data for id = {id}");
-                    _logger.LogError(ex, $"error when getting session data for id = {id}");
-                    return RedirectToAction(nameof(SessionList));
-                }
-            }
-            else
-            {
-                ViewData["Title"] = "Create Session";
-                return View(new SessionViewModel());
-            }
+            ViewData["Title"] = "Create Session";
+            return View(new SessionViewModel());
         }
 
-        [HttpPost]
         [MvcDiscovery]
         [ValidateAntiForgeryToken]
-        [DisplayName("Manage Classes")]
-        [Route("School/Academics/Sessions/Manage/{id?}")]
-        public async Task<IActionResult> SessionManage(SessionViewModel model, int? id)
+        [DisplayName("Add Session")]
+        [HttpPost("Session/Add")]
+        public async Task<IActionResult> SessionAdd(SessionViewModel model)
         {
-            var IdPres = (model.Id == 0);
+            ViewData["Title"] = "Create Session";
             if (!ModelState.IsValid)
             {
                 AlertMessage(NotificationType.error, "Error", "Please fill all required fields and save again.");
@@ -290,27 +330,80 @@ namespace FeePay.Web.Areas.School.Controllers
                 var res = await _academicServices.AddOrEditSessionAsync(model);
                 if (res.Succeeded)
                 {
-                    AlertMessage(NotificationType.success, "Success", $"Session is done {(IdPres ? "creating" : "updating")}");
+                    AlertMessage(NotificationType.success, "Success", $"Session added");
                     return RedirectToAction(nameof(SessionList));
                 }
                 else
                 {
                     AlertMessage(NotificationType.warning, "", "Session is already present with same name.");
-                    return View(model);
                 }
             }
             catch (Exception ex)
             {
-                AlertMessage(NotificationType.error, "Error", $"error when {(IdPres ? "creating" : "updating")} session for id = {id}");
-                _logger.LogError(ex, $"error when {(IdPres ? "creating" : "updating")} session for id = {id}");
-                return View(model);
+                AlertMessage(NotificationType.error, "Error", $"Error adding session.");
+                _logger.LogError(ex, $"error when adding session");
+            }
+            return View(model);
+        }
+
+        [MvcDiscovery]
+        [DisplayName("Edit Session")]
+        [HttpGet("Session/Edit/{id:int}")]
+        public async Task<IActionResult> SessionEdit(int id)
+        {
+            ViewData["Title"] = "Update Session";
+            try
+            {
+                var res = await _academicServices.FindSessionByIdAsync(id);
+                if (res.Succeeded) return View(res.Data);
+                AlertMessage(NotificationType.warning, "Warning", $"Session is not found.");
+                return RedirectToAction(nameof(SessionList));
+            }
+            catch (Exception ex)
+            {
+                AlertMessage(NotificationType.error, "Error", $"Error getting session.");
+                _logger.LogError(ex, $"error when getting session data for id = {id}");
+                return RedirectToAction(nameof(SessionList));
             }
         }
 
-        [HttpDelete]
         [MvcDiscovery]
-        [DisplayName("Delete Class")]
-        [Route("School/Academics/Sessions/Delete")]
+        [ValidateAntiForgeryToken]
+        [DisplayName("Edit Session")]
+        [HttpPost("Session/Edit/{id:int}")]
+        public async Task<IActionResult> SessionEdit(SessionViewModel model, int id)
+        {
+            ViewData["Title"] = "Update Session";
+            if (!ModelState.IsValid)
+            {
+                AlertMessage(NotificationType.error, "Error", "Please fill all required fields and save again.");
+                return View(model);
+            }
+            try
+            {
+                var res = await _academicServices.AddOrEditSessionAsync(model);
+                if (res.Succeeded)
+                {
+                    AlertMessage(NotificationType.success, "Success", $"Session edited");
+                    return RedirectToAction(nameof(SessionList));
+                }
+                else
+                {
+                    AlertMessage(NotificationType.warning, "", "Session is already present with same name.");
+                    _logger.LogWarning($"error when editing session. sessionid:{id},Error:{res.Message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                AlertMessage(NotificationType.error, "Error", $"Error editing session.");
+                _logger.LogError(ex, $"error when editing session. sessionid:{id}");
+            }
+            return View(model);
+        }
+
+        [MvcDiscovery]
+        [DisplayName("Delete Session")]
+        [HttpDelete("School/Academics/Sessions/Delete")]
         public IActionResult SessionDelete()
         {
             return View();

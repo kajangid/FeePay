@@ -156,5 +156,23 @@ namespace FeePay.Core.Application.Services.Student
             UserPasswordViewModel StudentNamePass = _mapper.Map<UserPasswordViewModel>(Student);
             return new Response<UserPasswordViewModel>(StudentNamePass);
         }
+
+        #region STUDENT PROFILE 
+        public async Task<Response<StudentAdmissionViewModel>> StudentProfileAsync()
+        {
+            int studentId = Convert.ToInt32(_loginService.GetLogedInStudentId());
+            string SchoolUniqueId = _appContextAccessor.ClaimSchoolUniqueId();
+            var studentProfile = await _unitOfWork.StudentAdmision.FindByStudentLoginIdAsync(studentId, SchoolUniqueId);
+            if (studentProfile == null) return new Response<StudentAdmissionViewModel>
+                    ("Student Profile not found. Please Talk to the school administration.");
+
+            var studentProfileModel = _mapper.Map<StudentAdmissionViewModel>(studentProfile);
+            studentProfileModel.StudentClass = await _unitOfWork.ClassRepo.FindByIdAsync(studentProfileModel.ClassId, SchoolUniqueId);
+            studentProfileModel.StudentSection = await _unitOfWork.SectionRepo.FindByIdAsync(studentProfileModel.SectionId, SchoolUniqueId);
+
+            return new Response<StudentAdmissionViewModel>(studentProfileModel);
+        }
+
+        #endregion
     }
 }

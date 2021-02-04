@@ -11,16 +11,31 @@ namespace FeePay.Core.Application.Interface.Repository.SuperAdmin
 {
     public interface ISuperAdminUserRepository
     {
-        Task<int> AddUserAsync(SuperAdminUser user, string dbId = null);
-        Task<int> UpdateUserAsync(SuperAdminUser user, string dbId = null);
-        Task<int> DeleteUserAsync(int Id, string dbId = null);
-        Task<SuperAdminUser> FindUserByUserIdAsync(int userId, string dbId = null);
-        Task<SuperAdminUser> FindUserByUserNameAsync(string normalizedUserName, string dbId = null);
-        Task<SuperAdminUser> FindUserByUserEmailAsync(string normalizedEmail, string dbId = null);
-        Task<SuperAdminUser> FindActiveUserByUserIdAsync(int userId, string dbId = null);
-        Task<SuperAdminUser> FindActiveUserByUserNameAsync(string normalizedUserName, string dbId = null);
-        Task<SuperAdminUser> FindActiveUserByUserEmailAsync(string normalizedEmail, string dbId = null);
-        Task<IList<SuperAdminUser>> FindAllActiveUserAsync(string dbId = null);
-        Task UpdateLoginState(int userId, string Ip, string dbId = null);
+        Task<int> AddAsync(SuperAdminUser user);
+        Task<int> UpdateAsync(SuperAdminUser user);
+        Task<int> DeleteAsync(int Id);
+
+        // Find
+        Task<SuperAdminUser> FindByIdAsync(int userId, bool? isActive = null);
+        Task<SuperAdminUser> FindByUserNameAsync(string normalizedUserName, bool? isActive = null);
+        Task<SuperAdminUser> FindByEmailAsync(string normalizedEmail, bool? isActive = null);
+
+        // Get
+        Task<IEnumerable<SuperAdminUser>> GetAllAsync(bool? isActive = null);
+        Task<IEnumerable<SuperAdminUser>> GetAll_WithAddEditUserAsync(bool? isActive = null);
+
+        // Search
+        /// <summary>
+        /// Search data in NormalizedUserName,NormalizedEmail,PhoneNumber,FirstName,LastName
+        /// </summary>
+        /// <param name="searchParam"> search string </param>
+        /// <param name="isActive">active[true]/inactive[false]/all[null]</param>
+        /// <returns> List of Super admin user data</returns>
+        Task<IEnumerable<SuperAdminUser>> Search_WithAddEdirUserAsync(string searchParam, bool? isActive = null);
+
+
+        // Misc
+        Task UpdateLoginState(int userId, string Ip);
+        Task<SuperAdminUser> FindPasswordByIdAsync(int id, bool? isActive = null);
     }
 }

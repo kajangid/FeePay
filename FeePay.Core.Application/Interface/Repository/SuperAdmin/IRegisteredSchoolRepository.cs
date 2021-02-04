@@ -12,13 +12,11 @@ namespace FeePay.Core.Application.Interface.Repository.SuperAdmin
         Task<int> AddAsync(RegisteredSchool school);
         Task<int> UpdateAsync(RegisteredSchool school);
         Task<int> DeleteAsync(int Id);
-        Task<RegisteredSchool> GetByNameAsync(string normalizedName);
-        Task<RegisteredSchool> GetByIdAsync(int schoolId);
-        Task<RegisteredSchool> GetByUniqueIdAsync(string schoolUniqueID);
-        Task<RegisteredSchool> GetActiveByNameAsync(string normalizedName);
-        Task<RegisteredSchool> GetActiveByIdAsync(int schoolId);
-        Task<RegisteredSchool> GetActiveByUniqueIdAsync(string schoolUniqueID);
-        Task<IList<RegisteredSchool>> GetAllActiveAsync();
+        Task<RegisteredSchool> FindByNameAsync(string normalizedName, bool? isActive = null);
+        Task<RegisteredSchool> FindByIdAsync(int schoolId, bool? isActive = null);
+        Task<RegisteredSchool> FindByUniqueIdAsync(string schoolUniqueID, bool? isActive = null);
+        Task<IEnumerable<RegisteredSchool>> GetAllAsync(bool? isActive = null);
+        Task<IEnumerable<RegisteredSchool>> GetAll_WithAddEditUserAsync(bool? isActive = null);
 
     }
 }

@@ -2,18 +2,68 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    @@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
 
-<h1>Master</h1>
+    body {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
 
-<a asp-action="Index" asp-controller="Authentication" asp-area="SuperAdmin">SA Login</a> |
-<a asp-action="Register" asp-controller="Account" asp-area="SuperAdmin">SA Register</a>
+    .cardContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 10px;
+        padding: 10px;
+    }
 
-<h1>school</h1>
+    .colorCard {
+        width: 300px;
+        margin: 30px;
+        font-family: 'Roboto', sans-serif;
+        color: #fafafc;
+        background: rgb(183,14,230);
+        background: linear-gradient(0deg, rgba(183,14,230,1) 0%, rgba(247,45,253,1) 100%);
+        border-radius: 25px;
+        box-shadow: 2px 2px 1px #868891;
+        padding: 10px;
+    }
 
-<a asp-action="Index" asp-controller="Authentication" asp-area="School">School Login</a> |
-<a asp-action="Register" asp-controller="Account" asp-area="School">School Register</a>
+        .colorCard a {
+            font-family: 'Roboto', sans-serif;
+            letter-spacing: 2px;
+            border-width: 0;
+            border-radius: 5px;
+            color: #244500;
+            background: rgb(166,235,203);
+            background: linear-gradient(0deg, rgba(166,235,203,1) 0%, rgba(247,255,243,1) 100%);
+            transition: .3s;
+            padding: 5px 30px;
+            text-decoration: none;
+        }
 
-<h1>Student</h1>
+            .colorCard a:hover, .colorCard a:active, .colorCard a:focus {
+                text-decoration: none;
+            }
+</style>
 
-<a asp-action="Index" asp-controller="Authentication" asp-area="Student">Student Login</a> |
-<a asp-action="Register" asp-controller="Account" asp-area="Student">Student Register</a>
+
+<div class="colorCard">
+    <div class="cardContent">
+        <h3>Master</h3>
+        <a asp-action="Index" asp-controller="Authentication" asp-area="SuperAdmin">Login</a>
+    </div>
+</div><div class="colorCard">
+    <div class="cardContent">
+        <h3>School</h3>
+        <a asp-action="Index" asp-controller="Authentication" asp-area="School">Login</a>
+    </div>
+</div>
+<div class="colorCard">
+    <div class="cardContent">
+        <h3>Student</h3>
+        <a asp-action="Index" asp-controller="Authentication" asp-area="Student">Login</a>
+    </div>
+</div>

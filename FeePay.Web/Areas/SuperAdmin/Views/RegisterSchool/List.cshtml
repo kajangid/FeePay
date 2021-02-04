@@ -1,0 +1,119 @@
+﻿@model IEnumerable<RegisterSchoolViewModel>
+@{
+    var random = new Random();
+    var ColorList = new List<string> { "primary", "secondary", "success", "info", "dark", "light", "danger", "warning" };
+}
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
+}
+@section PluginScripts{
+    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
+}
+@section Scripts{
+    <script>
+        (function () {
+            "use strict";
+            $('#registerSchoolListTable').DataTable({ "order": [[6, 'desc']] });
+            $('#registerSchoolListTable').reArrangeDatatableSerialNumber();
+        })(jQuery);
+    </script>
+}
+
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("List","RegisterSchool")"> Register School </a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header b-r-info b-l-info border-3">
+                    <h5>
+                        <a asp-action="Add" asp-controller="RegisterSchool">
+                            <i class="fa fa-plus"></i> Register School
+                        </a>
+                    </h5>
+                    <div class="card-header-right">
+                        <ul class="list-unstyled card-option">
+                            <li><i class="fa fa-spin fa-cog"></i></li>
+                            <li><i class="icofont icofont-maximize full-card"></i></li>
+                            <li><i class="icofont icofont-minus minimize-card"></i></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body" style="">
+                    <div class="table-responsive">
+                        <table class="hover" id="registerSchoolListTable" data-type="datatable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>principal Name</th>
+                                    <th>Contact Number</th>
+                                    <th>Is Approved</th>
+                                    <th>Modify By</th>
+                                    <th>Modify date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            var color = ColorList.OrderBy(s => random.NextDouble()).First();
+                                            var color1 = ColorList.OrderBy(s => random.NextDouble()).First();
+                                            <tr data-key="@item.Id">
+                                                <td></td>
+                                                <td>@item.Name</td>
+                                                <td>@item.PrincipalName</td>
+                                                <td>@item.ContactNumber</td>
+                                                <td>
+                                                    <input asp-for="@item.IsApproved" type="checkbox" data-action="approverow"
+                                                           data-ajaxurl="@Url.Action("Approve","RegisterSchool",new { id = item.Id })">
+                                                </td>
+                                                <td>
+                                                    <a asp-action="UserProfile" asp-controller="Account" asp-route-id="@item.ModifyById"
+                                                       class="btn btn-xs btn-@(color)">@item.ModifyBy</a>
+                                                </td>
+                                                <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
+                                                <td>
+                                                    <a asp-action="Edit" asp-controller="RegisterSchool" asp-route-id="@item.Id"
+                                                       data-container="body" data-toggle="popover" data-placement="top"
+                                                       title="Edit Class" class="d-inline-block mr-1">
+                                                        <i data-feather="edit-3"></i>
+                                                    </a>
+                                                    <a asp-action="Delete" asp-controller="RegisterSchool" asp-route-id="@item.Id"
+                                                       data-action="deleterow" data-actionmag="Register School" data-container="body"
+                                                       data-toggle="popover" data-placement="top" title="Delete Class"
+                                                       class="d-inline-block">
+                                                        <i data-feather="trash-2"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

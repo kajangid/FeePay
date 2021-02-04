@@ -1,0 +1,154 @@
+﻿@using FeePay.Core.Application.Interface;
+@model IEnumerable<StudentFeesViewModel>
+
+@inject ICultureFormatProvider _cultureFormatProvider
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
+
+
+}
+@section Scripts{
+    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function ($) {
+            "use strict";
+            var tbl = $('table[id="feestable"]');
+            var allCb = $('input[name="assignCkAll"]');
+            var assignCb = $('.select-checkbox');
+            if ($('.select-checkbox:checked').length === assignCb.length) { allCb.prop('checked', true); }
+            allCb.on('click', function (e) {
+                var $this = $(this);
+                var cboxlist = tbl.find('tbody tr th:last-child').find('input[type="checkbox"]');
+                if (typeof (cboxlist) != "undefined" && cboxlist != null && cboxlist.length > 0) {
+                    if ($this.prop('checked')) { $.each(cboxlist, function (i, v) { $(v).prop('checked', true); }); }
+                    else { $.each(cboxlist, function (i, v) { $(v).prop('checked', false); }); }
+                }
+                calculateSelectedAmount();
+            });
+            assignCb.on('click', function (e) {
+                var cboxlist = tbl.find('tbody tr th:last-child').find('input[type="checkbox"]');
+                if (typeof (cboxlist) != "undefined" && cboxlist != null && cboxlist.length > 0) {
+                    if ($('.select-checkbox:checked').length == assignCb.length) {
+                        allCb.prop('checked', true);
+                    } else {
+                        allCb.prop('checked', false);
+                    }
+                }
+                calculateSelectedAmount();
+            });
+            function calculateSelectedAmount() {
+                var tr = $('.select-checkbox:checked').closest('tr');
+                var amountPay = 0;
+                $.each(tr, function (i, v) {
+                    var amountTd = $(v).find('td[data-amount]');
+                    if (amountTd != null && amountTd != '')
+                        amountPay += parseFloat(amountTd.attr('data-amount'));
+                });
+                var formatedAmount = new Intl.NumberFormat('en-IN', {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
+                }).format(amountPay);
+                $('[data-paying="amount"]').html(formatedAmount);
+            }
+            $('#feepay').on('submit', function (e) {
+                var swalWithBootstrapButtons = Swal.mixin(global_swanMixin);
+                if ($('.select-checkbox:checked').length <= 0) {
+                    e.preventDefault();
+                    swalWithBootstrapButtons.fire('Please select a fee to proceed.')
+                    return false;
+                } else { }
+            });
+        })(jQuery)
+    </script>
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="edit-profile">
+        <div class="row">
+            <div class="col-sm-12">
+                <form id="feepay" asp-action="Index" asp-controller="FeeManage" asp-area="Student" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="feestable" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Fees Name</th>
+                                            <th>Fees Code</th>
+                                            <th>Due Date</th>
+                                            <th>Status</th>
+                                            <th>Amount (₹)</th>
+                                            <th scope="col">
+                                                <label class="m-0" for="chk-ani"><input class="checkbox_animated" id="chk-ani" name="assignCkAll" type="checkbox">All</label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    @if (Model != null)
+                                    {
+                                        int counter = 0;
+                                        <tbody>
+                                            @foreach (var fee in Model)
+                                            {
+                                                <tr>
+                                                    <td>@fee.FeeTypeName</td>
+                                                    <td>@fee.FeeTypeCode</td>
+                                                    <td>@(fee.DueDate?.ToString("dd/MM/yyyy"))</td>
+                                                    <td>@fee.Status</td>
+                                                    <td data-amount="@fee.FeeAmount">@(_cultureFormatProvider.FormatCurrencyIntoIndianCalture(fee.FeeAmount))</td>
+                                                    <th scope="row">
+                                                        <label class="m-0" asp-for="@fee.IsSelected">
+                                                            <input class="checkbox_animated select-checkbox" name="FeeDeposit[@counter].IsSelected" asp-for="@fee.IsSelected" type="checkbox">
+                                                            <input type="hidden" name="FeeDeposit[@counter].StudentFeeId" asp-for="@fee.Id" />
+                                                            <input type="hidden" name="FeeDeposit[@counter].FeeTypeCode" asp-for="@fee.FeeTypeCode" />
+                                                        </label>
+                                                    </th>
+                                                </tr>
+                                                counter++;
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>@( _cultureFormatProvider.FormatCurrencyIntoIndianCalture(Model.Sum(s => s.FeeAmount)))</td>
+                                                <th scope="row"></th>
+                                            </tr>
+                                        </tfoot>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer border-0">
+                            <div class="row">
+                                <div class="col text-right">
+                                    <p class="d-inline">Pay Amount: ₹ <span class="blockquote mr-5" data-paying="amount">0.00</span></p>
+                                    <input type="submit" class="btn btn-outline-primary" value="Pay fee" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

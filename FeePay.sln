@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeePay.Core.Application", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeePay.Web", "FeePay.Web\FeePay.Web.csproj", "{54612D46-15B2-4BB0-B688-23B7361EE249}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeePay.Infrastructure.PayPal", "FeePay.Infrastructure.PayPal\FeePay.Infrastructure.PayPal.csproj", "{0324666A-BD7D-45F6-977B-A1B8D70E95CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{54612D46-15B2-4BB0-B688-23B7361EE249}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54612D46-15B2-4BB0-B688-23B7361EE249}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54612D46-15B2-4BB0-B688-23B7361EE249}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0324666A-BD7D-45F6-977B-A1B8D70E95CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0324666A-BD7D-45F6-977B-A1B8D70E95CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0324666A-BD7D-45F6-977B-A1B8D70E95CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0324666A-BD7D-45F6-977B-A1B8D70E95CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +88,7 @@ Global
 		{89BFD9A9-B790-4669-95F0-7249175A3C80} = {F7505CED-8186-41A7-B878-BF7A0C33F4F1}
 		{832901CD-97EA-4BC9-B2D6-15582EF3A32D} = {0A11AD4E-F32C-464B-A3C5-4B86CA16FB7A}
 		{54612D46-15B2-4BB0-B688-23B7361EE249} = {17E84DFC-1CE6-436C-8400-11EE233D6984}
+		{0324666A-BD7D-45F6-977B-A1B8D70E95CC} = {F7505CED-8186-41A7-B878-BF7A0C33F4F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A1B6827-526A-42B3-B154-B152959AC106}

@@ -1,31 +1,70 @@
-﻿CREATE PROCEDURE [dbo].[SP_GetAll_SuperAdmin_User]
+﻿-- =============================================
+-- Author:		Karan
+-- Create date: 26-12-2020
+-- Description:	Sp to get all and search super user data with add edit user
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_GetAll_SuperAdmin_User]
 (
-@Id INT = 0
-,@UserName NVARCHAR(256) = NULL
-,@NormalizedUserName NVARCHAR(256) = NULL
-,@Email NVARCHAR(256) = NULL
-,@NormalizedEmail NVARCHAR(256) = NULL
-,@PhoneNumber NVARCHAR(50) = NULL
-,@IsActive BIT = 1
-,@ModifyBy INT = 0
-,@AddedBy INT = 0
+@IsActive			BIT				= NULL,
+@SearchParam		NVARCHAR(150)	= NUll
 )
 AS
 BEGIN
-	SELECT TOP(100)  [Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PhoneNumber],
-			[PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDate], [LockoutEnabled], [AccessFailedCount], [SecurityStamp],
-			[FirstName], [LastName], [FullName], [Photo], [City], [LastLoginIP], [LastLoginDate], [IsActive], [ModifyDate],
-			[ModifyBy], [AddedDate], [AddedBy]
-	FROM [dbo].[SuperAdmin_User] WHERE
-			[IsDelete] = 0 AND
-			([Id] != 0 AND [Id] = @Id) OR
-			([UserName] IS NOT NULL AND [UserName] = @UserName) OR
-			([NormalizedUserName] IS NOT NULL AND [NormalizedUserName] = @NormalizedUserName) OR
-			([Email] IS NOT NULL AND [Email] = @Email) OR
-			([NormalizedEmail] IS NOT NULL AND [NormalizedEmail] = @NormalizedEmail) OR
-			([PhoneNumber] IS NOT NULL AND [PhoneNumber] = @PhoneNumber) OR			
-			([IsActive] IS NOT NULL AND [IsActive] = @IsActive) OR
-			([ModifyBy] != 0 AND [ModifyBy] = @ModifyBy) OR
-			([AddedBy] !=0 AND [AddedBy] = @AddedBy)
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	IF(@SearchParam IS NOT NULL AND @SearchParam <> N'')
+		BEGIN
+			SELECT [sa].[Id],[sa].[UserName],[sa].[NormalizedUserName],[sa].[Email],[sa].[NormalizedEmail],[sa].[EmailConfirmed],
+				[sa].[PhoneNumber],[sa].[PhoneNumberConfirmed],[sa].[TwoFactorEnabled],[sa].[LockoutEndDate],[sa].[LockoutEnabled],
+				[sa].[AccessFailedCount],[sa].[SecurityStamp],[sa].[FirstName],[sa].[LastName],[sa].[Photo],[sa].[City],
+				[sa].[LastLoginIP],[sa].[LastLoginDate],[sa].[IsActive],[sa].[ModifyDate],[sa].[AddedDate] 
+				, [t1].[Id], [t1].[FullName], [t1].[UserName] --<-------- Added By
+				, [t2].[Id], [t2].[FullName], [t2].[UserName] --<-------- ModifyBy
+			FROM [dbo].[SuperAdmin_User] [sa]
+				OUTER APPLY (
+							SELECT [ab].[Id],[ab].[FullName],[ab].[Email],[ab].[UserName]
+							FROM   [dbo].[SuperAdmin_User] [ab]
+							WHERE  [ab].[Id] = [sa].[AddedBy] AND [ab].[IsDelete] = 0 AND [ab].[IsActive] = 1) [t1]
 
+				OUTER APPLY (
+							SELECT [mb].[Id],[mb].[FullName],[mb].[Email],[mb].[UserName]
+							FROM   [dbo].[SuperAdmin_User] [mb]
+							WHERE  [mb].[Id] = [sa].[ModifyBy] AND [mb].[IsDelete] = 0 AND [mb].[IsActive] = 1) [t2]
+			WHERE
+				[sa].[IsDelete] = 0 AND
+				[sa].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEn @IsActive ELSE [sa].[IsActive] END AND
+				(
+				[sa].[NormalizedUserName] LIKE '%'+@SearchParam+'%' OR
+				[sa].[NormalizedEmail] LIKE '%'+@SearchParam+'%' OR
+				[sa].[PhoneNumber] LIKE '%'+@SearchParam+'%' OR
+				[sa].[FirstName] LIKE '%'+@SearchParam+'%' OR
+				[sa].[LastName] LIKE '%'+@SearchParam+'%' 
+				)
+			RETURN
+		END
+	ELSE
+		BEGIN
+			SELECT [sa].[Id],[sa].[UserName],[sa].[NormalizedUserName],[sa].[Email],[sa].[NormalizedEmail],[sa].[EmailConfirmed],
+				[sa].[PhoneNumber],[sa].[PhoneNumberConfirmed],[sa].[TwoFactorEnabled],[sa].[LockoutEndDate],[sa].[LockoutEnabled],
+				[sa].[AccessFailedCount],[sa].[SecurityStamp],[sa].[FirstName],[sa].[LastName],[sa].[Photo],[sa].[City],
+				[sa].[LastLoginIP],[sa].[LastLoginDate],[sa].[IsActive],[sa].[ModifyDate],[sa].[AddedDate] 
+				, [t1].[Id], [t1].[FullName], [t1].[UserName] --<-------- Added By
+				, [t2].[Id], [t2].[FullName], [t2].[UserName] --<-------- ModifyBy
+			FROM [dbo].[SuperAdmin_User] [sa]
+				OUTER APPLY (
+							SELECT [ab].[Id],[ab].[FullName],[ab].[Email],[ab].[UserName]
+							FROM   [dbo].[SuperAdmin_User] [ab]
+							WHERE  [ab].[Id] = [sa].[AddedBy] AND [ab].[IsDelete] = 0 AND [ab].[IsActive] = 1) [t1]
+
+				OUTER APPLY (
+							SELECT [mb].[Id],[mb].[FullName],[mb].[Email],[mb].[UserName]
+							FROM   [dbo].[SuperAdmin_User] [mb]
+							WHERE  [mb].[Id] = [sa].[ModifyBy] AND [mb].[IsDelete] = 0 AND [mb].[IsActive] = 1) [t2]
+			WHERE
+				[sa].[IsDelete] = 0 AND
+				[sa].[IsActive] = CASE WHEN @IsActive IS NOT NULL THEn @IsActive ELSE [sa].[IsActive] END
+			RETURN
+		END
 END

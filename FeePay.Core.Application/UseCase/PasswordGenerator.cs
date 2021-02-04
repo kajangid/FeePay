@@ -32,7 +32,8 @@ namespace FeePay.Core.Application.UseCase
             AllLowerCaseChars = GetCharRange('a', 'z', exclusiveChars: "ilo");
             AllUpperCaseChars = GetCharRange('A', 'Z', exclusiveChars: "IO");
             AllNumericChars = GetCharRange('2', '9');
-            AllSpecialChars = "!@#%*()$?+-=";
+            //AllSpecialChars = "!@#%*()$?+-=";
+            AllSpecialChars = "@#*$+-";
 
         }
 

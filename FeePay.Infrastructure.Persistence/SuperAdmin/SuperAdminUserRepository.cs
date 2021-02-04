@@ -19,49 +19,257 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
     {
         public SuperAdminUserRepository(IConnectionStringBuilder connectionStringBuilder, IDBVariables dBVariables)
         {
-            _ConnectionStringBuilder = connectionStringBuilder;
-            _DefaultConnectionString = connectionStringBuilder.GetDefaultConnectionString();
-            _DBVariables = dBVariables;
+            _defaultConnectionString = connectionStringBuilder.GetDefaultConnectionString();
+            _dbVariables = dBVariables;
         }
-        private readonly IDBVariables _DBVariables;
-        private readonly string _DefaultConnectionString;
-        private readonly IConnectionStringBuilder _ConnectionStringBuilder;
+        private readonly IDBVariables _dbVariables;
+        private readonly string _defaultConnectionString;
 
-        public async Task<int> AddUserAsync(SuperAdminUser user, string dbId = null)
+        public async Task<int> AddAsync(SuperAdminUser user)
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
+                using IDbConnection connection = new SqlConnection(_defaultConnectionString);
+                var SpRequiredParameters = new
                 {
-                    var SpRequiredParameters = new
+                    user.AccessFailedCount,
+                    user.AddedBy,
+                    user.City,
+                    user.Email,
+                    user.EmailConfirmed,
+                    user.FirstName,
+                    user.FullName,
+                    user.IsActive,
+                    user.LastLoginDate,
+                    user.LastLoginIP,
+                    user.LastName,
+                    user.LockoutEnabled,
+                    user.LockoutEndDate,
+                    user.NormalizedEmail,
+                    user.NormalizedUserName,
+                    user.Password,
+                    user.PasswordHash,
+                    user.PhoneNumber,
+                    user.PhoneNumberConfirmed,
+                    user.Photo,
+                    user.SecurityStamp,
+                    user.TwoFactorEnabled,
+                    user.UserName
+                };
+                return await connection.ExecuteScalarAsync<int>(
+                    _dbVariables.SP_Add_SuperAdmin_User,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure);
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
+        }
+        public async Task<int> UpdateAsync(SuperAdminUser user)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(_defaultConnectionString);
+                var SpRequiredParameters = new
+                {
+                    user.Id,
+                    user.AccessFailedCount,
+                    user.City,
+                    user.Email,
+                    user.EmailConfirmed,
+                    user.FirstName,
+                    user.FullName,
+                    user.IsActive,
+                    user.LastName,
+                    user.LockoutEnabled,
+                    user.LockoutEndDate,
+                    user.ModifyBy,
+                    user.NormalizedEmail,
+                    user.NormalizedUserName,
+                    user.Password,
+                    user.PasswordHash,
+                    user.PhoneNumber,
+                    user.PhoneNumberConfirmed,
+                    user.Photo,
+                    user.SecurityStamp,
+                    user.TwoFactorEnabled,
+                    user.UserName
+                };
+                return await connection.ExecuteScalarAsync<int>(
+                    _dbVariables.SP_Update_SuperAdmin_User,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure);
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
+        }
+        public async Task<int> DeleteAsync(int id)
+        {
+            try
+            {
+                using var connection = new SqlConnection(_defaultConnectionString);
+                return await connection.ExecuteScalarAsync<int>(
+                    _dbVariables.SP_Delete_SuperAdmin_User,
+                    new { Id = id },
+                    commandType: CommandType.StoredProcedure);
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
+
+        }
+
+        // Find
+        public async Task<SuperAdminUser> FindByIdAsync(int userId, bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(_defaultConnectionString);
+                var SpRequiredParameters = new { Id = userId, IsActive = isActive };
+                return await connection.QuerySingleOrDefaultAsync<SuperAdminUser>(
+                    _dbVariables.SP_Get_SuperAdmin_User,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure);
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
+        }
+        public async Task<SuperAdminUser> FindByUserNameAsync(string normalizedUserName, bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(_defaultConnectionString);
+                var SpRequiredParameters = new { NormalizedUserName = normalizedUserName, IsActive = isActive };
+                return await connection.QuerySingleOrDefaultAsync<SuperAdminUser>(
+                    _dbVariables.SP_Get_SuperAdmin_User,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure);
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
+        }
+        public async Task<SuperAdminUser> FindByEmailAsync(string normalizedEmail, bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(_defaultConnectionString);
+                var SpRequiredParameters = new { NormalizedEmail = normalizedEmail, IsActive = isActive };
+                return await connection.QuerySingleOrDefaultAsync<SuperAdminUser>(
+                    _dbVariables.SP_Get_SuperAdmin_User,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure);
+
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
+        }
+
+        // Get
+        public async Task<IEnumerable<SuperAdminUser>> GetAllAsync(bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(_defaultConnectionString);
+                var SpRequiredParameters = new { IsActive = isActive };
+                var list = (await connection.QueryAsync<SuperAdminUser>(
+                    _dbVariables.SP_Get_SuperAdmin_User,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure));
+                return list;
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
+        }
+        public async Task<IEnumerable<SuperAdminUser>> GetAll_WithAddEditUserAsync(bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(_defaultConnectionString);
+                var SpRequiredParameters = new { IsActive = isActive };
+                var list = (await connection.QueryAsync<SuperAdminUser, SuperAdminUser, SuperAdminUser, SuperAdminUser>(
+                    _dbVariables.SP_GetAll_SuperAdmin_User,
+                    (user, addedby, modifyby) =>
                     {
-                        AccessFailedCount = user.AccessFailedCount,
-                        AddedBy = user.AddedBy,
-                        City = user.City,
-                        Email = user.Email,
-                        EmailConfirmed = user.EmailConfirmed,
-                        FirstName = user.FirstName,
-                        FullName = user.FullName,
-                        IsActive = user.IsActive,
-                        LastLoginDate = user.LastLoginDate,
-                        LastLoginIP = user.LastLoginIP,
-                        LastName = user.LastName,
-                        LockoutEnabled = user.LockoutEnabled,
-                        LockoutEndDate = user.LockoutEndDate,
-                        NormalizedEmail = user.NormalizedEmail,
-                        NormalizedUserName = user.NormalizedUserName,
-                        Password = user.Password,
-                        PasswordHash = user.PasswordHash,
-                        PhoneNumber = user.PhoneNumber,
-                        PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-                        Photo = user.Photo,
-                        SecurityStamp = user.SecurityStamp,
-                        TwoFactorEnabled = user.TwoFactorEnabled,
-                        UserName = user.UserName
-                    };
-                    return await connection.ExecuteAsync(_DBVariables.SP_Add_SuperAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
-
-                }
+                        user.AddedByUser = addedby;
+                        user.ModifyByUser = modifyby;
+                        return user;
+                    },
+                    SpRequiredParameters,
+                    splitOn: "Id,Id,Id",
+                    commandType: CommandType.StoredProcedure));
+                return list;
             }
             catch (TimeoutException ex)
             {
@@ -71,61 +279,64 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
         }
-        public async Task<int> UpdateUserAsync(SuperAdminUser user, string dbId = null)
+
+        // Search
+        /// <summary>
+        /// Search data in NormalizedUserName,NormalizedEmail,PhoneNumber,FirstName,LastName
+        /// </summary>
+        /// <param name="searchParam"> search string </param>
+        /// <param name="isActive">active[true]/inactive[false]/all[null]</param>
+        /// <returns> List of Super admin user data</returns>
+        public async Task<IEnumerable<SuperAdminUser>> Search_WithAddEdirUserAsync(string searchParam, bool? isActive = null)
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
-                    var SpRequiredParameters = new
+                using IDbConnection connection = new SqlConnection(_defaultConnectionString);
+                var SpRequiredParameters = new { SearchParam = searchParam, IsActive = isActive };
+                var list = (await connection.QueryAsync<SuperAdminUser, SuperAdminUser, SuperAdminUser, SuperAdminUser>(
+                    _dbVariables.SP_GetAll_SuperAdmin_User,
+                    (user, addedby, modifyby) =>
                     {
-                        Id = user.Id,
-                        AccessFailedCount = user.AccessFailedCount,
-                        City = user.City,
-                        Email = user.Email,
-                        EmailConfirmed = user.EmailConfirmed,
-                        FirstName = user.FirstName,
-                        FullName = user.FullName,
-                        IsActive = user.IsActive,
-                        LastLoginDate = user.LastLoginDate,
-                        LastLoginIP = user.LastLoginIP,
-                        LastName = user.LastName,
-                        LockoutEnabled = user.LockoutEnabled,
-                        LockoutEndDate = user.LockoutEndDate,
-                        ModifyBy = user.ModifyBy,
-                        NormalizedEmail = user.NormalizedEmail,
-                        NormalizedUserName = user.NormalizedUserName,
-                        Password = user.Password,
-                        PasswordHash = user.PasswordHash,
-                        PhoneNumber = user.PhoneNumber,
-                        PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-                        Photo = user.Photo,
-                        SecurityStamp = user.SecurityStamp,
-                        TwoFactorEnabled = user.TwoFactorEnabled,
-                        UserName = user.UserName
-                    };
-                    return await connection.ExecuteAsync(_DBVariables.SP_Update_SuperAdmin_User, SpRequiredParameters, commandType: CommandType.StoredProcedure);
+                        user.AddedByUser = addedby;
+                        user.ModifyByUser = modifyby;
+                        return user;
+                    },
+                    SpRequiredParameters,
+                    splitOn: "Id,Id,Id",
+                    commandType: CommandType.StoredProcedure));
+                return list;
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
+        }
 
-                }
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-        }
-        public async Task<int> DeleteUserAsync(int Id, string dbId = null)
+        // Mics
+        public async Task UpdateLoginState(int userId, string Ip)
         {
             try
             {
-                await using (var connection = new SqlConnection(_DefaultConnectionString))
-                {
-                    return await connection.ExecuteAsync(_DBVariables.SP_Delete_SuperAdmin_User, new { Id = Id }, null, null, CommandType.StoredProcedure);
-                }
+                using IDbConnection connection = new SqlConnection(_defaultConnectionString);
+                var SpRequiredParameters = new { Id = userId, LastLoginIP = Ip };
+                await connection.QueryAsync<SuperAdminUser>(
+                    _dbVariables.SP_AddLoginInfo_SuperAdmin,
+                    SpRequiredParameters,
+                    commandType: CommandType.StoredProcedure);
+
             }
             catch (TimeoutException ex)
             {
@@ -134,18 +345,53 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             catch (SqlException ex)
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
+            }
+        }
+        public async Task<SuperAdminUser> FindPasswordByIdAsync(int id, bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(_defaultConnectionString);
+                DynamicParameters tempParams = new DynamicParameters();
+                string sql = _dbVariables.QUERY_Password_SuperAdmin + @" AND [Id] = @UserId";
+                tempParams.Add("@UserId", id, DbType.Int32, ParameterDirection.Input);
+                tempParams.Add("@IsActive", (object)isActive ?? DBNull.Value, DbType.Boolean, ParameterDirection.Input);
+                var user = await connection.QuerySingleAsync<SuperAdminUser>
+                    (sql,
+                     tempParams,
+                     commandType: CommandType.Text);
+                return user;
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
             }
 
         }
-        public async Task<SuperAdminUser> FindUserByUserIdAsync(int userId, string dbId = null)
+        public async Task<IEnumerable<SuperAdminUser>> GetAll_WithPasswordAsync(bool? isActive = null)
         {
             try
             {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
-                    var SpRequiredParameters = new { Id = userId };
-                    return await connection.QuerySingleOrDefaultAsync<SuperAdminUser>(_DBVariables.SP_Get_SuperAdmin_User, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
+                using IDbConnection connection = new SqlConnection(_defaultConnectionString);
+                DynamicParameters tempParams = new DynamicParameters();
+                tempParams.Add("@IsActive", (object)isActive ?? DBNull.Value, DbType.Boolean, ParameterDirection.Input);
+                var user = await connection.QueryAsync<SuperAdminUser>
+                    (_dbVariables.QUERY_Password_SuperAdmin,
+                     tempParams,
+                     commandType: CommandType.Text);
+                return user;
             }
             catch (TimeoutException ex)
             {
@@ -155,139 +401,11 @@ namespace FeePay.Infrastructure.Persistence.SuperAdmin
             {
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
-        }
-        public async Task<SuperAdminUser> FindUserByUserNameAsync(string normalizedUserName, string dbId = null)
-        {
-            try
+            catch (Exception ex)
             {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
-                    var SpRequiredParameters = new { NormalizedUserName = normalizedUserName };
-                    return await connection.QuerySingleOrDefaultAsync<SuperAdminUser>(_DBVariables.SP_Get_SuperAdmin_User, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
+                throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
             }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-        }
-        public async Task<SuperAdminUser> FindUserByUserEmailAsync(string normalizedEmail, string dbId = null)
-        {
-            try
-            {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
-                    var SpRequiredParameters = new { NormalizedEmail = normalizedEmail };
-                    return await connection.QuerySingleOrDefaultAsync<SuperAdminUser>(_DBVariables.SP_Get_SuperAdmin_User, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-        }
-        public async Task<SuperAdminUser> FindActiveUserByUserIdAsync(int userId, string dbId = null)
-        {
-            try
-            {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
-                    var SpRequiredParameters = new { Id = userId, IsActive = true };
-                    return await connection.QuerySingleOrDefaultAsync<SuperAdminUser>(_DBVariables.SP_Get_SuperAdmin_User, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-        }
-        public async Task<SuperAdminUser> FindActiveUserByUserNameAsync(string normalizedUserName, string dbId = null)
-        {
-            try
-            {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
-                    var SpRequiredParameters = new { NormalizedUserName = normalizedUserName, IsActive = true };
-                    return await connection.QuerySingleOrDefaultAsync<SuperAdminUser>(_DBVariables.SP_Get_SuperAdmin_User, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-        }
-        public async Task<SuperAdminUser> FindActiveUserByUserEmailAsync(string normalizedEmail, string dbId = null)
-        {
-            try
-            {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
-                    var SpRequiredParameters = new { NormalizedEmail = normalizedEmail, IsActive = true };
-                    return await connection.QuerySingleOrDefaultAsync<SuperAdminUser>(_DBVariables.SP_Get_SuperAdmin_User, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-        }
-        public async Task<IList<SuperAdminUser>> FindAllActiveUserAsync(string dbId = null)
-        {
-            try
-            {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
-                    var SpRequiredParameters = new { IsActive = true };
-                    return (await connection.QueryAsync<SuperAdminUser>(_DBVariables.SP_GetAll_SuperAdmin_User, SpRequiredParameters, null, null, CommandType.StoredProcedure)).ToList();
-                }
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-        }
-        public async Task UpdateLoginState(int userId, string Ip, string dbId = null)
-        {
-            try
-            {
-                using (IDbConnection connection = new SqlConnection(_DefaultConnectionString))
-                {
-                    var SpRequiredParameters = new { Id = userId, LastLoginIP = Ip };
-                    await connection.QueryAsync<SuperAdminUser>(_DBVariables.SP_AddLoginInfo_SuperAdmin, SpRequiredParameters, null, null, CommandType.StoredProcedure);
-                }
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
+
         }
     }
 }

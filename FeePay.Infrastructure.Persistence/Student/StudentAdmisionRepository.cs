@@ -34,7 +34,7 @@ namespace FeePay.Infrastructure.Persistence.Student
         /// <param name="studentAdmission"> StudentAdmission data </param>
         /// <param name="dbId"> connection string key </param>
         /// <returns></returns>
-        public Task<int> AddAsync(StudentAdmission studentAdmission, string dbId = null)
+        public Task<int> AddAsync(StudentAdmission studentAdmission, string dbId)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<int> UpdateAsync(StudentAdmission studentAdmission, string dbId = null)
+        public async Task<int> UpdateAsync(StudentAdmission studentAdmission, string dbId)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<int> DeleteAsync(int Id, string dbId = null)
+        public async Task<int> DeleteAsync(int Id, string dbId)
         {
             try
             {
@@ -169,7 +169,7 @@ namespace FeePay.Infrastructure.Persistence.Student
 
 
         // find
-        public async Task<StudentAdmission> FindByIdAsync(int Id, string dbId = null)
+        public async Task<StudentAdmission> FindByIdAsync(int Id, string dbId)
         {
             try
             {
@@ -187,7 +187,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<StudentAdmission> FindByStudentLoginIdAsync(int Id, string dbId = null)
+        public async Task<StudentAdmission> FindByStudentLoginIdAsync(int Id, string dbId)
         {
             try
             {
@@ -205,7 +205,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<StudentAdmission> FindByFormNoAsync(string formno, string dbId = null)
+        public async Task<StudentAdmission> FindByFormNoAsync(string formno, string dbId)
         {
             try
             {
@@ -223,7 +223,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<StudentAdmission> FindBySr_RegNoAsync(string sr_regno, string dbId = null)
+        public async Task<StudentAdmission> FindBySr_RegNoAsync(string sr_regno, string dbId)
         {
             try
             {
@@ -241,7 +241,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<StudentAdmission> FindActiveByIdAsync(int Id, string dbId = null)
+        public async Task<StudentAdmission> FindActiveByIdAsync(int Id, string dbId)
         {
             try
             {
@@ -259,7 +259,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<StudentAdmission> FindActiveByStudentLoginIdAsync(int Id, string dbId = null)
+        public async Task<StudentAdmission> FindActiveByStudentLoginIdAsync(int Id, string dbId)
         {
             try
             {
@@ -277,7 +277,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<StudentAdmission> FindActiveByFormNoAsync(string formno, string dbId = null)
+        public async Task<StudentAdmission> FindActiveByFormNoAsync(string formno, string dbId)
         {
             try
             {
@@ -295,7 +295,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<StudentAdmission> FindActiveBySr_RegNoAsync(string sr_regno, string dbId = null)
+        public async Task<StudentAdmission> FindActiveBySr_RegNoAsync(string sr_regno, string dbId)
         {
             try
             {
@@ -316,7 +316,7 @@ namespace FeePay.Infrastructure.Persistence.Student
 
 
         // get all
-        public async Task<IEnumerable<StudentAdmission>> GetAllAsync(string dbId = null)
+        public async Task<IEnumerable<StudentAdmission>> GetAllAsync(string dbId)
         {
             try
             {
@@ -333,7 +333,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<IEnumerable<StudentAdmission>> GetAllActiveAsync(string dbId = null)
+        public async Task<IEnumerable<StudentAdmission>> GetAllActiveAsync(string dbId)
         {
             try
             {
@@ -482,7 +482,7 @@ namespace FeePay.Infrastructure.Persistence.Student
         }
 
         // get all with add edit user info
-        public async Task<IEnumerable<StudentAdmission>> GetAll_WithAddEditUserAsync(string dbId = null)
+        public async Task<IEnumerable<StudentAdmission>> GetAll_WithAddEditUserAsync(string dbId)
         {
             try
             {
@@ -509,7 +509,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<IEnumerable<StudentAdmission>> GetAllActive_WithAddEditUserAsync(string dbId = null)
+        public async Task<IEnumerable<StudentAdmission>> GetAllActive_WithAddEditUserAsync(string dbId)
         {
             try
             {
