@@ -5,6 +5,7 @@ using FeePay.Core.Application.Interface.Service;
 using FeePay.Core.Application.Interface.Service.School;
 using FeePay.Core.Application.Interface.Service.Student;
 using FeePay.Core.Application.Wrapper;
+using FeePay.Core.Domain.Entities;
 using FeePay.Core.Domain.Entities.Common;
 using FeePay.Core.Domain.Entities.School;
 using FeePay.Core.Domain.Entities.Student;
@@ -198,6 +199,7 @@ namespace FeePay.Core.Application.Services.School
             if (model.Id == 0)
             {
                 feeMaster.AddedBy = UserId;
+                feeMaster.IsActive = true;
                 int res = await _unitOfWork.FeeMaster.AddAsync(feeMaster, SchoolId);
                 if (res <= 0) return new Response<FeeMasterViewModel>("Fee Master is already exist or a error is accord while creating Fee master.");
             }
@@ -207,7 +209,7 @@ namespace FeePay.Core.Application.Services.School
                 if (feeMasterEntity == null) return new Response<FeeMasterViewModel>($"Could not find data for id={model.Id}");
                 feeMasterEntity.FeeGroupId = feeMaster.FeeGroupId;
                 feeMasterEntity.FeeTypeId = feeMaster.FeeTypeId;
-                feeMasterEntity.IsActive = feeMaster.IsActive;
+                feeMasterEntity.IsActive = true;
                 feeMasterEntity.DueDate = feeMaster.DueDate;
                 feeMasterEntity.Amount = feeMaster.Amount;
                 feeMasterEntity.Description = feeMaster.Description;
@@ -230,7 +232,6 @@ namespace FeePay.Core.Application.Services.School
 
             return Task.FromResult(new Response<bool>("Error deleting school fee master"));
         }
-
         #endregion
 
 
@@ -294,6 +295,57 @@ namespace FeePay.Core.Application.Services.School
             }
             return new Response<bool>(true, "data save successfully. ");
         }
+        #endregion
+
+
+        #region Fee Summary 
+        public async Task<Response<List<AllFeeSummaryViewModel>>> GetAllFeeSummaryAsync()
+        {
+            var schoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var userId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+            var classesWithFeesAmount = await _unitOfWork.StudentFee.GetClasses_FeesAsync(schoolId);
+            if (classesWithFeesAmount == null) return new Response<List<AllFeeSummaryViewModel>>("No Data found.");
+            var classes = await _unitOfWork.ClassRepo.GetAllActiveAsync(schoolId);
+            List<AllFeeSummaryViewModel> model = classes.Select(s =>
+                new AllFeeSummaryViewModel
+                {
+                    ClassId = s.Id,
+                    ClassName = s.Name,
+                    TotalFees = classesWithFeesAmount.Where(w => w.ClassId == s.Id).Sum(s => s.Amount),
+                    TotalPaid = classesWithFeesAmount.Where(w => w.ClassId == s.Id && w.IsPaid == true).Sum(s => s.Amount),
+                    TotalBalance = (classesWithFeesAmount.Where(w => w.ClassId == s.Id).Sum(s => s.Amount) -
+                    classesWithFeesAmount.Where(w => w.ClassId == s.Id && w.IsPaid == true).Sum(s => s.Amount)),
+                }).ToList();
+            return new Response<List<AllFeeSummaryViewModel>>(model);
+        }
+        public async Task<Response<List<ClassFeeSummaryViewModel>>> GetClassFeeSummaryAsync(int id)
+        {
+            var schoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var userId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+            var classStudentsWithFeesAmount = await _unitOfWork.StudentFee.GetClassStudents_FeesAsync(schoolId, id);
+            if (classStudentsWithFeesAmount == null) return new Response<List<ClassFeeSummaryViewModel>>("No Data found.");
+
+
+            var studentsInClass = await _unitOfWork.StudentAdmision.SearchStudentAsync(dbId: schoolId, classId: id);
+            List<ClassFeeSummaryViewModel> model = studentsInClass.Select(s =>
+                new ClassFeeSummaryViewModel
+                {
+                    StudentId = s.Id,
+                    StudentName = s.FirstName + " " + s.LastName,
+                    ClassSectionName = classStudentsWithFeesAmount.Where(w => w.StudentAdmissionId == s.Id).FirstOrDefault()?.Name,
+                    TotalFees = classStudentsWithFeesAmount.Where(w => w.StudentAdmissionId == s.Id).Sum(s => s.Amount),
+                    TotalPaid = classStudentsWithFeesAmount.Where(w => w.StudentAdmissionId == s.Id && w.IsPaid == true).Sum(s => s.Amount),
+                    TotalBalance = (classStudentsWithFeesAmount.Where(w => w.StudentAdmissionId == s.Id).Sum(s => s.Amount) -
+                    classStudentsWithFeesAmount.Where(w => w.StudentAdmissionId == s.Id && w.IsPaid == true).Sum(s => s.Amount)),
+                }).ToList();
+            return new Response<List<ClassFeeSummaryViewModel>>(model);
+        }
+        #endregion
+
+        #region Fee Collection
+        #endregion
+
+        #region Fee Transaction Report
         #endregion
     }
 }

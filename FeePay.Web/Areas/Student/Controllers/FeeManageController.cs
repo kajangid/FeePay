@@ -65,7 +65,7 @@ namespace FeePay.Web.Areas.Student.Controllers
             {
                 try
                 {
-                    var res = await _studentFeeDepositManagerService.GenerateFeeDepositSummery(model);
+                    var res = await _studentFeeDepositManagerService.GetSelectedFeeSummary(model);
                     if (res.Succeeded) return View(view, res.Data);
                     AlertMessage(NotificationType.warning, "Not Found", res.Message);
                     _logger.LogError("Error getting student fees Student Panel Error:{0}", res.Message);
@@ -81,6 +81,22 @@ namespace FeePay.Web.Areas.Student.Controllers
                 AlertMessage(NotificationType.error, "Error", $"Error when processing your request, Please try in some time.");
                 _logger.LogError("Error Fee Deposit Error:{0}", string.Join(",", GetErrorListFromModelState(ModelState).ToArray()));
             }
+            return View();
+        }
+
+
+        public async Task<IActionResult> PayNow(SelectedFeeDepositViewModel model)
+        {
+
+            // Create Payment 
+            // Add payment id to data base 
+            // capture payment 
+            // if successfully update database with succes 
+            // else update database with fail 
+            // notify user 
+            // send mail and sms to user  on succes
+            var res = await _studentFeeDepositManagerService.GenerateFeeDeposit(model);
+
             return View();
         }
     }

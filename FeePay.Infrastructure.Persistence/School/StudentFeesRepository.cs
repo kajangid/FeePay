@@ -9,6 +9,7 @@ using Dapper;
 using FeePay.Core.Application.Interface;
 using FeePay.Core.Application.Interface.Common;
 using FeePay.Core.Application.Interface.Repository.School;
+using FeePay.Core.Domain.Entities;
 using FeePay.Core.Domain.Entities.School;
 using FeePay.Core.Domain.Entities.Student;
 
@@ -24,7 +25,7 @@ namespace FeePay.Infrastructure.Persistence.School
             _connectionStringBuilder = connectionStringBuilder;
         }
 
-
+        #region Execute
         public async Task<int> AddAsync(int studentAdmissionId, int feeMasterId, string dbId, bool isActive = true)
         {
             try
@@ -166,6 +167,10 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+        #endregion
+
+        #region Find 
+
         public async Task<StudentFees> FindByIdAsync(int id, string dbId)
         {
             try
@@ -187,8 +192,9 @@ namespace FeePay.Infrastructure.Persistence.School
             }
 
         }
+        #endregion
 
-
+        #region Get Students
         public async Task<IEnumerable<StudentAdmission>> GetStudentsInFeesGroupAsync(int feeGroupId, string dbId)
         {
             try
@@ -255,6 +261,9 @@ namespace FeePay.Infrastructure.Persistence.School
             }
 
         }
+        #endregion
+
+        #region Check
         public async Task<bool> IsFeeAssignToStudentAsync(int studentAdmissionId, int feeMasterId, string dbId)
         {
             try
@@ -275,7 +284,9 @@ namespace FeePay.Infrastructure.Persistence.School
             }
 
         }
+        #endregion
 
+        #region Get StudentFees
         public async Task<IEnumerable<StudentFees>> GetStudentFeeListAsync(int studentAdmissionId, string dbId)
         {
             try
@@ -296,6 +307,118 @@ namespace FeePay.Infrastructure.Persistence.School
             }
 
         }
+        public async Task<IEnumerable<StudentFees>> GetStudentFeeListByTransactionIdAsync(string transactionId, string dbId)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var list = await connection.QueryAsync<StudentFees>(_dBVariables.QUERY_StudentFeeList_ByTranscationId,
+                    new { PaymentId = transactionId },
+                    commandType: CommandType.Text);
+                return list;
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+
+        }
+
+        #endregion
+
+        #region Get According To Class
+        //TODO: Remove SQL Hard Code Query
+        /// <summary>
+        /// Gets the Fees Assign to student classes
+        /// </summary>
+        /// <param name="dbId"> Database id </param>
+        /// <returns>List of Comman_Sp_School With (ClassId,Amount,DueDate,IsPaid)</returns>
+        public async Task<IEnumerable<Comman_Sp_School>> GetClasses_FeesAsync(string dbId)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                string sql = @"SELECT 
+                                [s].[ClassId],
+                                [fm].[Amount] ,
+                                [fm].[DueDate] ,
+                                [sf].[IsPaid] 
+                                FROM  [dbo].[StudentAdmission] [s] 
+                                INNER JOIN [dbo].[StudentFees] [sf] ON
+                                [sf].[StudentAdmissionId] = [s].[Id] AND [sf].[IsActive] = 1
+                                INNER JOIN [dbo].[FeeMaster] [fm] ON
+                                [fm].[Id] = [sf].[FeeMasterId] AND [sf].[IsActive] = 1
+                                WHERE [s].[IsActive] = 1
+                                ORDER BY ClassId ";
+                var q = await connection.QueryAsync<Comman_Sp_School>(sql, commandType: CommandType.Text);
+                return q;
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0} experienced an exception", nameof(GetClasses_FeesAsync)), ex);
+            }
+        }
+        //TODO: Remove SQL Hard Code Query
+        /// <summary>
+        /// Gets the Fees Assign to student classes
+        /// </summary>
+        /// <param name="dbId"> Database id </param>
+        /// <returns>List of Comman_Sp_School With (StudentAdmissionId,Name,Amount,DueDate,IsPaid)</returns>
+        public async Task<IEnumerable<Comman_Sp_School>> GetClassStudents_FeesAsync(string dbId, int classId)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                string sql = @"SELECT 
+                                [s].[Id] AS [StudentAdmissionId],
+                                CONCAT([c].[Name],' (',[se].[Name],')') AS [Name],
+                                [fm].[Amount] ,
+                                [fm].[DueDate] ,
+                                [sf].[IsPaid] 
+                                FROM  [dbo].[StudentAdmission] [s] 
+                                INNER JOIN [dbo].[StudentFees] [sf] ON
+                                [sf].[StudentAdmissionId] = [s].[Id] AND [sf].[IsActive] = 1
+                                INNER JOIN [dbo].[FeeMaster] [fm] ON
+                                [fm].[Id] = [sf].[FeeMasterId] AND [sf].[IsActive] = 1
+                                INNER JOIN [dbo].[Class] [c] ON
+                                [c].[Id] = [s].[ClassId] AND [c].[IsActive] = 1
+                                INNER JOIN [dbo].[Section] [se] ON
+                                [se].[Id] = [s].[SectionId] AND [se].[IsActive] = 1
+                                WHERE [s].[IsActive] = 1 AND [s].[ClassId] = @ClassId
+                                ORDER BY [StudentAdmissionId] ";
+                var q = await connection.QueryAsync<Comman_Sp_School>(sql,
+                    new { ClassId = classId },
+                    commandType: CommandType.Text);
+                return q;
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0} experienced an exception", nameof(GetClasses_FeesAsync)), ex);
+            }
+        }
+        #endregion
+        #region Get Students
+        #endregion
 
 
         // private methods

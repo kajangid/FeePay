@@ -196,7 +196,7 @@
 		[sf].[PaymentDate],
 		[fg].[Name] AS [FeeGroupName],
 		[fm].[Amount] AS [FeeAmount],
-		[fm].[DueDate] AS [FeeDueDate],				
+		[fm].[DueDate],				
 		[ft].[Id] AS [FeeTypeId], 
 		[ft].[Name] AS [FeeTypeName], 
 		[ft].[Code] AS [FeeTypeCode]
@@ -213,7 +213,7 @@
 		public string QUERY_Find_StudentFee { get; } = @"SELECT 
 							[sf].[Id],[sf].[StudentAdmissionId],[sf].[FeeMasterId],[sf].[Status],[sf].[FeeGroupId],[sf].[PaymentId],
 							[sf].[Mode],[sf].[PaymentDate],[fg].[Name] AS [FeeGroupName],[fm].[Amount] AS [FeeAmount],
-							[fm].[DueDate] AS [FeeDueDate],[ft].[Id] AS [FeeTypeId],[ft].[Name] AS [FeeTypeName],[ft].[Code] AS [FeeTypeCode]
+							[fm].[DueDate],[ft].[Id] AS [FeeTypeId],[ft].[Name] AS [FeeTypeName],[ft].[Code] AS [FeeTypeCode]
 							FROM 
 							[dbo].[StudentFees] [sf] 
 							INNER JOIN [dbo].[FeeMaster] AS [fm] 
@@ -223,6 +223,31 @@
 							INNER JOIN [dbo].[FeeGroup] AS [fg]  
 							ON [fg].[Id] = [fm].[FeeGroupId] AND [fg].[IsDelete] = 0 AND [fg].[IsActive] = 1
 							WHERE [sf].[Id] = @Id AND [sf].[IsActive] = 1 AND [sf].[IsDelete] = 0";
+		public string QUERY_StudentFeeList_ByTranscationId { get; } = @"SELECT
+		[sf].[Id],
+		[sf].[StudentAdmissionId],
+		[sf].[FeeMasterId], 
+		[sf].[Status],		
+		[sf].[FeeGroupId],
+		[sf].[PaymentId],
+		[sf].[Mode],
+		[sf].[PaymentDate],
+		[fg].[Name] AS [FeeGroupName],
+		[fm].[Amount] AS [FeeAmount],
+		[fm].[DueDate],				
+		[ft].[Id] AS [FeeTypeId], 
+		[ft].[Name] AS [FeeTypeName], 
+		[ft].[Code] AS [FeeTypeCode]
+		FROM 
+		[dbo].[StudentFees] [sf] 
+		INNER JOIN [dbo].[FeeMaster] AS [fm] 
+		ON [fm].[Id] = [sf].[FeeMasterId] AND [fm].[IsDelete] = 0 AND [fm].[IsActive] = 1
+		INNER JOIN [dbo].[FeeType] AS [ft] 
+		ON [ft].[Id] = [fm].[FeeTypeId] AND [ft].[IsDelete] = 0  AND [ft].[IsActive] = 1
+		INNER JOIN [dbo].[FeeGroup] AS [fg]  
+		ON [fg].[Id] = [fm].[FeeGroupId] AND [fg].[IsDelete] = 0 AND [fg].[IsActive] = 1
+		WHERE 
+		[sf].[PaymentId] = @PaymentId";
 		#endregion
 
 

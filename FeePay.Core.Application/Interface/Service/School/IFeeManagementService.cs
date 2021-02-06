@@ -38,5 +38,9 @@ namespace FeePay.Core.Application.Interface.Service.School
         Task<Response<bool>> AssignFeesToStudents(AssignFeesViewModel data, int id);
         #endregion
 
+        #region Fee Summary 
+        Task<Response<List<AllFeeSummaryViewModel>>> GetAllFeeSummaryAsync();
+        Task<Response<List<ClassFeeSummaryViewModel>>> GetClassFeeSummaryAsync(int id);
+        #endregion
     }
 }

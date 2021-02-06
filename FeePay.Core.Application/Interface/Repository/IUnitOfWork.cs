@@ -30,5 +30,6 @@ namespace FeePay.Core.Application.Interface.Repository
         IStudentAdmisionRepository StudentAdmision { get; }
         ICityStateRepository CityState { get; }
         IStudentFeesRepository StudentFee { get; }
+        IFeesTranscationRepository FeesTranscation { get; }
     }
 }

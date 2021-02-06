@@ -1,14 +1,15 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AutoMapper;
 using FeePay.Core.Application.DTOs;
 using FeePay.Core.Domain.Entities.Identity;
 using FeePay.Core.Domain.Entities.School;
 using FeePay.Core.Domain.Entities.Student;
 using FeePay.Core.Domain.Entities.SuperAdmin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FeePay.Core.Application.IoC;
 
 namespace FeePay.Core.Application.Mapping
 {
@@ -151,8 +152,10 @@ namespace FeePay.Core.Application.Mapping
             CreateMap<StudentAdmissionViewModel, StudentAdmission>();
 
 
-            CreateMap<StudentFees, StudentFeesViewModel>();
-            CreateMap<StudentFeesViewModel, StudentFees>();
+            CreateMap<StudentFees, StudentFeesViewModel>()
+                .ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.Id.EncryptID()));
+            CreateMap<StudentFeesViewModel, StudentFees>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Token.DecryptID()));
 
 
             #endregion

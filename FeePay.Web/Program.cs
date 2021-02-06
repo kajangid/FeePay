@@ -50,6 +50,8 @@ namespace FeePay.Web
                                 .AddJsonFile("appsettings.Local.json", optional: true)
                                 // Used for log settings like serilog strings.
                                 .AddJsonFile("appsettings.log.json", optional: true, reloadOnChange: true)
+                                // Used for local settings like PayPal strings.
+                                .AddJsonFile("appsettings.Paypal.json", optional: true, reloadOnChange: true)
                                 .AddEnvironmentVariables();
                         })
                         .UseSerilog((hostingContext, loggerConfiguration) =>

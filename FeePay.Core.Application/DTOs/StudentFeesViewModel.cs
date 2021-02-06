@@ -9,6 +9,7 @@ namespace FeePay.Core.Application.DTOs
     public class StudentFeesViewModel
     {
         public int Id { get; set; }
+        public string Token { get; set; }
         public int StudentAdmissionId { get; set; }
         public int FeeMasterId { get; set; }
         public int FeeGroupId { get; set; }

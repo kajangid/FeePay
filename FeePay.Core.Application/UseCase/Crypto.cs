@@ -10,25 +10,68 @@ namespace FeePay.Core.Application.UseCase
 {
     internal static class Crypto
     {
-        static string tbKey = "a1b2c3d4e5";
-
-        public static string TripleDESEncrypt(string tbMessage)
+        static readonly string _Key = "a1b2c3d4e5";
+        static readonly string _IV = "12345678";
+        static readonly byte[] _KeyInByte = StringToByte(_Key, 24); // convert to 24 characters - 192 bits
+        static readonly byte[] _IVInByte = StringToByte(_IV);
+        static ICryptoTransform GetEncryptor()
         {
+            using TripleDES threedes = new TripleDESCryptoServiceProvider { Key = _KeyInByte, IV = _IVInByte };
+            return threedes.CreateEncryptor(threedes.Key, threedes.IV);
+        }
+        static ICryptoTransform GetDecryptor()
+        {
+            using TripleDES threedes = new TripleDESCryptoServiceProvider { Key = _KeyInByte, IV = _IVInByte };
+            return threedes.CreateDecryptor(threedes.Key, threedes.IV);
+        }
+
+        #region EncryptDecrypt Number
+        public static string EncryptText(string input) => TripleDESEncrypt(input);
+        public static string DecryptText(string input) => TripleDESDecrypt(input);
+
+        public static string EncryptId(int input) => TripleDESEncryptInteger(input);
+        public static int DecryptId(string input) => TripleDESDecryptInteger(input);
+        #endregion
+
+        #region Encrypt & Decrypt With DES Algorithm
+        static string TripleDESEncrypt(string plainMessage)
+        {
+            if (string.IsNullOrEmpty(plainMessage)) throw new ArgumentNullException(plainMessage);
             try
             {
-                using TripleDES threedes = new TripleDESCryptoServiceProvider();
-                threedes.Key = StringToByte(tbKey, 24); // convert to 24 characters - 192 bits
-                threedes.IV = StringToByte("12345678");
-                byte[] key = threedes.Key;
-                byte[] IV = threedes.IV;
+                ICryptoTransform encryptor = GetEncryptor();
 
-                ICryptoTransform encryptor = threedes.CreateEncryptor(key, IV);
+                using MemoryStream memoryStream = new MemoryStream();
+                CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
+
+                // Write all data to the cryptoStream and flush it.
+                cryptoStream.Write(StringToByte(plainMessage), 0, StringToByte(plainMessage).Length);
+                cryptoStream.FlushFinalBlock();
+
+                // Get the encrypted array of bytes.
+                byte[] encrypted = memoryStream.ToArray();
+
+                return ByteToString(encrypted);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{nameof(TripleDESEncrypt)} Stop on Error: {ex.Message}", ex);
+            }
+
+        }
+        static string TripleDESEncryptInteger(int plainMessage)
+        {
+            if (plainMessage == 0) throw new ArgumentNullException(plainMessage.ToString(), "value is 0");
+            string plainMessageString = plainMessage.ToString();
+            try
+            {
+                ICryptoTransform encryptor = GetEncryptor();
 
                 using MemoryStream msEncrypt = new MemoryStream();
                 CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
 
                 // Write all data to the crypto stream and flush it.
-                csEncrypt.Write(StringToByte(tbMessage), 0, StringToByte(tbMessage).Length);
+                csEncrypt.Write(StringToByte(plainMessageString), 0, StringToByte(plainMessageString).Length);
                 csEncrypt.FlushFinalBlock();
 
                 // Get the encrypted array of bytes.
@@ -38,55 +81,16 @@ namespace FeePay.Core.Application.UseCase
             }
             catch (Exception ex)
             {
-                throw new Exception("TripleDESEncrypt Stop on Error.", ex);
+                throw new Exception($"{nameof(TripleDESEncryptInteger)} Stop on Error: {ex.Message}", ex);
             }
 
         }
-
-        private static string TripleDESEncryptID(int Message)
+        static string TripleDESDecrypt(string encryptedMessage)
         {
-            string tbMessage = Message.ToString();
+            if (string.IsNullOrEmpty(encryptedMessage)) throw new ArgumentNullException(encryptedMessage);
             try
             {
-
-                using TripleDES threedes = new TripleDESCryptoServiceProvider();
-                threedes.Key = StringToByte(tbKey, 24); // convert to 24 characters - 192 bits
-                threedes.IV = StringToByte("12345678");
-                byte[] key = threedes.Key;
-                byte[] IV = threedes.IV;
-
-                ICryptoTransform encryptor = threedes.CreateEncryptor(key, IV);
-
-                using MemoryStream msEncrypt = new MemoryStream();
-                CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
-
-                // Write all data to the crypto stream and flush it.
-                csEncrypt.Write(StringToByte(tbMessage), 0, StringToByte(tbMessage).Length);
-                csEncrypt.FlushFinalBlock();
-
-                // Get the encrypted array of bytes.
-                byte[] encrypted = msEncrypt.ToArray();
-
-                return ByteToString(encrypted);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("TripleDESEncryptID Stop on Error.", ex);
-            }
-
-        }
-
-        private static string TripleDESDecrypt(string encryptedMessage)
-        {
-            try
-            {
-                using TripleDES threedes = new TripleDESCryptoServiceProvider();
-                threedes.Key = StringToByte(tbKey, 24); // convert to 24 characters - 192 bits
-                threedes.IV = StringToByte("12345678");
-                byte[] key = threedes.Key;
-                byte[] IV = threedes.IV;
-
-                ICryptoTransform decryptor = threedes.CreateDecryptor(key, IV);
+                ICryptoTransform decryptor = GetDecryptor();
 
                 // Now decrypt the previously encrypted message using the decryptor
                 byte[] encrypted = StringToByteDecimal(encryptedMessage);
@@ -97,43 +101,32 @@ namespace FeePay.Core.Application.UseCase
             }
             catch (Exception ex)
             {
-                throw new Exception("TripleDESDecrypt Stop on Error.", ex);
+                throw new Exception($"{nameof(TripleDESDecrypt)} Stop on Error: {ex.Message}", ex);
             }
         }
-
-        private static int TripleDESDecryptID(string encryptedMessage)
+        static int TripleDESDecryptInteger(string encryptedMessage)
         {
-            int decraptvalue = 0;
+            if (string.IsNullOrEmpty(encryptedMessage)) throw new ArgumentNullException(encryptedMessage);
+            if (encryptedMessage == "0") throw new Exception("encryptedMessage value is 0.");
             try
             {
-                if (encryptedMessage != "0")
-                {
-                    using TripleDES threedes = new TripleDESCryptoServiceProvider();
-                    threedes.Key = StringToByte(tbKey, 24); // convert to 24 characters - 192 bits
-                    threedes.IV = StringToByte("12345678");
-                    byte[] key = threedes.Key;
-                    byte[] IV = threedes.IV;
+                ICryptoTransform decryptor = GetDecryptor();
 
-                    ICryptoTransform decryptor = threedes.CreateDecryptor(key, IV);
-
-                    // Now decrypt the previously encrypted message using the decryptor
-                    byte[] encrypted = StringToByteDecimal(encryptedMessage);
-                    using MemoryStream msDecrypt = new MemoryStream(encrypted);
-                    CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
-                    decraptvalue = int.Parse(ByteToString(csDecrypt));
-                }
+                // Now decrypt the previously encrypted message using the decryptor
+                byte[] encrypted = StringToByteDecimal(encryptedMessage);
+                using MemoryStream msDecrypt = new MemoryStream(encrypted);
+                CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
+                return int.Parse(ByteToString(csDecrypt));
             }
             catch (Exception ex)
             {
-                throw new Exception("TripleDESDecryptID Stop on Error.", ex);
+                throw new Exception($"{nameof(TripleDESDecryptInteger)} Stop on Error: {ex.Message}", ex);
             }
-            return decraptvalue;
         }
-
-        private static byte[] StringToByteDecimal(string StringToConvert)
+        static byte[] StringToByteDecimal(string StringToConvert)
         {
             int j = 0;
-            string dec = "";
+            string dec;
             byte[] ByteArray = new byte[StringToConvert.Length / 2];
             for (int i = 0; i < StringToConvert.Length; i = i + 2)
             {
@@ -143,8 +136,7 @@ namespace FeePay.Core.Application.UseCase
             }
             return ByteArray;
         }
-
-        private static byte[] StringToByte(string StringToConvert)
+        static byte[] StringToByte(string StringToConvert)
         {
 
             char[] CharArray = StringToConvert.ToCharArray();
@@ -152,7 +144,7 @@ namespace FeePay.Core.Application.UseCase
             for (int i = 0; i < CharArray.Length; i++) ByteArray[i] = Convert.ToByte(CharArray[i]);
             return ByteArray;
         }
-        private static byte[] StringToByte(string StringToConvert, int length)
+        static byte[] StringToByte(string StringToConvert, int length)
         {
 
             char[] CharArray = StringToConvert.ToCharArray();
@@ -160,27 +152,28 @@ namespace FeePay.Core.Application.UseCase
             for (int i = 0; i < CharArray.Length; i++) ByteArray[i] = Convert.ToByte(CharArray[i]);
             return ByteArray;
         }
-        private static string ByteToString(CryptoStream buff)
+        static string ByteToString(CryptoStream buff)
         {
-            string sbinary = "";
-            int b = 0;
+            StringBuilder sbinary = new StringBuilder();
+            int b;
             do
             {
                 b = buff.ReadByte();
-                if (b != -1) sbinary += ((char)b);
+                if (b != -1) sbinary.Append((char)b);
 
             } while (b != -1);
-            return (sbinary);
+            return (sbinary.ToString());
         }
-        private static string ByteToString(byte[] buff)
+        static string ByteToString(byte[] buff)
         {
-            string sbinary = "";
-            for (int i = 0; i < buff.Length; i++) sbinary += buff[i].ToString("X2"); // hex format
-            return (sbinary);
+            StringBuilder sbinary = new StringBuilder();
+            for (int i = 0; i < buff.Length; i++) sbinary.Append(buff[i].ToString("X2")); // hex format
+            return (sbinary.ToString());
         }
-        private static string HexToDec(string hexNum)
+        static string HexToDec(string hexNum)
         {
             return Convert.ToString(int.Parse(hexNum, System.Globalization.NumberStyles.HexNumber));
         }
+        #endregion
     }
 }

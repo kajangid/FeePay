@@ -166,11 +166,11 @@ namespace FeePay.Web.Areas.School.Controllers
 
         [MvcDiscovery]
         [HttpGet("Ledger/{id:int}")]
-        [DisplayName("Student Ledger")]
+        [DisplayName("Student Profile")]
         public async Task<IActionResult> StudentProfile(int id)
         {
             if (id == 0) return RedirectToAction(nameof(StudentList));
-            ViewData["Title"] = "Student Ledger";
+            ViewData["Title"] = "Student Profile";
             try
             {
                 var res = await _studentManagementService.StudentLedgerAsync(id);

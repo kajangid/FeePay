@@ -112,12 +112,23 @@
                                     </table>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-8">
-                                    </div>
-                                    <div class="col-md-4 text-right">
-                                        <a asp-action="Index" asp-controller="FeeManage" asp-area="Student" class="btn btn-outline-secondary">Back</a>
-                                        <a href="javascript:void(0)" class="btn btn-outline-primary ml-1">Pay Now</a>
-                                    </div>
+                                    <form asp-action="PayNow" asp-controller="FeeManage" asp-area="Student" id="paynowfrom" method="post">
+                                        <div class="col-md-8">
+                                            Show Payment GateWay: 1 : 2 : 3 : 4 :
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            @if (Model != null && Model.Fees != null && Model.Fees.Count > 0)
+                                            {
+                                                for (var i = 0; i < Model.Fees.Count; i++)
+                                                {
+                                                    <input type="hidden" name="FeeDeposit[@i].StudentFeeToken" asp-for="@Model.Fees[i].Token" />
+                                                }
+                                            }
+                                            <a asp-action="Index" asp-controller="FeeManage" asp-area="Student" class="btn btn-outline-secondary">Back</a>
+                                            <input type="submit" value="Pay Now" class="btn btn-primary m-0 ml-1" />
+                                            @*<a href="javascript:void(0)" class="btn btn-primary m-0 ml-1">Pay Now</a>*@
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -128,3 +139,12 @@
     </div>
 </div>
 
+@section Scripts{
+    <script>
+        (function ($) {
+            'use strict';
+
+
+        })(jQuery);
+    </script>
+}

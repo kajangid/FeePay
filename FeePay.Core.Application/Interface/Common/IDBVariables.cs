@@ -175,6 +175,7 @@ namespace FeePay.Core.Application.Interface.Common
         string QUERY_IsFeeAssignToStudent { get; }
         string QUERY_StudentFeeList { get; }
         string QUERY_Find_StudentFee { get; }
+        string QUERY_StudentFeeList_ByTranscationId { get; }
         #endregion
 
 

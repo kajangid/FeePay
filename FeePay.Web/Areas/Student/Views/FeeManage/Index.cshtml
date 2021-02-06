@@ -116,8 +116,8 @@
                                                     <th scope="row">
                                                         <label class="m-0" asp-for="@fee.IsSelected">
                                                             <input class="checkbox_animated select-checkbox" name="FeeDeposit[@counter].IsSelected" asp-for="@fee.IsSelected" type="checkbox">
-                                                            <input type="hidden" name="FeeDeposit[@counter].StudentFeeId" asp-for="@fee.Id" />
                                                             <input type="hidden" name="FeeDeposit[@counter].FeeTypeCode" asp-for="@fee.FeeTypeCode" />
+                                                            <input type="hidden" name="FeeDeposit[@counter].StudentFeeToken" asp-for="@fee.Token" />
                                                         </label>
                                                     </th>
                                                 </tr>

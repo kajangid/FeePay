@@ -39,6 +39,7 @@ namespace FeePay.Infrastructure.Persistence
             services.AddScoped<IStudentAdmisionRepository, StudentAdmisionRepository>();
 
             services.AddScoped<IStudentFeesRepository, StudentFeesRepository>();
+            services.AddScoped<IFeesTranscationRepository, FeesTranscationRepository>();
 
 
 

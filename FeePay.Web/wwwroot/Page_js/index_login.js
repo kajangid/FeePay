@@ -68,19 +68,23 @@
         }
     });
     // PalceHolder Animation
-    $('input[data-palceholder="label"]').on('focusin', function (e) {
-        var label = $(this).closest('.form-group').find('label');
-        label.css({
-            "-webkit-transform": "translateY(-20px)",
-            "transform": "translateY(-20px)",
-            "font-size": "12px",
-            "color": "#000",
-            "z-index": "2"
-        });
+    var input_field = $('input[data-palceholder="label"]');
+    var input_field_css = {
+        "-webkit-transform": "translateY(-20px)",
+        "transform": "translateY(-20px)",
+        "font-size": "12px",
+        "color": "#000",
+        "z-index": "2"
+    };
+    $.each(input_field, function (index, value) {
+        if ($(value).val())
+            $(value).closest('.form-group').find('label').css(input_field_css);
     });
-    $('input[data-palceholder="label"]').on('focusout', function (e) {
-        if (!$(this).val()) {
-            $(this).closest('.form-group').find('label').attr("style", "");
-        }
+    input_field.on('focusin', function (e) {
+        $(this).closest('.form-group').find('label').css(input_field_css);
+    });
+    input_field.on('focusout', function (e) {
+        if (!$(this).val()) $(this).closest('.form-group').find('label').attr("style", "");
+
     });
 })(jQuery);

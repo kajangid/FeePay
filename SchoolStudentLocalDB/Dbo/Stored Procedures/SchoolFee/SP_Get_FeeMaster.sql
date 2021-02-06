@@ -5,7 +5,7 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[SP_Get_FeeMaster]
 (
-@Id INT = 0
+@Id INT = NULL
 ,@FeeGroupId INT = NULL
 ,@FeeTypeId INT = NULL
 ,@IsActive BIT = NULL
@@ -17,7 +17,7 @@ BEGIN
 	SET NOCOUNT ON;
 		
 		
-	IF (@Id != 0)
+	IF (@Id IS NOT NULL AND @Id <> 0)
 	BEGIN	
 		SELECT 
 			[fm].[Id], [fm].[FeeGroupId], [fm].[FeeTypeId], [fm].[Amount], [fm].[DueDate], [fm].[Description], [fm].[IsActive],
@@ -31,9 +31,9 @@ BEGIN
 
 			FROM [dbo].[FeeMaster] [fm] 
 			INNER JOIN [dbo].[FeeType] [ft]
-			ON [ft].[Id] = [fm].[FeeTypeId] AND [ft].[IsDelete] = 1
+			ON [ft].[Id] = [fm].[FeeTypeId] AND [ft].[IsDelete] = 0
 			INNER JOIN [dbo].[FeeGroup] [fg]
-			ON [fg].[Id] = [fm].[FeeGroupId] AND [fg].[IsDelete] = 1
+			ON [fg].[Id] = [fm].[FeeGroupId] AND [fg].[IsDelete] = 0
 			WHERE
 			[fm].[IsDelete] = 0 
 			AND [fm].[Id] = @Id 

@@ -41,7 +41,7 @@ namespace FeePay.Web.Areas.School.Controllers
         #region FEE TYPE 
         [HttpGet]
         [MvcDiscovery]
-        [Route("School/FeeTypes")]
+        [Route("{Area}/Fees/FeeTypes/List")]
         [DisplayName("List Fee Type")]
         public async Task<IActionResult> FeeTypeList()
         {
@@ -67,7 +67,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         [HttpGet]
         [MvcDiscovery]
-        [Route("School/ManageFeeType/{id?}")]
+        [Route("{Area}/Fees/FeeTypes/Manage/{id?}")]
         [DisplayName("Add Or Edit Fee Type")]
         public async Task<IActionResult> FeeTypeManage(int? id)
         {
@@ -103,7 +103,7 @@ namespace FeePay.Web.Areas.School.Controllers
         [HttpPost]
         [MvcDiscovery]
         [ValidateAntiForgeryToken]
-        [Route("School/ManageFeeType/{id?}")]
+        [Route("{Area}/Fees/FeeTypes/Manage/{id?}")]
         [DisplayName("Add Or Edit Fee Type")]
         public async Task<IActionResult> FeeTypeManage(FeeTypeViewModel model, int? id)
         {
@@ -139,7 +139,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         [HttpDelete]
         [MvcDiscovery]
-        [Route("School/DeleteFeeType/{id}")]
+        [Route("{Area}/Fees/FeeTypes/Delete/{id}")]
         [DisplayName("Delete Fee Type")]
         public IActionResult FeeTypeDelete(int id)
         {
@@ -151,7 +151,7 @@ namespace FeePay.Web.Areas.School.Controllers
         #region FEE GROUP 
         [HttpGet]
         [MvcDiscovery]
-        [Route("School/FeeGroups")]
+        [Route("{Area}/Fees/FeeGroup/List")]
         [DisplayName("List Fee Group")]
         public async Task<IActionResult> FeeGroupList()
         {
@@ -177,7 +177,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         [HttpGet]
         [MvcDiscovery]
-        [Route("School/ManageFeeGroup/{id?}")]
+        [Route("{Area}/Fees/FeeGroup/Manage/{id?}")]
         [DisplayName("Add Or Edit Fee Group")]
         public async Task<IActionResult> FeeGroupManage(int? id)
         {
@@ -212,7 +212,7 @@ namespace FeePay.Web.Areas.School.Controllers
         [HttpPost]
         [MvcDiscovery]
         [ValidateAntiForgeryToken]
-        [Route("School/ManageFeeGroup/{id?}")]
+        [Route("{Area}/Fees/FeeGroup/Manage/{id?}")]
         [DisplayName("Add Or Edit Fee Group")]
         public async Task<IActionResult> FeeGroupManage(FeeGroupViewModel model, int? id)
         {
@@ -248,7 +248,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         [HttpDelete]
         [MvcDiscovery]
-        [Route("School/DeleteFeeGroup/{id}")]
+        [Route("{Area}/Fees/FeeGroup/Delete/{id}")]
         [DisplayName("Delete Fee Group")]
         public IActionResult FeeGroupDelete(int id)
         {
@@ -260,7 +260,7 @@ namespace FeePay.Web.Areas.School.Controllers
         #region FEE MASTER 
         [HttpGet]
         [MvcDiscovery]
-        [Route("School/FeeMasters")]
+        [Route("{Area}/Fees/FeeMaster/List")]
         [DisplayName("List Fee Master")]
         public async Task<IActionResult> FeeMasterList()
         {
@@ -286,7 +286,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
         [HttpGet]
         [MvcDiscovery]
-        [Route("School/ManageFeeMaster/{id?}")]
+        [Route("{Area}/Fees/FeeMaster/Manage/{id?}")]
         [DisplayName("Add Or Edit Fee Master")]
         public async Task<IActionResult> FeeMasterManage(int? id)
         {
@@ -321,7 +321,7 @@ namespace FeePay.Web.Areas.School.Controllers
         [HttpPost]
         [MvcDiscovery]
         [ValidateAntiForgeryToken]
-        [Route("School/ManageFeeMaster/{id?}")]
+        [Route("{Area}/Fees/FeeMaster/Manage/{id?}")]
         [DisplayName("Add Or Edit Fee Master")]
         public async Task<IActionResult> FeeMasterManage(FeeMasterViewModel model, int? id)
         {
@@ -357,13 +357,14 @@ namespace FeePay.Web.Areas.School.Controllers
 
         [HttpDelete]
         [MvcDiscovery]
-        [Route("School/DeleteFeeMaster/{id}")]
+        [Route("{Area}/Fees/FeeMaster/Delete/{id}")]
         [DisplayName("Delete Fee Master")]
         public IActionResult FeeMasterDelete(int id)
         {
             return View();
         }
         #endregion
+
 
         #region FEE ASSIGN
         [HttpGet]
@@ -426,6 +427,166 @@ namespace FeePay.Web.Areas.School.Controllers
                 _logger.LogError(ex, "Error when assign fees");
                 return Json(new { Success = false, Message = "Error when assign fees" });
             }
+        }
+        #endregion
+
+        #region ALL FEE SUMMERY
+        [HttpGet]
+        [MvcDiscovery]
+        [Route("{Area}/Fees/Summary")]
+        [DisplayName("All Fees Summary")]
+        public async Task<IActionResult> FeesSummaryAll()
+        {
+            ViewData["Title"] = "All Fees Summary";
+            try
+            {
+                var res = await _feeManagement.GetAllFeeSummaryAsync();
+                if (res.Succeeded) return View(res.Data);
+                else
+                {
+                    _logger.LogError("Error when getting All Fees Summary. Error{0}", res.Message);
+                    AlertMessage(NotificationType.error, "Error", res.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when getting All Fees Summary.");
+                AlertMessage(NotificationType.error, "Error", "There is an error getting All Fees Summary.");
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+        [HttpGet]
+        [MvcDiscovery]
+        [Route("{Area}/Fees/Summary/Class/{id:int}")]
+        [DisplayName("Class Fees Summary")]
+        public async Task<IActionResult> FeesSummaryClass(int id)
+        {
+            ViewData["Title"] = "Class Fees Summary";
+            try
+            {
+                var res = await _feeManagement.GetClassFeeSummaryAsync(id);
+                if (res.Succeeded) return View(res.Data);
+                else
+                {
+                    _logger.LogError("Error when getting Class Fees Summary. Error{0}", res.Message);
+                    AlertMessage(NotificationType.error, "Error", res.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when getting Class Fees Summary.");
+                AlertMessage(NotificationType.error, "Error", "There is an error getting Class Fees Summary.");
+                return RedirectToAction(nameof(FeesSummaryAll));
+            }
+            return View();
+        }
+        #endregion
+
+        #region FEE COLLECTION
+        [HttpGet]
+        [MvcDiscovery]
+        [Route("{Area}/Fees/Report/Collection")]
+        [DisplayName("Fee Collection Report")]
+        public async Task<IActionResult> FeeCollection()
+        {
+            ViewData["Title"] = "Fee Collection Report";
+            try
+            {
+                var res = await _feeManagement.GetAllFeeSummaryAsync();
+                AlertMessage(NotificationType.info, "", "Service Temporally Unavailable.");
+                if (res.Succeeded) return View();
+                else
+                {
+                    _logger.LogError("Error when getting Fee Collection Report Data. Error{0}", res.Message);
+                    AlertMessage(NotificationType.error, "Error", res.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when getting Fee Collection Report Data.");
+                AlertMessage(NotificationType.error, "Error", "There is an error getting Fee Collection Report.");
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+        [HttpPost]
+        [MvcDiscovery]
+        [Route("{Area}/Fees/Report/Collection/Search")]
+        [DisplayName("Fee Collection Report")]
+        public async Task<IActionResult> FeeCollectionSearch(string param1)
+        {
+            ViewData["Title"] = "Fee Collection Report";
+            try
+            {
+                var res = await _feeManagement.GetAllFeeSummaryAsync();
+                if (res.Succeeded) return View();
+                else
+                {
+                    _logger.LogError("Error when searching Fee Collection Report Data. Error{0}", res.Message);
+                    AlertMessage(NotificationType.error, "Error", res.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when searching Fee Collection Report Data.");
+                AlertMessage(NotificationType.error, "Error", "There is an error searching Fee Collection Report.");
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+        #endregion
+        #region FEE TRANSACTION REPORT
+        [HttpGet]
+        [MvcDiscovery]
+        [Route("{Area}/Fees/Report/Transaction")]
+        [DisplayName("Fee Transaction Report")]
+        public async Task<IActionResult> FeeTransaction()
+        {
+            ViewData["Title"] = "Fee Transaction Report";
+            try
+            {
+                var res = await _feeManagement.GetAllFeeSummaryAsync();
+                AlertMessage(NotificationType.info, "", "Service Temporally Unavailable.");
+                if (res.Succeeded) return View();
+                else
+                {
+                    _logger.LogError("Error when getting Fee Transaction Report Data. Error{0}", res.Message);
+                    AlertMessage(NotificationType.error, "Error", res.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when getting Fee Transaction Report Data.");
+                AlertMessage(NotificationType.error, "Error", "There is an error getting Fee Transaction Report Data.");
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+        [HttpGet]
+        [MvcDiscovery]
+        [Route("{Area}/Fees/Report/Transaction/Search")]
+        [DisplayName("Fee Transaction Report")]
+        public async Task<IActionResult> FeeTransactionSearch(string param1)
+        {
+            ViewData["Title"] = "Fee Transaction Report";
+            try
+            {
+                var res = await _feeManagement.GetAllFeeSummaryAsync();
+                if (res.Succeeded) return View();
+                else
+                {
+                    _logger.LogError("Error when searching Fee Transaction Report Data. Error{0}", res.Message);
+                    AlertMessage(NotificationType.error, "Error", res.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when searching Fee Transaction Report Data.");
+                AlertMessage(NotificationType.error, "Error", "There is an error searching Fee Transaction Report Data.");
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
         }
         #endregion
     }

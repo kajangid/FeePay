@@ -12,7 +12,7 @@ namespace FeePay.Core.Application.DTOs
     }
     public class SelectedFeeDeposit
     {
-        public int StudentFeeId { get; set; }
+        public string StudentFeeToken { get; set; }
         public string FeeTypeCode { get; set; }
         public bool IsSelected { get; set; }
     }

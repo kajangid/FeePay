@@ -8,8 +8,11 @@ using FeePay.Core.Application.DTOs;
 using FeePay.Core.Application.Interface.Repository;
 using FeePay.Core.Application.Interface.Service;
 using FeePay.Core.Application.Interface.Service.Student;
+using FeePay.Core.Application.IoC;
 using FeePay.Core.Application.Wrapper;
+using FeePay.Core.Domain.Entities.School;
 using FeePay.Core.Domain.Entities.Student;
+using FeePay.Core.Application.Enums;
 
 namespace FeePay.Core.Application.Services.Student
 {
@@ -48,7 +51,7 @@ namespace FeePay.Core.Application.Services.Student
             return new Response<IEnumerable<StudentFeesViewModel>>(model.ToList());
         }
 
-        public async Task<Response<FeeDepositSummeryViewModel>> GenerateFeeDepositSummery(SelectedFeeDepositViewModel model)
+        public async Task<Response<FeeDepositSummeryViewModel>> GetSelectedFeeSummary(SelectedFeeDepositViewModel model)
         {
             string SchoolUniqueId = _appContextAccessor.ClaimSchoolUniqueId();
             int UserId = Convert.ToInt32(_loginService.GetLogedInStudentId());
@@ -69,7 +72,9 @@ namespace FeePay.Core.Application.Services.Student
                 {
                     if (selectedFee.IsSelected)
                     {
-                        var stuFee = await _unitOfWork.StudentFee.FindByIdAsync(selectedFee.StudentFeeId, SchoolUniqueId);
+                        if (!selectedFee.StudentFeeToken.IsValidToken()) return new Response<FeeDepositSummeryViewModel>("Invalid Data.");
+                        var studentFeeId = selectedFee.StudentFeeToken.DecryptID();
+                        var stuFee = await _unitOfWork.StudentFee.FindByIdAsync(studentFeeId, SchoolUniqueId);
                         if (stuFee != null) fees.Add(stuFee);
                     }
                 }
@@ -81,6 +86,112 @@ namespace FeePay.Core.Application.Services.Student
                 return new Response<FeeDepositSummeryViewModel>(resModel);
             }
             return new Response<FeeDepositSummeryViewModel>();
+
+        }
+
+        public async Task<Response<FeeDepositSummeryViewModel>> GenerateFeeDeposit(SelectedFeeDepositViewModel model)
+        {
+            string SchoolUniqueId = _appContextAccessor.ClaimSchoolUniqueId();
+            int UserId = Convert.ToInt32(_loginService.GetLogedInStudentId());
+
+            if (model != null && model.FeeDeposit.Any(a => a.IsSelected == true))
+            {
+                var studentProfile = await _unitOfWork.StudentAdmision.FindByStudentLoginIdAsync(UserId, SchoolUniqueId);
+                if (studentProfile == null) return new Response<FeeDepositSummeryViewModel>
+                        ("Student Profile not found. Please Talk to the school administration.");
+
+                var studentProfileModel = _mapper.Map<StudentAdmissionViewModel>(studentProfile);
+                studentProfileModel.StudentClass = await _unitOfWork.ClassRepo.FindByIdAsync(studentProfileModel.ClassId, SchoolUniqueId);
+                studentProfileModel.StudentSection = await _unitOfWork.SectionRepo.FindByIdAsync(studentProfileModel.SectionId, SchoolUniqueId);
+
+
+                List<StudentFees> fees = new List<StudentFees>();
+                foreach (var selectedFee in model.FeeDeposit)
+                {
+                    if (!selectedFee.StudentFeeToken.IsValidToken()) return new Response<FeeDepositSummeryViewModel>("Invalid Data.");
+                    var studentFeeId = selectedFee.StudentFeeToken.DecryptID();
+                    var stuFee = await _unitOfWork.StudentFee.FindByIdAsync(studentFeeId, SchoolUniqueId);
+                    if (stuFee != null) fees.Add(stuFee);
+                }
+                FeeDepositSummeryViewModel resModel = new FeeDepositSummeryViewModel()
+                {
+                    Student = studentProfileModel,
+                    Fees = _mapper.Map<List<StudentFeesViewModel>>(fees)
+                };
+                return new Response<FeeDepositSummeryViewModel>(resModel);
+            }
+            return new Response<FeeDepositSummeryViewModel>();
+
+        }
+
+        public async Task<Response<bool>> GenerateFeesTransaction(string transactionId, string status,
+            string mode, decimal amountPay, List<StudentFeesViewModel> feesModel)
+        {
+            string SchoolUniqueId = _appContextAccessor.ClaimSchoolUniqueId();
+            int UserId = Convert.ToInt32(_loginService.GetLogedInStudentId());
+            FeesTranscation feesTranscation = new FeesTranscation()
+            {
+                UserId = UserId,
+                Amount = amountPay,
+                IsComplete = false,
+                TransactionId = transactionId,
+                TransactionMode = mode,
+                State = status,
+                Receipt = "",
+            };
+            List<StudentFees> fees = _mapper.Map<List<StudentFees>>(feesModel);
+            fees.ForEach(f =>
+            {
+                f.Status = nameof(FeeStatus.Not_Paied);
+                f.PaymentId = transactionId;
+            });
+
+            var res = await _unitOfWork.FeesTranscation.AddAsync(feesTranscation, fees, SchoolUniqueId);
+            if (res < 0) return new Response<bool>("Error Adding FeesTranscation Data.");
+            return new Response<bool>(res > 0);
+        }
+
+        public async Task<Response<bool>> ComplateFeesTransaction(string transactionId, string status, DateTime complateDate)
+        {
+            string SchoolUniqueId = _appContextAccessor.ClaimSchoolUniqueId();
+            FeesTranscation feesTranscation = await _unitOfWork.FeesTranscation.FindByTranscationIdAsync(transactionId, SchoolUniqueId);
+            if (feesTranscation == null) return new Response<bool>("NO Transaction Found.");
+            feesTranscation.State = status;
+            feesTranscation.IsComplete = true;
+            feesTranscation.Date = complateDate;
+            var fees = await _unitOfWork.StudentFee.GetStudentFeeListByTransactionIdAsync(transactionId, SchoolUniqueId);
+            if(fees == null || !fees.Any()) return new Response<bool>("NO Transaction Fees Found.");
+            fees.ToList().ForEach(f => {
+                f.Status = nameof(FeeStatus.Paied);
+                f.PaymentDate = complateDate;
+                f.Mode = "Online";                
+            });
+
+            var res = await _unitOfWork.FeesTranscation.UpdateAsync(feesTranscation, fees.ToList(), SchoolUniqueId);
+            if (res < 0) return new Response<bool>("Error Adding FeesTranscation Data.");
+            return new Response<bool>(res > 0);
+        }
+
+        public async Task<Response<bool>> FailFeesTransaction(string transactionId, string status)
+        {
+            string SchoolUniqueId = _appContextAccessor.ClaimSchoolUniqueId();
+            FeesTranscation feesTranscation = await _unitOfWork.FeesTranscation.FindByTranscationIdAsync(transactionId, SchoolUniqueId);
+            if (feesTranscation == null) return new Response<bool>("NO Transaction Found.");
+            feesTranscation.State = status;
+            feesTranscation.IsComplete = false;
+            feesTranscation.Date = null;
+            var fees = await _unitOfWork.StudentFee.GetStudentFeeListByTransactionIdAsync(transactionId, SchoolUniqueId);
+            if (fees == null || !fees.Any()) return new Response<bool>("NO Transaction Fees Found.");
+            fees.ToList().ForEach(f => {
+                f.Status = string.Empty;
+                f.PaymentDate = null;
+                f.Mode = string.Empty;
+                f.PaymentId = string.Empty;
+            });
+
+            var res = await _unitOfWork.FeesTranscation.UpdateAsync(feesTranscation, fees.ToList(), SchoolUniqueId);
+            if (res < 0) return new Response<bool>("Error Adding FeesTranscation Data.");
+            return new Response<bool>(res > 0);
 
         }
     }
