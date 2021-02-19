@@ -62,6 +62,7 @@
     <Folder Include="Dbo\Tables" />
     <Folder Include="Dbo\Stored Procedures\SuperAdmin" />
     <Folder Include="Dbo\Scripts" />
+    <Folder Include="Dbo\Stored Procedures\RegisteredSchool" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dbo\PublishProfile\FeePayLocalDB.publish.xml" />
@@ -89,11 +90,11 @@
     <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Update_SuperAdmin_User.sql" />
     <Build Include="Dbo\Stored Procedures\SuperAdmin\SP_Update_SuperAdmin_UserRole.sql" />
     <Build Include="Dbo\Tables\RegisteredSchool.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_Update_RegisteredSchool.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_GetAll_RegisteredSchool.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_Get_RegisteredSchool.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_Delete_RegisteredSchool.sql" />
-    <Build Include="Dbo\Stored Procedures\SP_Add_RegisteredSchool.sql" />
+    <Build Include="Dbo\Stored Procedures\RegisteredSchool\SP_Add_RegisteredSchool.sql" />
+    <Build Include="Dbo\Stored Procedures\RegisteredSchool\SP_Delete_RegisteredSchool.sql" />
+    <Build Include="Dbo\Stored Procedures\RegisteredSchool\SP_Get_RegisteredSchool.sql" />
+    <Build Include="Dbo\Stored Procedures\RegisteredSchool\SP_GetAll_RegisteredSchool.sql" />
+    <Build Include="Dbo\Stored Procedures\RegisteredSchool\SP_Update_RegisteredSchool.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Dbo\Scripts\Sp_Exe.Script.PostDeployment.sql" />

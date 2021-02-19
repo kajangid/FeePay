@@ -20,7 +20,7 @@
 )
 AS
 BEGIN
-    IF EXISTS(SELECT *FROM [dbo].[StudentLogin] WHERE [Id] = @Id)
+    IF EXISTS(SELECT *FROM [dbo].[StudentLogin] WHERE [Id] = @Id AND [IsDelete] = 0)
     BEGIN 
         UPDATE [dbo].[StudentLogin]
         SET  

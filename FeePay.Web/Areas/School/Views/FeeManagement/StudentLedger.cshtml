@@ -1,0 +1,180 @@
+﻿@model StudentLedgerViewModel
+@{
+    var ApplyFeeList = Model?.FeeList?.Where(w => w.IsPaid == false).ToList();
+    var PaidFeeList = Model?.FeeList?.Where(w => w.IsPaid == true).ToList();
+}
+@section Style{
+}
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function ($) {
+            "use strict";
+            $('#studentApplyFeeList').DataTable({
+                "order": [[3, 'desc']],
+                columnDefs: [
+                    { targets: 0, visible: true, searchable: false, orderable: false },
+                    { targets: 1, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 2, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 3, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 4, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 5, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 6, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 7, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 8, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 9, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                ]
+            });
+            $('#studentApplyFeeList').reArrangeDatatableSerialNumber();
+            $('#studentPaidFeeList').DataTable({
+                "order": [[3, 'desc']],
+                columnDefs: [
+                    { targets: 0, visible: true, searchable: false, orderable: false },
+                    { targets: 1, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 2, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 3, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 4, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 5, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 6, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 7, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 8, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 9, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                ]
+            });
+            $('#studentPaidFeeList').reArrangeDatatableSerialNumber();
+        })(jQuery)
+    </script>
+}
+
+
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="edit-profile">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>@Model?.StudentAdmissionViewModel?.Fullname</h4>
+                        <p class="mb-0">
+                            class: <span>@Model?.StudentAdmissionViewModel?.StudentClass?.Name</span>
+                            ( <span>@Model?.StudentAdmissionViewModel?.StudentSection?.Name</span> )
+                        </p>
+                        <p class="mb-0">
+                            Sr/Reg Number: <span>@Model?.StudentAdmissionViewModel?.Sr_RegNo</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Apply Fees</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="display" id="studentApplyFeeList">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th>Fees Group</th>
+                                        <th>Fees Code</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th>Amount [₹]</th>
+                                        <th>Payment Id</th>
+                                        <th>Date</th>
+                                        <th>Discount [₹]</th>
+                                        <th>Balance [₹]</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null && ApplyFeeList != null)
+                                    {
+                                        foreach (var fee in ApplyFeeList)
+                                        {
+                                            <tr>
+                                                <th scope="row"></th>
+                                                <td>@fee.FeeGroupName</td>
+                                                <td>@fee.FeeTypeCode</td>
+                                                <td data-order="@fee.DueDate?.ToString("MMddyyyyHHmmss")">@(fee.DueDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture))</td>
+                                                <td>@fee.Status</td>
+                                                <td>@fee.FeeAmount</td>
+                                                <td>@fee.PaymentId</td>
+                                                <td data-order="@fee.PaymentDate?.ToString("MMddyyyyHHmmss")">@(fee.PaymentDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture))</td>
+                                                <td>-</td>
+                                                <td>@fee.FeeAmount</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Paid Fees</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="display" id="studentPaidFeeList">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th>Fees Group</th>
+                                        <th>Fees Code</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th>Amount [₹]</th>
+                                        <th>Payment Id</th>
+                                        <th>Date</th>
+                                        <th>Discount [₹]</th>
+                                        <th>Paid [₹]</th>
+                                        @*<th>Balance [₹]</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null && PaidFeeList != null)
+                                    {
+                                        foreach (var fee in PaidFeeList)
+                                        {
+                                            <tr>
+                                                <th scope="row"></th>
+                                                <td>@fee.FeeGroupName</td>
+                                                <td>@fee.FeeTypeCode</td>
+                                                <td data-order="@fee.DueDate?.ToString("MMddyyyyHHmmss")">@(fee.DueDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture))</td>
+                                                <td>@fee.Status</td>
+                                                <td>@fee.FeeAmount</td>
+                                                <td>@fee.PaymentId</td>
+                                                <td data-order="@fee.PaymentDate?.ToString("MMddyyyyHHmmss")">@(fee.PaymentDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture))</td>
+                                                <td>-</td>
+                                                <td>@(fee.FeeAmount)</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

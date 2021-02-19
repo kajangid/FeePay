@@ -14,28 +14,40 @@ using FeePay.Core.Domain.Entities.Student;
 using FeePay.Core.Application.UseCase;
 using FeePay.Core.Application.Interface.Service.Student;
 using FeePay.Core.Application.Exceptions;
+using FeePay.Core.Application.Interface;
 
 namespace FeePay.Infrastructure.Identity.Service
 {
     public class StudentRegistrationService : IStudentRegistrationService
     {
-        public StudentRegistrationService(UserManager<StudentLogin> userManager, ILogger<StudentRegistrationService> logger
-            //,IUnitOfWork unitOfWork, IAppContextAccessor appContextAccessor, ILoginService loginService, IMapper mapper
+        public StudentRegistrationService(
+            ILogger<StudentRegistrationService> logger,
+            UserManager<StudentLogin> userManager,
+            IUnitOfWork unitOfWork,
+            IAppContextAccessor appContextAccessor,
+            ILoginService loginService,
+            IMapper mapper,
+            IPasswordHasher<StudentLogin> passwordHasher,
+            IPasswordGenerator passwordGenerator
             )
         {
-            //_appContextAccessor = appContextAccessor;
-            //_loginService = loginService;
-            //_unitOfWork = unitOfWork;
-            //_mapper = mapper;
-            _userManager = userManager;
             _logger = logger;
+            _userManager = userManager;
+            _unitOfWork = unitOfWork;
+            _appContextAccessor = appContextAccessor;
+            _loginService = loginService;
+            _mapper = mapper;
+            _passwordHasher = passwordHasher;
+            _passwordGenerator = passwordGenerator;
         }
-        //private readonly IAppContextAccessor _appContextAccessor;
-        //private readonly ILoginService _loginService;
-        //private readonly IUnitOfWork _unitOfWork;
-        //private readonly IMapper _mapper;
-        private readonly UserManager<StudentLogin> _userManager;
         private readonly ILogger<StudentRegistrationService> _logger;
+        private readonly UserManager<StudentLogin> _userManager;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAppContextAccessor _appContextAccessor;
+        private readonly ILoginService _loginService;
+        private readonly IMapper _mapper;
+        public readonly IPasswordHasher<StudentLogin> _passwordHasher;
+        public readonly IPasswordGenerator _passwordGenerator;
 
 
 
@@ -65,5 +77,17 @@ namespace FeePay.Infrastructure.Identity.Service
 
 
 
+        public async Task ChangeStudentLoginPasswordAsync(StudentLogin user, string newPassword)
+        {
+            await _userManager.RemovePasswordAsync(user);
+            await _userManager.AddPasswordAsync(user, newPassword);
+        }
+        public StudentLogin GetNewHashStudentLoginPasswordAsync(StudentLogin user, string newPassword)
+        {
+            var hasedPassword = _passwordHasher.HashPassword(user, newPassword);
+            user.SecurityStamp = Guid.NewGuid().ToString();
+            user.PasswordHash = hasedPassword;
+            return user;
+        }
     }
 }

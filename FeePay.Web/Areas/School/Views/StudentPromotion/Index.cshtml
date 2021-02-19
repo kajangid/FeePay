@@ -1,0 +1,251 @@
+﻿@model StudentPromotionViewModel
+@{
+    var class_PostSelectList = (Model != null) ? new SelectList(Model.Classes, "Value", "Text", Model?.ClassId_Post) : null;
+}
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function ($) {
+            "use strict";
+            var selectClass_Post = $('select[name="ClassId_Post"]');
+            if (selectClass_Post != null && selectClass_Post.length > 0) {
+                var selectedSection = $('select[name="SectionId_Post"]').attr("data-key-selected");
+                bindSectionDropDown(selectClass_Post, $('select[name="SectionId_Post"]'), selectedSection);
+                selectClass_Post.on('change', function (e) {
+                    e.preventDefault();
+                    var $this = $(this);
+                    bindSectionDropDown($this, $('select[name="SectionId_Post"]'));
+                });
+            }
+            var selectClass_Post = $('select[name="ClassId_Promo"]');
+            if (selectClass_Post != null && selectClass_Post.length > 0) {
+                var selectedSection = $('select[name="SectionId_Promo"]').attr("data-key-selected");
+                bindSectionDropDown(selectClass_Post, $('select[name="SectionId_Promo"]'), selectedSection);
+                selectClass_Post.on('change', function (e) {
+                    e.preventDefault();
+                    var $this = $(this);
+                    bindSectionDropDown($this, $('select[name="SectionId_Promo"]'));
+                });
+            }
+            function bindSectionDropDown(select, selectSectionEle, selected) {
+                selected = selected || '0';
+                var html = '<option value=""> Select </option>';
+                var classId = select.val();
+                var url = selectSectionEle.attr("data-ajaxurl");
+                if (classId === "") { selectSectionEle.html(html); return true; }
+                $.ajax({
+                    url: `${url}?id=${classId}`,
+                    method: 'get',
+                    dataType: 'json'
+                }).done(function (res) {
+                    if (res.success) {
+                        if (res.data != null && res.data.length > 0) {
+                            html += res.data.map(function (i) {
+                                return `<option value="${i.value}" ${(i.value === selected
+                                    && typeof (selected) != "undefined"
+                                    && selected != null && selected != '')
+                                    ? 'Selected' : ''} >${i.text}</option>`;
+                            }).join('');
+                            selectSectionEle.html(html);
+                        }
+                    } else { }
+                }).fail(function (jqXHR, textStatus) {
+                    console.log("Request failed: " + textStatus);
+                }).always(function () { });
+            }
+            $('form[id="promoteStudentForm"]').on('submit', function (e) {
+                e.preventDefault();
+                swalWithBootstrapButtons
+                    .fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, Promote!',
+                        cancelButtonText: 'No, cancel!',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.value) {
+                            if ($(this).valid()) {
+                                $.ajax({
+                                    url: $(this).attr('action'),
+                                    method: $(this).attr('method'),
+                                    dataType: 'json',
+                                    data: $(this).serialize() + '&ClassId_Post=' + $('select[name="ClassId_Post"]').val() + '&SectionId_Post=' + $('select[name="SectionId_Post"]').val(),
+                                }).done(function (res) {
+                                    console.log(res);
+                                    if (res.success) {
+                                        swalWithBootstrapButtons.fire('Promoted!', 'Students has been promoted.', 'success');
+                                    } else {
+                                        swalWithBootstrapButtons.fire('Error!', 'Error accor while promoting students. ' + res.message, 'error');
+                                    }
+                                }).fail(function (jqXHR, textStatus) {
+                                    console.log("Request failed: " + textStatus);
+                                }).always(function () { });
+                            }
+                        } else if (result.dismiss === Swal.DismissReason.cancel) { }
+                    }).catch(swal.noop);
+            });
+        })(jQuery);
+    </script>
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <form method="post" class="needs-validation" novalidate="">
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label asp-for="ClassId_Post"> Class *</label>
+                                            <select asp-for="ClassId_Post"
+                                                    asp-items="@(class_PostSelectList)"
+                                                    class="form-control">
+                                                <option value=""> Select </option>
+                                            </select>
+                                            <div class="invalid-feedback"><span asp-validation-for="ClassId_Post"></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label asp-for="SectionId_Post"> Section *</label>
+                                            <select asp-for="SectionId_Post"
+                                                    data-ajaxurl="@Url.Action("GetClassSection","Uitility")"
+                                                    data-key-selected="@Model?.SectionId_Post"
+                                                    class="form-control">
+                                                <option> Select </option>
+                                            </select>
+                                            <div class="invalid-feedback"><span asp-validation-for="SectionId_Post"></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group mb-0 text-right"><input type="submit" class="btn btn-primary" value="Search" /></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (Model.StudentAdmission != null && Model.StudentAdmission.Any())
+        {
+            <div class="col-sm-12">
+                <form id="promoteStudentForm" asp-action="Promote" asp-controller="StudentPromotion" method="post" class="needs-validation" novalidate>
+                    @Html.AntiForgeryToken()
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="SessionId_Promo">Session *</label>
+                                        <select asp-for="SessionId_Promo"
+                                                asp-items="@(new SelectList(Model.Sessions,"Value","Text"))"
+                                                data-key-selected="@Model?.SessionId_Promo"
+                                                class="form-control">
+                                            <option value=""> Select </option>
+                                        </select>
+                                        <div class="invalid-feedback"><span asp-validation-for="SessionId_Promo"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="ClassId_Promo">Class *</label>
+                                        <select asp-for="ClassId_Promo"
+                                                asp-items="@(new SelectList(Model.Classes,"Value","Text"))"
+                                                data-key-selected="@Model?.ClassId_Promo"
+                                                class="form-control">
+                                            <option value=""> Select </option>
+                                        </select>
+                                        <div class="invalid-feedback"><span asp-validation-for="ClassId_Promo"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="SectionId_Promo">Section *</label>
+                                        <select asp-for="SectionId_Promo"
+                                                class="form-control"
+                                                data-ajaxurl="@Url.Action("GetClassSection","Uitility")"
+                                                data-key-selected="@Model?.SectionId_Promo">
+                                        </select>
+                                        <div class="invalid-feedback"><span asp-validation-for="SectionId_Promo"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table" id="assignfees_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr/Reg No</th>
+                                                    <th>Name</th>
+                                                    <th>Father's Name</th>
+                                                    <th>MobileNo</th>
+                                                    <th>Date of Birth</th>
+                                                    <th>MotherName</th>
+                                                    @*<th>Current Result</th>
+                                                        <th>Next Session Status</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (int i = 0; i < Model.StudentAdmission.Count; i++)
+                                                {
+                                                    <tr data-key="@Model.StudentAdmission[i].Id">
+                                                        <td>
+                                                            @Model.StudentAdmission[i].Sr_RegNo
+                                                            <input type="hidden" asp-for="@Model.StudentAdmission[i].Id" />
+                                                            <input type="hidden" asp-for="@Model.StudentAdmission[i].Sr_RegNo" />
+                                                            <input type="hidden" asp-for="@Model.StudentAdmission[i].FirstName" />
+                                                        </td>
+                                                        <td>@($"{Model.StudentAdmission[i].FirstName} {@Model.StudentAdmission[i].LastName}")</td>
+                                                        <td>@Model.StudentAdmission[i].FatherName</td>
+                                                        <td>@Model.StudentAdmission[i].MobileNo</td>
+                                                        <td>@Model.StudentAdmission[i].DateOfBirth?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+                                                        <td>@Model.StudentAdmission[i].MotherName</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-0 text-right"><input type="submit" class="btn btn-success mr-3" value="Add" /></div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col">
+                                    <div id="form-validation-summary" class="my-2 txt-danger" style="font-size: 12px;line-height: 1;letter-spacing: 0.9px;" asp-validation-summary="All"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>

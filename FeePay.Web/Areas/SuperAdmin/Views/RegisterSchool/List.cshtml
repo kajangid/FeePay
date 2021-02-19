@@ -3,11 +3,11 @@
     var random = new Random();
     var ColorList = new List<string> { "primary", "secondary", "success", "info", "dark", "light", "danger", "warning" };
 }
+@section Models{
+}
 @section Styles{
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
 }
 @section PluginScripts{
-    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
 }
 @section Scripts{
     <script>
@@ -82,7 +82,9 @@
                                                 <td>@item.PrincipalName</td>
                                                 <td>@item.ContactNumber</td>
                                                 <td>
-                                                    <input asp-for="@item.IsApproved" type="checkbox" data-action="approverow"
+                                                    <input asp-for="@item.IsApproved"
+                                                           type="checkbox"
+                                                           data-action="approverow"
                                                            data-ajaxurl="@Url.Action("Approve","RegisterSchool",new { id = item.Id })">
                                                 </td>
                                                 <td>
@@ -91,14 +93,25 @@
                                                 </td>
                                                 <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
                                                 <td>
-                                                    <a asp-action="Edit" asp-controller="RegisterSchool" asp-route-id="@item.Id"
-                                                       data-container="body" data-toggle="popover" data-placement="top"
-                                                       title="Edit Class" class="d-inline-block mr-1">
+                                                    <a asp-action="Edit"
+                                                       asp-controller="RegisterSchool"
+                                                       asp-route-id="@item.Id"
+                                                       data-container="body"
+                                                       data-toggle="popover"
+                                                       data-placement="top"
+                                                       title="Edit Class"
+                                                       class="d-inline-block mr-1">
                                                         <i data-feather="edit-3"></i>
                                                     </a>
-                                                    <a asp-action="Delete" asp-controller="RegisterSchool" asp-route-id="@item.Id"
-                                                       data-action="deleterow" data-actionmag="Register School" data-container="body"
-                                                       data-toggle="popover" data-placement="top" title="Delete Class"
+                                                    <a asp-action="Delete"
+                                                       asp-controller="RegisterSchool"
+                                                       asp-route-id="@item.Id"
+                                                       data-action="deleterow"
+                                                       data-actionmag="Register School"
+                                                       data-container="body"
+                                                       data-toggle="popover"
+                                                       data-placement="top"
+                                                       title="Delete Class"
                                                        class="d-inline-block">
                                                         <i data-feather="trash-2"></i>
                                                     </a>

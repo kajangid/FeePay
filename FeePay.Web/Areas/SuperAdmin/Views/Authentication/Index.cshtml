@@ -34,7 +34,7 @@
                 <div class="login-card">
                     <div>
                         <div>
-                            <a class="logo" href="@Url.Action("")">
+                            <a class="logo" asp-action="Index" asp-controller="Home" asp-area="">
                                 <img class="img-fluid for-light" src="~/Cuba/images/logo/login.png" alt="looginpage">
                                 <img class="img-fluid for-dark" src="~/Cuba/images/logo/logo_dark.png" alt="looginpage">
                             </a>
@@ -63,6 +63,14 @@
                                 </div>
                                 <div class="my-2 txt-danger" style="font-size: 12px;line-height: 1;letter-spacing: 0.9px;" asp-validation-summary="All"></div>
                             </form>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <a asp-action="Index" asp-controller="Authentication" asp-area="School" class="btn btn-outline-info btn-block">School Login</a>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <a asp-action="Index" asp-controller="Authentication" asp-area="Student" class="btn btn-outline-info btn-block">Student Login</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

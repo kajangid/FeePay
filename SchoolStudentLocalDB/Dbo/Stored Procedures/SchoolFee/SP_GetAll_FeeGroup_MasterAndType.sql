@@ -4,7 +4,7 @@
 -- Description:	Sp to get all fee group list with fee master and fee type join data
 -- =============================================
 CREATE PROCEDURE [dbo].[SP_GetAll_FeeGroup_MasterAndType]
-
+@AcademicSessionId INT 
 AS
 BEGIN	
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -25,7 +25,10 @@ BEGIN
 	ON [fg].[Id] = [fm].FeeGroupId AND [fm].[IsDelete] = 0 AND [fm].[IsActive] = 1
 	INNER JOIN [dbo].[FeeType] AS [ft] 
 	ON [ft].[Id] = [fm].FeeTypeId AND [ft].[IsDelete] = 0  AND [ft].[IsActive] = 1
-	WHERE [fg].[IsDelete] = 0 AND [fg].[IsActive] = 1
+	WHERE 
+	[fg].[IsDelete] = 0 AND 
+	[fg].[IsActive] = 1 AND
+	[fm].[AcademicSessionId] = @AcademicSessionId
 
 
 END

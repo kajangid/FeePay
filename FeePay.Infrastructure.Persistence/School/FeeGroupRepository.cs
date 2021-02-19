@@ -24,8 +24,8 @@ namespace FeePay.Infrastructure.Persistence.School
             _connectionStringBuilder = connectionStringBuilder;
         }
 
-
-        public async Task<int> AddAsync(FeeGroup feeGroup, string dbId = null)
+        #region Execute
+        public async Task<int> AddAsync(FeeGroup feeGroup, string dbId)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
-        public async Task<int> UpdateAsync(FeeGroup feeGroup, string dbId = null)
+        public async Task<int> UpdateAsync(FeeGroup feeGroup, string dbId)
         {
             try
             {
@@ -86,13 +86,13 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
-        public async Task<int> DeleteAsync(int Id, string dbId = null)
+        public async Task<int> DeleteAsync(int id, string dbId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 return await connection.ExecuteAsync(_dBVariables.SP_Delete_FeeGroup,
-                    new { Id },
+                    new { Id = id },
                     commandType: CommandType.StoredProcedure);
             }
             catch (TimeoutException ex)
@@ -108,149 +108,17 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
-        public async Task<IEnumerable<FeeGroup>> GetAllActiveAsync(string dbId = null)
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QueryAsync<FeeGroup>(_dBVariables.SP_GetAll_FeeGroup,
-                    new { IsActive = true },
-                    commandType: CommandType.StoredProcedure);
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
-            }
-        }
-        public async Task<FeeGroup> FindActiveByIdAsync(int Id, string dbId = null)
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QuerySingleOrDefaultAsync<FeeGroup>(_dBVariables.SP_Get_FeeGroup,
-                    new { Id, IsActive = true },
-                    commandType: CommandType.StoredProcedure);
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
-            }
-        }
-        public async Task<FeeGroup> FindActiveByNameAsync(string Name, string dbId = null)
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QuerySingleOrDefaultAsync<FeeGroup>(_dBVariables.SP_Get_FeeGroup,
-                    new { NormalizeName = Name.ToUpper(), IsActive = true },
-                    commandType: CommandType.StoredProcedure);
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
-            }
-        }
-        public async Task<IEnumerable<FeeGroup>> GetAllAsync(string dbId = null)
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QueryAsync<FeeGroup>(_dBVariables.SP_GetAll_FeeGroup,
-                    commandType: CommandType.StoredProcedure);
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
-            }
-        }
-        public async Task<FeeGroup> FindByIdAsync(int Id, string dbId = null)
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QuerySingleOrDefaultAsync<FeeGroup>(_dBVariables.SP_Get_FeeGroup,
-                    new { Id },
-                    commandType: CommandType.StoredProcedure);
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
-            }
-        }
-        public async Task<FeeGroup> FindByNameAsync(string Name, string dbId = null)
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QuerySingleOrDefaultAsync<FeeGroup>(_dBVariables.SP_Get_FeeGroup,
-                    new { NormalizeName = Name.ToUpper() },
-                    commandType: CommandType.StoredProcedure);
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
-            }
-        }
+        #endregion
 
-
-
-        public async Task<IEnumerable<FeeGroup>> GetAllActive_WithAddEditUserAsync(string dbId = null)
+        #region Find
+        public async Task<FeeGroup> FindByIdAsync(int id, string dbId, bool? isActive = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QueryAsync<FeeGroup, SchoolAdminUser, SchoolAdminUser, FeeGroup>(_dBVariables.SP_GetAll_FeeGroup_AddEditUser,
-                    (feegroup, addeduser, modifyuser) => { feegroup.AddedByUser = addeduser; feegroup.ModifyByUser = modifyuser; return feegroup; },
-                    new { IsActive = true },
-                    splitOn: "Id,Id,Id",
+                return await connection.QuerySingleOrDefaultAsync<FeeGroup>(
+                    sql: _dBVariables.SP_Get_FeeGroup,
+                    param: new { Id = id, IsActive = isActive },
                     commandType: CommandType.StoredProcedure);
             }
             catch (TimeoutException ex)
@@ -266,18 +134,91 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
-        public async Task<FeeGroup> FindActiveById_WithAddEditUserAsync(int Id, string dbId = null)
+        public async Task<FeeGroup> FindByNameAsync(string name, string dbId, bool? isActive = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                var list = await connection.QueryAsync<FeeGroup, SchoolAdminUser, SchoolAdminUser, FeeGroup>(_dBVariables.SP_Get_FeeGroup_AddEditUser,
-                    (feegroup, addeduser, modifyuser) => { feegroup.AddedByUser = addeduser; feegroup.ModifyByUser = modifyuser; return feegroup; },
-                    new { Id, IsActive = true },
-                    splitOn: "Id,Id,Id",
+                return await connection.QuerySingleOrDefaultAsync<FeeGroup>(
+                    sql: _dBVariables.SP_Get_FeeGroup,
+                    param: new { NormalizeName = name.ToUpper(), IsActive = isActive },
+                    commandType: CommandType.StoredProcedure);
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
+        }
+        #endregion
+
+        #region Get All
+        public async Task<IEnumerable<FeeGroup>> GetAllAsync(string dbId, bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                return await connection.QueryAsync<FeeGroup>(
+                    sql: _dBVariables.SP_GetAll_FeeGroup,
+                    param: new { IsActive = isActive },
+                    commandType: CommandType.StoredProcedure);
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
+        }
+        public async Task<IEnumerable<FeeGroup>> GetAll_WithAddEditUserAsync(string dbId, bool? isActive = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                var users = await connection.QueryAsync<SchoolAdminUser>(
+                    sql: _dBVariables.SP_Get_SchoolAdmin_User,
+                    param: new { IsActive = true },
                     commandType: CommandType.StoredProcedure);
 
-                return list?.FirstOrDefault();
+                var list = await GetAllAsync(dbId, isActive);
+                if (list != null && users != null && users.Any())
+                {
+                    var _classes = list.ToList();
+                    _classes.ForEach(f =>
+                    {
+                        if (f.AddedBy != 0)
+                            f.AddedByUser = users.Where(w => w.Id == f.AddedBy).SingleOrDefault();
+                        if (f.ModifyBy != 0)
+                            f.ModifyByUser = users.Where(w => w.Id == f.ModifyBy).SingleOrDefault();
+                    });
+                    return _classes;
+                }
+                return list;
+
+                //return await connection.QueryAsync<FeeGroup, SchoolAdminUser, SchoolAdminUser, FeeGroup>(
+                //    sql: _dBVariables.SP_GetAll_FeeGroup_AddEditUser,
+                //    map: (feegroup, addeduser, modifyuser) =>
+                //     {
+                //         feegroup.AddedByUser = addeduser;
+                //         feegroup.ModifyByUser = modifyuser;
+                //         return feegroup;
+                //     },
+                //    param: new { IsActive = isActive },
+                //    splitOn: "Id,Id,Id",
+                //    commandType: CommandType.StoredProcedure);
             }
             catch (TimeoutException ex)
             {
@@ -289,122 +230,26 @@ namespace FeePay.Infrastructure.Persistence.School
             }
             catch (Exception ex)
             {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+                throw new Exception(String.Format("{0}.WithConnection() an exception", GetType().FullName), ex);
             }
         }
-        public async Task<FeeGroup> FindActiveByName_WithAddEditUserAsync(string Name, string dbId = null)
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                var list = await connection.QueryAsync<FeeGroup, SchoolAdminUser, SchoolAdminUser, FeeGroup>(_dBVariables.SP_Get_FeeGroup_AddEditUser,
-                    (feegroup, addeduser, modifyuser) => { feegroup.AddedByUser = addeduser; feegroup.ModifyByUser = modifyuser; return feegroup; },
-                    new { NormalizeName = Name.ToUpper(), IsActive = true },
-                    splitOn: "Id,Id,Id",
-                    commandType: CommandType.StoredProcedure);
-
-                return list?.FirstOrDefault();
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
-            }
-        }
-        public async Task<IEnumerable<FeeGroup>> GetAll_WithAddEditUserAsync(string dbId = null)
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                return await connection.QueryAsync<FeeGroup, SchoolAdminUser, SchoolAdminUser, FeeGroup>(_dBVariables.SP_GetAll_FeeGroup_AddEditUser,
-                    (feegroup, addeduser, modifyuser) => { feegroup.AddedByUser = addeduser; feegroup.ModifyByUser = modifyuser; return feegroup; },
-                    splitOn: "Id,Id,Id",
-                    commandType: CommandType.StoredProcedure);
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
-            }
-        }
-        public async Task<FeeGroup> FindById_WithAddEditUserAsync(int Id, string dbId = null)
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                var list = await connection.QueryAsync<FeeGroup, SchoolAdminUser, SchoolAdminUser, FeeGroup>(_dBVariables.SP_Get_FeeGroup_AddEditUser,
-                    (feegroup, addeduser, modifyuser) => { feegroup.AddedByUser = addeduser; feegroup.ModifyByUser = modifyuser; return feegroup; },
-                    new { Id },
-                    splitOn: "Id,Id,Id",
-                    commandType: CommandType.StoredProcedure);
-
-                return list?.FirstOrDefault();
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
-            }
-        }
-        public async Task<FeeGroup> FindByName_WithAddEditUserAsync(string Name, string dbId = null)
-        {
-            try
-            {
-                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                var list = await connection.QueryAsync<FeeGroup, SchoolAdminUser, SchoolAdminUser, FeeGroup>(_dBVariables.SP_Get_FeeGroup_AddEditUser,
-                    (feegroup, addeduser, modifyuser) => { feegroup.AddedByUser = addeduser; feegroup.ModifyByUser = modifyuser; return feegroup; },
-                    new { NormalizeName = Name.ToUpper() },
-                    splitOn: "Id,Id,Id",
-                    commandType: CommandType.StoredProcedure);
-
-                return list?.FirstOrDefault();
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
-            }
-        }
+        #endregion
 
 
-
-
-        public async Task<IEnumerable<FeeGroup>> GetAllWithMasterAandTypeAsync(string dbId = null)
+        public async Task<IEnumerable<FeeGroup>> GetAllWithMasterAandTypeAsync(string dbId, int academicSessionId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var list = await connection.QueryAsync<FeeGroup, FeeMaster, FeeType, FeeGroup>(
-                    _dBVariables.SP_GetAll_FeeGroup_MasterAndType,
-                    (feegroup, master, type) => { feegroup.FeeMasterList.Add(master); feegroup.FeeTypeList.Add(type); return feegroup; },
+                    sql: _dBVariables.SP_GetAll_FeeGroup_MasterAndType,
+                    map: (feegroup, master, type) =>
+                    {
+                        feegroup.FeeMasterList.Add(master);
+                        feegroup.FeeTypeList.Add(type);
+                        return feegroup;
+                    },
+                    param: new { AcademicSessionId = academicSessionId },
                     splitOn: "Id,Id,Id",
                     commandType: CommandType.StoredProcedure);
 
@@ -431,6 +276,9 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
+
+
+
 
 
         // private methods

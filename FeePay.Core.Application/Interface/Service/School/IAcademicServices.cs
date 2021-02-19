@@ -31,8 +31,10 @@ namespace FeePay.Core.Application.Interface.Service.School
         Task<Response<List<SessionViewModel>>> GetListOfSessionsAsync();
         Task<Response<SessionViewModel>> FindSessionByIdAsync(int Id);
         Task<Response<bool>> AddOrEditSessionAsync(SessionViewModel model);
-
+        Task<Response<SessionViewModel>> GetActiveSessionAsync();
+        Task<Response<bool>> ChangeSessionAsync(int id);
         #endregion
+
         Task<Response<List<DropDownItem>>> GetClassSectionsAsync(int classId);
         Task<Response<List<DropDownItem>>> GetAllDropDownClassesAsync();
     }

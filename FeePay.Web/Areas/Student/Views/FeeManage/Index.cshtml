@@ -11,57 +11,7 @@
 @section Scripts{
     <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
     <partial name="_ValidationScriptsPartial" />
-    <script>
-        (function ($) {
-            "use strict";
-            var tbl = $('table[id="feestable"]');
-            var allCb = $('input[name="assignCkAll"]');
-            var assignCb = $('.select-checkbox');
-            if ($('.select-checkbox:checked').length === assignCb.length) { allCb.prop('checked', true); }
-            allCb.on('click', function (e) {
-                var $this = $(this);
-                var cboxlist = tbl.find('tbody tr th:last-child').find('input[type="checkbox"]');
-                if (typeof (cboxlist) != "undefined" && cboxlist != null && cboxlist.length > 0) {
-                    if ($this.prop('checked')) { $.each(cboxlist, function (i, v) { $(v).prop('checked', true); }); }
-                    else { $.each(cboxlist, function (i, v) { $(v).prop('checked', false); }); }
-                }
-                calculateSelectedAmount();
-            });
-            assignCb.on('click', function (e) {
-                var cboxlist = tbl.find('tbody tr th:last-child').find('input[type="checkbox"]');
-                if (typeof (cboxlist) != "undefined" && cboxlist != null && cboxlist.length > 0) {
-                    if ($('.select-checkbox:checked').length == assignCb.length) {
-                        allCb.prop('checked', true);
-                    } else {
-                        allCb.prop('checked', false);
-                    }
-                }
-                calculateSelectedAmount();
-            });
-            function calculateSelectedAmount() {
-                var tr = $('.select-checkbox:checked').closest('tr');
-                var amountPay = 0;
-                $.each(tr, function (i, v) {
-                    var amountTd = $(v).find('td[data-amount]');
-                    if (amountTd != null && amountTd != '')
-                        amountPay += parseFloat(amountTd.attr('data-amount'));
-                });
-                var formatedAmount = new Intl.NumberFormat('en-IN', {
-                    maximumFractionDigits: 2,
-                    minimumFractionDigits: 2,
-                }).format(amountPay);
-                $('[data-paying="amount"]').html(formatedAmount);
-            }
-            $('#feepay').on('submit', function (e) {
-                var swalWithBootstrapButtons = Swal.mixin(global_swanMixin);
-                if ($('.select-checkbox:checked').length <= 0) {
-                    e.preventDefault();
-                    swalWithBootstrapButtons.fire('Please select a fee to proceed.')
-                    return false;
-                } else { }
-            });
-        })(jQuery)
-    </script>
+    <script src="@Url.Content("~/Page_js/student/index.js")"></script>
 }
 <div class="container-fluid">
     <div class="page-title">
@@ -97,7 +47,9 @@
                                             <th>Status</th>
                                             <th>Amount (₹)</th>
                                             <th scope="col">
-                                                <label class="m-0" for="chk-ani"><input class="checkbox_animated" id="chk-ani" name="assignCkAll" type="checkbox">All</label>
+                                                <label class="m-0" for="chk-ani">
+                                                    <input class="checkbox_animated" id="chk-ani" name="assignCkAll" type="checkbox">All
+                                                </label>
                                             </th>
                                         </tr>
                                     </thead>
@@ -114,11 +66,18 @@
                                                     <td>@fee.Status</td>
                                                     <td data-amount="@fee.FeeAmount">@(_cultureFormatProvider.FormatCurrencyIntoIndianCalture(fee.FeeAmount))</td>
                                                     <th scope="row">
-                                                        <label class="m-0" asp-for="@fee.IsSelected">
-                                                            <input class="checkbox_animated select-checkbox" name="FeeDeposit[@counter].IsSelected" asp-for="@fee.IsSelected" type="checkbox">
+                                                        @if (!fee.IsPaid)
+                                                        {
+                                                            <label class="m-0" asp-for="@fee.IsSelected">
+                                                                <input class="checkbox_animated select-checkbox" name="FeeDeposit[@counter].IsSelected" asp-for="@fee.IsSelected" type="checkbox">
+                                                                <input type="hidden" name="FeeDeposit[@counter].FeeTypeCode" asp-for="@fee.FeeTypeCode" />
+                                                                <input type="hidden" name="FeeDeposit[@counter].StudentFeeToken" asp-for="@fee.Token" />
+                                                            </label>
+                                                        }
+                                                        else
+                                                        {
                                                             <input type="hidden" name="FeeDeposit[@counter].FeeTypeCode" asp-for="@fee.FeeTypeCode" />
-                                                            <input type="hidden" name="FeeDeposit[@counter].StudentFeeToken" asp-for="@fee.Token" />
-                                                        </label>
+                                                        }
                                                     </th>
                                                 </tr>
                                                 counter++;

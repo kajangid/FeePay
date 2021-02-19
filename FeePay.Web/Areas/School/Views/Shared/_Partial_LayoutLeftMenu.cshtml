@@ -29,24 +29,25 @@
                 </li>
                 <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                        <i data-feather="airplay"></i> <span> Fees </span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li><a href="@Url.Action("FeeTypeList","FeeManagement")">Create Fees Name</a></li>
-                        <li><a href="@Url.Action("FeeGroupList","FeeManagement")">Create Fees Group</a></li>
-                        <li><a href="@Url.Action("FeeMasterList","FeeManagement")">Define Group Fees</a></li>
-                        <li><a href="@Url.Action("FeesSummaryAll","FeeManagement")">Fees Summary </a></li>
-                        <li><a href="@Url.Action("FeeCollection","FeeManagement")">Fees Collection </a></li>
-                        <li><a href="@Url.Action("FeeTransaction","FeeManagement")">Fees Transaction </a></li>
-                    </ul>
-                </li>
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                         <i data-feather="airplay"></i> <span> Master </span>
                     </a>
                     <ul class="sidebar-submenu">
                         <li><a href="@Url.Action("ClassList","Academic")">Create Class</a></li>
                         <li><a href="@Url.Action("SectionList","Academic")">Create Section</a></li>
+                        <li><a href="@Url.Action("FeeTypeList","FeeManagement")">Create Fees Name</a></li>
+                        <li><a href="@Url.Action("FeeGroupList","FeeManagement")">Create Fees Group</a></li>
+                        <li><a href="@Url.Action("FeeMasterList","FeeManagement")">Define Group Fees</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                        <i data-feather="airplay"></i> <span> Fees </span>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li><a href="@Url.Action("FeesSummaryAll","FeeManagement")">Fees Summary</a></li>
+                        <li><a href="@Url.Action("FeeCollection","FeeManagement")">Fees Collection</a></li>
+                        <li><a href="@Url.Action("FeeTransaction","FeeManagement")">Fees Transaction</a></li>
+                        <li><a href="@Url.Action("FeePending","FeeManagement")">Pending Fees</a></li>
                     </ul>
                 </li>
                 <li class="sidebar-list">
@@ -56,6 +57,16 @@
                     <ul class="sidebar-submenu">
                         <li><a href="@Url.Action("StudentAdd","StudentAdmission")">New Admission</a></li>
                         <li><a href="@Url.Action("StudentList","StudentAdmission")">Student List</a></li>
+                        <li><a href="javascript:void(0)">Upload Student</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                        <i data-feather="airplay"></i> <span> Payment Gateway </span>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li><a href="@Url.Action("Index","PaymentGatewayManagement")"> Upload Document </a></li>
+                        <li><a href="@Url.Action("Status","PaymentGatewayManagement")"> Status </a></li>
                     </ul>
                 </li>
                 <li class="sidebar-list">
@@ -64,12 +75,11 @@
                         <i data-feather="airplay"></i> <span> Setting </span>
                     </a>
                     <ul class="sidebar-submenu">
-                        <li><a href="@Url.Action("UserProfile","Home",new { id = UserId})">Profile</a></li>
+                        <li><a href="@Url.Action("UserProfile","Home")">Profile</a></li>
                         <li><a href="@Url.Action("StaffList","Account")">User Creation</a></li>
                         <li><a href="@Url.Action("RoleList","Account")">User Rights</a></li>
                         <li><a href="@Url.Action("SessionList","Academic")">Create New Session</a></li>
-                        <li><a href="javascript:void(0)">Student Promotion</a></li>
-                        <li><a href="javascript:void(0)">Upload Student</a></li>
+                        <li><a href="@Url.Action("Index","StudentPromotion")">Student Promotion</a></li>
                         <li><a href="javascript:void(0)">Send SMS</a></li>
                         <li><a href="javascript:void(0)">SMS Setting</a></li>
                     </ul>

@@ -99,6 +99,7 @@ namespace FeePay.Core.Application.Services.SuperAdmin
             return new Response<bool>(res > 0);
         }
         #endregion
+
         #region SUPER USER PROFILE 
         public async Task<Response<SuperAdmin_UserViewModel>> GetUserProfileAsync()
         {

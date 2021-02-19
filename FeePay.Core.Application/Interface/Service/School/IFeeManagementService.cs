@@ -34,13 +34,26 @@ namespace FeePay.Core.Application.Interface.Service.School
         #endregion
 
         #region Fee Assign
-        Task<AssignFeesViewModel> SearchStudentAndBindAssignViewModel(AssignFeesViewModel data, int id);
-        Task<Response<bool>> AssignFeesToStudents(AssignFeesViewModel data, int id);
+        Task<Response<AssignFeesViewModel>> BindAssignViewModelAsync(int feeGroupId, AssignFeesViewModel model = null);
+        Task<Response<AssignFeesViewModel>> SearchStudentAndAddToAssignViewModelAsync(AssignFeesViewModel data);
+        Task<Response<bool>> AssignFeesToStudents(AssignFeesViewModel data, int feeGroupId);
         #endregion
 
         #region Fee Summary 
         Task<Response<List<AllFeeSummaryViewModel>>> GetAllFeeSummaryAsync();
         Task<Response<List<ClassFeeSummaryViewModel>>> GetClassFeeSummaryAsync(int id);
+        #endregion
+
+        #region Fee Collection
+        Task<Response<FeesCollerctionReportViewModel>> GetFeeCollectionReport(FeeCollectionSearchModel searchModel = null);
+        #endregion
+
+        #region Fee Transaction Report
+        Task<Response<List<FeesTransactionReportViewModel>>> GetFeeTransactionReport();
+        #endregion
+
+        #region Pending Fess
+        Task<Response<FeePendingViewModel>> GetPendingFeesAsync(StudentSearchViewModel searchModel = null);
         #endregion
     }
 }

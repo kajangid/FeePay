@@ -5,6 +5,71 @@
 }
 @section Style{
     <link href="@Url.Content("~/lib/Tree-Generator-jQuery-Bonsai/jquery.bonsai.css")" rel="stylesheet" />
+    <style>
+        #tree input[type=checkbox] + label {
+            display: inline-block;
+            margin: 0.1em;
+            cursor: pointer;
+            padding: 0.3em 0.2em;
+        }
+
+        #tree input[type=checkbox] {
+            display: none;
+        }
+
+            #tree input[type=checkbox] + label:before {
+                content: "\2714";
+                border: 0.1em solid #000;
+                border-radius: 0.2em;
+                display: inline-block;
+                width: 1.4em;
+                height: 1.4em;
+                padding-left: 0.2em;
+                padding-bottom: 0.2em;
+                margin-right: 0.5em;
+                vertical-align: bottom;
+                color: transparent;
+                transition: .1s;
+                line-height: 1.3em;
+            }
+
+            #tree input[type=checkbox] + label:active:before {
+                transform: scale(0);
+            }
+
+            #tree input[type=checkbox]:checked + label:before {
+                background-color: MediumSeaGreen;
+                border-color: MediumSeaGreen;
+                color: #fff;
+            }
+
+            #tree input[type=checkbox]:disabled + label:before {
+                transform: scale(1);
+                border-color: #aaa;
+            }
+
+            #tree input[type=checkbox]:checked:disabled + label:before {
+                transform: scale(1);
+                background-color: #bfb;
+                border-color: #bfb;
+            }
+
+        #tree.bonsai > li {
+            padding-left: 2.3em;
+        }
+
+        #tree li .thumb {
+            height: 32px;
+            width: 32px;
+            left: 1em;
+        }
+
+        #tree li.has-children > .thumb:after {
+            padding: 0.5em 0.5em 0em 0.5em;
+            height: 100%;
+            display: block;
+        }
+    </style>
 }
 
 @section Scripts{
@@ -23,11 +88,12 @@
                 .each(function (i, v) {
                     $(v).prop("checked", true);
                 });
-            $('#tree li[data-isdisabled="True"]')
+            $('#tree li[data-isdisabled="True"] input[type="checkbox"]')
                 .each(function (i, v) {
                     //#tree li[data-isdisabled="True"] input[type="checkbox"]
-                    //$(v).prop("disabled", true);
-                    $(v).hide();
+                    $(v).prop("disabled", true);
+                    //$(v).hide();
+                    $(v).closest('li').css({ 'color': '#ccc', 'display': 'none' });
                 });
 
             $('form').submit(function () {
@@ -39,20 +105,25 @@
                     }
                     var controllerName = 'SelectedControllers[' + i + ']';
                     $(controller).prop('name', controllerName + '.Name');
+                    if ($(controller).prop('disabled')) {
+                        $(controller).before($("<input/>", { type: "hidden", name: controllerName + '.Name', value: $(controller).val() }));
+                    }
 
                     var area = $(controller).next().next();
                     $(area).prop('name', controllerName + '.AreaName');
-
                     $('ul > li > input[type="checkbox"]:checked', $(controller).parent()).each(function () {
                         var action = $(this);
                         var actionName = controllerName + '.Actions[' + j + '].Name';
                         $(action).prop('name', actionName);
+
+                        if ($(action).prop('disabled')) {
+                            $(action).before($("<input/>", { type: "hidden", name: actionName, value: $(action).val() }));
+                        }
                         j++;
                     });
                     j = 0;
                     i++;
                 });
-
                 return true;
             });
         });
@@ -137,7 +208,9 @@
                                                 @Model.UserList[i].Name
                                                 <span class="text-right">
                                                     <label asp-for="@Model.UserList[i].IsSelected">
-                                                        <input class="checkbox_animated" asp-for="@Model.UserList[i].IsSelected" type="checkbox">
+                                                        <input class="checkbox_animated"
+                                                               asp-for="@Model.UserList[i].IsSelected"
+                                                               type="checkbox">
                                                         <input type="hidden" asp-for="@Model.UserList[i].Name" />
                                                         <input type="hidden" asp-for="@Model.UserList[i].Id" />
                                                     </label>
@@ -171,7 +244,10 @@
                                         {
                                             name = controller.DisplayName ?? controller.Name;
                                         }
-                                        <li class="controller" data-value="@controller.Name" data-isselected="@controller.IsSelected" data-isdisabled="@controller.IsDisabled">
+                                        <li class="controller"
+                                            data-value="@controller.Name"
+                                            data-isselected="@controller.IsSelected"
+                                            data-isdisabled="@controller.IsDisabled">
                                             <input type="hidden" class="area" value="@controller.AreaName" />
                                             @name
                                             @if (controller.Actions.Any())
@@ -182,7 +258,11 @@
                                                         {
                                                             name = action.DisplayName ?? action.Name;
                                                         }
-                                                        <li data-value="@action.Name" data-isselected="@action.IsSelected" data-isdisabled="@action.IsDisabled">@name</li>
+                                                        <li data-value="@action.Name"
+                                                            data-isselected="@action.IsSelected"
+                                                            data-isdisabled="@action.IsDisabled">
+                                                            @name
+                                                        </li>
                                                     }
                                                 </ul>
                                             }

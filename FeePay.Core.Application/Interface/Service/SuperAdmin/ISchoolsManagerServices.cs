@@ -17,5 +17,12 @@ namespace FeePay.Core.Application.Interface.Service.SuperAdmin
         Task<Response<bool>> DeleteRegisterSchool(int registeredSchoolId);
         Task<Response<bool>> ApproveRegisterSchool(int registeredSchoolId, bool IsApproved);
         #endregion
+
+
+        #region PAYMENT GATEWAY DOCUMENT
+        Task<Response<List<PaymentGatewayDocumentViewModel>>> GetPaymentGatewayDocumentList();
+        Task<Response<PaymentGatewayDocumentViewModel>> GetPaymentGatewayDocumentById(int id); 
+        Task<Response<bool>> ApprovePaymentGateway(IsActiveRequestViewModel model);
+        #endregion
     }
 }

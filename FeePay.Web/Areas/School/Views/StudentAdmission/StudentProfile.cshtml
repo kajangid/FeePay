@@ -3,12 +3,8 @@
     StudentAdmissionViewModel student = Model.StudentAdmissionViewModel;
 }
 @section Style{
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
-
-
 }
 @section Scripts{
-    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
     <partial name="_ValidationScriptsPartial" />
     <script>
         (function ($) {
@@ -147,8 +143,8 @@
                                         <th>Payment Id</th>
                                         <th>Date</th>
                                         <th>Discount (₹)</th>
-                                        @*<th>Paid (₹)</th>*@
-                                        @*<th>Balance</th>*@
+                                        <th>Paid (₹)</th>
+                                        <th>Balance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -157,11 +153,13 @@
                                         <tr>
                                             <td>@fee.FeeGroupName</td>
                                             <td>@fee.FeeTypeCode</td>
-                                            <td>@(fee.DueDate?.ToString("dd/MM/yyyy"))</td>
+                                            <td data-order="@fee.DueDate?.ToString("MMddyyyyHHmmss")">@(fee.DueDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture))</td>
                                             <td>@fee.Status</td>
                                             <td>@fee.FeeAmount</td>
                                             <td>@fee.PaymentId</td>
-                                            <td>@(fee.PaymentDate?.ToString("dd/MM/yyyy"))</td>
+                                            <td>@(fee.PaymentDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture))</td>
+                                            <td>-</td>
+                                            <td>-</td>
                                             <td>-</td>
                                         </tr>
                                     }

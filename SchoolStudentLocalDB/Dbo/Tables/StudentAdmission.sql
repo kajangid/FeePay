@@ -1,7 +1,8 @@
 ﻿CREATE TABLE [dbo].[StudentAdmission]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(100, 1), 
-	[FormNo] NVARCHAR(50) NOT NULL,
+	[Sr_RegNo] NVARCHAR(80) NOT NULL,
+	[AcademicSessionId] INT NOT NULL,
 	[ClassId] INT NOT NULL,  
 	[SectionId] INT NOT NULL,  
 	[StudentLoginId] INT NOT NULL,
@@ -12,7 +13,7 @@
 	[MobileNo] NVARCHAR(50) NOT NULL, 
 	[Gender] NVARCHAR(50) NOT NULL,
 	[GuardianMobileNo] NVARCHAR(50) NULL,
-	[Sr_RegNo] NVARCHAR(80) NULL,
+	[FormNo] NVARCHAR(50) NULL,
 	[EnrollNo] NVARCHAR(50) NULL,
 	[MACHINEID] NVARCHAR(50) NULL,
 	[PreviousClass] NVARCHAR(50) NULL,

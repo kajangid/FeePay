@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -23,6 +24,7 @@ namespace FeePay.Core.Application.IoC
             else
             { return false; }
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -34,6 +36,7 @@ namespace FeePay.Core.Application.IoC
             return regex.IsMatch(Value);
 
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -45,6 +48,7 @@ namespace FeePay.Core.Application.IoC
             return regex.IsMatch(Value);
 
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -56,6 +60,7 @@ namespace FeePay.Core.Application.IoC
             return regex.IsMatch(Value);
 
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -70,6 +75,7 @@ namespace FeePay.Core.Application.IoC
                 Convert.ToInt32(strDateSplit[1]));
             return Date;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -80,6 +86,7 @@ namespace FeePay.Core.Application.IoC
             string DecryptedID = Crypto.DecryptText(id);
             return IsNumber(DecryptedID);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -89,14 +96,72 @@ namespace FeePay.Core.Application.IoC
         {
             return Crypto.EncryptId(id);
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
         public static int DecryptID(this String id)
         {
             return Crypto.DecryptId(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        /// 
+        public static string EncryptMessage(this String message)
+        {
+            return Crypto.EncryptText(message);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static string DecryptMessage(this String message)
+        {
+            return Crypto.DecryptText(message);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileUrl"></param>
+        /// <returns></returns>
+        public static string GetFileNameWithExtentionFromFileUrl(this string fileUrl)
+        {
+            if (string.IsNullOrEmpty(fileUrl)) return "";
+            var splitPart = fileUrl.Split('/');
+            var fileName = splitPart[splitPart.Length - 1];
+            return fileName;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileUrl"></param>
+        /// <returns></returns>
+        public static string GetFileNameWithOutExtentionFromFileUrl(this string fileUrl)
+        {
+            var fileName = GetFileNameWithExtentionFromFileUrl(fileUrl);
+            return Path.GetFileNameWithoutExtension(fileName);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileUrl"></param>
+        /// <returns></returns>
+        public static string GetFileExtentionFromFileUrl(this string fileUrl)
+        {
+            var fileName = GetFileNameWithExtentionFromFileUrl(fileUrl);
+            return Path.GetExtension(fileName);
         }
 
     }

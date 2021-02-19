@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using FeePay.Core.Application.Enums;
 using FeePay.Core.Application.Interface;
 using FeePay.Core.Application.Interface.Common;
 using FeePay.Core.Application.Interface.Repository.School;
@@ -24,6 +25,13 @@ namespace FeePay.Infrastructure.Persistence.School
             _connectionStringBuilder = connectionStringBuilder;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="feesTranscation"></param>
+        /// <param name="fees"></param>
+        /// <param name="dbId"></param>
+        /// <returns></returns>
         public async Task<int> AddAsync(FeesTranscation feesTranscation, List<StudentFees> fees, string dbId)
         {
             IDbConnection connection = new SqlConnection(GetConStr(dbId));
@@ -31,10 +39,6 @@ namespace FeePay.Infrastructure.Persistence.School
             IDbTransaction transaction = connection.BeginTransaction();
             try
             {
-                var sql = @"INSERT INTO [dbo].[FeesTranscation]
-                                ([UserId],[TransactionId],[TransactionMode],[Amount],[IsComplete],[State],[Date],[Receipt])
-                                VALUES(@UserId,@TransactionId,@TransactionMode,@Amount,@IsComplete,@State,@Date,@Receipt)
-                                SELECT CAST(SCOPE_IDENTITY() AS INT)";
                 var parameters = new
                 {
                     feesTranscation.UserId,
@@ -43,11 +47,15 @@ namespace FeePay.Infrastructure.Persistence.School
                     feesTranscation.Amount,
                     feesTranscation.IsComplete,
                     feesTranscation.State,
-                    feesTranscation.Date,
-                    feesTranscation.Receipt,
+                    feesTranscation.Date
                 };
-                var paymentId = await connection.ExecuteScalarAsync<int>(sql,parameters, commandType: CommandType.Text);
-                if(paymentId < 0 )
+                var paymentId = await connection.ExecuteScalarAsync<int>(
+                    sql: _dBVariables.QUERY_Add_FeesTransaction,
+                    param: parameters,
+                    transaction: transaction,
+                    commandType: CommandType.Text);
+
+                if (paymentId < 0)
                 {
                     transaction?.Rollback();
                     connection?.Close();
@@ -62,27 +70,16 @@ namespace FeePay.Infrastructure.Persistence.School
                     tempParams.Add("@Status", s.Status, DbType.String, ParameterDirection.Input);
                     tempParams.Add("@Mode", s.Mode, DbType.String, ParameterDirection.Input);
                     tempParams.Add("@PaymentDate", DBNull.Value, DbType.DateTime, ParameterDirection.Input);
-                    tempParams.Add("@IsPaid", DBNull.Value, DbType.Boolean, ParameterDirection.Input);
+                    tempParams.Add("@IsPaid", s.IsPaid, DbType.Boolean, ParameterDirection.Input);
                     return tempParams;
                 });
-                var sql1 = @"CREATE TABLE  #routineUpdatedRecords
-                            ([Id] INT,[Status] NVARCHAR(20),[PaymentId] NVARCHAR(50),[Mode] NVARCHAR(50),
-                            [PaymentDate] DATETIME,[IsPaid] BIT);
-                            INSERT INTO #routineUpdatedRecords 
-                            VALUES(@Id, @Status, @PaymentId, @Mode, @PaymentDate, @IsPaid)";
-                var res = await connection.ExecuteAsync(sql1, parameters1, commandType: CommandType.Text);
 
-                var sql2 = @"UPDATE [sf] SET 
-                            [sf].[Status]		=	CASE WHEN [ur].[Status] IS NOT NULL THEN [ur].[Status] ELSE [ur].[Status] END, 
-                            [sf].[PaymentId]	=	CASE WHEN [ur].[PaymentId] IS NOT NULL THEN [ur].[PaymentId] ELSE [sf].[PaymentId] END, 
-                            [sf].[Mode]			=	CASE WHEN [ur].[Mode] IS NOT NULL THEN [ur].[Mode] ELSE [sf].[Mode] END, 
-                            [sf].[PaymentDate]	=	CASE WHEN [ur].[PaymentDate] IS NOT NULL THEN [ur].[PaymentDate] ELSE [sf].[PaymentDate] END, 
-                            [sf].[IsPaid]		=	CASE WHEN [ur].[IsPaid] IS NOT NULL THEN [ur].[IsPaid] ELSE [sf].[IsPaid] END
-                            FROM [StudentFees] [sf]
-                            INNER JOIN #routineUpdatedRecords [ur] 
-                            ON 
-                            [sf].[Id] = [ur].[Id] AND [sf].[IsActive] = 1 AND [sf].[IsDelete] = 0";
-                var numResults = await connection.ExecuteAsync(sql2, commandType: CommandType.Text);
+                var numResults = await connection.ExecuteAsync(
+                    sql: _dBVariables.QUERY_FeesTransaction_BulkUpdate_StudentFees,
+                    param: parameters1,
+                    transaction: transaction,
+                    commandType: CommandType.Text);
+
                 if (numResults < 0)
                 {
                     transaction?.Rollback();
@@ -113,6 +110,13 @@ namespace FeePay.Infrastructure.Persistence.School
                 connection?.Close();
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="feesTranscation"></param>
+        /// <param name="fees"></param>
+        /// <param name="dbId"></param>
+        /// <returns></returns>
         public async Task<int> UpdateAsync(FeesTranscation feesTranscation, List<StudentFees> fees, string dbId)
         {
             IDbConnection connection = new SqlConnection(GetConStr(dbId));
@@ -120,16 +124,6 @@ namespace FeePay.Infrastructure.Persistence.School
             IDbTransaction transaction = connection.BeginTransaction();
             try
             {
-                var sql = @"UPDATE [dbo].[FeesTranscation]  SET
-                                [TransactionId]		=	CASE WHEN @TransactionId IS NOT NULL THEN @TransactionId ELSE [TransactionId] END,
-                                [TransactionMode]	=	CASE WHEN @TransactionMode IS NOT NULL THEN @TransactionMode ELSE [TransactionMode] END,
-                                [Amount]			=	CASE WHEN @Amount IS NOT NULL THEN @Amount ELSE [Amount] END,
-                                [IsComplete]		=	CASE WHEN @IsComplete IS NOT NULL THEN @IsComplete ELSE [IsComplete] END,
-                                [State]				=	CASE WHEN @State IS NOT NULL THEN @State ELSE [State] END,
-                                [Date]				=	CASE WHEN @Date IS NOT NULL THEN @Date ELSE [Date] END,
-                                [Receipt]			=	CASE WHEN @Receipt IS NOT NULL THEN @Receipt ELSE [Receipt] END
-                                Where [Id] = @Id
-                                SELECT CAST(SCOPE_IDENTITY() AS INT)";
                 var parameters = new
                 {
                     feesTranscation.Id,
@@ -139,10 +133,14 @@ namespace FeePay.Infrastructure.Persistence.School
                     feesTranscation.Amount,
                     feesTranscation.IsComplete,
                     feesTranscation.State,
-                    feesTranscation.Date,
-                    feesTranscation.Receipt,
+                    feesTranscation.Date
                 };
-                var paymentId = await connection.ExecuteScalarAsync<int>(sql, parameters, commandType: CommandType.Text);
+                var paymentId = await connection.ExecuteScalarAsync<int>(
+                    sql: _dBVariables.QUERY_Update_FeesTransaction,
+                    param: parameters,
+                    transaction: transaction,
+                    commandType: CommandType.Text);
+
                 if (paymentId < 0)
                 {
                     transaction?.Rollback();
@@ -158,27 +156,16 @@ namespace FeePay.Infrastructure.Persistence.School
                     tempParams.Add("@Status", s.Status, DbType.String, ParameterDirection.Input);
                     tempParams.Add("@Mode", s.Mode, DbType.String, ParameterDirection.Input);
                     tempParams.Add("@PaymentDate", s.PaymentDate, DbType.DateTime, ParameterDirection.Input);
-                    tempParams.Add("@IsPaid", DBNull.Value, DbType.Boolean, ParameterDirection.Input);
+                    tempParams.Add("@IsPaid", s.IsPaid, DbType.Boolean, ParameterDirection.Input);
                     return tempParams;
                 });
-                var sql1 = @"CREATE TABLE  #routineUpdatedRecords
-                            ([Id] INT,[Status] NVARCHAR(20),[PaymentId] NVARCHAR(50),[Mode] NVARCHAR(50),
-                            [PaymentDate] DATETIME,[IsPaid] BIT);
-                            INSERT INTO #routineUpdatedRecords 
-                            VALUES(@Id, @Status, @PaymentId, @Mode, @PaymentDate, @IsPaid)";
-                var res = await connection.ExecuteAsync(sql1, parameters1, commandType: CommandType.Text);
 
-                var sql2 = @"UPDATE [sf] SET 
-                            [sf].[Status]		=	CASE WHEN [ur].[Status] IS NOT NULL THEN [ur].[Status] ELSE [ur].[Status] END, 
-                            [sf].[PaymentId]	=	CASE WHEN [ur].[PaymentId] IS NOT NULL THEN [ur].[PaymentId] ELSE [sf].[PaymentId] END, 
-                            [sf].[Mode]			=	CASE WHEN [ur].[Mode] IS NOT NULL THEN [ur].[Mode] ELSE [sf].[Mode] END, 
-                            [sf].[PaymentDate]	=	CASE WHEN [ur].[PaymentDate] IS NOT NULL THEN [ur].[PaymentDate] ELSE [sf].[PaymentDate] END, 
-                            [sf].[IsPaid]		=	CASE WHEN [ur].[IsPaid] IS NOT NULL THEN [ur].[IsPaid] ELSE [sf].[IsPaid] END
-                            FROM [StudentFees] [sf]
-                            INNER JOIN #routineUpdatedRecords [ur] 
-                            ON 
-                            [sf].[Id] = [ur].[Id] AND [sf].[IsActive] = 1 AND [sf].[IsDelete] = 0";
-                var numResults = await connection.ExecuteAsync(sql2, commandType: CommandType.Text);
+                var numResults = await connection.ExecuteAsync(
+                    sql: _dBVariables.QUERY_FeesTransaction_BulkUpdate_StudentFees,
+                    param: parameters1,
+                    transaction: transaction,
+                    commandType: CommandType.Text);
+
                 if (numResults < 0)
                 {
                     transaction?.Rollback();
@@ -210,19 +197,21 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="feeTranscationId"></param>
+        /// <param name="dbId"></param>
+        /// <returns></returns>
         public async Task<FeesTranscation> FindByIdAsync(int feeTranscationId, string dbId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                string sql = @"SELECT [Id],[UserId],[TransactionId],[TransactionMode],[Amount],
-                                [IsComplete],[State],[Date],[Receipt]
-                                FROM [dbo].[FeesTranscation]
-                                WHERE [Id] = @Id";
                 var SpRequiredParameters = new { Id = feeTranscationId };
                 return await connection.QuerySingleOrDefaultAsync<FeesTranscation>(
-                    sql,
-                    SpRequiredParameters,
+                    sql: _dBVariables.QUERY_FindById_FeesTransaction,
+                    param: SpRequiredParameters,
                     commandType: CommandType.Text);
 
             }
@@ -239,19 +228,21 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced an exception", GetType().FullName), ex);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transcationId"></param>
+        /// <param name="dbId"></param>
+        /// <returns></returns>
         public async Task<FeesTranscation> FindByTranscationIdAsync(string transcationId, string dbId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                string sql = @"SELECT [Id],[UserId],[TransactionId],[TransactionMode],[Amount],
-                                [IsComplete],[State],[Date],[Receipt]
-                                FROM [dbo].[FeesTranscation]
-                                WHERE [TransactionId] = @TransactionId";
-                var SpRequiredParameters = new { TransactionId = transcationId};
+                var SpRequiredParameters = new { TransactionId = transcationId };
                 return await connection.QuerySingleOrDefaultAsync<FeesTranscation>(
-                    sql,
-                    SpRequiredParameters,
+                    sql: _dBVariables.QUERY_FindByTranscationId_FeesTransaction,
+                    param: SpRequiredParameters,
                     commandType: CommandType.Text);
 
             }
@@ -268,12 +259,166 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbId"></param>
+        /// <param name="isComplated"></param>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="studentLoginId"></param>
+        /// <param name="Receipt"></param>
+        /// <param name="transactionMode"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<FeesTranscation>> GetAllAsync(string dbId, bool? isComplated = null,
+            DateTime? fromDate = null, DateTime? toDate = null, int? studentLoginId = null, string Receipt = null,
+            TransactionMode? transactionMode = null, TransactionStatus? status = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                StringBuilder Query = new StringBuilder();
+                Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction);
+                var parameters = new DynamicParameters();
+                if (fromDate is not null)
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_FromDate);
+                    parameters.Add("@FromDate", fromDate, DbType.DateTime, ParameterDirection.Input);
+                }
+                if (toDate is not null)
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_ToDate);
+                    parameters.Add("@ToDate", toDate, DbType.DateTime, ParameterDirection.Input);
+                }
+                if (studentLoginId is not null and not 0)
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_UserId);
+                    parameters.Add("@UserId", studentLoginId, DbType.Int32, ParameterDirection.Input);
+                }
+                if (isComplated is not null)
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_IsComplete);
+                    parameters.Add("@IsComplete", isComplated, DbType.Boolean, ParameterDirection.Input);
+                }
+                if (!string.IsNullOrEmpty(Receipt) && !string.IsNullOrWhiteSpace(Receipt))
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_Receipt);
+                    parameters.Add("@Receipt", Receipt, DbType.String, ParameterDirection.Input, Receipt.Length);
+                }
+                if (transactionMode != null && !string.IsNullOrEmpty(nameof(transactionMode)))
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_TransactionMode);
+                    parameters.Add("@TransactionMode", nameof(transactionMode), DbType.String, ParameterDirection.Input);
+                }
+                if (status != null && !string.IsNullOrEmpty(nameof(status)))
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_State);
+                    parameters.Add("@State", nameof(transactionMode), DbType.String, ParameterDirection.Input);
+                }
 
+                return await connection.QueryAsync<FeesTranscation>(
+                    Query.ToString(),
+                    parameters,
+                    commandType: CommandType.Text);
 
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbId"></param>
+        /// <param name="isComplated"></param>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="studentLoginId"></param>
+        /// <param name="Receipt"></param>
+        /// <param name="transactionMode"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<FeesTranscation>> GetAll_WithStudentAdmissionAsync(string dbId, bool? isComplated = null,
+            DateTime? fromDate = null, DateTime? toDate = null, int? studentLoginId = null, string Receipt = null,
+            TransactionMode? transactionMode = null, TransactionStatus? status = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                StringBuilder Query = new StringBuilder();
+                Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_WithStudentAdmission);
+                var parameters = new DynamicParameters();
+                if (fromDate is not null)
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_FromDate);
+                    parameters.Add("@FromDate", fromDate, DbType.DateTime, ParameterDirection.Input);
+                }
+                if (toDate is not null)
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_ToDate);
+                    parameters.Add("@ToDate", toDate, DbType.DateTime, ParameterDirection.Input);
+                }
+                if (studentLoginId is not null and not 0)
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_FromDate);
+                    parameters.Add("@UserId", studentLoginId, DbType.Int32, ParameterDirection.Input);
+                }
+                if (isComplated is not null)
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_IsComplete);
+                    parameters.Add("@IsComplete", isComplated, DbType.Boolean, ParameterDirection.Input);
+                }
+                if (!string.IsNullOrEmpty(Receipt) && !string.IsNullOrWhiteSpace(Receipt))
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_Receipt);
+                    parameters.Add("@Receipt", Receipt, DbType.String, ParameterDirection.Input, Receipt.Length);
+                }
+                if (transactionMode != null && !string.IsNullOrEmpty(nameof(transactionMode)))
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_TransactionMode);
+                    parameters.Add("@TransactionMode", nameof(transactionMode), DbType.String, ParameterDirection.Input);
+                }
+                if (status != null && !string.IsNullOrEmpty(nameof(status)))
+                {
+                    Query.Append(_dBVariables.QUERY_GetAll_FeesTransaction_Where_State);
+                    parameters.Add("@State", nameof(transactionMode), DbType.String, ParameterDirection.Input);
+                }
 
+                return await connection.QueryAsync<FeesTranscation, StudentAdmission, FeesTranscation>(
+                    Query.ToString(),
+                    (ft, sa) =>
+                    {
+                        ft.StudentAdmission = sa;
+                        return ft;
+                    },
+                    parameters,
+                    splitOn: "Id,Id",
+                    commandType: CommandType.Text);
 
-
-
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a exception", GetType().FullName), ex);
+            }
+        }
 
         // private methods
         private string GetConStr(string dbId = null)

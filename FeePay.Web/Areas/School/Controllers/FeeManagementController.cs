@@ -22,8 +22,16 @@ namespace FeePay.Web.Areas.School.Controllers
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class FeeManagementController : AreaBaseController
     {
-        public FeeManagementController(ILogger<FeeManagementController> logger, ILoginService loginService,
-            IFeeManagementService feeManagementService, IAcademicServices academicServices,
+        private readonly ILogger<FeeManagementController> _logger;
+        private readonly ILoginService _login;
+        private readonly IFeeManagementService _feeManagement;
+        private readonly IAcademicServices _academic;
+        private readonly IStudentManagementService _studentManagement;
+        public FeeManagementController(
+            ILogger<FeeManagementController> logger,
+            ILoginService loginService,
+            IFeeManagementService feeManagementService,
+            IAcademicServices academicServices,
             IStudentManagementService studentManagementService)
         {
             _logger = logger;
@@ -32,11 +40,6 @@ namespace FeePay.Web.Areas.School.Controllers
             _academic = academicServices;
             _studentManagement = studentManagementService;
         }
-        private readonly ILogger<FeeManagementController> _logger;
-        private readonly ILoginService _login;
-        private readonly IFeeManagementService _feeManagement;
-        private readonly IAcademicServices _academic;
-        private readonly IStudentManagementService _studentManagement;
 
         #region FEE TYPE 
         [HttpGet]
@@ -374,10 +377,19 @@ namespace FeePay.Web.Areas.School.Controllers
         public async Task<IActionResult> FeesAssign(int id) // FeeGroupId
         {
             ViewData["Title"] = "Assign Fees";
-            AssignFeesViewModel model = new AssignFeesViewModel();
-            var res = await _academic.GetAllDropDownClassesAsync();
-            model.Classes = res.Data;
-            return View(model);
+            try
+            {
+                var res = await _feeManagement.BindAssignViewModelAsync(id);
+                if (res.Succeeded) return View(res.Data);
+                _logger.LogError(string.Format("Error when getting assign fees data. FeeGroupID={0}, Error={1}", id, res.Message));
+                AlertMessage(NotificationType.error, "Error", "Error when getting assign fees Data.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, string.Format("Error when getting assign fees Data. FeeGroupID={0}, Error={1}", id, ex.Message));
+                AlertMessage(NotificationType.error, "Error", "Error when getting assign fees Data.");
+            }
+            return RedirectToAction(nameof(FeeMasterList));
         }
 
         [HttpPost]
@@ -388,8 +400,17 @@ namespace FeePay.Web.Areas.School.Controllers
         public async Task<IActionResult> FeesAssign(AssignFeesViewModel data, int id) // FeeGroupId
         {
             ViewData["Title"] = "Assign Fees";
-            var res = await _academic.GetAllDropDownClassesAsync();
-            data.Classes = res.Data;
+            var res = await _feeManagement.BindAssignViewModelAsync(id, data);
+            if (!res.Succeeded)
+            {
+                _logger.LogError(string.Format("Error when getting assign fees data. FeeGroupID={0}, Error={1}", id, res.Message));
+                AlertMessage(NotificationType.error, "Error", "Error when getting assign fees Data.");
+                return RedirectToAction(nameof(FeeMasterList));
+            }
+            else
+            {
+                data = res.Data;
+            }
 
             if (!string.IsNullOrEmpty(data.Search)) ModelState.Remove(nameof(data.ClassId));
             if (data.ClassId != 0) ModelState.Remove(nameof(data.Search));
@@ -401,7 +422,10 @@ namespace FeePay.Web.Areas.School.Controllers
 
             try
             {
-                data = await _feeManagement.SearchStudentAndBindAssignViewModel(data, id);
+                var result = await _feeManagement.SearchStudentAndAddToAssignViewModelAsync(data);
+                if (result.Succeeded) return View(result.Data);
+                _logger.LogError("Error when getting student list for assign fees. Error={0}", result.Message);
+                AlertMessage(NotificationType.warning, "Error", "Error when getting student list for assign fees.");
             }
             catch (Exception ex)
             {
@@ -429,6 +453,7 @@ namespace FeePay.Web.Areas.School.Controllers
             }
         }
         #endregion
+
 
         #region ALL FEE SUMMERY
         [HttpGet]
@@ -483,6 +508,7 @@ namespace FeePay.Web.Areas.School.Controllers
         }
         #endregion
 
+
         #region FEE COLLECTION
         [HttpGet]
         [MvcDiscovery]
@@ -493,9 +519,8 @@ namespace FeePay.Web.Areas.School.Controllers
             ViewData["Title"] = "Fee Collection Report";
             try
             {
-                var res = await _feeManagement.GetAllFeeSummaryAsync();
-                AlertMessage(NotificationType.info, "", "Service Temporally Unavailable.");
-                if (res.Succeeded) return View();
+                var res = await _feeManagement.GetFeeCollectionReport();
+                if (res.Succeeded) return View(res.Data);
                 else
                 {
                     _logger.LogError("Error when getting Fee Collection Report Data. Error{0}", res.Message);
@@ -512,15 +537,15 @@ namespace FeePay.Web.Areas.School.Controllers
         }
         [HttpPost]
         [MvcDiscovery]
-        [Route("{Area}/Fees/Report/Collection/Search")]
+        [Route("{Area}/Fees/Report/Collection")]
         [DisplayName("Fee Collection Report")]
-        public async Task<IActionResult> FeeCollectionSearch(string param1)
+        public async Task<IActionResult> FeeCollection(FeeCollectionSearchModel model)
         {
             ViewData["Title"] = "Fee Collection Report";
             try
             {
-                var res = await _feeManagement.GetAllFeeSummaryAsync();
-                if (res.Succeeded) return View();
+                var res = await _feeManagement.GetFeeCollectionReport(model);
+                if (res.Succeeded) return View(res.Data);
                 else
                 {
                     _logger.LogError("Error when searching Fee Collection Report Data. Error{0}", res.Message);
@@ -536,6 +561,8 @@ namespace FeePay.Web.Areas.School.Controllers
             return View();
         }
         #endregion
+
+
         #region FEE TRANSACTION REPORT
         [HttpGet]
         [MvcDiscovery]
@@ -546,9 +573,8 @@ namespace FeePay.Web.Areas.School.Controllers
             ViewData["Title"] = "Fee Transaction Report";
             try
             {
-                var res = await _feeManagement.GetAllFeeSummaryAsync();
-                AlertMessage(NotificationType.info, "", "Service Temporally Unavailable.");
-                if (res.Succeeded) return View();
+                var res = await _feeManagement.GetFeeTransactionReport();
+                if (res.Succeeded) return View(res.Data);
                 else
                 {
                     _logger.LogError("Error when getting Fee Transaction Report Data. Error{0}", res.Message);
@@ -563,11 +589,11 @@ namespace FeePay.Web.Areas.School.Controllers
             }
             return View();
         }
-        [HttpGet]
+        [HttpPost]
         [MvcDiscovery]
-        [Route("{Area}/Fees/Report/Transaction/Search")]
+        [Route("{Area}/Fees/Report/Transaction")]
         [DisplayName("Fee Transaction Report")]
-        public async Task<IActionResult> FeeTransactionSearch(string param1)
+        public async Task<IActionResult> FeeTransaction(string param1)
         {
             ViewData["Title"] = "Fee Transaction Report";
             try
@@ -584,6 +610,89 @@ namespace FeePay.Web.Areas.School.Controllers
             {
                 _logger.LogError(ex, "Error when searching Fee Transaction Report Data.");
                 AlertMessage(NotificationType.error, "Error", "There is an error searching Fee Transaction Report Data.");
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+        #endregion
+
+
+        #region PENDING FEES
+        [HttpGet]
+        [MvcDiscovery]
+        [Route("{Area}/Fees/Report/Due")]
+        [DisplayName("Pending Fees")]
+        public async Task<IActionResult> FeePending()
+        {
+            ViewData["Title"] = "Pending Fees";
+            try
+            {
+                var res = await _feeManagement.GetPendingFeesAsync();
+                if (res.Succeeded) return View(res.Data);
+                else
+                {
+                    _logger.LogError("Error when getting Pending Fees Data. Error{0}", res.Message);
+                    AlertMessage(NotificationType.error, "Error", res.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when getting Pending Fees Data.");
+                AlertMessage(NotificationType.error, "Error", "There is an error getting Pending Fees Data.");
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+        [HttpPost]
+        [MvcDiscovery]
+        [Route("{Area}/Fees/Report/Due")]
+        [DisplayName("Pending Fees")]
+        public async Task<IActionResult> FeePending(StudentSearchViewModel model)
+        {
+            ViewData["Title"] = "Pending Fees";
+            try
+            {
+                var res = await _feeManagement.GetPendingFeesAsync(model);
+                if (res.Succeeded) return View(res.Data);
+                else
+                {
+                    _logger.LogError("Error when getting Pending Fees Data. Error{0}", res.Message);
+                    AlertMessage(NotificationType.error, "Error", res.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when getting Pending Fees Data.");
+                AlertMessage(NotificationType.error, "Error", "There is an error getting Pending Fees Data.");
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+        #endregion
+
+
+        #region STUDENT LEDGER
+        [HttpGet]
+        [MvcDiscovery]
+        [Route("{Area}/Fees/StudentLedger/{id:int}")]
+        [DisplayName("Student Ledger")]
+        public async Task<IActionResult> StudentLedger(int id)
+        {
+            ViewData["Title"] = "Student Ledger";
+            try
+            {
+                var res = await _studentManagement.StudentLedgerAsync(id);
+                if (res.Succeeded) return View(res.Data);
+                else
+                {
+                    _logger.LogError("Error when getting Student Ledger Data. Error{0}", res.Message);
+                    AlertMessage(NotificationType.error, "Error", res.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when getting Student Ledger Data.");
+                AlertMessage(NotificationType.error, "Error", "There is an error getting Student Ledger Data.");
                 return RedirectToAction("Index", "Home");
             }
             return View();

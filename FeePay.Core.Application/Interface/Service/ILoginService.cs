@@ -16,6 +16,10 @@ namespace FeePay.Core.Application.Interface.Service
 
 
         Task<List<string>> GetUserAccessRights(string userName, string areaName);
+        Task<List<string>> GetUserAccessRoles(string userName, string areaName);
+
+        Task<SessionViewModel> GetCurrentAcademicSession();
+
 
         Task<Dictionary<string, string>> GetCurrentStudentClassSection();
         Task<string> GetCurrentStudentName();

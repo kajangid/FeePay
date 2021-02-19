@@ -9,6 +9,7 @@ using FeePay.Infrastructure.Persistence.Common;
 using FeePay.Infrastructure.Persistence.School;
 using FeePay.Infrastructure.Persistence.Student;
 using FeePay.Infrastructure.Persistence.SuperAdmin;
+using FeePay.Infrastructure.Persistence.DataAccess;
 
 namespace FeePay.Infrastructure.Persistence
 {
@@ -17,6 +18,7 @@ namespace FeePay.Infrastructure.Persistence
         public static IServiceCollection AddInfrastructurePersistenceServices(this IServiceCollection services)
         {
             services.AddSingleton<IDBVariables, DBVariables>();
+            //services.AddScoped<ISqlConnectionAccess, SqlConnectionAccess>();
 
             services.AddScoped<ISuperAdminUserRepository, SuperAdminUserRepository>();
             services.AddScoped<ISuperAdminRoleRepository, SuperAdminRoleRepository>();
@@ -25,6 +27,7 @@ namespace FeePay.Infrastructure.Persistence
             services.AddScoped<ISchoolAdminRoleRepository, SchoolAdminRoleRepository>();
             services.AddScoped<ISchoolAdminUserRoleRepository, SchoolAdminUserRoleRepository>();
             services.AddScoped<IStudentLoginRepository, StudentLoginRepository>();
+            services.AddScoped<IPaymentGatewayDocumentRepository, PaymentGatewayDocumentRepository>();
 
             services.AddScoped<IRegisteredSchoolRepository, RegisteredSchoolRepository>();
             services.AddScoped<IFeeTypeRepository, FeeTypeRepository>();
@@ -40,6 +43,8 @@ namespace FeePay.Infrastructure.Persistence
 
             services.AddScoped<IStudentFeesRepository, StudentFeesRepository>();
             services.AddScoped<IFeesTranscationRepository, FeesTranscationRepository>();
+            services.AddScoped<IStudentAcademicSessionsRepository, StudentAcademicSessionsRepository>();
+            services.AddScoped<IDocumentsRepository, DocumentsRepository>();
 
 
 

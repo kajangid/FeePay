@@ -118,7 +118,12 @@ namespace FeePay.Core.Application.Enums
             /// Select if you want <see cref="IFormFile"/> should be a zip file.
             /// </summary>
             [Description("application/zip,application/octet-stream,application/x-zip-compressed,multipart/x-zip")]
-            Zip
+            Zip,
+
+            /// <summary>
+            /// Unkonwn.
+            /// </summary>
+            Unkonwn
         }
     }
 }

@@ -24,7 +24,9 @@ namespace FeePay.Web.Areas.School.Controllers
         private readonly ILogger<StudentAdmissionController> _logger;
         private readonly IStudentManagementService _studentManagementService;
         private readonly ILoginService _loginService;
-        public StudentAdmissionController(ILogger<StudentAdmissionController> logger, ILoginService loginService,
+        public StudentAdmissionController(
+            ILogger<StudentAdmissionController> logger,
+            ILoginService loginService,
             IStudentManagementService studentManagementService)
         {
             _logger = logger;
@@ -32,29 +34,47 @@ namespace FeePay.Web.Areas.School.Controllers
             _loginService = loginService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        #region Student Admission
+        #region STUDENT ADMISSION
         [MvcDiscovery]
         [HttpGet("List")]
         [DisplayName("List Students")]
         public async Task<IActionResult> StudentList()
         {
+            ViewData["Title"] = "Students";
             try
             {
-                ViewData["Title"] = "Students";
-                var list = await _studentManagementService.GetListOfStudentsAsync();
-                return View(list.Data);
+                var res = await _studentManagementService.SearchStudentAsync();
+                if (res.Succeeded) return View(res.Data);
+                AlertMessage(NotificationType.warning, "Error", res.Message);
+                _logger.LogError("error when getting Students list data. Error={0}", res.Message);
             }
             catch (Exception ex)
             {
                 AlertMessage(NotificationType.error, "Error", "error when getting Students list data.");
                 _logger.LogError(ex, "error when getting Students list data.");
-                return RedirectToAction("Index", "Home");
             }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [MvcDiscovery]
+        [HttpPost("List")]
+        [DisplayName("List Students")]
+        public async Task<IActionResult> StudentList(StudentSearchViewModel model)
+        {
+            ViewData["Title"] = "Students";
+            try
+            {
+                var res = await _studentManagementService.SearchStudentAsync(model);
+                if(res.Succeeded) return View(res.Data);
+                AlertMessage(NotificationType.warning, "Error", res.Message);
+                _logger.LogError("error when getting Students list data. Error={0}", res.Message);
+            }
+            catch (Exception ex)
+            {
+                AlertMessage(NotificationType.error, "Error", "error when getting Students list data.");
+                _logger.LogError(ex, "error when getting Students list data.");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [MvcDiscovery]
@@ -163,9 +183,12 @@ namespace FeePay.Web.Areas.School.Controllers
         {
             return View();
         }
+        #endregion
 
+
+        #region STUDENT PROFILE
         [MvcDiscovery]
-        [HttpGet("Ledger/{id:int}")]
+        [HttpGet("StudentProfile/{id:int}")]
         [DisplayName("Student Profile")]
         public async Task<IActionResult> StudentProfile(int id)
         {
@@ -193,7 +216,7 @@ namespace FeePay.Web.Areas.School.Controllers
         {
             try
             {
-                var res = await _studentManagementService.GetStudentPassword(id);
+                var res = await _studentManagementService.GetStudentPasswordAsync(id);
                 if (res.Succeeded)
                 {
                     return Json(new { success = true, data = res.Data });
@@ -208,36 +231,27 @@ namespace FeePay.Web.Areas.School.Controllers
             return Json(new { success = false, message = "no data found" });
         }
 
+        [MvcDiscovery]
+        [DisplayName("Change Password")]
+        [HttpPost("ChangeCredentials/{id:int}")]
+        public async Task<JsonResult> ChnageCredentials(ResetPasswordViewModel model, int id)
+        {
+            if (!ModelState.IsValid)
+                return Json(new { success = false, message = $"Error: {string.Join(", ", GetErrorListFromModelState(ModelState).ToArray())}" });
 
+            try
+            {
+                var res = await _studentManagementService.ChangePassword_FromAdminAsync(model, id);
+                if (res.Succeeded) return Json(new { success = true });
+                _logger.LogError("Error Changing Credentials User Data Error:{0}", res.Message);
+                return Json(new { success = false, message = res.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error Changing Credentials User Data");
+                return Json(new { success = false, message = "Error Activating User Data." });
+            }
+        }
         #endregion
-
-        [HttpGet("GetClassSection/{id:int}")]
-        public async Task<JsonResult> GetClassSection(int id)
-        {
-            try
-            {
-                var res = await _studentManagementService.ClassSectionsAsync(id);
-                return Json(new { success = res.Succeeded, data = res.Data });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"error when getting StudentAdmission class section drop down list data for class id = {id}");
-                return Json(new { success = false, message = "Oh, Snap! Something went wrong." });
-            }
-        }
-        [HttpGet("GetStateCities/{id:int}")]
-        public async Task<JsonResult> GetStateCities(int id)
-        {
-            try
-            {
-                var res = await _studentManagementService.StateCitiesAsync(id);
-                return Json(new { success = res.Succeeded, data = res.Data });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"error when getting cities of state where state id is = {id}");
-                return Json(new { success = false, message = "Oh, Snap! Something went wrong." });
-            }
-        }
     }
 }

@@ -1,11 +1,10 @@
 ﻿@using FeePay.Core.Application.Interface;
+@model IEnumerable<FeesTransactionReportViewModel>
 
 @inject ICultureFormatProvider _cultureFormatProvider
 @section Style{
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
 }
 @section Scripts{
-    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
     <script>
         (function () {
             "use strict";
@@ -31,4 +30,55 @@
         </div>
     </div>
 </div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body" style="">
+                    <div class="table-responsive">
+                        <table class="hover" id="feeTransactionListTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th>Sr/Reg No</th>
+                                    <th>Student</th>
+                                    <th>Class</th>
+                                    <th>Father Name</th>
+                                    <th>MobileNo</th>
+                                    <th>FeeTransactionId</th>
+                                    <th>Deposit</th>
+                                    <th>Discount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td scope="row"></td>
+                                                <td>@(item.Sr_RegNo)</td>
+                                                <td><a asp-action="StudentLedger" asp-controller="FeeManagement" asp-route-id="@(item.StudentAdmissionId)">@(item.StudentName)</a></td>
+                                                <td>@($"{item.ClassName}({item.SectionName})")</td>
+                                                <td>@(item.FatherName)</td>
+                                                <td>@(item.MobileNo)</td>
+                                                <td>@(item.FeeTransactionId)</td>
+                                                <td>@(_cultureFormatProvider.FormatCurrencyIntoIndianCalture(item.Deposit))</td>
+                                                <td>@(_cultureFormatProvider.FormatCurrencyIntoIndianCalture(item.Discount))</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 

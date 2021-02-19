@@ -11,6 +11,14 @@ namespace FeePay.Core.Application.Interface.Service.School
 {
     public interface ISchoolAdminRegistrationService
     {
+        Task<string> GenarateEmailVarificationCodeAsync(SchoolAdminUser user);
+        Task<bool> VerifyEmailVarificationCodeAsync(SchoolAdminUser user, string token);
+
+
+
+
+
+
         Task<bool> RegisterSchoolUserWithPhoneNumberAsync(StaffMemberViewModel model);
         Task<bool> UpdateSchoolUserWithPhoneNumberAsync(StaffMemberViewModel model);
 

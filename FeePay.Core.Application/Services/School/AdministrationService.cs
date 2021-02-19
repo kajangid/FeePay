@@ -6,6 +6,7 @@ using FeePay.Core.Application.Interface.Service.School;
 using FeePay.Core.Application.Wrapper;
 using FeePay.Core.Domain.Entities.Common;
 using FeePay.Core.Domain.Entities.Identity;
+using FeePay.Core.Domain.Entities.SuperAdmin;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace FeePay.Core.Application.Services.School
 
 
 
-        #region Staffs 
+        #region USER  
         public async Task<StaffMemberViewModel> BindStaffMemberViewModel(StaffMemberViewModel model = null)
         {
             if (model != null && model.Id != 0)
@@ -95,7 +96,7 @@ namespace FeePay.Core.Application.Services.School
         }
         #endregion
 
-        #region Roles 
+        #region USER ROLES 
         public async Task<RoleViewModel> BindRoleViewModel(RoleViewModel model = null)
         {
             if (model != null && model.Id != 0)
@@ -168,7 +169,7 @@ namespace FeePay.Core.Application.Services.School
         }
         #endregion
 
-        #region User Profile
+        #region USER PROFILE
         public async Task<Response<UserProfileViewModel>> GetUserProfileData()
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
@@ -227,10 +228,48 @@ namespace FeePay.Core.Application.Services.School
             }
             return new Response<bool>("Current password doesn't match.");
         }
-
         #endregion
 
+        #region PAYMENT GATEWAY DOCUMENT
+        public async Task<Response<PaymentGatewayDocumentViewModel>> GetPaymentGatewayDocument()
+        {
+            string schoolKey = _appContextAccessor.ClaimSchoolUniqueId();
+            if (string.IsNullOrEmpty(schoolKey)) return new Response<PaymentGatewayDocumentViewModel>("Login With School Account.");
+            var school = await _unitOfWork.RegisteredSchool.FindByUniqueIdAsync(schoolKey);
+            if (school == null) return new Response<PaymentGatewayDocumentViewModel>("No School Data Found.");
+            var paymentGatewayDocument = await _unitOfWork.PaymentGatewayDocument.FindByIdAsync(school.Id);
+            PaymentGatewayDocumentViewModel model = _mapper.Map<PaymentGatewayDocumentViewModel>(paymentGatewayDocument);
+            return new Response<PaymentGatewayDocumentViewModel>(model);
+        }
+        public async Task<Response<bool>> AddOrEditPaymentGatewayDocument(PaymentGatewayDocumentViewModel model)
+        {
+            int userId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+            var paymentGDoc = _mapper.Map<PaymentGatewayDocument>(model);
+            if (model.Id == 0)
+            {
+                string schoolKey = _appContextAccessor.ClaimSchoolUniqueId();
+                if (string.IsNullOrEmpty(schoolKey)) return new Response<bool>("Login With School Account.");
+                var school = await _unitOfWork.RegisteredSchool.FindByUniqueIdAsync(schoolKey);
+                if (school == null) return new Response<bool>("No School Data Found.");
+                paymentGDoc.RegisteredSchoolId = school.Id;
+                paymentGDoc.AddedBy = userId;
+                var res = await _unitOfWork.PaymentGatewayDocument.AddAsync(paymentGDoc);
+                if (res <= 0) new Response<bool>("Error Saving Data.");
+            }
+            else
+            {
+                string schoolKey = _appContextAccessor.ClaimSchoolUniqueId();
+                if (string.IsNullOrEmpty(schoolKey)) return new Response<bool>("Login With School Account.");
+                var school = await _unitOfWork.RegisteredSchool.FindByUniqueIdAsync(schoolKey);
+                if (school == null) return new Response<bool>("No School Data Found.");
+                paymentGDoc.ModifyBy = userId;
+                var res = await _unitOfWork.PaymentGatewayDocument.UpdateAsync(paymentGDoc);
+                if (res <= 0) new Response<bool>("Error Updating Data.");
+            }
 
+            return new Response<bool>(userId > 0);
+        }
+        #endregion
 
 
 

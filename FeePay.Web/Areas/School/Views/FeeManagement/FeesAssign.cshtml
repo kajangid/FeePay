@@ -6,12 +6,10 @@
     bool IsFindFeeGroup = (Model != null && Model.FeeGroup != null && Model.FeeGroup.FeeMaster != null && Model.FeeGroup.FeeMaster.Count > 0);
 }
 @section Style{
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
 
 
 }
 @section Scripts{
-    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
     <partial name="_ValidationScriptsPartial" />
     <script src="@Url.Content("~/Page_js/school/index_feesassign.js")"></script>
 }
@@ -36,109 +34,42 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header b-r-info b-l-info border-3">
-                    <h5>
-                        <a asp-action="FeeMasterList" asp-controller="FeeManagement">
-                            <i class="fa fa-arrow-left"></i> Go back
-                        </a>
-                    </h5>
-                    <div class="card-header-right">
-                        <ul class="list-unstyled card-option">
-                            <li><i class="fa fa-spin fa-cog"></i></li>
-                            <li><i class="icofont icofont-maximize full-card"></i></li>
-                            <li><i class="icofont icofont-minus minimize-card"></i></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <form asp-action="FeesAssign" method="post" class="needs-validation" novalidate="">
-                                @Html.AntiForgeryToken()
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label asp-for="ClassId"> Class *</label>
-                                            <select asp-for="ClassId" asp-items="@(new SelectList(Model.Classes,"Value","Text",Model?.ClassId))" class="form-control">
-                                                <option value=""> Select </option>
-                                            </select>
-                                            <div class="invalid-feedback"><span asp-validation-for="ClassId"></span></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label asp-for="SectionId"> Section </label>
-                                            <select asp-for="SectionId" data-ajaxurl="@Url.Action("GetClassSection","StudentAdmission")" data-key-selected="@Model?.SectionId" class="form-control">
-                                                <option> Select </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group mb-0 text-right"><input type="submit" class="btn btn-success mr-3" value="Search" /></div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-6">
-                            <form asp-action="FeesAssign" method="post" class="needs-validation" novalidate="">
-                                @Html.AntiForgeryToken()
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <label asp-for="Search">
-                                            Search *
-                                            <a href="javascript:void(0)" data-toggle="m-tooltip"
-                                               data-placement="top" title="" data-original-title="Search for Form no, Name, Mobile number, Father's name, Mother's name">
-                                                <i class="fa fa-info-circle"></i>
-                                            </a>
-                                        </label>
-                                        <input type="text" asp-for="Search" class="form-control" placeholder="Search for Form no, Name, Mobile number, Father's name..." />
-                                        <div class="invalid-feedback"><span asp-validation-for="Search"></span></div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="form-group mb-0 text-right"><input type="submit" class="btn btn-success mr-3" value="Search" /></div>
-                                </div>
-                            </form>
+            @{ await Html.RenderPartialAsync("_Partial_SearchStudent", Model); }            
+            @if (IsFindFeeGroup)
+            {
+                <div class="card">
+                    <div class="card-body" style="">
+                        <div class="table-responsive">
+                            <h6>@Model.FeeGroup.Name </h6>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Amount [₹]</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        for (int i = 0; i < Model.FeeGroup.FeeMaster.Count; i++)
+                                        {
+                                            var feetype = Model.FeeGroup.FeeType;
+                                            var feemaster = Model.FeeGroup.FeeMaster;
+                                            <tr>
+                                                <th scope="row">@(i + 1)</th>
+                                                <td>@($"{feetype[i]?.Name}({feetype[i]?.Code})")</td>
+                                                <td>@feemaster[i].Amount</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
             @if (IsFindStudent)
             {
-                if (IsFindFeeGroup)
-                {
-                    <div class="card">
-                        <div class="card-body" style="">
-                            <div class="table-responsive">
-                                <h6>@Model.FeeGroup.Name </h6>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{
-                                            for (int i = 0; i < Model.FeeGroup.FeeMaster.Count; i++)
-                                            {
-                                                var feetype = Model.FeeGroup.FeeType;
-                                                var feemaster = Model.FeeGroup.FeeMaster;
-                                                <tr>
-                                                    <th scope="row">@(i + 1)</th>
-                                                    <td>@($"{feetype[i]?.Name}({feetype[i]?.Code})")</td>
-                                                    <td>@feemaster[i].Amount</td>
-                                                </tr>
-                                            }
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                }
                 <div class="card">
                     <form id="assignform" asp-controller="FeeManagement" asp-action="AssignToStudent" asp-route-id="@Model.FeeGroup.Id" method="post">
                         @*<form id="assignform" asp-action="FeesAssign" asp-controller="FeeManagement" method="post">*@

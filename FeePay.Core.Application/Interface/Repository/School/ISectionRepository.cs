@@ -9,21 +9,21 @@ namespace FeePay.Core.Application.Interface.Repository.School
 {
     public interface ISectionRepository
     {
-        Task<int> AddAsync(Section section, string dbId = null);
-        Task<int> UpdateAsync(Section section, string dbId = null);
-        Task<int> DeleteAsync(int Id, string dbId = null);
+        #region Execute
+        Task<int> AddAsync(Section section, string dbId);
+        Task<int> UpdateAsync(Section section, string dbId);
+        Task<int> DeleteAsync(int id, string dbId);
+        #endregion
 
-        // Find
-        Task<Section> FindByIdAsync(int Id, string dbId = null);
-        Task<Section> FindByNameAsync(string Name, string dbId = null);
-        Task<Section> FindActiveByIdAsync(int Id, string dbId = null);
-        Task<Section> FindActiveByNameAsync(string Name, string dbId = null);
+        #region Find
+        Task<Section> FindByIdAsync(int id, string dbId, bool? isActive = null);
+        Task<Section> FindByNameAsync(string name, string dbId, bool? isActive = null);
+        #endregion
 
-        // Get All
-        Task<IEnumerable<Section>> GetAllAsync(string dbId = null);
-        Task<IEnumerable<Section>> GetAllActiveAsync(string dbId = null);
-        Task<IEnumerable<Section>> GetAll_WithAddEditUserAsync(string dbId = null);
-        Task<IEnumerable<Section>> GetAllActive_WithAddEditUserAsync(string dbId = null);
+        #region Get All
+        Task<IEnumerable<Section>> GetAllAsync(string dbId, bool? isActive = null);
+        Task<IEnumerable<Section>> GetAll_WithAddEditUserAsync(string dbId, bool? isActive = null);
+        #endregion
 
     }
 }

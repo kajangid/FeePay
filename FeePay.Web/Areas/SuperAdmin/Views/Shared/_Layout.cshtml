@@ -23,6 +23,7 @@
     <!-- Feather icon-->
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/feather-icon.css")">
     <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/animate.css")">
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/chartist.css")">
     <!-- Plugins css Ends-->
@@ -33,7 +34,7 @@
     <link id="color" rel="stylesheet" href="@Url.Content("~/Cuba/css/color-1.css")" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/responsive.css")">
-    @RenderSection("Styles",required:false)
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <!-- tap on top starts-->
@@ -60,6 +61,7 @@
     </div>
     <!-- page-wrapper ends-->
     <!-- bootstrap modal-->
+    <partial name="_Partial_ShowImageModal" />
     @RenderSection("Models", false)
     <!-- bootstrap modal ends-->
     <!-- latest jquery-->
@@ -75,9 +77,11 @@
     <!-- Plugins JS start-->
     <script src="@Url.Content("~/Cuba/js/sidebar-menu.js")"></script>
     <script src="@Url.Content("~/Cuba/js/tooltip-init.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
     <script src="@Url.Content("~/Cuba/js/clipboard/clipboard.min.js")"></script>
     <script src="@Url.Content("~/Cuba/js/custom-card/custom-card.js")"></script>
     <script src="@Url.Content("~/Cuba/js/notify/bootstrap-notify.min.js")"></script>
+    @RenderSection("PluginScripts", required: false)
     <!-- Plugins JS Ends-->
     <partial name="_ValidationScriptsPartial" />
     <partial name="_Partial_AlertMessage" />
@@ -85,7 +89,6 @@
     <script src="@Url.Content("~/Cuba/js/script.js")"></script>
     <script src="@Url.Content("~/Cuba/js/theme-customizer/customizer.js")"></script>
     <!-- Plugin used-->
-    @RenderSection("PluginScripts", required: false)
     <script src="@Url.Content("~/Page_js/index_setting.js")"></script>
     <script src="@Url.Content("~/Page_js/index_global.js")"></script>
     @RenderSection("Scripts", required: false)

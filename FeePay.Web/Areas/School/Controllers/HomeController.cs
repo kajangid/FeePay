@@ -23,12 +23,17 @@ namespace FeePay.Web.Areas.School.Controllers
         private readonly ILogger _logger;
         private readonly IAdministrationService _administrationService;
         private readonly ILoginService _loginService;
-        public HomeController(ILogger<HomeController> logger, IAdministrationService administrationService,
-            ILoginService loginService)
+        private readonly ISchoolAdminRegistrationService _schoolAdminRegistrationService;
+        public HomeController(
+            ILogger<HomeController> logger,
+            IAdministrationService administrationService,
+            ILoginService loginService,
+            ISchoolAdminRegistrationService schoolAdminRegistrationService)
         {
             _logger = logger;
             _administrationService = administrationService;
             _loginService = loginService;
+            _schoolAdminRegistrationService = schoolAdminRegistrationService;
         }
 
         [HttpGet]
@@ -44,7 +49,7 @@ namespace FeePay.Web.Areas.School.Controllers
 
 
 
-        #region User Profile
+        #region USER PROFILE
         [HttpGet]
         [Route("School/Profile")]
         [DisplayName("User Profile")]

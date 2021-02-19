@@ -16,10 +16,10 @@ using Newtonsoft.Json;
 
 namespace FeePay.Web.Filters
 {
-    public class SchoolAdminAuthorizeAttribute : Attribute, IAuthorizationFilter
+    public class SchoolAdminAuthorizeAttribute : Attribute, IAsyncAuthorizationFilter
     {
 
-        public void OnAuthorization(AuthorizationFilterContext context)
+        public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
 
             string url = context.HttpContext.Request.Path;
@@ -40,15 +40,19 @@ namespace FeePay.Web.Filters
                 return;
             }
 
+            var _loginservice = CreateLoginServiceInstance(context);
+
+
             // TODO: Make this role SYSTEM for only developer use
             // pass admin for all access
-            foreach (var role in ClaimUserRoles(context))
+            var roles = await _loginservice.GetUserAccessRoles(context.HttpContext.User.Identity.Name, "School");
+            foreach (var role in roles)
                 if (!string.IsNullOrEmpty(role) && role.Equals("admin", StringComparison.InvariantCultureIgnoreCase))
                     return;
 
             var actionId = GetActionId(context);
-
-            foreach (var access in ClaimUserRightAccess(context))
+            var rolesAccess = await _loginservice.GetUserAccessRights(context.HttpContext.User.Identity.Name, "School");
+            foreach (var access in rolesAccess)
             {
                 var accessList = JsonConvert.DeserializeObject<IEnumerable<MvcControllerInfo>>(access);
                 if (accessList != null && accessList.SelectMany(c => c.Actions).Any(a => a.Id == actionId))
@@ -137,6 +141,12 @@ namespace FeePay.Web.Filters
             var authenticateAdminResult = claims?
                 .Where(a => a.Type == "Role" && a.ValueType.Equals("role_name", StringComparison.InvariantCultureIgnoreCase) && a.Issuer.Equals("school", StringComparison.InvariantCultureIgnoreCase));
             return (authenticateAdminResult != null ? authenticateAdminResult.Select(s => s.Value).ToList() : new List<string>());
+        }
+        private ILoginService CreateLoginServiceInstance(AuthorizationFilterContext context)
+        {
+            // manually find and inject necessary dependencies.
+            var srv = context.HttpContext.RequestServices.GetService(typeof(ILoginService)) as ILoginService;
+            return srv;
         }
     }
 }

@@ -3,11 +3,13 @@
     var random = new Random();
     var ColorList = new List<string> { "primary", "secondary", "success", "info", "dark", "light", "danger", "warning" };
 }
+@section Models{
+    @{ await Html.RenderPartialAsync("_Area_Partial_ShowUserNamePassword"); }
+    @{ await Html.RenderPartialAsync("_Area_Partial_ChangePassword", new ResetPasswordViewModel()); }
+}
 @section Styles{
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
 }
 @section PluginScripts{
-    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
 }
 @section Scripts{
     <script>
@@ -84,7 +86,9 @@
                                                 <td>@item.PhoneNumber</td>
                                                 <td>@item.LastLoginDate?.ToString("dd/MM/yyyy::hh:mm")</td>
                                                 <td>
-                                                    <input asp-for="@item.IsActive" type="checkbox" data-action="isactiverow"
+                                                    <input asp-for="@item.IsActive"
+                                                           type="checkbox"
+                                                           data-action="isactiverow"
                                                            data-ajaxurl="@Url.Action("UserActive","Account",new { id = item.Id })">
                                                 </td>
                                                 <td>
@@ -94,32 +98,62 @@
                                                 <td>@item.ModifyDate?.ToString("dd/MM/yyyy::hh:mm")</td>
                                                 <td>
                                                     <div class="d-inline" style="width:150px;">
-                                                        <a asp-action="UserEdit" asp-controller="Account" asp-route-id="@item.Id"
-                                                           asp-area="SuperAdmin" data-container="body" data-toggle="popover"
-                                                           data-placement="top" title="Edit User" class="d-inline-block mr-1">
+                                                        <a asp-action="UserEdit"
+                                                           asp-controller="Account"
+                                                           asp-route-id="@item.Id"
+                                                           asp-area="SuperAdmin"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="Edit User"
+                                                           class="d-inline-block mr-1">
                                                             <i data-feather="edit-3"></i>
                                                         </a>
-                                                        <a asp-action="UserProfile" asp-controller="Account" asp-route-id="@item.Id"
-                                                           asp-area="SuperAdmin" data-container="body" data-toggle="popover"
-                                                           data-placement="top" title="User's Profile" class="d-inline-block mr-1">
+                                                        <a asp-action="UserProfile"
+                                                           asp-controller="Account"
+                                                           asp-route-id="@item.Id"
+                                                           asp-area="SuperAdmin"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="User's Profile"
+                                                           class="d-inline-block mr-1">
                                                             <i data-feather="user"></i>
                                                         </a>
                                                         <a data-ajaxurl="@Url.Action("UserCredentials","Account",new { id = item.Id })"
-                                                           href="javascript:void(0)" data-onclilck="showPassword" data-actionmag="show credentials"
-                                                           data-container="body" data-toggle="popover" data-placement="top"
-                                                           title="User Login Credentials" class="d-inline-block mr-1">
+                                                           href="javascript:void(0)"
+                                                           data-onclilck="showPassword"
+                                                           data-actionmag="show credentials"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="User Login Credentials"
+                                                           class="d-inline-block mr-1">
                                                             <i data-feather="log-in"></i>
                                                         </a>
                                                         <a data-ajaxurl="@Url.Action("ChnageCredentials","Account",new { id = item.Id })"
-                                                           href="javascript:void(0)" data-onclilck="changePasswordAdmin" data-actionmag="change credentials"
-                                                           data-ajaxkey="@item.Id" data-container="body" data-toggle="popover" data-placement="top"
-                                                           title="Change Credentials" class="d-inline-block mr-1">
+                                                           href="javascript:void(0)"
+                                                           data-onclilck="changePasswordAdmin"
+                                                           data-actionmag="change credentials"
+                                                           data-ajaxkey="@item.Id"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="Change Credentials"
+                                                           class="d-inline-block mr-1">
                                                             <i data-feather="unlock"></i>
                                                         </a>
-                                                        <a asp-action="UserDelete" asp-controller="Account" asp-route-id="@item.Id"
-                                                           asp-area="SuperAdmin" data-action="deleterow" data-actionmag="delete user"
-                                                           data-container="body" data-toggle="popover" data-placement="top"
-                                                           title="Delete User" class="d-inline-block">
+                                                        <a asp-action="UserDelete"
+                                                           asp-controller="Account"
+                                                           asp-route-id="@item.Id"
+                                                           asp-area="SuperAdmin"
+                                                           data-action="deleterow"
+                                                           data-actionmag="delete user"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="Delete User"
+                                                           class="d-inline-block">
                                                             <i data-feather="trash-2"></i>
                                                         </a>
                                                     </div>
@@ -137,10 +171,6 @@
     </div>
 </div>
 
-@section Models{
-    @{ await Html.RenderPartialAsync("_Area_Partial_ShowUserNamePassword"); }
-    @{ await Html.RenderPartialAsync("_Area_Partial_ChangePassword", new ResetPasswordViewModel()); }
-}
 
 
 

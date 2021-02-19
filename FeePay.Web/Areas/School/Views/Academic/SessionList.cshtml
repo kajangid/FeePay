@@ -5,14 +5,24 @@
 }
 
 @section Style{
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
 }
 @section Scripts{
-    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
     <script>
         (function () {
             "use strict";
-            $('#sessionListTable').DataTable({ "order": [[5, 'desc']] });
+            $('#sessionListTable').DataTable({
+                "order": [[5, 'desc']],
+                columnDefs: [
+                    { targets: 0, visible: true, searchable: false, orderable: false },
+                    { targets: 1, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 2, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 3, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 4, visible: true, searchable: false, orderable: false },
+                    { targets: 5, visible: true, searchable: false, orderable: false },
+                    { targets: 6, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 7, visible: true, searchable: false, orderable: false },
+                ]
+            });
             $('#sessionListTable').reArrangeDatatableSerialNumber();
         })(jQuery);
     </script>
@@ -77,14 +87,14 @@
                                             <tr data-key="@item.Id">
                                                 <td></td>
                                                 <td>@item.Year</td>
-                                                <td>@item.StartYear?.ToString("dd/MM/yyyy")</td>
-                                                <td>@item.EndYear?.ToString("dd/MM/yyyy")</td>
+                                                <td data-order="@item.StartYear?.ToString("MMddyyyyHHmmss")">@item.StartYear?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+                                                <td data-order="@item.EndYear?.ToString("MMddyyyyHHmmss")">@item.EndYear?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
                                                 <td>
                                                     @if (item.IsActive)
                                                     {<label class="badge badge-success">Active</label>}
                                                 </td>
                                                 <td><a href="@Url.Action("StaffManage","Account",new { id = item.ModifyById })" class="btn btn-@(color) btn-xs">@item.ModifyBy</a></td>
-                                                <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
+                                                <td data-order="@item.ModifyDate?.ToString("MMddyyyyHHmmss")">@item.ModifyDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)</td>
                                                 <td>
                                                     <a asp-action="SessionEdit" asp-controller="Academic" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Session" class="d-inline-block mr-1">
                                                         <i data-feather="edit-3"></i>

@@ -31,7 +31,7 @@ namespace FeePay.Core.Application.DTOs
         [Phone]
         [DisplayName("Mobile Number")]
         [Required(ErrorMessage = "Mobile Number is required for adding a staff member.")]
-        [RegularExpression(@"^((\+91?)|\+)?[7-9][0-9]{9}$", ErrorMessage = "Please enter a valid mobile number.")]
+        [RegularExpression(@"^((\+91?)|\+)?[1-9][0-9]{9}$", ErrorMessage = "Please enter a valid mobile number.")]
         public string PhoneNumber { get; set; }
 
         [StringLength(49)]

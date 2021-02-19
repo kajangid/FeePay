@@ -18,9 +18,22 @@ namespace FeePay.Infrastructure.Identity.Service
 {
     public class SchoolAdminRegistrationService : ISchoolAdminRegistrationService
     {
-        public SchoolAdminRegistrationService(IUnitOfWork unitOfWork, IAppContextAccessor appContextAccessor, ILoginService loginService,
-            UserManager<SchoolAdminUser> userManager, IMapper mapper,
-            IPasswordHasher<SchoolAdminUser> passwordHasher, IPasswordGenerator passwordGenerator)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAppContextAccessor _appContextAccessor;
+        private readonly ILoginService _loginService;
+        private readonly UserManager<SchoolAdminUser> _userManager;
+        private readonly IMapper _mapper;
+        private readonly IPasswordHasher<SchoolAdminUser> _passwordHasher;
+        private readonly IPasswordGenerator _passwordGenerator;
+        public SchoolAdminRegistrationService(
+            IUnitOfWork unitOfWork,
+            IAppContextAccessor appContextAccessor,
+            ILoginService loginService,
+            UserManager<SchoolAdminUser> userManager,
+            IMapper mapper,
+            IPasswordHasher<SchoolAdminUser> passwordHasher,
+            IPasswordGenerator passwordGenerator
+            )
         {
             _unitOfWork = unitOfWork;
             _appContextAccessor = appContextAccessor;
@@ -30,13 +43,32 @@ namespace FeePay.Infrastructure.Identity.Service
             _passwordHasher = passwordHasher;
             _passwordGenerator = passwordGenerator;
         }
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IAppContextAccessor _appContextAccessor;
-        private readonly ILoginService _loginService;
-        private readonly UserManager<SchoolAdminUser> _userManager;
-        private readonly IMapper _mapper;
-        public readonly IPasswordHasher<SchoolAdminUser> _passwordHasher;
-        public readonly IPasswordGenerator _passwordGenerator;
+
+        public async Task<string> GenarateEmailVarificationCodeAsync()//SchoolAdminUser appUser
+        {
+            try
+            {
+                var userId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+                var schoolId = _appContextAccessor.ClaimSchoolUniqueId();
+                var appUser = await _unitOfWork.SchoolAdminUser.FindByIdAsync(userId, schoolId);
+                //var token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
+                var token = await _userManager.GenerateUserTokenAsync(appUser, "AddSchoolAdminLoginTokenProvider", "emailconfirmation-auth");
+                var confirmationLink = _appContextAccessor.AbsoluteUriByPage("School/Authentication/ConfirmEmail", new { token, email = appUser.Email });
+
+                // Save token and expire time in db
+                return confirmationLink;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+
+
+
+
+
 
 
         public async Task<bool> RegisterSchoolUserWithPhoneNumberAsync(StaffMemberViewModel model)

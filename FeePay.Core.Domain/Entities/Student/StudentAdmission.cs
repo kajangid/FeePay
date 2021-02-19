@@ -15,11 +15,12 @@ namespace FeePay.Core.Domain.Entities.Student
             FeesGroupList = new List<FeeGroup>();
         }
         public int Id { get; set; }
-        public string FormNo { get; set; }
+        public string Sr_RegNo { get; set; }
         public DateTime? AdmissionDate { get; set; }
+        public int AcademicSessionId { get; set; }
         public int ClassId { get; set; }
         public int SectionId { get; set; }
-        public string Sr_RegNo { get; set; }
+        public string FormNo { get; set; }
         public string EnrollNo { get; set; }
         public string MACHINEID { get; set; }
         public string StudentType { get; set; }

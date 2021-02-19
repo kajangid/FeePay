@@ -13,63 +13,73 @@ namespace FeePay.Infrastructure.Persistence
     public class UnitOfWork : IUnitOfWork
     {
         public UnitOfWork(
-            ISuperAdminUserRepository SuperAdminUserRepository, ISuperAdminRoleRepository SuperAdminRoleRepository,
+            ISuperAdminUserRepository SuperAdminUserRepository,
+            ISuperAdminRoleRepository SuperAdminRoleRepository,
             ISuperAdminUserRoleRepository SuperAdminUserRoleRepository,
-            ISchoolAdminUserRepository SchoolAdminUserRepository, ISchoolAdminRoleRepository SchoolAdminRoleRepository,
+            ISchoolAdminUserRepository SchoolAdminUserRepository,
+            ISchoolAdminRoleRepository SchoolAdminRoleRepository,
             ISchoolAdminUserRoleRepository SchoolAdminUserRoleRepository,
-            IStudentLoginRepository StudentLoginRepository, IRegisteredSchoolRepository RegisteredSchoolRepository,
-            IFeeTypeRepository feeTypeRepository, IFeeGroupRepository feeGroupRepository, IFeeMasterRespository feeMasterRespository,
-            IClassRepository classRepository, ISectionRepository sectionRepository, IClassSectionRepository classSectionRepository,
-            ISessionRepository sessionRepository, IStudentAdmisionRepository studentAdmisionRepository, ICityStateRepository cityStateRepository,
-            IStudentFeesRepository studentFeeRepository, IFeesTranscationRepository feesTranscationRepository)
+            IStudentLoginRepository StudentLoginRepository,
+            IRegisteredSchoolRepository RegisteredSchoolRepository,
+            IFeeTypeRepository feeTypeRepository,
+            IFeeGroupRepository feeGroupRepository,
+            IFeeMasterRespository feeMasterRespository,
+            IClassRepository classRepository,
+            ISectionRepository sectionRepository,
+            IClassSectionRepository classSectionRepository,
+            ISessionRepository sessionRepository,
+            IStudentAdmisionRepository studentAdmisionRepository,
+            ICityStateRepository cityStateRepository,
+            IStudentFeesRepository studentFeeRepository,
+            IFeesTranscationRepository feesTranscationRepository,
+            IStudentAcademicSessionsRepository studentAcademicSessionsRepository,
+            IDocumentsRepository documentsRepository,
+            IPaymentGatewayDocumentRepository paymentGatewayDocumentRepository)
         {
             SuperAdminUser = SuperAdminUserRepository;
             SuperAdminRole = SuperAdminRoleRepository;
             SuperAdminUserRole = SuperAdminUserRoleRepository;
-
             SchoolAdminUser = SchoolAdminUserRepository;
             SchoolAdminRole = SchoolAdminRoleRepository;
             SchoolAdminUserRole = SchoolAdminUserRoleRepository;
-
             StudentLogin = StudentLoginRepository;
             RegisteredSchool = RegisteredSchoolRepository;
-
             FeeType = feeTypeRepository;
             FeeGroup = feeGroupRepository;
             FeeMaster = feeMasterRespository;
-
             ClassRepo = classRepository;
             SectionRepo = sectionRepository;
             ClassSection = classSectionRepository;
             Session = sessionRepository;
-
             StudentAdmision = studentAdmisionRepository;
             CityState = cityStateRepository;
             StudentFee = studentFeeRepository;
             FeesTranscation = feesTranscationRepository;
+            StudentAcademicSessions = studentAcademicSessionsRepository;
+            Documents = documentsRepository;
+            PaymentGatewayDocument = paymentGatewayDocumentRepository;
         }
         public ISuperAdminUserRepository SuperAdminUser { get; }
         public ISuperAdminRoleRepository SuperAdminRole { get; }
         public ISuperAdminUserRoleRepository SuperAdminUserRole { get; }
-
         public ISchoolAdminUserRepository SchoolAdminUser { get; }
         public ISchoolAdminRoleRepository SchoolAdminRole { get; }
         public ISchoolAdminUserRoleRepository SchoolAdminUserRole { get; }
         public IStudentLoginRepository StudentLogin { get; }
         public IRegisteredSchoolRepository RegisteredSchool { get; }
-
         public IFeeTypeRepository FeeType { get; }
         public IFeeGroupRepository FeeGroup { get; }
         public IFeeMasterRespository FeeMaster { get; }
-
         public IClassRepository ClassRepo { get; }
         public ISectionRepository SectionRepo { get; }
         public IClassSectionRepository ClassSection { get; }
         public ISessionRepository Session { get; }
-
+        public IStudentAcademicSessionsRepository StudentAcademicSessions { get; }
         public IStudentAdmisionRepository StudentAdmision { get; }
         public ICityStateRepository CityState { get; }
         public IStudentFeesRepository StudentFee { get; }
         public IFeesTranscationRepository FeesTranscation { get; }
+        public IDocumentsRepository Documents { get; }
+        public IPaymentGatewayDocumentRepository PaymentGatewayDocument { get; }
     }
 }

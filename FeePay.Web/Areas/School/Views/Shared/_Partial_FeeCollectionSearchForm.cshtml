@@ -1,0 +1,47 @@
+﻿@model FeeCollectionSearchModel
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label asp-for="FromDate"> From </label>
+            <input asp-for="FromDate"
+                   type="text"
+                   class="datepicker-here form-control"
+                   data-language="en"
+                   placeholder="dd/mm/yyyy"
+                   data-date-format="dd/mm/yyyy"
+                   autocomplete="off"
+                   value="@(Model?.FromDate?.ToString("dd/MM/yyyy"))" />
+            <div class="invalid-feedback">
+                <span asp-validation-for="FromDate"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label asp-for="ToDate"> To </label>
+            <input asp-for="ToDate"
+                   type="text"
+                   class="datepicker-here form-control"
+                   data-language="en"
+                   placeholder="dd/mm/yyyy"
+                   data-date-format="dd/mm/yyyy"
+                   autocomplete="off"
+                   value="@(Model?.ToDate?.ToString("dd/MM/yyyy"))" />
+            <div class="invalid-feedback">
+                <span asp-validation-for="ToDate"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="form-group mb-0 text-right">
+            <a href="javascript:void(0)"
+               onclick="window.location.replace(window.location.href);"
+               class="btn btn-outline-secondary mr-2">
+                Reset
+            </a>
+            <input type="submit"
+                   class="btn btn-success mr-3"
+                   value="Search" />
+        </div>
+    </div>
+</div>

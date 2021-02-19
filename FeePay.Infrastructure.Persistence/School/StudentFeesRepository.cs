@@ -26,16 +26,17 @@ namespace FeePay.Infrastructure.Persistence.School
         }
 
         #region Execute
-        public async Task<int> AddAsync(int studentAdmissionId, int feeMasterId, string dbId, bool isActive = true)
+        public async Task<int> AddAsync(StudentFees studentFees, string dbId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var Parameters = new
                 {
-                    StudentAdmissionId = studentAdmissionId,
-                    FeeMasterId = feeMasterId,
-                    IsActive = isActive
+                    studentFees.StudentAdmissionId,
+                    studentFees.FeeMasterId,
+                    studentFees.AcademicSessionId,
+                    studentFees.IsActive
                 };
                 return await connection.ExecuteScalarAsync<int>(_dBVariables.SP_Add_StudentFees,
                     Parameters, commandType: CommandType.StoredProcedure);
@@ -49,16 +50,18 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-        public async Task<int> UpdateAsync(int studentAdmissionId, int feeMasterId, string dbId, bool isActive = true)
+        public async Task<int> UpdateAsync(StudentFees studentFees, string dbId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var Parameters = new
                 {
-                    StudentAdmissionId = studentAdmissionId,
-                    FeeMasterId = feeMasterId,
-                    IsActive = isActive
+                    studentFees.Id,
+                    studentFees.StudentAdmissionId,
+                    studentFees.FeeMasterId,
+                    studentFees.AcademicSessionId,
+                    studentFees.IsActive
                 };
                 return await connection.ExecuteScalarAsync<int>(_dBVariables.SP_Add_StudentFees,
                     Parameters, commandType: CommandType.StoredProcedure);
@@ -72,7 +75,6 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
-
         /// <summary>
         /// Insert Bulk data in db
         /// </summary>
@@ -92,6 +94,7 @@ namespace FeePay.Infrastructure.Persistence.School
                     tempParams.Add("@StudentAdmissionId", s.StudentAdmissionId, DbType.Int32, ParameterDirection.Input);
                     tempParams.Add("@FeeMasterId", s.FeeMasterId, DbType.Int32, ParameterDirection.Input);
                     tempParams.Add("@FeeGroupId", s.FeeGroupId, DbType.Int32, ParameterDirection.Input);
+                    tempParams.Add("@AcademicSessionId", s.AcademicSessionId, DbType.Int32, ParameterDirection.Input);
                     tempParams.Add("@IsActive", true, DbType.Boolean, ParameterDirection.Input);
                     return tempParams;
                 });
@@ -170,15 +173,14 @@ namespace FeePay.Infrastructure.Persistence.School
         #endregion
 
         #region Find 
-
-        public async Task<StudentFees> FindByIdAsync(int id, string dbId)
+        public async Task<StudentFees> FindByIdAsync(int id, string dbId, int? academicSessionId = null)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var q = await connection.QuerySingleAsync<StudentFees>(
-                    _dBVariables.QUERY_Find_StudentFee,
-                    new { Id = id },
+                    sql: _dBVariables.QUERY_Find_StudentFee,
+                    param: new { Id = id },
                     commandType: CommandType.Text);
                 return q;
             }
@@ -195,18 +197,19 @@ namespace FeePay.Infrastructure.Persistence.School
         #endregion
 
         #region Get Students
-        public async Task<IEnumerable<StudentAdmission>> GetStudentsInFeesGroupAsync(int feeGroupId, string dbId)
+        public async Task<IEnumerable<StudentAdmission>> GetStudentsInFeesGroupAsync(string dbId, int feeGroupId, int academicSessionId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                var q = await connection.QueryAsync<StudentAdmission, FeeGroup, StudentAdmission>(_dBVariables.SP_Get_StudentFees,
-                    (stu, fg) =>
-                    {
-                        stu.FeesGroupList.Add(fg);
-                        return stu;
-                    },
-                    new { FeeGroupId = feeGroupId },
+                var q = await connection.QueryAsync<StudentAdmission, FeeGroup, StudentAdmission>(
+                    sql: _dBVariables.SP_Get_StudentFees,
+                    map: (stu, fg) =>
+                     {
+                         stu.FeesGroupList.Add(fg);
+                         return stu;
+                     },
+                    param: new { FeeGroupId = feeGroupId, AcademicSessionId = academicSessionId },
                     splitOn: "Id,Id,Id",
                     commandType: CommandType.StoredProcedure);
 
@@ -228,18 +231,19 @@ namespace FeePay.Infrastructure.Persistence.School
             }
 
         }
-
-        public async Task<IEnumerable<StudentAdmission>> GetStudentFeesAsync(string dbId)
+        public async Task<IEnumerable<StudentAdmission>> GetStudentFeesAsync(string dbId, int academicSessionId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                var q = await connection.QueryAsync<StudentAdmission, FeeGroup, StudentAdmission>(_dBVariables.SP_Get_StudentFees,
-                    (stu, fg) =>
+                var q = await connection.QueryAsync<StudentAdmission, FeeGroup, StudentAdmission>(
+                    sql: _dBVariables.SP_Get_StudentFees,
+                    map: (stu, fg) =>
                     {
                         stu.FeesGroupList.Add(fg);
                         return stu;
                     },
+                    param: new { AcademicSessionId = academicSessionId },
                     splitOn: "Id,Id",
                     commandType: CommandType.StoredProcedure);
 
@@ -264,7 +268,7 @@ namespace FeePay.Infrastructure.Persistence.School
         #endregion
 
         #region Check
-        public async Task<bool> IsFeeAssignToStudentAsync(int studentAdmissionId, int feeMasterId, string dbId)
+        public async Task<bool> IsFeeAssignToStudentAsync(string dbId, int studentAdmissionId, int feeMasterId)
         {
             try
             {
@@ -287,13 +291,14 @@ namespace FeePay.Infrastructure.Persistence.School
         #endregion
 
         #region Get StudentFees
-        public async Task<IEnumerable<StudentFees>> GetStudentFeeListAsync(int studentAdmissionId, string dbId)
+        public async Task<IEnumerable<StudentFees>> GetStudentFeeListAsync(string dbId, int studentAdmissionId, int academicSessionId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                var list = await connection.QueryAsync<StudentFees>(_dBVariables.QUERY_StudentFeeList,
-                    new { StudentAdmissionId = studentAdmissionId },
+                var list = await connection.QueryAsync<StudentFees>(
+                    sql: _dBVariables.QUERY_StudentFeeList,
+                    param: new { StudentAdmissionId = studentAdmissionId, AcademicSessionId = academicSessionId },
                     commandType: CommandType.Text);
                 return list;
             }
@@ -307,13 +312,14 @@ namespace FeePay.Infrastructure.Persistence.School
             }
 
         }
-        public async Task<IEnumerable<StudentFees>> GetStudentFeeListByTransactionIdAsync(string transactionId, string dbId)
+        public async Task<IEnumerable<StudentFees>> GetStudentFeeListByTransactionIdAsync(string dbId, string transactionId, int academicSessionId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                var list = await connection.QueryAsync<StudentFees>(_dBVariables.QUERY_StudentFeeList_ByTranscationId,
-                    new { PaymentId = transactionId },
+                var list = await connection.QueryAsync<StudentFees>(
+                    sql: _dBVariables.QUERY_StudentFeeList_ByTranscationId,
+                    param: new { PaymentId = transactionId, AcademicSessionId = academicSessionId },
                     commandType: CommandType.Text);
                 return list;
             }
@@ -327,34 +333,23 @@ namespace FeePay.Infrastructure.Persistence.School
             }
 
         }
-
         #endregion
 
         #region Get According To Class
-        //TODO: Remove SQL Hard Code Query
         /// <summary>
         /// Gets the Fees Assign to student classes
         /// </summary>
         /// <param name="dbId"> Database id </param>
         /// <returns>List of Comman_Sp_School With (ClassId,Amount,DueDate,IsPaid)</returns>
-        public async Task<IEnumerable<Comman_Sp_School>> GetClasses_FeesAsync(string dbId)
+        public async Task<IEnumerable<Comman_Sp_School>> GetClasses_FeesAsync(string dbId, int academicSessionId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                string sql = @"SELECT 
-                                [s].[ClassId],
-                                [fm].[Amount] ,
-                                [fm].[DueDate] ,
-                                [sf].[IsPaid] 
-                                FROM  [dbo].[StudentAdmission] [s] 
-                                INNER JOIN [dbo].[StudentFees] [sf] ON
-                                [sf].[StudentAdmissionId] = [s].[Id] AND [sf].[IsActive] = 1
-                                INNER JOIN [dbo].[FeeMaster] [fm] ON
-                                [fm].[Id] = [sf].[FeeMasterId] AND [sf].[IsActive] = 1
-                                WHERE [s].[IsActive] = 1
-                                ORDER BY ClassId ";
-                var q = await connection.QueryAsync<Comman_Sp_School>(sql, commandType: CommandType.Text);
+                var q = await connection.QueryAsync<Comman_Sp_School>(
+                    sql: _dBVariables.QUERY_GetClasses_Fees,
+                    param: new { AcademicSessionId = academicSessionId },
+                    commandType: CommandType.Text);
                 return q;
             }
             catch (TimeoutException ex)
@@ -370,36 +365,19 @@ namespace FeePay.Infrastructure.Persistence.School
                 throw new Exception(String.Format("{0} experienced an exception", nameof(GetClasses_FeesAsync)), ex);
             }
         }
-        //TODO: Remove SQL Hard Code Query
         /// <summary>
         /// Gets the Fees Assign to student classes
         /// </summary>
         /// <param name="dbId"> Database id </param>
         /// <returns>List of Comman_Sp_School With (StudentAdmissionId,Name,Amount,DueDate,IsPaid)</returns>
-        public async Task<IEnumerable<Comman_Sp_School>> GetClassStudents_FeesAsync(string dbId, int classId)
+        public async Task<IEnumerable<Comman_Sp_School>> GetClassStudents_FeesAsync(string dbId, int academicSessionId, int classId)
         {
             try
             {
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
-                string sql = @"SELECT 
-                                [s].[Id] AS [StudentAdmissionId],
-                                CONCAT([c].[Name],' (',[se].[Name],')') AS [Name],
-                                [fm].[Amount] ,
-                                [fm].[DueDate] ,
-                                [sf].[IsPaid] 
-                                FROM  [dbo].[StudentAdmission] [s] 
-                                INNER JOIN [dbo].[StudentFees] [sf] ON
-                                [sf].[StudentAdmissionId] = [s].[Id] AND [sf].[IsActive] = 1
-                                INNER JOIN [dbo].[FeeMaster] [fm] ON
-                                [fm].[Id] = [sf].[FeeMasterId] AND [sf].[IsActive] = 1
-                                INNER JOIN [dbo].[Class] [c] ON
-                                [c].[Id] = [s].[ClassId] AND [c].[IsActive] = 1
-                                INNER JOIN [dbo].[Section] [se] ON
-                                [se].[Id] = [s].[SectionId] AND [se].[IsActive] = 1
-                                WHERE [s].[IsActive] = 1 AND [s].[ClassId] = @ClassId
-                                ORDER BY [StudentAdmissionId] ";
-                var q = await connection.QueryAsync<Comman_Sp_School>(sql,
-                    new { ClassId = classId },
+                var q = await connection.QueryAsync<Comman_Sp_School>(
+                    sql: _dBVariables.QUERY_GetClassStudents_Fees,
+                    param: new { ClassId = classId, AcademicSessionId = academicSessionId },
                     commandType: CommandType.Text);
                 return q;
             }
@@ -417,11 +395,82 @@ namespace FeePay.Infrastructure.Persistence.School
             }
         }
         #endregion
-        #region Get Students
+
+        #region Get StudentFees
+        public async Task<IEnumerable<StudentFees>> GetAllAsync(string dbId, int academicSessionId,
+            DateTime? fromDate = null, DateTime? toDate = null, int? classId = null, int? sectionId = null,
+            int? studentId = null, bool? isPaid = null, string studentSearchString = null)
+        {
+            try
+            {
+                using IDbConnection connection = new SqlConnection(GetConStr(dbId));
+                StringBuilder Query = new StringBuilder(_dBVariables.QUERY_STUDENTFEES_GetAll);
+                var parameters = new DynamicParameters();
+                Query.Append(_dBVariables.QUERY_STUDENTFEES_GetAll_Where_AcademicSessionId);
+                parameters.Add("@AcademicSessionId", fromDate, DbType.DateTime, ParameterDirection.Input);
+                if (fromDate is not null)
+                {
+                    Query.Append(_dBVariables.QUERY_STUDENTFEES_GetAll_Where_FromDate);
+                    parameters.Add("@FromDate", fromDate, DbType.DateTime, ParameterDirection.Input);
+                }
+                if (toDate is not null)
+                {
+                    Query.Append(_dBVariables.QUERY_STUDENTFEES_GetAll_Where_ToDate);
+                    parameters.Add("@ToDate", toDate, DbType.DateTime, ParameterDirection.Input);
+                }
+                if (classId is not null and not 0)
+                {
+                    Query.Append(_dBVariables.QUERY_STUDENTFEES_GetAll_Where_ClassId);
+                    parameters.Add("@ClassId", classId, DbType.Int32, ParameterDirection.Input);
+                }
+                if (sectionId is not null and not 0)
+                {
+                    Query.Append(_dBVariables.QUERY_STUDENTFEES_GetAll_Where_SectionId);
+                    parameters.Add("@SectionId", sectionId, DbType.Int32, ParameterDirection.Input);
+                }
+                if (studentId is not null and not 0)
+                {
+                    Query.Append(_dBVariables.QUERY_STUDENTFEES_GetAll_Where_StudentAdmissionId);
+                    parameters.Add("@StudentAdmissionId", studentId, DbType.Int32, ParameterDirection.Input);
+                }
+                if (isPaid is not null)
+                {
+                    Query.Append(_dBVariables.QUERY_STUDENTFEES_GetAll_Where_IsPaid);
+                    parameters.Add("@IsPaid", isPaid, DbType.Boolean, ParameterDirection.Input);
+                }
+                if (!string.IsNullOrEmpty(studentSearchString) && !string.IsNullOrWhiteSpace(studentSearchString))
+                {
+                    Query.Append(_dBVariables.QUERY_STUDENTFEES_GetAll_Where_SearchParam);
+                    parameters.Add("@SearchParam", studentSearchString, DbType.String, ParameterDirection.Input);
+                }
+
+                var q = await connection.QueryAsync<StudentFees, StudentAdmission, StudentFees>(
+                    sql: Query.ToString(),
+                    map: (studentfees, StudentAdmission) =>
+                    {
+                        studentfees.StudentAdmission = StudentAdmission;
+                        return studentfees;
+                    },
+                    param: parameters,
+                    splitOn: "Id,Id",
+                    commandType: CommandType.Text);
+                return q;
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("{0} experienced an exception", nameof(GetClasses_FeesAsync)), ex);
+            }
+        }
         #endregion
 
-
-        // private methods
         private string GetConStr(string dbId = null)
         {
             return string.IsNullOrEmpty(dbId) ?

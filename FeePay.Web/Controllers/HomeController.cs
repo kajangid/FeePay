@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace FeePay.Web.Controllers
 {
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -28,17 +29,19 @@ namespace FeePay.Web.Controllers
             //_logger.LogInformation("Hello, {Name}!", LogFile.FileName.SuperAdmin);
             // -> Event written to log-Bob.txt
 
-            //_logger.LogInformation("Shutting down");
-
             return View();
         }
 
-        public IActionResult Privacy()
+
+
+
+        [HttpGet("/Register/School")]
+        public IActionResult SchoolRegistration()
         {
             return View();
         }
 
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //
         //public IActionResult Error()
         //{
         //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

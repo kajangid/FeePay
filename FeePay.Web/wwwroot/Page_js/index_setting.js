@@ -6,3 +6,8 @@ window.global_swanMixin = {
     },
     buttonsStyling: false
 }
+const global_base_url = window.location.origin;
+
+const global_host = window.location.host;
+
+const global_pathArray = window.location.pathname.split('/');

@@ -1,0 +1,144 @@
+﻿@model IEnumerable<PaymentGatewayDocumentViewModel>
+@{
+}
+@section Models{
+}
+@section Styles{
+}
+@section PluginScripts{
+}
+@section Scripts{
+    <script>
+        (function () {
+            "use strict";
+            $('#pgDocListTable').DataTable({ "order": [[6, 'desc']] });
+            $('#pgDocListTable').reArrangeDatatableSerialNumber();
+        })(jQuery);
+    </script>
+}
+
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body" style="">
+                    <div class="table-responsive">
+                        <table class="hover" id="pgDocListTable" data-type="datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th>School Name</th>
+                                    <th>principal Name</th>
+                                    <th>Display Name</th>
+                                    <th>Approved</th>
+                                    <th>Plan Status</th>
+                                    <th>Documents</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            var school = item.RegisterSchool;
+                                            <tr data-key="@item.Id">
+                                                <th scope="row"></th>
+                                                <td>@school.Name</td>
+                                                <td>@school.PrincipalName</td>
+                                                <td>@item.BusinessDisplayName</td>
+                                                <td>@item.IsApproved</td>
+                                                <td>Plan renaming time</td>
+                                                <td>
+                                                    <a href="javascript:void(0)"
+                                                       data-container="body"
+                                                       data-toggle="popover"
+                                                       data-placement="top"
+                                                       title="PAN Card Copy"
+                                                       class="d-inline-block mb-1 mr-1"
+                                                       onclick="openImageModalBox('@item.BusinessPANCard')">
+                                                        <i class="icofont icofont-2x icofont-file-jpg"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0)"
+                                                       data-container="body"
+                                                       data-toggle="popover"
+                                                       data-placement="top"
+                                                       title="Bank Passbook Copy"
+                                                       class="d-inline-block mb-1 mr-1"
+                                                       onclick="openImageModalBox('@item.XeroxCopyOfBankPassbook')">
+                                                        <i class="icofont icofont-2x icofont-file-jpg"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0)"
+                                                       data-container="body"
+                                                       data-toggle="popover"
+                                                       data-placement="top"
+                                                       title="Identity Proof"
+                                                       class="d-inline-block mb-1 mr-1"
+                                                       onclick="openImageModalBox('@item.IdentityProof')">
+                                                        <i class="icofont icofont-2x icofont-file-jpg"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a asp-action="ViewDocs"
+                                                       asp-controller="PaymentGatewayManager"
+                                                       asp-route-id="@item.Id"
+                                                       data-container="body"
+                                                       data-toggle="popover"
+                                                       data-placement="top"
+                                                       title="View Information"
+                                                       class="d-inline-block mb-1 mr-1">
+                                                        <i class="icofont icofont-2x icofont-open-eye"></i>
+                                                    </a>
+                                                    <a asp-action="DownloadAllDocs"
+                                                       asp-controller="PaymentGatewayManager"
+                                                       asp-route-id="@item.Id"
+                                                       data-container="body"
+                                                       data-toggle="popover"
+                                                       data-placement="top"
+                                                       title="Download All Documents"
+                                                       class="d-inline-block mb-1 mr-1">
+                                                        <i class="icofont icofont-2x icofont-file-zip"></i>
+                                                    </a>
+                                                    <a asp-action="ApprovePaymentGateway"
+                                                       asp-controller="PaymentGatewayManager"
+                                                       asp-route-id="@item.Id"
+                                                       data-container="body"
+                                                       data-toggle="popover"
+                                                       data-placement="top"
+                                                       title="Approve Payment Gateway"
+                                                       class="d-inline-block mb-1 mr-1">
+                                                        <i class="icofont icofont-2x icofont-verification-check"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -3,10 +3,8 @@
 
 @inject ICultureFormatProvider _cultureFormatProvider
 @section Style{
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
 }
 @section Scripts{
-    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
     <script>
         (function () {
             "use strict";
@@ -25,8 +23,8 @@
             <div class="col-6">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
-                    <li class="breadcrumb-item">Fees</li>
-                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                    <li class="breadcrumb-item">Fees Summary</li>
+                    <li class="breadcrumb-item active">All Classes</li>
                 </ol>
             </div>
         </div>
@@ -44,10 +42,10 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th>Class </th>
-                                    <th>Paid[₹]</th>
-                                    <th>Fees[₹]</th>
-                                    <th>Discount[₹]</th>
-                                    <th>Amount[₹]</th>
+                                    <th>Deposit</th>
+                                    <th>Fees</th>
+                                    <th>Discount</th>
+                                    <th>Balance</th>
                                 </tr>
                             </thead>
                             <tbody>

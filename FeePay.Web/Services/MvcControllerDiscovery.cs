@@ -28,15 +28,16 @@ namespace FeePay.Web.Services
         public IEnumerable<MvcControllerInfo> GetSchoolControllers(string selectedlist = "")
         {
             // TODO: make it dynamic
-            var hideAction = new List<string>() { "TostMessage", "Message", "AlertMessage", "RedirectToLocal", "GetErrorListFromModelState", "Logout" };
-            var hideController = new List<string>() { "Authentication", "AreaBase" };
-            var DefaultController = new List<string>() { };
-            var DefaultSelectedAction = new List<string>() { "Dashboard", "UserProfile", "GetUserPassword" };
+            var hideAction = new List<string>() { };
+            var hideController = new List<string>() { "Authentication" };
+            var DefaultController = new List<string>() { "Uitility", "Home" };
+            var DefaultSelectedAction = new List<string>() { };
             var list = GetControllers()
-                .Where(w => w.AreaName != null &&
-                w.AreaName.Equals("school", StringComparison.InvariantCultureIgnoreCase) &&
-                !hideController.Contains(w.Name)
-                ).ToList();
+                .Where(w =>
+                w.AreaName != null &&
+                w.AreaName.Equals("school", StringComparison.InvariantCultureIgnoreCase) && !hideController.Contains(w.Name))
+                .ToList();
+            // Filter Default 
             list.ForEach(f =>
             {
                 f.Actions = f.Actions.Where(wa => !hideAction.Contains(wa.Name)).ToList();
@@ -48,6 +49,7 @@ namespace FeePay.Web.Services
                 f.IsDisabled = DefaultController.Contains(f.Name);
                 f.IsSelected = DefaultController.Contains(f.Name);
             });
+            // Filter Default Selected
             if (!string.IsNullOrEmpty(selectedlist))
             {
                 var accessList = JsonConvert.DeserializeObject<IEnumerable<MvcControllerInfo>>(selectedlist);

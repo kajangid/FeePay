@@ -34,6 +34,7 @@ namespace FeePay.Core.Application.DTOs
 
         [StringLength(349)]
         public string Description { get; set; }
+        public int AcademicSessionId { get; set; }
 
 
         public FeeType FeeType { get; set; }

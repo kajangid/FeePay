@@ -20,7 +20,11 @@ const swalWithBootstrapButtons = Swal.mixin({
     },
     buttonsStyling: false
 });
-
+const swalWithOutButtons = Swal.mixin({
+    showCancelButton: false,
+    showConfirmButton: false,
+    buttonsStyling: false
+});
 function addErrorMsgToValidatonSummery(errorMsg) {
     var validationSummary = $('#form-validation-summary ul');
     if (validationSummary.length == 0) {
@@ -32,7 +36,6 @@ function addErrorMsgToValidatonSummery(errorMsg) {
     } else { validationSummary.append('<li>' + errorMsg + '</li>'); }
 
 }
-
 var modal_animate_custom = {
     init: function (modelId) {
         modelId = modelId || this.myModelId;
@@ -49,7 +52,18 @@ var modal_animate_custom = {
         })
     }
 };
-
+function openImageModalBox(src) {
+    modal_animate_custom.init('image-ModalBox');
+    var img = $('#image-ModalBox').find('img.modal-img');
+    if (typeof (img) != "undefined" && img != null && img.length > 0) {
+        img.attr("src", src);
+        $('#image-ModalBox').modal('show');
+    }
+    $('#image-ModalBox').on('hide.bs.modal', function (e) {
+        if (typeof (img) != "undefined" && img != null && img.length > 0)
+            setTimeout(function () { img.attr("src", ''); }, 200);            
+    });
+}
 (function ($) {
     'use strict';
     $.fn.reArrangeDatatableSerialNumber = function () {
@@ -101,6 +115,7 @@ var modal_animate_custom = {
         clipboard.on('success', function (e) { });
         clipboard.on('error', function (e) { });
     } else { console.log("ClipboardJS library not loaded...."); }
+    //
 })(jQuery);
 (function ($) {
     'use strict';
@@ -315,14 +330,108 @@ var modal_animate_custom = {
                 data: postData,
             }).done(function (res) {
                 if (res && res.success) {
-                    $this.find('input').val('');
+                    $this.find('input[type="text"]').val('');
                     $this.attr('action', '');
                     swalWithBootstrapButtons.fire('Password Change!', 'New Password has been set.', 'success');
                 } else {
                     addErrorMsgToValidatonSummery(res.message);
                     swalWithBootstrapButtons.fire('Fail!', 'there is an error changing password...', 'warning');
                 }
+                $('#changePass_admin').modal('hide');
             }).fail(function (jrhx, status) { console.log(jrhx, status); });
         }
+    });
+})(jQuery);
+
+(function ($) {
+    "use strict";
+    // search student partial
+    var selectClass = $('select[name="ClassId"]');
+    if (selectClass != null && selectClass.length > 0) {
+        var selectedSection = $('select[name="SectionId"]').attr("data-key-selected");
+        bindSectionDropDown(selectClass, selectedSection);
+        selectClass.on('change', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            bindSectionDropDown($this);
+        });
+    }
+    function bindSectionDropDown(select, selected) {
+        selected = selected || '0';
+        var selectSectionEle = $('select[name="SectionId"]');
+        var html = '<option value="">Select</option>';
+        var classId = select.val();
+        var url = selectSectionEle.attr("data-ajaxurl");
+        if (classId === "") { selectSectionEle.html(html); return true; }
+        $.ajax({
+            url: `${url}?id=${classId}`,
+            method: 'get',
+            dataType: 'json'
+        }).done(function (res) {
+            if (res.success) {
+                if (res.data != null && res.data.length > 0) {
+                    html += res.data.map(function (i) {
+                        return `<option value="${i.value}" ${(i.value === selected
+                            && typeof (selected) != "undefined"
+                            && selected != null && selected != '')
+                            ? 'Selected' : ''} >${i.text}</option>`;
+                    }).join('');
+                    selectSectionEle.html(html);
+                }
+            } else { }
+        }).fail(function (jqXHR, textStatus) {
+            console.log("Request failed: " + textStatus);
+        }).always(function () {
+        });
+    }
+})(jQuery);
+
+(function ($) {
+    "use strict";
+    var modal = $('#changeSession');
+    modal_animate_custom.init('changeSession');
+    $('#changeSessionModal').on('click', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        $.ajax({
+            url: $this.attr('data-ajaxurl'),
+            dataType: 'json',
+            method: 'get',
+        }).done(function (res) {
+            if (res && res.success) {
+                console.log(res.data);
+                var select = modal.find('form select[id="Id"]');
+                var html = '';
+                if (select != null && select.length > 0) {
+                    $.each(res.data, function (index, value) {
+                        html += `<option value="${value.id}" ${(value.selected ? 'selected' : '')}>${value.name}</option>`;
+                    });
+                    select.html(html);
+                }
+                modal.modal('show');
+            } else {
+            }
+        }).fail(function (jrhx, status) { console.log(jrhx, status); });
+    });
+
+    modal.find('form[id="changeSessionForm"]').on('submit', function (e) {
+        var $this = $(this);
+        event.preventDefault();
+        var postData = $this.serialize();
+        $.ajax({
+            url: $this.attr('action'),
+            dataType: 'json',
+            method: $this.attr('method'),
+            data: postData,
+        }).done(function (res) {
+            if (res && res.success) {
+                swalWithBootstrapButtons.fire('Session Change!', 'New Session has been set.', 'success');
+                window.setTimeout(function () { window.location.href = global_base_url + "/School/Dashboard"; }, 200);
+            } else {
+                addErrorMsgToValidatonSummery(res.message);
+                swalWithBootstrapButtons.fire('Fail!', 'there is an error changing session...', 'warning');
+            }
+            modal.modal('hide');
+        }).fail(function (jrhx, status) { console.log(jrhx, status); });
     });
 })(jQuery);

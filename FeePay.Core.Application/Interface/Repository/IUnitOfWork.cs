@@ -31,5 +31,8 @@ namespace FeePay.Core.Application.Interface.Repository
         ICityStateRepository CityState { get; }
         IStudentFeesRepository StudentFee { get; }
         IFeesTranscationRepository FeesTranscation { get; }
+        IStudentAcademicSessionsRepository StudentAcademicSessions { get; }
+        IDocumentsRepository Documents { get; }
+        IPaymentGatewayDocumentRepository PaymentGatewayDocument { get; }
     }
 }

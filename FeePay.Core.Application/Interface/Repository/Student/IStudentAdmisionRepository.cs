@@ -11,30 +11,29 @@ namespace FeePay.Core.Application.Interface.Repository.Student
     {
         Task<int> AddAsync(StudentAdmission studentAdmission, string dbId);
         Task<int> UpdateAsync(StudentAdmission studentAdmission, string dbId);
+        Task<int> BulkUpdateAsync(List<StudentAdmission> studentAdmission, string dbId);
         Task<int> DeleteAsync(int Id, string dbId);
 
 
         // find
-        Task<StudentAdmission> FindByIdAsync(int Id, string dbId);
-        Task<StudentAdmission> FindByStudentLoginIdAsync(int Id, string dbId);
-        Task<StudentAdmission> FindByFormNoAsync(string formno, string dbId);
-        Task<StudentAdmission> FindBySr_RegNoAsync(string sr_regno, string dbId);
-        Task<StudentAdmission> FindActiveByIdAsync(int Id, string dbId);
-        Task<StudentAdmission> FindActiveByStudentLoginIdAsync(int Id, string dbId);
-        Task<StudentAdmission> FindActiveByFormNoAsync(string formno, string dbId);
-        Task<StudentAdmission> FindActiveBySr_RegNoAsync(string sr_regno, string dbId);
+        Task<StudentAdmission> FindByIdAsync(int Id, string dbId, bool? active = null);
+        Task<StudentAdmission> FindByStudentLoginIdAsync(int Id, string dbId, bool? active = null);
+        Task<StudentAdmission> FindByFormNoAsync(string formno, string dbId, bool? active = null);
+        Task<StudentAdmission> FindBySr_RegNoAsync(string sr_regno, string dbId, bool? active = null);
 
 
         // get all
-        Task<IEnumerable<StudentAdmission>> GetAllAsync(string dbId);
-        Task<IEnumerable<StudentAdmission>> GetAllActiveAsync(string dbId);
-        Task<IEnumerable<StudentAdmission>> SearchStudentAsync(string dbId, string seatchString = null, int? classId = null,
-            int? sectionId = null, bool isActive = true, string gender = null, int? studentId = null);
-        Task<IEnumerable<StudentAdmission>> SearchStudent_WithAddEditUserAsync(string dbId, string seatchString = null, int? classId = null,
-            int? sectionId = null, bool isActive = true, string gender = null, int? studentId = null);
+        Task<IEnumerable<StudentAdmission>> GetAllAsync(string dbId, int academicSessionId, bool? active = null);
+        Task<IEnumerable<StudentAdmission>> GetAll_WithAddEditUserAsync(string dbId, int academicSessionId, bool? active = null);
 
-        // get all with add edit user info
-        Task<IEnumerable<StudentAdmission>> GetAll_WithAddEditUserAsync(string dbId);
-        Task<IEnumerable<StudentAdmission>> GetAllActive_WithAddEditUserAsync(string dbId);
+        // Search
+        Task<IEnumerable<StudentAdmission>> SearchStudentAsync(string dbId,
+            int academicSessionId, int? classId = null, int? sectionId = null,
+            string seatchString = null, string gender = null, int? studentAdmissionId = null,
+            bool isActive = true);
+        Task<IEnumerable<StudentAdmission>> SearchStudent_WithAddEditUserAsync(string dbId,
+            int academicSessionId, int? classId = null, int? sectionId = null,
+            string seatchString = null, string gender = null, int? studentAdmissionId = null,
+            bool isActive = true);
     }
 }

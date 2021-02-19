@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using FeePay.Core.Application.DTOs;
 
 namespace FeePay.Core.Application.Interface.Service
 {
@@ -17,7 +18,18 @@ namespace FeePay.Core.Application.Interface.Service
         /// </summary>
         /// <returns> tenant db id </returns>
         string ClaimSchoolUniqueId();
-        ClaimsPrincipal getCurrentUser();
+        ClaimsPrincipal GetCurrentUser();
         List<string> ClaimSchoolUserRoles();
+        string AbsoluteAction(string actionName, string controllerName, object routeValues = null);
+        string AbsoluteUriByPage(string page, object routeValues = null);
+
+        string GetRootDirectory(string folderName);
+        string GetDirectoryRootPath(string path);
+        string GetDirectoryUrl(string baseUrl, string path);
+
+
+        #region  SITE SESSION
+        SessionViewModel SiteSession_AcademicSession { get; set; }
+        #endregion
     }
 }

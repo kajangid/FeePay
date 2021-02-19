@@ -126,6 +126,8 @@ namespace FeePay.Core.Application.Mapping
 
             // Mapping properties from SessionViewModel to Section 
             CreateMap<SessionViewModel, Session>();
+
+
             #endregion
 
             #region School Management
@@ -213,7 +215,32 @@ namespace FeePay.Core.Application.Mapping
             // Mapping properties from SuperAdminUser to UserPasswordViewModel 
             CreateMap<SuperAdminUser, UserPasswordViewModel>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+
+            // Mapping properties from PaymentGatewayDocument to StudentAdmissionViewModel 
+            CreateMap<PaymentGatewayDocument, PaymentGatewayDocumentViewModel>()
+                .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+                .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+                .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)))
+                .ForMember(dest => dest.XeroxCopyOfBankPassbook, opt => opt.MapFrom(src => src.BankPassbookCopy))
+                .ForMember(dest => dest.BusinessPANCard, opt => opt.MapFrom(src => src.BusinessPANCardCopy))
+                .ForMember(dest => dest.RegisterSchool, opt => opt.MapFrom(src => src.RegisteredSchool));
+            // Mapping properties from StudentAdmissionViewModel to PaymentGatewayDocument 
+            CreateMap<PaymentGatewayDocumentViewModel, PaymentGatewayDocument>()
+                .ForMember(dest => dest.IdentityProof, opt => opt.MapFrom(src => (src.IdentityProofUploadData != null && !string.IsNullOrEmpty(src.IdentityProofUploadData.Url) ? src.IdentityProofUploadData.Url : null)))
+                .ForMember(dest => dest.BankPassbookCopy, opt => opt.MapFrom(src => (src.BankPassbookUploadData != null && !string.IsNullOrEmpty(src.BankPassbookUploadData.Url) ? src.BankPassbookUploadData.Url : null)))
+                .ForMember(dest => dest.BusinessPANCardCopy, opt => opt.MapFrom(src => (src.BusinessPANCardUploadData != null && !string.IsNullOrEmpty(src.BusinessPANCardUploadData.Url) ? src.BusinessPANCardUploadData.Url : null)));
+
+            // Mapping properties from Documents to DocumentsViewModel 
+            CreateMap<Documents, DocumentsViewModel>()
+                .ForMember(dest => dest.AddedBy, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Email : string.Empty)))
+                .ForMember(dest => dest.ModifyBy, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Email : string.Empty)))
+                .ForMember(dest => dest.AddedById, opt => opt.MapFrom(src => (src.AddedByUser != null ? src.AddedByUser.Id : 0)))
+                .ForMember(dest => dest.ModifyById, opt => opt.MapFrom(src => (src.ModifyByUser != null ? src.ModifyByUser.Id : 0)));
+            // Mapping properties from DocumentsViewModel to Documents 
+            CreateMap<DocumentsViewModel, Documents>();
             #endregion
+
         }
     }
 }

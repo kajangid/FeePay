@@ -17,34 +17,42 @@ namespace FeePay.Core.Application.DTOs
     public class StudentAdmissionViewModel : BaseViewModel
     {
         public int Id { get; set; }
+
         [Required]
-        [StringLength(49)]
-        [DisplayName("Form Number")]
-        public string FormNo { get; set; }
+        [DisplayName("Sr/Reg Number")]
+        [StringLength(79)]
+        public string Sr_RegNo { get; set; }
+
         [Required(ErrorMessage = "Admission Date Required.")]
         [DisplayName("Admission Date")]
         [DataType(DataType.Date, ErrorMessage = "Invalid Date Format.")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AdmissionDate { get; set; }
+
         [Required]
         [DisplayName("Class")]
         public int ClassId { get; set; }
+
         [Required]
         [DisplayName("Section")]
         public int SectionId { get; set; }
-        [Required]
-        [DisplayName("Sr/Reg Number")]
-        [StringLength(79)]
-        public string Sr_RegNo { get; set; }
+
+        [StringLength(49)]
+        [DisplayName("Form Number")]
+        public string FormNo { get; set; }
+
         [DisplayName("Enroll No")]
         [StringLength(49)]
         public string EnrollNo { get; set; }
+
         [DisplayName("MACHINE ID")]
         [StringLength(49)]
         public string MACHINEID { get; set; }
+
         [StringLength(49)]
         [DisplayName("Student Type")]
         public string StudentType { get; set; }
+
         [StringLength(49)]
         [DisplayName("Student Medium")]
         public string Medium { get; set; }
@@ -52,7 +60,9 @@ namespace FeePay.Core.Application.DTOs
         [StringLength(349)]
         [DisplayName("Remarks")]
         public string Remarks { get; set; }
+
         public int StudentLoginId { get; set; }
+        public int AcademicSessionId { get; set; }
 
         #region Contact & Personal Info
         [Required]
@@ -73,7 +83,7 @@ namespace FeePay.Core.Application.DTOs
         [DisplayName("Category")]
         public string Category { get; set; }
         [Required]
-        [RegularExpression(@"^((\+91?)|\+)?[7-9][0-9]{9}$", ErrorMessage = "Please enter a valid mobile number.")]
+        [RegularExpression(@"^((\+91?)|\+)?[1-9][0-9]{9}$", ErrorMessage = "Please enter a valid mobile number.")]
         [DisplayName("Student Mobile Number")]
         public string MobileNo { get; set; }
         [StringLength(59)]
@@ -110,12 +120,12 @@ namespace FeePay.Core.Application.DTOs
         [DisplayName("Mother's Name")]
         public string MotherName { get; set; }
         [DisplayName("Guardian Mobile Number")]
-        [RegularExpression(@"^((\+91?)|\+)?[7-9][0-9]{9}$", ErrorMessage = "Please enter a valid mobile number.")]
+        [RegularExpression(@"^((\+91?)|\+)?[1-9][0-9]{9}$", ErrorMessage = "Please enter a valid mobile number.")]
         public string GuardianMobileNo { get; set; }
         [StringLength(59)]
         [DisplayName("Guardian Email")]
         public string GuardianEmail { get; set; }
-        [RegularExpression(@"^((\+91?)|\+)?[7-9][0-9]{9}$", ErrorMessage = "Please enter a valid mobile number.")]
+        [RegularExpression(@"^((\+91?)|\+)?[1-9][0-9]{9}$", ErrorMessage = "Please enter a valid mobile number.")]
         [DisplayName("Guardian Alternate Mobile Number")]
         public string AlternateMobileNo { get; set; }
         #endregion
@@ -140,7 +150,7 @@ namespace FeePay.Core.Application.DTOs
 
         public Classes StudentClass { get; set; }
         public Section StudentSection { get; set; }
-        public string Fullname { get; set; }
+        public string Fullname { get { return $"{FirstName} {LastName}"; } }
 
 
         public List<DropDownItem> AvaliableClasses { get; set; }

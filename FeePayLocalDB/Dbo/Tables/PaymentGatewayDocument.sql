@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[PaymentGatewayDocument]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(100, 1),
+	[BusinessDisplayName] NVARCHAR(50) NOT NULL,
+	[BusinessPANCardNumber] NVARCHAR(30) NOT NULL,
+	[BusinessPANCardCopy] NVARCHAR(255) NOT NULL,
+	[RegisteredAddress] NVARCHAR(255) NOT NULL,
+	[AddressPinCode] NVARCHAR(10) NOT NULL,
+	[AddressCityId] INT NOT NULL,
+	[AddressStateId] INT NOT NULL,
+	[AccountNumber] NVARCHAR(20) NOT NULL,
+	[IFSC] NVARCHAR(50) NOT NULL,
+	[BankPassbookCopy] NVARCHAR(255) NOT NULL,
+	[ContactName] NVARCHAR(50) NOT NULL,
+	[ContactEmail] NVARCHAR(50) NOT NULL,
+	[ContactPhoneNumber] NVARCHAR(50) NOT NULL,
+	[IdentityProof] NVARCHAR(255) NOT NULL,
+	[RegisteredSchoolId] INT NOT NULL,
+	[IsApproved] BIT NULL DEFAULT 0, 
+	[IsActive] BIT NULL DEFAULT 0, 
+	[IsDelete] BIT NULL DEFAULT 0, 
+	[ModifyDate] DATETIME NULL DEFAULT GetDate(), 
+	[ModifyBy] INT NULL, 
+	[AddedDate] DATETIME NULL DEFAULT GetDate(), 
+	[AddedBy] INT NULL,
+
+)

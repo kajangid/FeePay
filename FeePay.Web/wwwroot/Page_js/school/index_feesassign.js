@@ -1,41 +1,5 @@
 ﻿(function ($) {
     "use strict";
-    var selectClass = $('select[name="ClassId"]');
-    var selectedSection = $('select[name="SectionId"]').attr("data-key-selected");
-    bindSectionDropDown(selectClass, selectedSection);
-    selectClass.on('change', function (e) {
-        e.preventDefault();
-        var $this = $(this);
-        bindSectionDropDown($this);
-    });
-    function bindSectionDropDown(select, selected) {
-        selected = selected || '0';
-        var selectSectionEle = $('select[name="SectionId"]');
-        var html = '<option value="">Select</option>';
-        var classId = select.val();
-        var url = selectSectionEle.attr("data-ajaxurl");
-        if (classId === "") { selectSectionEle.html(html); return true; }
-        $.ajax({
-            url: `${url}?id=${classId}`,
-            method: 'get',
-            dataType: 'json'
-        }).done(function (res) {
-            if (res.success) {
-                if (res.data != null && res.data.length > 0) {
-                    html += res.data.map(function (i) {
-                        return `<option value="${i.value}" ${(i.value === selected
-                            && typeof (selected) != "undefined"
-                            && selected != null && selected != '')
-                            ? 'Selected' : ''} >${i.text}</option>`;
-                    }).join('');
-                    selectSectionEle.html(html);
-                }
-            } else { }
-        }).fail(function (jqXHR, textStatus) {
-            console.log("Request failed: " + textStatus);
-        }).always(function () {
-        });
-    }
     var tbl = $('table[id="assignfees_table"]');
     var allCb = $('input[name="assignCkAll"]');
     var assignCb = $('.assign-checkbox');

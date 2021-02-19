@@ -9,20 +9,18 @@ namespace FeePay.Core.Application.Interface.Repository.School
 {
     public interface ISessionRepository
     {
-        Task<int> AddAsync(Session session, string dbId = null);
-        Task<int> UpdateAsync(Session session, string dbId = null);
-        Task<int> DeleteAsync(int Id, string dbId = null);
+        Task<int> AddAsync(Session session, string dbId);
+        Task<int> UpdateAsync(Session session, string dbId);
+        Task<int> SetDefaultAsync(int Id, string dbId);
+        Task<int> DeleteAsync(int Id, string dbId);
 
         // Find
-        Task<Session> FindByIdAsync(int Id, string dbId = null);
-        Task<Session> FindByNameAsync(string Year, string dbId = null);
-        Task<Session> FindActiveByIdAsync(int Id, string dbId = null);
-        Task<Session> FindActiveByNameAsync(string Year, string dbId = null);
+        Task<Session> FindByIdAsync(int Id, string dbId, bool? isActive = null);
+        Task<Session> FindByNameAsync(string Year, string dbId, bool? isActive = null);
+        Task<Session> FetchActiveAcadmicSession(string dbId);
 
         // Get All
-        Task<IEnumerable<Session>> GetAllAsync(string dbId = null);
-        Task<IEnumerable<Session>> GetAllActiveAsync(string dbId = null);
-        Task<IEnumerable<Session>> GetAll_WithAddEditUserAsync(string dbId = null);
-        Task<IEnumerable<Session>> GetAllActive_WithAddEditUserAsync(string dbId = null);
+        Task<IEnumerable<Session>> GetAllAsync(string dbId, bool? isActive = null);
+        Task<IEnumerable<Session>> GetAll_WithAddEditUserAsync(string dbId, bool? isActive = null);
     }
 }

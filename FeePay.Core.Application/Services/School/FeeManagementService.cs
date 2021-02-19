@@ -33,7 +33,6 @@ namespace FeePay.Core.Application.Services.School
         private readonly ILoginService _loginService;
 
 
-
         #region Fee Type 
         public async Task<Response<List<FeeTypeViewModel>>> GetAllFeeTypeAsync()
         {
@@ -150,8 +149,8 @@ namespace FeePay.Core.Application.Services.School
         public async Task<FeeMasterViewModel> BindFeeMasterViewModel(FeeMasterViewModel model = null)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            var feetypelist = await _unitOfWork.FeeType.GetAllActiveAsync(SchoolId);
-            var feegrouplist = await _unitOfWork.FeeGroup.GetAllActiveAsync(SchoolId);
+            var feetypelist = await _unitOfWork.FeeType.GetAllAsync(dbId: SchoolId, isActive: true);
+            var feegrouplist = await _unitOfWork.FeeGroup.GetAllAsync(dbId: SchoolId, isActive: true);
             List<DropDownItem> feetypeDDL = feetypelist?.Select(s => new DropDownItem { Value = s.Id.ToString(), Text = $"{s.Name} | {s.Code}" }).ToList();
             List<DropDownItem> feegroupDDL = feegrouplist?.Select(s => new DropDownItem { Value = s.Id.ToString(), Text = s.Name }).ToList();
             if (model != null)
@@ -174,15 +173,19 @@ namespace FeePay.Core.Application.Services.School
         public async Task<Response<List<FeeMasterViewModel>>> GetAllFeeMasterAsync()
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            var tt = await _unitOfWork.FeeMaster.GetAll_WithAddEditUserAsync(SchoolId);
+            var currentSession = await _loginService.GetCurrentAcademicSession();
+            if (currentSession == null) return new Response<List<FeeMasterViewModel>>("Select Academic Session.");
+            var tt = await _unitOfWork.FeeMaster.GetAll_WithAddEditUserAsync(dbId: SchoolId, academicSessionId: currentSession.Id);
             return new Response<List<FeeMasterViewModel>>(_mapper.Map<List<FeeMasterViewModel>>(tt.ToList()));
         }
         public async Task<Response<List<FeeGroupViewModel>>> GetAllFeeGroupMasterAsync()
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            var list = await _unitOfWork.FeeGroup.GetAllWithMasterAandTypeAsync(SchoolId);
+            var currentSession = await _loginService.GetCurrentAcademicSession();
+            if (currentSession == null) return new Response<List<FeeGroupViewModel>>("Select Academic Session.");
+            var list = await _unitOfWork.FeeGroup.GetAllWithMasterAandTypeAsync(dbId: SchoolId, academicSessionId: currentSession.Id);
             List<FeeGroupViewModel> tt = _mapper.Map<List<FeeGroupViewModel>>(list.ToList());
-            return new Response<List<FeeGroupViewModel>>(_mapper.Map<List<FeeGroupViewModel>>(tt.ToList()));
+            return new Response<List<FeeGroupViewModel>>(tt.ToList());
         }
         public async Task<Response<FeeMasterViewModel>> GetFeeMasterByIdAsync(int feeMasterId)
         {
@@ -195,11 +198,14 @@ namespace FeePay.Core.Application.Services.School
         {
             var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var currentSession = await _loginService.GetCurrentAcademicSession();
+            if (currentSession == null) return new Response<FeeMasterViewModel>("Select Academic Session.");
             FeeMaster feeMaster = _mapper.Map<FeeMaster>(model);
             if (model.Id == 0)
             {
                 feeMaster.AddedBy = UserId;
                 feeMaster.IsActive = true;
+                feeMaster.AcademicSessionId = currentSession.Id;
                 int res = await _unitOfWork.FeeMaster.AddAsync(feeMaster, SchoolId);
                 if (res <= 0) return new Response<FeeMasterViewModel>("Fee Master is already exist or a error is accord while creating Fee master.");
             }
@@ -214,6 +220,7 @@ namespace FeePay.Core.Application.Services.School
                 feeMasterEntity.Amount = feeMaster.Amount;
                 feeMasterEntity.Description = feeMaster.Description;
                 feeMasterEntity.ModifyBy = UserId;
+                feeMasterEntity.AcademicSessionId = currentSession.Id;
                 int res = await _unitOfWork.FeeMaster.UpdateAsync(feeMasterEntity, SchoolId);
                 if (res <= 0) return new Response<FeeMasterViewModel>("Fee Master is already exist with same name or a error is accord while updating fee master.");
             }
@@ -236,24 +243,53 @@ namespace FeePay.Core.Application.Services.School
 
 
         #region Fee Assign
-
-        public async Task<AssignFeesViewModel> SearchStudentAndBindAssignViewModel(AssignFeesViewModel data, int id)
+        public async Task<Response<AssignFeesViewModel>> BindAssignViewModelAsync(int feeGroupId, AssignFeesViewModel model = null)
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            var ress = await GetAllFeeGroupMasterAsync();
-            data.FeeGroup = ress.Data?.SingleOrDefault(w => w.Id == id);
+            var currentSession = await _loginService.GetCurrentAcademicSession();
+            if (currentSession == null) return new Response<AssignFeesViewModel>("Select Academic Session.");
+            var feeGroupWithFeeMasterAndFeeType = await _unitOfWork.FeeGroup.GetAllWithMasterAandTypeAsync(dbId: SchoolId, academicSessionId: currentSession.Id);
+            List<FeeGroupViewModel> tt = _mapper.Map<List<FeeGroupViewModel>>(feeGroupWithFeeMasterAndFeeType.ToList());
+            if (tt == null) return new Response<AssignFeesViewModel>("No data found.");
+            var _classes = (await _unitOfWork
+                .ClassRepo
+                .GetAllAsync(dbId: SchoolId, isActive: true))
+                .Select(s => new DropDownItem { Value = s.Id.ToString(), Text = s.NormalizedName }).ToList();
+            if (model == null)
+            {
+                model = new AssignFeesViewModel()
+                {
+                    FeeGroup = tt?.SingleOrDefault(w => w.Id == feeGroupId),
+                    Classes = _classes ?? new List<DropDownItem>()
+                };
+            }
+            else
+            {
+                model.FeeGroup = tt?.SingleOrDefault(w => w.Id == feeGroupId);
+                model.Classes = _classes ?? new List<DropDownItem>();
+            }
+            return new Response<AssignFeesViewModel>(model);
+        }
+        public async Task<Response<AssignFeesViewModel>> SearchStudentAndAddToAssignViewModelAsync(AssignFeesViewModel data)
+        {
+            var schoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var currentSession = await _loginService.GetCurrentAcademicSession();
+            if (currentSession == null) return new Response<AssignFeesViewModel>("Select Academic Session.");
 
-            var students = await _unitOfWork.StudentAdmision.SearchStudentAsync(classId: data.ClassId,
+            var students = await _unitOfWork.StudentAdmision.SearchStudentAsync(
+                dbId: schoolId,
+                academicSessionId: currentSession.Id,
+                classId: data.ClassId,
                 sectionId: data.SectionId,
                 seatchString: data.Search,
                 gender: data.Gender,
-                isActive: true,
-                dbId: SchoolId);
+                isActive: true);
 
             data.StudentAdmissionList = students != null && students.Count() > 0 ?
                 _mapper.Map<List<StudentAdmissionViewModel>>(students) : new List<StudentAdmissionViewModel>();
 
-            var studentsInFeeGroup = (await _unitOfWork.StudentFee.GetStudentsInFeesGroupAsync(id, dbId: SchoolId))?.ToList();
+            var studentsInFeeGroup = (await _unitOfWork.StudentFee.GetStudentsInFeesGroupAsync(
+                feeGroupId: data.FeeGroup.Id, academicSessionId: currentSession.Id, dbId: schoolId))?.ToList();
             var CheckBoxStudentList = data.StudentAdmissionList.Select(s => new CheckBoxItem
             {
                 Id = s.Id,
@@ -261,21 +297,24 @@ namespace FeePay.Core.Application.Services.School
                 IsSelected = (studentsInFeeGroup?.ToList().Any(a => a.Id == s.Id) ?? false)
             }).ToList();
             data.CbStudents = CheckBoxStudentList;
-            return data;
+            return new Response<AssignFeesViewModel>(data);
         }
         public async Task<Response<bool>> AssignFeesToStudents(AssignFeesViewModel data, int feeGroupId)
         {
-            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var schoolId = _appContextAccessor.ClaimSchoolUniqueId();
             //var UserId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
+            var currentSession = await _loginService.GetCurrentAcademicSession();
+            if (currentSession == null) return new Response<bool>("Select Academic Session.");
             List<StudentFees> studentFees = new List<StudentFees>();
             if (data.CbStudents.Count > 0)
             {
                 foreach (var CbStudent in data.CbStudents)
                 {
-                    var FeeMasterList = await _unitOfWork.FeeMaster.GetByFeeGroupIdAsync(feeGroupId, SchoolId);
+                    var FeeMasterList = await _unitOfWork.FeeMaster.FindByFeeGroupIdAsync(id: feeGroupId, dbId: schoolId, academicSessionId: currentSession.Id, isActive: true);
                     foreach (var feeMaster in FeeMasterList)
                     {
-                        bool NotAssignThisFee = await _unitOfWork.StudentFee.IsFeeAssignToStudentAsync(CbStudent.Id, feeMaster.Id, SchoolId);
+                        bool NotAssignThisFee = await _unitOfWork.StudentFee.IsFeeAssignToStudentAsync(
+                            studentAdmissionId: CbStudent.Id, feeMasterId: feeMaster.Id, dbId: schoolId);
                         if (CbStudent.IsSelected && !NotAssignThisFee)
                         {
                             studentFees.Add(new StudentFees()
@@ -283,6 +322,8 @@ namespace FeePay.Core.Application.Services.School
                                 StudentAdmissionId = CbStudent.Id,
                                 FeeMasterId = feeMaster.Id,
                                 FeeGroupId = feeGroupId,
+                                AcademicSessionId = ((await _unitOfWork.StudentAcademicSessions
+                                .FindByStudentAdmissionIdAndSessionIdAsync(CbStudent.Id, currentSession.Id, schoolId))?.Id) ?? 0
                             });
                         }
                     }
@@ -290,7 +331,7 @@ namespace FeePay.Core.Application.Services.School
             }
             if (studentFees.Count > 0)
             {
-                var insertedId = await _unitOfWork.StudentFee.BulkAddAsync(studentFees: studentFees, dbId: SchoolId);
+                var insertedId = await _unitOfWork.StudentFee.BulkAddAsync(studentFees: studentFees, dbId: schoolId);
                 if (insertedId <= 0) return new Response<bool>("error saving data");
             }
             return new Response<bool>(true, "data save successfully. ");
@@ -298,14 +339,17 @@ namespace FeePay.Core.Application.Services.School
         #endregion
 
 
-        #region Fee Summary 
+        #region Fee Summary Report
         public async Task<Response<List<AllFeeSummaryViewModel>>> GetAllFeeSummaryAsync()
         {
             var schoolId = _appContextAccessor.ClaimSchoolUniqueId();
             var userId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
-            var classesWithFeesAmount = await _unitOfWork.StudentFee.GetClasses_FeesAsync(schoolId);
+            var currentSession = await _loginService.GetCurrentAcademicSession();
+            if (currentSession == null) return new Response<List<AllFeeSummaryViewModel>>("Select Academic Session.");
+            var classesWithFeesAmount = await _unitOfWork.StudentFee.GetClasses_FeesAsync(
+                dbId: schoolId, academicSessionId: currentSession.Id);
             if (classesWithFeesAmount == null) return new Response<List<AllFeeSummaryViewModel>>("No Data found.");
-            var classes = await _unitOfWork.ClassRepo.GetAllActiveAsync(schoolId);
+            var classes = await _unitOfWork.ClassRepo.GetAllAsync(dbId: schoolId, isActive: true);
             List<AllFeeSummaryViewModel> model = classes.Select(s =>
                 new AllFeeSummaryViewModel
                 {
@@ -322,17 +366,24 @@ namespace FeePay.Core.Application.Services.School
         {
             var schoolId = _appContextAccessor.ClaimSchoolUniqueId();
             var userId = Convert.ToInt32(_loginService.GetLogedInSchoolAdminId());
-            var classStudentsWithFeesAmount = await _unitOfWork.StudentFee.GetClassStudents_FeesAsync(schoolId, id);
+            var currentSession = await _loginService.GetCurrentAcademicSession();
+            if (currentSession == null) return new Response<List<ClassFeeSummaryViewModel>>("Select Academic Session.");
+
+            var classStudentsWithFeesAmount = await _unitOfWork.StudentFee.GetClassStudents_FeesAsync(
+                dbId: schoolId, academicSessionId: currentSession.Id, classId: id);
             if (classStudentsWithFeesAmount == null) return new Response<List<ClassFeeSummaryViewModel>>("No Data found.");
 
 
-            var studentsInClass = await _unitOfWork.StudentAdmision.SearchStudentAsync(dbId: schoolId, classId: id);
+            var studentsInClass = await _unitOfWork.StudentAdmision.SearchStudentAsync(
+                dbId: schoolId,
+                academicSessionId: currentSession.Id,
+                classId: id);
             List<ClassFeeSummaryViewModel> model = studentsInClass.Select(s =>
                 new ClassFeeSummaryViewModel
                 {
                     StudentId = s.Id,
                     StudentName = s.FirstName + " " + s.LastName,
-                    ClassSectionName = classStudentsWithFeesAmount.Where(w => w.StudentAdmissionId == s.Id).FirstOrDefault()?.Name,
+                    ClassSectionName = $"{s.StudentClass?.Name}({s.StudentSection?.Name})",
                     TotalFees = classStudentsWithFeesAmount.Where(w => w.StudentAdmissionId == s.Id).Sum(s => s.Amount),
                     TotalPaid = classStudentsWithFeesAmount.Where(w => w.StudentAdmissionId == s.Id && w.IsPaid == true).Sum(s => s.Amount),
                     TotalBalance = (classStudentsWithFeesAmount.Where(w => w.StudentAdmissionId == s.Id).Sum(s => s.Amount) -
@@ -342,10 +393,117 @@ namespace FeePay.Core.Application.Services.School
         }
         #endregion
 
-        #region Fee Collection
+
+        #region Fee Collection Report
+        public async Task<Response<FeesCollerctionReportViewModel>> GetFeeCollectionReport(FeeCollectionSearchModel searchModel = null)
+        {
+            if (searchModel == null) { searchModel = new FeeCollectionSearchModel() { FromDate = DateTime.Now, ToDate = DateTime.Now }; }
+            var schoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var _classes = await _unitOfWork.ClassRepo.GetAllAsync(dbId: schoolId, isActive: true);
+            var section = await _unitOfWork.SectionRepo.GetAllAsync(dbId: schoolId, isActive: true);
+            var currentSession = await _loginService.GetCurrentAcademicSession();
+            if (currentSession == null) return new Response<FeesCollerctionReportViewModel>("Select Academic Session.");
+            var studentFees = await _unitOfWork.StudentFee.GetAllAsync(
+                dbId: schoolId,
+                academicSessionId: currentSession.Id,
+                isPaid: true,
+                fromDate: searchModel.FromDate,
+                toDate: searchModel.ToDate);
+            if (studentFees == null) return new Response<FeesCollerctionReportViewModel>("NO Data Found.");
+
+            List<StudentFeesViewModel> studentfeemodal = _mapper.Map<List<StudentFeesViewModel>>(studentFees.ToList());
+
+            studentfeemodal.ForEach(f =>
+            {
+                if (f.StudentAdmission != null)
+                {
+                    f.StudentAdmission.StudentClass = _classes?.Where(w => w.Id == f.StudentAdmission.ClassId).SingleOrDefault();
+                    f.StudentAdmission.StudentSection = section?.Where(w => w.Id == f.StudentAdmission.SectionId).SingleOrDefault();
+                }
+            });
+            FeesCollerctionReportViewModel model = new FeesCollerctionReportViewModel()
+            {
+                StudentFees = studentfeemodal,
+                SearchModel = searchModel
+            };
+            return new Response<FeesCollerctionReportViewModel>(model);
+        }
         #endregion
 
+
         #region Fee Transaction Report
+        public async Task<Response<List<FeesTransactionReportViewModel>>> GetFeeTransactionReport()
+        {
+            var schoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var _classes = await _unitOfWork.ClassRepo.GetAllAsync(dbId: schoolId, isActive: true);
+            var section = await _unitOfWork.SectionRepo.GetAllAsync(dbId: schoolId, isActive: true);
+            var transcations = await _unitOfWork.FeesTranscation.GetAll_WithStudentAdmissionAsync(schoolId,
+                isComplated: true);
+            if (transcations == null) return new Response<List<FeesTransactionReportViewModel>>("NO Data Found.");
+            List<FeesTransactionReportViewModel> model = transcations.Select(s => new FeesTransactionReportViewModel
+            {
+                ClassName = _classes?.Where(w => w.Id == s.StudentAdmission?.ClassId).SingleOrDefault()?.Name,
+                SectionName = section?.Where(w => w.Id == s.StudentAdmission?.SectionId).SingleOrDefault()?.Name,
+                Deposit = s.Amount,
+                FeeTransactionId = s.TransactionId,
+                FatherName = s.StudentAdmission?.FatherName,
+                MobileNo = s.StudentAdmission?.MobileNo,
+                Sr_RegNo = s.StudentAdmission?.Sr_RegNo,
+                StudentName = $"{s.StudentAdmission?.FirstName} {s.StudentAdmission?.LastName}",
+                StudentAdmissionId = s.StudentAdmission?.Id ?? 0,
+
+            }).ToList();
+            return new Response<List<FeesTransactionReportViewModel>>(model);
+        }
+        #endregion
+
+
+        #region Pending Fess
+        public async Task<Response<FeePendingViewModel>> GetPendingFeesAsync(StudentSearchViewModel searchModel = null)
+        {
+            var schoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var _classes = await _unitOfWork.ClassRepo.GetAllAsync(dbId: schoolId, isActive: true);
+            var section = await _unitOfWork.SectionRepo.GetAllAsync(dbId: schoolId, isActive: true);
+            var currentSession = await _loginService.GetCurrentAcademicSession();
+            if (currentSession == null) return new Response<FeePendingViewModel>("Select Academic Session.");
+            FeePendingViewModel model = new FeePendingViewModel();
+            if (searchModel == null)
+            {
+                searchModel = new StudentSearchViewModel()
+                {
+                    Classes = _classes.Select(s => new DropDownItem { Text = s.Name, Value = s.Id.ToString() }).ToList(),
+                };
+            }
+            else
+            {
+                searchModel.Classes = _classes.Select(s => new DropDownItem { Text = s.Name, Value = s.Id.ToString() }).ToList();
+
+                var studentFees = await _unitOfWork.StudentFee.GetAllAsync(
+                    dbId: schoolId,
+                    academicSessionId: currentSession.Id,
+                    classId: searchModel.ClassId,
+                    sectionId: searchModel.SectionId,
+                    studentSearchString: searchModel.Search,
+                    isPaid: false);
+                if (studentFees == null) return new Response<FeePendingViewModel>(model);
+
+                var dueFees = studentFees.Where(w => w.DueDate < DateTime.Now).ToList();
+                dueFees.ForEach(f =>
+                {
+                    if (f.StudentAdmission != null)
+                    {
+                        f.StudentAdmission.StudentClass = _classes?.Where(w => w.Id == f.StudentAdmission.ClassId).SingleOrDefault();
+                        f.StudentAdmission.StudentSection = section?.Where(w => w.Id == f.StudentAdmission.SectionId).SingleOrDefault();
+                    }
+                });
+
+                List<StudentFeesViewModel> StudentFeeModel = _mapper.Map<List<StudentFeesViewModel>>(dueFees);
+                model.StudentFeesList = StudentFeeModel;
+                model.CbStudents = StudentFeeModel.Select(s => new CheckBoxItem { Id = s.StudentAdmissionId }).ToList();
+            }
+            model.SearchModel = searchModel;
+            return new Response<FeePendingViewModel>(model);
+        }
         #endregion
     }
 }

@@ -12,6 +12,7 @@ using FeePay.Core.Application.Interface.Service.SuperAdmin;
 using FeePay.Infrastructure.Identity.Service;
 using FeePay.Infrastructure.Identity.IdentityStore;
 using FeePay.Infrastructure.Identity.ClaimsPrincipalFactory;
+using FeePay.Infrastructure.Identity.TokenProvider;
 
 namespace FeePay.Infrastructure.Identity
 {
@@ -70,12 +71,22 @@ namespace FeePay.Infrastructure.Identity
             services.AddIdentity<SuperAdminUser, SuperAdminRole>()
                 .AddClaimsPrincipalFactory<SuperAdminClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
-            services.AddSecondIdentity<SchoolAdminUser, SchoolAdminRole>()
+            //.AddSuperAdminLoginTokenProvider();
+            services.AddSecondIdentity<SchoolAdminUser, SchoolAdminRole>(opt => {
+                //opt.Tokens.EmailConfirmationTokenProvider = "AddSchoolAdminLoginTokenProvider";
+                opt.Tokens.ProviderMap.Add("AddSchoolAdminLoginTokenProvider",
+                    new TokenProviderDescriptor(typeof(IUserTwoFactorTokenProvider<SchoolAdminUser>)));
+            })
                 .AddClaimsPrincipalFactory<SchoolAdminClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
+                //.AddTokenProvider<SchoolAdminTokenProvider<SchoolAdminUser>>("AddSchoolAdminLoginTokenProvider");
+
+
+
             services.AddThirdIdentity<StudentLogin>()
                 .AddClaimsPrincipalFactory<StudentClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
+                //.AddStudentLoginTokenProvider();
             // identity stores
             services.AddTransient<IUserStore<SuperAdminUser>, SuperAdminUserStore>();
             services.AddTransient<IRoleStore<SuperAdminRole>, SuperAdminRoleStore>();

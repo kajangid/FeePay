@@ -8,6 +8,7 @@ using FeePay.Core.Application.DTOs;
 using FeePay.Core.Application.Interface.Repository;
 using FeePay.Core.Application.Interface.Service;
 using FeePay.Core.Application.Interface.Service.School;
+using FeePay.Core.Application.IoC;
 using FeePay.Core.Application.Wrapper;
 using FeePay.Core.Domain.Entities.Common;
 using FeePay.Core.Domain.Entities.School;
@@ -39,7 +40,7 @@ namespace FeePay.Core.Application.Services.School
             if (model != null)
             {
                 var Sections = (await _unitOfWork.ClassSection.FindSectionsInClassByClassIdAsync(model.Id, SchoolId))?.Sections.ToList();
-                model.CBSections = (await _unitOfWork.SectionRepo.GetAllActiveAsync(SchoolId)).Select(s => new CheckBoxItem
+                model.CBSections = (await _unitOfWork.SectionRepo.GetAllAsync(dbId: SchoolId, isActive: true)).Select(s => new CheckBoxItem
                 {
                     Id = s.Id,
                     Name = s.NormalizedName,
@@ -50,7 +51,7 @@ namespace FeePay.Core.Application.Services.School
             {
                 model = new ClassViewModel()
                 {
-                    CBSections = (await _unitOfWork.SectionRepo.GetAllActiveAsync(SchoolId)).Select(s => new CheckBoxItem
+                    CBSections = (await _unitOfWork.SectionRepo.GetAllAsync(dbId: SchoolId, isActive: true)).Select(s => new CheckBoxItem
                     {
                         Id = s.Id,
                         Name = s.NormalizedName
@@ -150,7 +151,6 @@ namespace FeePay.Core.Application.Services.School
             if (result <= 0) return new Response<bool>();
             return new Response<bool>((result > 0));
         }
-
         #endregion
 
 
@@ -185,8 +185,31 @@ namespace FeePay.Core.Application.Services.School
                 session.ModifyBy = UserId;
                 result = await _unitOfWork.Session.UpdateAsync(session, SchoolId);
             }
-            if (result <= 0) return new Response<bool>();
-            return new Response<bool>((result > 0));
+            if (result > 0) return new Response<bool>((result > 0));
+            return new Response<bool>();
+        }
+        public async Task<Response<SessionViewModel>> GetActiveSessionAsync()
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var session = await _unitOfWork.Session.FetchActiveAcadmicSession(SchoolId);
+            SessionViewModel model = _mapper.Map<SessionViewModel>(session);
+            return new Response<SessionViewModel>(model);
+        }
+        public async Task<Response<bool>> ChangeSessionAsync(int id)
+        {
+            var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
+            var session = await _unitOfWork.Session.FindByIdAsync(id, SchoolId);
+            if (session != null)
+            {
+                _appContextAccessor.SiteSession_AcademicSession = new SessionViewModel()
+                {
+                    Id = session.Id,
+                    Year = session.Year,
+                    StartYear = session.StartYear,
+                    EndYear = session.EndYear
+                };
+            }
+            return new Response<bool>(session != null);
         }
 
         #endregion
@@ -194,7 +217,7 @@ namespace FeePay.Core.Application.Services.School
         public async Task<Response<List<DropDownItem>>> GetAllDropDownClassesAsync()
         {
             var SchoolId = _appContextAccessor.ClaimSchoolUniqueId();
-            var _classes = (await _unitOfWork.ClassRepo.GetAllActiveAsync(SchoolId))
+            var _classes = (await _unitOfWork.ClassRepo.GetAllAsync(dbId: SchoolId, isActive: true))
                 .Select(s => new DropDownItem { Value = s.Id.ToString(), Text = s.NormalizedName }).ToList();
             return new Response<List<DropDownItem>>(_classes ?? new List<DropDownItem>());
         }

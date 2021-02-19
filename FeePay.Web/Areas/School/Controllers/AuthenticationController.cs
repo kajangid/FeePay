@@ -1,7 +1,4 @@
-﻿using FeePay.Core.Application.DTOs;
-using FeePay.Core.Application.Interface.Service;
-using FeePay.Web.Areas.Common;
-using FeePay.Web.Extensions;
+﻿using FeePay.Web.Extensions;
 using FeePay.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static FeePay.Core.Application.Enums.Notification;
+using FeePay.Core.Application.DTOs;
+using FeePay.Core.Application.Interface.Service;
+using FeePay.Core.Application.Interface.Service.School;
+using FeePay.Web.Areas.Common;
 
 namespace FeePay.Web.Areas.School.Controllers
 {
@@ -21,13 +22,14 @@ namespace FeePay.Web.Areas.School.Controllers
     [Area("School")]
     public class AuthenticationController : AreaBaseController
     {
-        public AuthenticationController(ILogger<AuthenticationController> logger, ILoginService loginService)
+        private readonly ILogger<AuthenticationController> _logger;
+        private readonly ILoginService _loginService;
+        public AuthenticationController(ILogger<AuthenticationController> logger,
+            ILoginService loginService)
         {
             _logger = logger;
             _loginService = loginService;
         }
-        private readonly ILogger _logger;
-        private readonly ILoginService _loginService;
 
         [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

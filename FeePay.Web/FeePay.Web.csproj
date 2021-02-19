@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Serilog" Version="2.10.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />
@@ -32,13 +32,14 @@
     <Folder Include="Areas\SuperAdmin\Models\" />
     <Folder Include="Areas\SuperAdmin\Views\Authentication\" />
     <Folder Include="wwwroot\Schools\DemoSchool\" />
-    <Folder Include="wwwroot\SuperAdmin\" />
+    <Folder Include="wwwroot\SuperAdmin\PaymentGatewayDoc\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FeePay.Core.Application\FeePay.Core.Application.csproj" />
     <ProjectReference Include="..\FeePay.Core.Domain\FeePay.Core.Domain.csproj" />
-    <ProjectReference Include="..\FeePay.Infrastructure.Identity\FeePay.Infrastructure.Identity.csproj" />
+    <!--<ProjectReference Include="..\FeePay.Infrastructure.Identity\FeePay.Infrastructure.Identity.csproj" />-->
+    <ProjectReference Include="..\FeePay.Infrastructure.Persistence\FeePay.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\FeePay.Infrastructure.Shared\FeePay.Infrastructure.Shared.csproj" />
   </ItemGroup>
 

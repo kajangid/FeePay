@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[StudentFees]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(100, 1),
+	[AcademicSessionId] INT NOT NULL,
 	[StudentAdmissionId] INT NOT NULL, 
 	[FeeMasterId] INT NOT NULL, 
 	[FeeGroupId] INT NULL, 
@@ -9,6 +10,7 @@
 	[Mode] NVARCHAR(50) NULL,
 	[PaymentDate] DATETIME NULL,
 	[IsPaid] BIT NULL DEFAULT 0,
+	[Receipt] NVARCHAR(50) NULL, 
 	[IsActive] BIT NULL DEFAULT 0, 
 	[IsDelete] BIT NULL DEFAULT 0, 
 	[ModifyDate] DATETIME NULL DEFAULT GetDate(), 

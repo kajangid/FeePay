@@ -37,7 +37,6 @@ namespace FeePay.Web.Areas.School.Controllers
 
 
         #region Staff Section
-
         [MvcDiscovery]
         [HttpGet("User/List")]
         [DisplayName("User List")]
@@ -98,11 +97,10 @@ namespace FeePay.Web.Areas.School.Controllers
             var res = await _administrationService.DeleteStaffMemberAsync(id);
             return Json(new { success = res.Succeeded, message = res.Message });
         }
-
         #endregion
 
-        #region Role Section
 
+        #region Role Section
         [MvcDiscovery]
         [HttpGet("Role/List")]
         [DisplayName("Roles")]
@@ -162,12 +160,12 @@ namespace FeePay.Web.Areas.School.Controllers
             var res = await _administrationService.DeleteStaffRoleAsync(id);
             return Json(new { success = res.Succeeded, message = res.Message });
         }
-
         #endregion
 
+
         [MvcDiscovery]
-        [HttpGet("User/Password/{id:int}")]
-        [DisplayName("Show Staff Password")]
+        [HttpGet("User/ShowPassword/{id:int}")]
+        [DisplayName("Show User Password")]
         public async Task<JsonResult> StaffPassword(int id)
         {
             var userId = _loginService.GetLogedInSchoolAdminId();

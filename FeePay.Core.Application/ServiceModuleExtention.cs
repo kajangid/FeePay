@@ -29,9 +29,8 @@ namespace FeePay.Core.Application
             services.AddSingleton<IPasswordGenerator, PasswordGenerator>();
             services.AddSingleton<ICultureFormatProvider, CultureFormatProvider>();
 
-            services.AddTransient<IAppContextAccessor, AppContextAccessor>();
-
             //School 
+            services.AddScoped<ISchoolCommonServices, SchoolCommonServices>();
             services.AddScoped<IAdministrationService, AdministrationService>();
             services.AddScoped<IFeeManagementService, FeeManagementService>();
             services.AddScoped<IAcademicServices, AcademicServices>();

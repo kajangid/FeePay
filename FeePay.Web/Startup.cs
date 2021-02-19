@@ -2,13 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FeePay.Core.Application;
-using FeePay.Infrastructure.Identity;
-using FeePay.Infrastructure.Persistence;
-using FeePay.Web.Extensions;
-using FeePay.Web.Filters;
-using FeePay.Web.Services;
-using FeePay.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
@@ -16,6 +9,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using FeePay.Core.Application;
+using FeePay.Core.Application.Interface;
+using FeePay.Core.Application.Interface.Service;
+using FeePay.Infrastructure.Persistence;
+using FeePay.Web.Extensions;
+using FeePay.Web.IoC;
+using FeePay.Web.Services;
+using FeePay.Web.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace FeePay.Web
 {
@@ -34,10 +36,25 @@ namespace FeePay.Web
             services.AddLogging();
             services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidatiomAttributeAdapterProvider>();
             services.AddSingleton<IMvcControllerDiscovery, MvcControllerDiscovery>();
+            services.AddSingleton<IUtilityService, UtilityService>();
+            services.AddSingleton<ISiteSettings>(Configuration.GetSection("SiteSettings").Get<SiteSettings>());
+            //services.Configure<SiteSettings>(Configuration.GetSection("SiteSettings"));
+
+            services.AddTransient<IAppContextAccessor, AppContextAccessor>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
+
             services.AddHttpContextAccessor();
             services.AddInfrastructurePersistenceServices();
             services.AddApplicationServices(Configuration);
-            services.AddInfrastructureIdentityService(Configuration);
+            services.AddIdentityServices(Configuration);
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             services.AddControllersWithViews();
         }
 
@@ -60,6 +77,8 @@ namespace FeePay.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

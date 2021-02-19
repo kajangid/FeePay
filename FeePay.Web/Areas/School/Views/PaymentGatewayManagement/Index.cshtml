@@ -1,0 +1,304 @@
+﻿@using FeePay.Core.Application.Interface.Service.School;
+@using FeePay.Web.Services.Interfaces;
+@model PaymentGatewayDocumentViewModel
+@inject ISchoolCommonServices _schoolCommonServices
+@inject ISiteSettings siteSeting
+@{
+    var states = new SelectList((await _schoolCommonServices.DDL_StatesAsync())?.Data?.ToList(), "Value", "Text");
+}
+@functions{
+    private string GetFilePathFromUrl(string url)
+    {
+        if (string.IsNullOrEmpty(url)) return "";
+        var splitParts = url.Split('/');
+        return splitParts[splitParts.Length - 1];
+    }
+}
+
+@section Style{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/date-picker.css")">
+}
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="@Url.Content("~/Cuba/js/datepicker/date-picker/datepicker.js")"></script>
+    <script src="@Url.Content("~/Cuba/js/datepicker/date-picker/datepicker.en.js")"></script>
+    <script src="@Url.Content("~/Page_js/school/index_up-pg.js")"></script>
+}
+
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Payment Gateway</li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-wizard form theme-form needs-validation" id="regForm" action="" method="POST" novalidate enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+                        @if (Model != null && Model.Id != 0)
+                        {
+                            <input type="hidden" asp-for="Id" />
+                        }
+                        <div class="tab">
+                            <div>
+                                <h6>Business Identity</h6>
+                                <p>for school business</p>
+                                <hr />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="BusinessDisplayName"> Display Name * </label>
+                                <input asp-for="BusinessDisplayName" class="form-control" type="text" placeholder="Business Display Name">
+                                <div class="invalid-feedback text-danger"><span asp-validation-for="BusinessDisplayName"></span></div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="BusinessPANCardNumber"> PAN Card Number * </label>
+                                <input asp-for="BusinessPANCardNumber" class="form-control" type="text" placeholder="Business PAN Card Number">
+                                <div class="invalid-feedback text-danger"><span asp-validation-for="BusinessPANCardNumber"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group mb-3">
+                                        <div class="docs-preview-placeholder" data-original-doc="@Model?.BusinessPANCard"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="form-group mb-3">
+                                        <label asp-for="BusinessPANCard_File"> PAN Card *</label>
+                                        <input asp-for="BusinessPANCard_File"
+                                               class="form-control"
+                                               type="file"
+                                               value="@GetFilePathFromUrl(Model?.BusinessPANCard)"
+                                               placeholder="Business PAN Card">
+                                        <div class="invalid-feedback text-danger"><span asp-validation-for="BusinessPANCard_File"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-3 mt-2">
+                                        <label class="d-block">&nbsp;</label>
+                                        <label asp-for="BusinessPANCardSaveAsDocument">
+                                            <input class="checkbox_animated" asp-for="BusinessPANCardSaveAsDocument" type="checkbox"> Save In Documents
+                                        </label><label class="badge badge-info mx-2 px-1"> soon </label>
+                                        <div class="invalid-feedback text-danger"><span asp-validation-for="BusinessPANCardSaveAsDocument"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="RegisteredAddress"> Address * </label>
+                                <textarea asp-for="RegisteredAddress" class="form-control" rows="3" placeholder="Registered Address"></textarea>
+                                <div class="invalid-feedback text-danger"><span asp-validation-for="RegisteredAddress"></span></div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-4">
+                                    <div class="form-group mb-3">
+                                        <label asp-for="AddressPinCode"> Pin Code * </label>
+                                        <input asp-for="AddressPinCode" class="form-control" type="text" placeholder="Pin Code">
+                                        <div class="invalid-feedback text-danger"><span asp-validation-for="AddressPinCode"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-3">
+                                        <label asp-for="AddressStateId"> State * </label>
+                                        <select asp-for="AddressStateId"
+                                                asp-items="@states"
+                                                class="form-control">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <div class="invalid-feedback text-danger"><span asp-validation-for="AddressStateId"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-3">
+                                        <label asp-for="AddressCityId"> City * </label>
+                                        <select asp-for="AddressCityId"
+                                                data-ajaxurl="@Url.Action("GetStateCities","Uitility")"
+                                                data-ajaxkey="@Model?.AddressCityId"
+                                                class="form-control">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <div class="invalid-feedback text-danger"><span asp-validation-for="AddressCityId"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab">
+                            <div>
+                                <h6>Bank Account Details</h6>
+                                <p>for school business</p>
+                                <hr />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="AccountNumber"> Account Number * </label>
+                                <input asp-for="AccountNumber" class="form-control" type="text" placeholder="AccountNumber">
+                                <div class="invalid-feedback text-danger"><span asp-validation-for="AccountNumber"></span></div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="ConfirmAccountNumber"> Confirm Account Number * </label>
+                                <input asp-for="ConfirmAccountNumber" class="form-control" type="text" placeholder="Confirm Account Number">
+                                <div class="invalid-feedback text-danger"><span asp-validation-for="ConfirmAccountNumber"></span></div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="IFSC"> Bank IFSC Code * </label>
+                                <input asp-for="IFSC" class="form-control" type="text" placeholder="Bank IFSC Code">
+                                <div class="invalid-feedback text-danger"><span asp-validation-for="IFSC"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group mb-3">
+                                        <div class="docs-preview-placeholder" data-original-doc="@Model?.XeroxCopyOfBankPassbook"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group mb-3">
+                                        <label asp-for="XeroxCopyOfBankPassbook_File"> Xerox Copy Of Bank Passbook *</label>
+                                        <input asp-for="XeroxCopyOfBankPassbook_File"
+                                               class="form-control"
+                                               type="file"
+                                               value="@GetFilePathFromUrl(Model?.XeroxCopyOfBankPassbook)"
+                                               placeholder="Xerox Copy Of Bank Passbook">
+                                        <div class="invalid-feedback text-danger"><span asp-validation-for="XeroxCopyOfBankPassbook_File"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-3 mt-2">
+                                        <label class="d-block">&nbsp;</label>
+                                        <label asp-for="XeroxCopyOfBankPassbookSaveAsDocument">
+                                            <input class="checkbox_animated" asp-for="XeroxCopyOfBankPassbookSaveAsDocument" type="checkbox"> Save In Documents
+                                        </label><label class="badge badge-info mx-2 px-1"> soon </label>
+                                        <div class="invalid-feedback text-danger"><span asp-validation-for="XeroxCopyOfBankPassbookSaveAsDocument"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab">
+                            <div>
+                                <h6>Primary Contact Details</h6>
+                                <p>for school business</p>
+                                <hr />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="ContactName">
+                                    Contact Name *
+                                    <br />
+                                    <small>(Student will see this name while paying for you.)</small>
+                                </label>
+                                <input asp-for="ContactName" class="form-control" type="text" placeholder="Contact Name">
+                                <div class="invalid-feedback text-danger"><span asp-validation-for="ContactName"></span></div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="ContactEmail"> Contact Email *</label>
+                                <input asp-for="ContactEmail" class="form-control" type="text" placeholder="Contact Email">
+                                <div class="invalid-feedback text-danger"><span asp-validation-for="ContactEmail"></span></div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="ContactPhoneNumber"> Contact Phone Number * </label>
+                                <input asp-for="ContactPhoneNumber" class="form-control" type="text" placeholder="Contact Phone Number">
+                                <div class="invalid-feedback text-danger"><span asp-validation-for="ContactPhoneNumber"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group mb-3">
+                                        <div class="docs-preview-placeholder" data-original-doc="@Model?.IdentityProof"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="form-group mb-3">
+                                        <label asp-for="IdentityProof_File">
+                                            Identity Proof *
+                                            <a href="javascript:void(0)"
+                                               data-toggle="m-tooltip"
+                                               data-placement="top"
+                                               data-original-title="Adhar Card, Voter Id Card, Driving Licence Xerox copy as identity proof."
+                                               title="Adhar Card, Voter Id Card, Driving License Xerox copy as identity proof.">
+                                                <i class="fa fa-info-circle"></i>
+                                            </a>
+                                        </label>
+                                        <input asp-for="IdentityProof_File"
+                                               class="form-control"
+                                               type="file"
+                                               value="@GetFilePathFromUrl(Model?.IdentityProof)"
+                                               placeholder="Identity Proof">
+                                        <div class="invalid-feedback text-danger"><span asp-validation-for="IdentityProof_File"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group mb-3 mt-2">
+                                        <label class="d-block">&nbsp;</label>
+                                        <label asp-for="IdentityProofSaveAsDocument">
+                                            <input class="checkbox_animated" asp-for="IdentityProofSaveAsDocument" type="checkbox"> Save In Documents
+                                        </label><label class="badge badge-info mx-2 px-1"> soon </label>
+                                        <div class="invalid-feedback text-danger"><span asp-validation-for="IdentityProofSaveAsDocument"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-right btn-mb">
+                                <button class="btn btn-secondary" id="prevBtn" type="button" data-onclick="nextPrev" data-step="-1">Previous</button>
+                                <button class="btn btn-primary" id="nextBtn" type="button" data-onclick="nextPrev" data-step="1">Next</button>
+                            </div>
+                        </div>
+                        <!-- Circles which indicates the steps of the form:-->
+                        <div class="text-center">
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                        </div>
+                        <!-- Circles which indicates the steps of the form:-->
+                        <div class="d-block"><div id="form-validation-summary" class="my-2 txt-danger" style="font-size: 12px;line-height: 1;letter-spacing: 0.9px;" asp-validation-summary="All"></div></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Standard guidelines to be followed for every document: </h6>
+                    <ul>
+                        <li>
+                            <i class="fa fa-angle-double-right txt-primary m-r-10"></i>
+                            Documents uploaded should be clear and valid
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right txt-primary m-r-10"></i>
+                            Documents should be less than 1 MB in size
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right txt-primary m-r-10"></i>
+                            Supported format of documents are jpg, png, <del>PDF</del>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right txt-primary m-r-10"></i>
+                            Photo should be taken from front and information should be clearly visible
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right txt-primary m-r-10"></i>
+                            Documents should not be handwritten
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

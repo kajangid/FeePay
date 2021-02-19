@@ -4,14 +4,25 @@
     var ColorList = new List<string> { "primary", "secondary", "success", "info", "dark", "light", "danger", "warning" };
 }
 @section Style{
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
 }
 @section Scripts{
-    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
     <script>
         (function () {
             "use strict";
-            $('#classListTable').DataTable({ "order": [[5, 'desc']] });
+            $('#classListTable').DataTable({
+                "order": [[5, 'desc']],
+                columnDefs: [
+                    { targets: 0, visible: true, searchable: false, orderable: false },
+                    { targets: 1, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 2, visible: true, searchable: true, orderable: false },
+                    { targets: 3, visible: true, searchable: false, orderable: false },
+                    { targets: 4, visible: true, searchable: false, orderable: false },
+                    { targets: 5, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 6, visible: true, searchable: false, orderable: false },
+                    { targets: 7, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 7, visible: true, searchable: false, orderable: false },
+                ]
+            });
             $('#classListTable').reArrangeDatatableSerialNumber();
         })(jQuery);
     </script>
@@ -73,7 +84,7 @@
                                         foreach (var item in Model)
                                         {
                                             var color = ColorList.OrderBy(s => random.NextDouble()).First();
-                                            var color1 = ColorList.OrderBy(s => random.NextDouble()).First();                                            
+                                            var color1 = ColorList.OrderBy(s => random.NextDouble()).First();
                                             <tr data-key="@item.Id">
                                                 <td></td>
                                                 <td>@item.Name</td>
@@ -88,17 +99,36 @@
                                                     }
                                                 </td>
                                                 <td>
-                                                    <input asp-for="@item.IsActive" type="checkbox">
+                                                    <input asp-for="@item.IsActive"
+                                                           type="checkbox"
+                                                           data-action="isactiverow"
+                                                           data-ajaxurl="@Url.Action("ClassActive","Academic",new { id = item.Id })">
                                                 </td>
                                                 <td><a href="@Url.Action("StaffManage","Account",new { id = item.ModifyById })" class="btn btn-@(color) btn-xs">@item.ModifyBy</a></td>
-                                                <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
+                                                <td data-order="@item.ModifyDate?.ToString("MMddyyyyHHmmss")">@item.ModifyDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)</td>
                                                 <td><a href="@Url.Action("StaffManage","Account",new { id = item.AddedById })" class="btn btn-@(color1) btn-xs">@item.AddedBy</a></td>
-                                                <td>@item.AddedDate?.ToString("dd/MM/yyyy")</td>
+                                                <td data-order="@item.AddedDate?.ToString("MMddyyyyHHmmss")">@item.AddedDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)</td>
                                                 <td>
-                                                    <a asp-action="ClassEdit" asp-controller="Academic" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Class" class="d-inline-block mr-1">
+                                                    <a asp-action="ClassEdit"
+                                                       asp-controller="Academic"
+                                                       asp-route-id="@item.Id"
+                                                       data-container="body"
+                                                       data-toggle="popover"
+                                                       data-placement="top"
+                                                       title="Edit Class"
+                                                       class="d-inline-block mr-1">
                                                         <i data-feather="edit-3"></i>
                                                     </a>
-                                                    <a data-action="deleterow" data-actionmag="Class" asp-action="ClassDelete" asp-controller="Academic" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Class" class="d-inline-block">
+                                                    <a data-action="deleterow"
+                                                       data-actionmag="Class"
+                                                       asp-action="ClassDelete"
+                                                       asp-controller="Academic"
+                                                       asp-route-id="@item.Id"
+                                                       data-container="body"
+                                                       data-toggle="popover"
+                                                       data-placement="top"
+                                                       title="Delete Class"
+                                                       class="d-inline-block">
                                                         <i data-feather="trash-2"></i>
                                                     </a>
                                                 </td>

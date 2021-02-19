@@ -4,15 +4,26 @@
     var ColorList = new List<string> { "primary", "secondary", "success", "info", "dark", "light", "danger", "warning" };
 }
 @section Style{
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
 }
 
 @section Scripts{
-    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
     <script>
         (function () {
             "use strict";
-            $('#staffListTable').dataTable({ "order": [[7, 'desc']] });
+            $('#staffListTable').dataTable({
+                "order": [[7, 'desc']],
+                columnDefs: [
+                    { targets: 0, visible: true, searchable: false, orderable: false },
+                    { targets: 1, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 2, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 3, visible: true, searchable: false, orderable: true },
+                    { targets: 4, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 5, visible: true, searchable: false, orderable: false },
+                    { targets: 6, visible: true, searchable: false, orderable: false },
+                    { targets: 7, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 8, visible: true, searchable: false, orderable: false },
+                ]
+            });
             $('#staffListTable').reArrangeDatatableSerialNumber();
         })(jQuery);
     </script>
@@ -82,24 +93,52 @@
                                                 <td></td>
                                                 <td>@item.FirstName @item.LastName</td>
                                                 <td>@item.Email</td>
-                                                <td>@item.LastLoginDate?.ToString("dd/MM/yyyy::hh:mm")</td>
+                                                <td data-order="@item.LastLoginDate?.ToString("MMddyyyyHHmmss")">@item.LastLoginDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)</td>
                                                 <td>
                                                     <p title="@item.RoleListString">
                                                         @(item.RoleListString.Length > 15 ? item.RoleListString.Substring(0, 15) + "....": item.RoleListString)
                                                     </p>
                                                 </td>
-                                                <td><input asp-for="@item.IsActive" type="checkbox"></td>
+                                                <td>
+                                                    <input asp-for="@item.IsActive"
+                                                           type="checkbox"
+                                                           data-action="isactiverow"
+                                                           data-ajaxurl="@Url.Action("StaffActive","Account",new { id = item.Id })">
+                                                </td>
                                                 <td><a href="@Url.Action("StaffManage","Account",new { id = item.ModifyById })" class="btn btn-@(color) btn-xs">@item.ModifyBy</a></td>
-                                                <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
+                                                <td data-order="@item.ModifyDate?.ToString("MMddyyyyHHmmss")">@item.ModifyDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)</td>
                                                 <td>
                                                     <div style="width:100px">
-                                                        <a asp-action="StaffManage" asp-controller="Account" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Staff" class="d-inline-block mr-2">
+                                                        <a asp-action="StaffManage"
+                                                           asp-controller="Account"
+                                                           asp-route-id="@item.Id"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="Edit Staff"
+                                                           class="d-inline-block mr-2">
                                                             <i data-feather="edit-3"></i>
                                                         </a>
-                                                        <a href="javascript:void(0)" data-ajaxurl="@Url.Action("StaffPassword","Account",new { id = item.Id })" data-onclilck="showPassword" data-container="body" data-toggle="popover" data-placement="top" title="See Password" class="d-inline-block mr-2">
+                                                        <a href="javascript:void(0)"
+                                                           data-ajaxurl="@Url.Action("StaffPassword","Account",new { id = item.Id })"
+                                                           data-onclilck="showPassword"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="See Password"
+                                                           class="d-inline-block mr-2">
                                                             <i data-feather="unlock"></i>
                                                         </a>
-                                                        <a data-action="deleterow" data-actionmag="Staff" asp-action="StaffDelete" asp-controller="Account" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Staff" class="d-inline-block">
+                                                        <a data-action="deleterow"
+                                                           data-actionmag="Staff"
+                                                           asp-action="StaffDelete"
+                                                           asp-controller="Account"
+                                                           asp-route-id="@item.Id"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="Delete Staff"
+                                                           class="d-inline-block">
                                                             <i data-feather="trash-2"></i>
                                                         </a>
                                                     </div>
@@ -118,6 +157,6 @@
 </div>
 
 @section Models{
-    @{ await Html.RenderPartialAsync("_Partial_ShowUserNamePassword"); }
+    @{ await Html.RenderPartialAsync("_Area_Partial_ShowUserNamePassword"); }
 }
 

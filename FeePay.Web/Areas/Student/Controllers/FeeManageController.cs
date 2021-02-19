@@ -12,6 +12,7 @@ using FeePay.Core.Application.Interface.Service;
 using FeePay.Core.Application.Interface.Service.Student;
 using static FeePay.Core.Application.Enums.Notification;
 using FeePay.Core.Application.DTOs;
+using FeePay.Core.Application.Enums;
 
 namespace FeePay.Web.Areas.Student.Controllers
 {
@@ -81,7 +82,7 @@ namespace FeePay.Web.Areas.Student.Controllers
                 AlertMessage(NotificationType.error, "Error", $"Error when processing your request, Please try in some time.");
                 _logger.LogError("Error Fee Deposit Error:{0}", string.Join(",", GetErrorListFromModelState(ModelState).ToArray()));
             }
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -96,8 +97,59 @@ namespace FeePay.Web.Areas.Student.Controllers
             // notify user 
             // send mail and sms to user  on succes
             var res = await _studentFeeDepositManagerService.GenerateFeeDeposit(model);
+            if (!res.Succeeded) return View(nameof(Index)); // send error message 
 
-            return View();
+            decimal totalAmount = res.Data.Fees.Sum(s => s.FeeAmount);
+            string transactionId = Guid.NewGuid().ToString("N");
+            DateTime transactionDate = DateTime.Now;
+
+
+            // Create A Payment And Save TransactionId to Database
+            var res1 = await _studentFeeDepositManagerService.GenerateFeesTransaction(
+                transactionId: transactionId,
+                status: nameof(TransactionStatus.CREATED),
+                mode: nameof(TransactionMode.DEBIT_CARD), // GateWayName
+                amountPay: totalAmount,
+                feesModel: res.Data.Fees);
+            if (!res1.Succeeded)
+            {
+                AlertMessage(NotificationType.error, "Error", "res1:: " + res1.Message);
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Capture the payment
+
+
+            // If Complete save as complete
+            var res2 = await _studentFeeDepositManagerService.ComplateFeesTransaction(transactionId: transactionId,
+                status: nameof(TransactionStatus.CAPTURED),
+                complateDate: transactionDate);
+            if (!res2.Succeeded)
+            {
+                AlertMessage(NotificationType.error, "Error", "res2:: " + res2.Message);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                AlertMessage(NotificationType.success, "Thank You!", "Payment complete successfully.");
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            // If fail save as canceled 
+            //var res3 = await _studentFeeDepositManagerService.FailFeesTransaction(transactionId: transactionId,
+            //    status: nameof(TransactionStatus.CANCELED));
+            //if (!res3.Succeeded)
+            //{
+            //    AlertMessage(NotificationType.error, "Error", "res3:: " + res3.Message);
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //else
+            //{
+            //    AlertMessage(NotificationType.error, "Payment Failed!!", "Payment cancel, please try again.");
+            //    return RedirectToAction(nameof(Index));
+            //}
+
         }
     }
 }

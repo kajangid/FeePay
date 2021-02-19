@@ -7,6 +7,5 @@
 	[Amount] NUMERIC(10,2) NOT NULL, 
 	[IsComplete] BIT NOT NULL,
 	[State] NVARCHAR(50) NOT NULL,
-	[Date] DATETIME NULL, 
-	[Receipt] NVARCHAR(50) NULL, 
+	[Date] DATETIME NULL
 )

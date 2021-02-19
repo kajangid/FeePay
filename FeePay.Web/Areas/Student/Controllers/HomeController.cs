@@ -51,7 +51,7 @@ namespace FeePay.Web.Areas.Student.Controllers
         {
             try
             {
-                var res = await _studentManagementService.GetStudentPassword(0);
+                var res = await _studentManagementService.GetStudentPasswordAsync(0);
                 if (res.Succeeded)
                 {
                     return Json(new { success = true, data = res.Data });

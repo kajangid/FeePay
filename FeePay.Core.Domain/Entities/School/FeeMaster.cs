@@ -15,6 +15,7 @@ namespace FeePay.Core.Domain.Entities.School
         public DateTime? DueDate { get; set; }
         public decimal Amount { get; set; }
         public string Description { get; set; }
+        public int AcademicSessionId { get; set; }
 
 
         public FeeType FeeType { get; set; }

@@ -1,0 +1,221 @@
+﻿@using FeePay.Core.Application.Interface.Service.School;
+@using FeePay.Web.Services.Interfaces;
+@model PaymentGatewayDocumentViewModel
+@inject ISchoolCommonServices _schoolCommonServices
+@inject ISiteSettings siteSeting
+@{
+    var stateName = "-";// (await _schoolCommonServices.DDL_StateByIdAsync(Model?.AddressStateId ?? 0))?.Data?.Text;
+    var cityName = "-";// (await _schoolCommonServices.DDL_CityByIdAsync(Model?.AddressCityId ?? 0))?.Data?.Text;
+}
+@section Models{
+}
+@section Styles{
+}
+@section PluginScripts{
+}
+@section Scripts{
+    <script>
+        (function () {
+            "use strict";
+            $('form[id="approvePaymentGatewayForm"]').on('submit', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var isApproved = $('input[name="IsApproved"]').prop('checked');
+                try {
+                    swalWithBootstrapButtons.fire({
+                        title: 'Are you sure?',
+                        text: `Do you want to ${isApproved ? 'accept' : 'deny'} this school for using payment gateway`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: `Yes, ${isApproved ? 'Accept' : 'Deny'}!`,
+                        cancelButtonText: 'No, Cancel!',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.value) {
+                            $.ajax({
+                                url: $this.attr('action'),
+                                method: $this.attr('method'),
+                                data: $this.serialize(),
+                                dataType: 'json'
+                            }).done(function (res) {
+                                if (res.success) {
+                                    if (res.data != null && res.data == true) {
+                                        swalWithBootstrapButtons.fire(`${isApproved ? 'Accepted' : 'Denied'}`, `School is ${isApproved ? 'accepted' : 'denied'} for using payment gateway.`, 'success');
+                                    }
+                                } else { swalWithBootstrapButtons.fire('Fail!', `There is an error ${isApproved ? 'accepteing' : 'denying'} this school for using payment gateway...`, 'error'); }
+                            }).fail(function (jqXHR, textStatus) {
+                                console.log("Request failed: " + textStatus);
+                            }).always(function () { });
+                        } else if (result.dismiss === Swal.DismissReason.cancel) { }
+                    }).catch(swal.noop);
+                } catch (ex) {
+                    console.log("Ah, Snap!. Catch an error..", ex);
+                }
+            });
+        })(jQuery);
+    </script>
+}
+
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("ListDocument","PaymentGatewayManager")"> List Documents </a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="my-4">@Model?.RegisterSchool?.Name</h4>
+                    <h5 class="mb-1">@Model?.RegisterSchool?.PrincipalName</h5>
+                    <p>@Model?.RegisterSchool?.Address</p>
+                    <hr class="hr">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="40%" class="border-0"></th>
+                                <th class="border-0"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border-0">School Name</td>
+                                <td class="border-0">@Model?.RegisterSchool?.Name</td>
+                            </tr>
+                            <tr>
+                                <td>Principal Name</td>
+                                <td>@Model?.RegisterSchool?.PrincipalName</td>
+                            </tr>
+                            <tr>
+                                <td>PAN Card Number</td>
+                                <td>@Model?.BusinessPANCardNumber</td>
+                            </tr>
+                            <tr>
+                                <td>Business Display Name</td>
+                                <td>
+                                    @Model?.BusinessDisplayName
+                                    <br /> (<small>Student will see this name while paying for this school.</small>)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PAN Card</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-8 col-sm-12">
+                                            <a href="javascript:void(0)"
+                                               class="d-inline-block mb-1 mr-1"
+                                               onclick="openImageModalBox('@Model?.BusinessPANCard')">
+                                                <img src="@Model?.BusinessPANCard" class="img-thumbnail rounded" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Address</td>
+                                <td>@Model?.RegisteredAddress</td>
+                            </tr>
+                            <tr>
+                                <td>Pin Code</td>
+                                <td>@Model?.AddressPinCode</td>
+                            </tr>
+                            <tr>
+                                <td>State</td>
+                                <td>@stateName</td>
+                            </tr>
+                            <tr>
+                                <td>City</td>
+                                <td>@cityName</td>
+                            </tr>
+                            <tr>
+                                <td>Account Number</td>
+                                <td>@Model?.AccountNumber</td>
+                            </tr>
+                            <tr>
+                                <td>Bank IFSC Code</td>
+                                <td>@Model?.IFSC</td>
+                            </tr>
+                            <tr>
+                                <td>Copy Of Bank Passbook</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-8 col-sm-12">
+                                            <a href="javascript:void(0)"
+                                               class="d-inline-block mb-1 mr-1"
+                                               onclick="openImageModalBox('@Model?.XeroxCopyOfBankPassbook')">
+                                                <img src="@Model?.XeroxCopyOfBankPassbook" class="img-thumbnail rounded" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Contact Name</td>
+                                <td>@Model?.ContactName</td>
+                            </tr>
+                            <tr>
+                                <td>Contact Email</td>
+                                <td>@Model?.ContactEmail</td>
+                            </tr>
+                            <tr>
+                                <td>Contact Phone Number</td>
+                                <td>@Model?.ContactPhoneNumber</td>
+                            </tr>
+                            <tr>
+                                <td>Identity Proof</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-8 col-sm-12">
+                                            <a href="javascript:void(0)"
+                                               class="d-inline-block mb-1 mr-1"
+                                               onclick="openImageModalBox('@Model?.IdentityProof')">
+                                                <img src="@Model?.IdentityProof" class="img-thumbnail rounded" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <form id="approvePaymentGatewayForm" asp-action="ApprovePaymentGateway" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="row">
+                            <input type="hidden" asp-for="Id" />
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label asp-for="IsApproved">
+                                        <input class="checkbox_animated" asp-for="IsApproved" type="checkbox">
+                                        Approve for Payment Gateway <br /> <small class="ml-5"> Allowing For Taking Payments  </small>
+                                    </label>
+                                    <div class="invalid-feedback text-danger"><span asp-validation-for="IsApproved"></span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group mb-3 text-right btn-mb">
+                                    <input class="btn btn-primary" type="submit" value="Save" />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div id="form-validation-summary" class="my-2 txt-danger" style="font-size: 12px;line-height: 1;letter-spacing: 0.9px;" asp-validation-summary="All"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

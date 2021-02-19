@@ -9,26 +9,21 @@ namespace FeePay.Core.Application.Interface.Repository.School
 {
     public interface IFeeTypeRepository
     {
-        Task<int> AddAsync(FeeType feeType, string dbId = null);
-        Task<int> UpdateAsync(FeeType feeType, string dbId = null);
-        Task<int> DeleteAsync(int Id, string dbId = null);
-        Task<IEnumerable<FeeType>> GetAllActiveAsync(string dbId = null);
-        Task<FeeType> FindActiveByIdAsync(int Id, string dbId = null);
-        Task<FeeType> FindActiveByNameAsync(string Name, string dbId = null);
-        Task<FeeType> FindActiveByCodeAsync(string Code, string dbId = null);
-        Task<IEnumerable<FeeType>> GetAllAsync(string dbId = null);
-        Task<FeeType> FindByIdAsync(int Id, string dbId = null);
-        Task<FeeType> FindByNameAsync(string Name, string dbId = null);
-        Task<FeeType> FindByCodeAsync(string Code, string dbId = null);
+        #region Execute
+        Task<int> AddAsync(FeeType feeType, string dbId);
+        Task<int> UpdateAsync(FeeType feeType, string dbId);
+        Task<int> DeleteAsync(int id, string dbId);
+        #endregion
 
+        #region Find
+        Task<FeeType> FindByIdAsync(int id, string dbId, bool? isActive = null);
+        Task<FeeType> FindByNameAsync(string name, string dbId, bool? isActive = null);
+        Task<FeeType> FindByCodeAsync(string code, string dbId, bool? isActive = null);
+        #endregion
 
-        Task<IEnumerable<FeeType>> GetAllActive_WithAddEditUserAsync(string dbId = null);
-        Task<FeeType> FindActiveById_WithAddEditUserAsync(int Id, string dbId = null);
-        Task<FeeType> FindActiveByName_WithAddEditUserAsync(string Name, string dbId = null);
-        Task<FeeType> FindActiveByCode_WithAddEditUserAsync(string Code, string dbId = null);
-        Task<IEnumerable<FeeType>> GetAll_WithAddEditUserAsync(string dbId = null);
-        Task<FeeType> FindById_WithAddEditUserAsync(int Id, string dbId = null);
-        Task<FeeType> FindByName_WithAddEditUserAsync(string Name, string dbId = null);
-        Task<FeeType> FindByCode_WithAddEditUserAsync(string Code, string dbId = null);
+        #region Get All
+        Task<IEnumerable<FeeType>> GetAllAsync(string dbId, bool? isActive = null);
+        Task<IEnumerable<FeeType>> GetAll_WithAddEditUserAsync(string dbId, bool? isActive = null);
+        #endregion
     }
 }

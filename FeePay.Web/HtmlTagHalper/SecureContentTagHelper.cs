@@ -52,23 +52,22 @@ namespace FeePay.Web.HtmlTagHalper
             //where usr.UserName == user.Identity.Name
             //select role
             //).ToListAsync();
-            var rolesAccess = await _loginService.GetUserAccessRights(user.Identity.Name, Area);
+
+            // pass admin for all access
+            var roles = await _loginService.GetUserAccessRoles(user.Identity.Name, Area);
+            foreach (var role in roles)
+                if (!string.IsNullOrEmpty(role) && role.Equals("admin", StringComparison.InvariantCultureIgnoreCase))
+                    return;
+
 
             var actionId = $"{Area}:{Controller}:{Action}";
-
+            var rolesAccess = await _loginService.GetUserAccessRights(user.Identity.Name, Area);
             foreach (var Access in rolesAccess)
             {
                 var accessList = JsonConvert.DeserializeObject<IEnumerable<MvcControllerInfo>>(Access);
                 if (accessList.SelectMany(c => c.Actions).Any(a => a.Id == actionId))
                     return;
             }
-
-            //foreach (var role in roles)
-            //{
-            //    var accessList = JsonConvert.DeserializeObject<IEnumerable<MvcControllerInfo>>(role.Access);
-            //    if (accessList.SelectMany(c => c.Actions).Any(a => a.Id == actionId))
-            //        return;
-            //}
 
             output.SuppressOutput();
         }

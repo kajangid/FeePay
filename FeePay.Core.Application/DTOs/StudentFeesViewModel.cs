@@ -10,6 +10,7 @@ namespace FeePay.Core.Application.DTOs
     {
         public int Id { get; set; }
         public string Token { get; set; }
+        public int AcademicSessionId { get; set; }
         public int StudentAdmissionId { get; set; }
         public int FeeMasterId { get; set; }
         public int FeeGroupId { get; set; }
@@ -26,7 +27,10 @@ namespace FeePay.Core.Application.DTOs
 
         public decimal FeeAmount { get; set; }
         public DateTime? DueDate { get; set; }
+        public bool IsPaid { get; set; }
 
         public bool IsSelected { get; set; }
+
+        public StudentAdmissionViewModel StudentAdmission { get; set; }
     }
 }

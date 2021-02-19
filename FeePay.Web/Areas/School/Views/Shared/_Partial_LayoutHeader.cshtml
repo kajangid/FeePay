@@ -9,7 +9,7 @@
     var currentUser_Name = await _loginService.GetCurrentSchoolAdminUser_Name();
     var Name = (!string.IsNullOrEmpty(currentUser_Name)) ? currentUser_Name : UserManager.GetUserName(User);
     string firstRole = "";
-    var roles = _appContext.ClaimSchoolUserRoles();
+    var roles = await _loginService.GetUserAccessRoles(UserManager.GetUserName(User), "school");// .ClaimSchoolUserRoles();
     if (roles != null) { firstRole = roles.FirstOrDefault(); }
 }
 
@@ -30,14 +30,7 @@
             <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="~/Cuba/images/logo/logo.png" alt=""></a></div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="sliders"></i></div>
         </div>
-        <div class="left-header col horizontal-wrapper pl-0">
-            <ul class="horizontal-menu">
-                <li class="mega-menu outside">
-                </li>
-                <li class="level-menu outside">
-                </li>
-            </ul>
-        </div>
+        @await Component.InvokeAsync("AcademicSession")
         <div class="nav-right col-8 pull-right right-header p-0">
             <ul class="nav-menus">
                 <li> <span class="header-search"><i data-feather="search"></i></span></li>

@@ -36,7 +36,7 @@ namespace FeePay.Core.Application.UseCase
         #region Encrypt & Decrypt With DES Algorithm
         static string TripleDESEncrypt(string plainMessage)
         {
-            if (string.IsNullOrEmpty(plainMessage)) throw new ArgumentNullException(plainMessage);
+            if (string.IsNullOrEmpty(plainMessage)) return plainMessage;
             try
             {
                 ICryptoTransform encryptor = GetEncryptor();
@@ -59,9 +59,8 @@ namespace FeePay.Core.Application.UseCase
             }
 
         }
-        static string TripleDESEncryptInteger(int plainMessage)
+        static string TripleDESEncryptInteger(int plainMessage = 0)
         {
-            if (plainMessage == 0) throw new ArgumentNullException(plainMessage.ToString(), "value is 0");
             string plainMessageString = plainMessage.ToString();
             try
             {
@@ -87,7 +86,7 @@ namespace FeePay.Core.Application.UseCase
         }
         static string TripleDESDecrypt(string encryptedMessage)
         {
-            if (string.IsNullOrEmpty(encryptedMessage)) throw new ArgumentNullException(encryptedMessage);
+            if (string.IsNullOrEmpty(encryptedMessage)) return encryptedMessage;
             try
             {
                 ICryptoTransform decryptor = GetDecryptor();
@@ -106,8 +105,7 @@ namespace FeePay.Core.Application.UseCase
         }
         static int TripleDESDecryptInteger(string encryptedMessage)
         {
-            if (string.IsNullOrEmpty(encryptedMessage)) throw new ArgumentNullException(encryptedMessage);
-            if (encryptedMessage == "0") throw new Exception("encryptedMessage value is 0.");
+            if (string.IsNullOrEmpty(encryptedMessage)) return 0;
             try
             {
                 ICryptoTransform decryptor = GetDecryptor();

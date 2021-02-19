@@ -11,6 +11,7 @@ namespace FeePay.Core.Domain.Entities.Student
     {
         public int Id { get; set; }
         public int StudentAdmissionId { get; set; }
+        public int AcademicSessionId { get; set; }
         public int FeeMasterId { get; set; }
         public string Status { get; set; }
         public string Mode { get; set; }
@@ -18,6 +19,8 @@ namespace FeePay.Core.Domain.Entities.Student
         public DateTime? PaymentDate { get; set; }
         public bool IsDelete { get; set; }
         public bool IsActive { get; set; }
+        public bool IsPaid { get; set; }
+        public string Receipt { get; set; }
 
 
 
@@ -31,6 +34,7 @@ namespace FeePay.Core.Domain.Entities.Student
         public decimal FeeAmount { get; set; }
         public DateTime? DueDate { get; set; }
 
-
+        public FeesTranscation FeesTranscation { get; set; }
+        public StudentAdmission StudentAdmission { get; set; }
     }
 }

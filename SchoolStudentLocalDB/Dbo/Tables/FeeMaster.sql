@@ -4,6 +4,7 @@
 	[FeeGroupId] INT NOT NULL, 
 	[FeeTypeId] INT NOT NULL, 
 	[Amount] NUMERIC(6,2) NOT NULL,
+	[AcademicSessionId] INT NULL, 
 	[DueDate] DATETIME NULL,  	
 	[Description] NVARCHAR(350) NULL,
 	[IsActive] BIT NULL DEFAULT 0, 

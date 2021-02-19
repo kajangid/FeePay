@@ -1,0 +1,23 @@
+﻿@using FeePay.Core.Application.IoC;
+@using FeePay.Core.Application.Interface.Service;
+@inject IAppContextAccessor _appContextAccessor
+@{
+    ViewData["Title"] = "Default";
+}
+
+<div class="left-header col horizontal-wrapper pl-0">
+    <ul class="horizontal-menu">
+        <li class="mega-menu outside">
+            Session: @(_appContextAccessor.SiteSession_AcademicSession?.Year)
+            <secure-content asp-area="School" asp-controller="Account" asp-action="ChangeSession">
+                <a class="mx-1"
+                   id="changeSessionModal"
+                   href="javascript:void(0)"
+                   data-ajaxurl="@Url.Action("SessionCheckBoxList","Academic")"
+                   title="Change Academic Session">
+                    <i class="fa fa-repeat"></i>
+                </a>
+            </secure-content>
+        </li>
+    </ul>
+</div>

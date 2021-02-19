@@ -32,41 +32,41 @@
             <div class="card">
                 <div class="card-body">
                     <div class="invoice">
-                        <div>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <img class="media-object rounded-circle img-60" src="~/Cuba/images/user/1.jpg" alt="">
-                                        </div>
-                                        <div class="media-body m-l-20">
-                                            <h4 class="media-heading">@Model?.Student?.Fullname</h4>
-                                            <p>
-                                                Class: @studentclass <br /><span>Sr/Reg: @Model?.Student?.Sr_RegNo </span>
-                                            </p>
-                                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img class="media-object rounded-circle img-60" src="~/Cuba/images/user/1.jpg" alt="">
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="text-md-end" id="project">
-                                        <ul class="list-group list-group-flush">
-                                            @*<li class="list-group-item d-flex justify-content-between align-items-center p-0 pb-1 border-0">
-                                                    Sr/Reg Number<span class="text-right">@Model?.Student?.Sr_RegNo</span>
-                                                </li>*@
-                                            <li class="list-group-item d-flex justify-content-between align-items-center p-0 pb-1 border-0">
-                                                Father's Name: <span class="text-right">@Model?.Student?.FatherName</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center p-0 pb-1 border-0">
-                                                Mother's Name: <span class="text-right">@Model?.Student?.MotherName</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center p-0 border-0">
-                                                Mobile Number: <span class="text-right">@Model?.Student?.MobileNo</span>
-                                            </li>
-                                        </ul>
+                                    <div class="media-body m-l-20">
+                                        <h4 class="media-heading">@Model?.Student?.Fullname</h4>
+                                        <p>
+                                            Class: @studentclass <br /><span>Sr/Reg: @Model?.Student?.Sr_RegNo </span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div class="col-md-4">
+                                <div class="text-md-end" id="project">
+                                    <ul class="list-group list-group-flush">
+                                        @*<li class="list-group-item d-flex justify-content-between align-items-center p-0 pb-1 border-0">
+                            Sr/Reg Number<span class="text-right">@Model?.Student?.Sr_RegNo</span>
+                        </li>*@
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-0 pb-1 border-0">
+                                            Father's Name: <span class="text-right">@Model?.Student?.FatherName</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-0 pb-1 border-0">
+                                            Mother's Name: <span class="text-right">@Model?.Student?.MotherName</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-0 border-0">
+                                            Mobile Number: <span class="text-right">@Model?.Student?.MobileNo</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
                                 <div class="table-responsive invoice-table" id="table">
                                     <table class="table table-bordered table-striped">
                                         <tbody>
@@ -111,11 +111,20 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="row">
-                                    <form asp-action="PayNow" asp-controller="FeeManage" asp-area="Student" id="paynowfrom" method="post">
-                                        <div class="col-md-8">
-                                            Show Payment GateWay: 1 : 2 : 3 : 4 :
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col">
+                                <form asp-action="PayNow" asp-controller="FeeManage" asp-area="Student" id="paynowfrom" method="post" class="form theme-form">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            Show Payment GateWay: 1 : 2 : 3 : 4 : [If We Have More Then 1 Payment GateWays.]
                                         </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-8"></div>
                                         <div class="col-md-4 text-right">
                                             @if (Model != null && Model.Fees != null && Model.Fees.Count > 0)
                                             {
@@ -128,8 +137,8 @@
                                             <input type="submit" value="Pay Now" class="btn btn-primary m-0 ml-1" />
                                             @*<a href="javascript:void(0)" class="btn btn-primary m-0 ml-1">Pay Now</a>*@
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

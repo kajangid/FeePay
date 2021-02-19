@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 using FeePay.Web.Areas.Common;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel;
+using FeePay.Core.Application.Interface.Service;
 using FeePay.Core.Application.Interface.Service.School;
 using FeePay.Core.Application.DTOs;
 using static FeePay.Core.Application.Enums.Notification;
+using FeePay.Core.Application.IoC;
 
 namespace FeePay.Web.Areas.School.Controllers
 {
@@ -20,12 +22,17 @@ namespace FeePay.Web.Areas.School.Controllers
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class AcademicController : AreaBaseController
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<AcademicController> _logger;
         private readonly IAcademicServices _academicServices;
-        public AcademicController(ILogger<AcademicController> logger, IAcademicServices academicServices)
+        private readonly IAppContextAccessor _appContextAccessor;
+        public AcademicController(
+            ILogger<AcademicController> logger,
+            IAcademicServices academicServices,
+            IAppContextAccessor appContextAccessor)
         {
             _logger = logger;
             _academicServices = academicServices;
+            _appContextAccessor = appContextAccessor;
         }
 
 
@@ -408,6 +415,58 @@ namespace FeePay.Web.Areas.School.Controllers
         {
             return View();
         }
+
+        [MvcDiscovery]
+        [DisplayName("Change Session")]
+        [HttpPost("School/Academics/Sessions/Change")]
+        public async Task<JsonResult> SessionChange(int id)
+        {
+            if (id == 0)
+            {
+                ModelState.AddModelError("Id", "Session is required.");
+                return Json(new { success = false, message = "please select a session." });
+            }
+            try
+            {
+                var res = await _academicServices.ChangeSessionAsync(id);
+                if (res.Succeeded) return Json(new { success = true });
+                _logger.LogError("error when setting default session. Error= {0}, Action= {1}", res.Message, nameof(SessionChange));
+                return Json(new { success = false, message = $"error when setting default session. error = {res.Message}" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "error when setting default session.");
+                return Json(new { success = false, message = "error when setting default session." });
+            }
+        }
+
+        [MvcDiscovery]
+        [DisplayName("Session CheckBox List")]
+        [HttpGet("School/Academics/Sessions/CheckBoxList")]
+        public async Task<JsonResult> SessionCheckBoxList()
+        {
+            try
+            {
+                var res = await _academicServices.GetListOfSessionsAsync();
+                if (res.Succeeded)
+                {
+                    var currentSession = _appContextAccessor.SiteSession_AcademicSession;
+                    var cblist = res.Data?.Select(s => new { s.Id, Name = s.Year, Selected = (s.Id == currentSession?.Id) });
+                    return Json(new { success = true, data = cblist });
+                }
+                else
+                {
+                    _logger.LogError("error when getting session data. Error= {0}, Action= {1}", res.Message, nameof(SessionCheckBoxList));
+                    return Json(new { success = false, message = $"error when getting session data. error = {res.Message}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "error when getting session data.");
+                return Json(new { success = false, message = "error when getting session data." });
+            }
+        }
+
         #endregion
     }
 }

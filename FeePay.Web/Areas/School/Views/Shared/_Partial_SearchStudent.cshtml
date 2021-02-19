@@ -1,0 +1,87 @@
+﻿@model StudentSearchViewModel
+@{
+    var items = (Model != null) ? new SelectList(Model.Classes, "Value", "Text", Model?.ClassId) : null;
+    var controllerName = ViewContext.RouteData.Values["Controller"]?.ToString().ToLower();
+    var actionName = ViewContext.RouteData.Values["Action"]?.ToString().ToLower();
+}
+<div class="card">
+    @if (controllerName == "feemanagement" && actionName == "feesassign")
+    {
+        <div class="card-header b-r-info b-l-info border-3">
+            <h5>
+                <a asp-action="FeeMasterList" asp-controller="FeeManagement">
+                    <i class="fa fa-arrow-left"></i> Go back
+                </a>
+            </h5>
+            <div class="card-header-right">
+                <ul class="list-unstyled card-option">
+                    <li><i class="fa fa-spin fa-cog"></i></li>
+                    <li><i class="icofont icofont-maximize full-card"></i></li>
+                    <li><i class="icofont icofont-minus minimize-card"></i></li>
+                </ul>
+            </div>
+        </div>
+    }
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <form method="post" class="needs-validation" novalidate="">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label asp-for="ClassId"> Class *</label>
+                                <select asp-for="ClassId"
+                                        asp-items="@(items)"
+                                        class="form-control">
+                                    <option value=""> Select </option>
+                                </select>
+                                <div class="invalid-feedback"><span asp-validation-for="ClassId"></span></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label asp-for="SectionId"> Section </label>
+                                <select asp-for="SectionId"
+                                        data-ajaxurl="@Url.Action("GetClassSection","Uitility")"
+                                        data-key-selected="@Model?.SectionId"
+                                        class="form-control">
+                                    <option> Select </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group mb-0 text-right"><input type="submit" class="btn btn-primary" value="Search" /></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-6">
+                <form method="post" class="needs-validation" novalidate="">
+                    @Html.AntiForgeryToken()
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label asp-for="Search">
+                                Search *
+                                <a href="javascript:void(0)"
+                                   data-toggle="m-tooltip"
+                                   data-placement="top"
+                                   data-original-title="Search for Sr/Reg no, Name, Mobile number, Father's name, Mother's name"
+                                   title="Search for Sr/Reg no, Name, Mobile number, Father's name, Mother's name">
+                                    <i class="fa fa-info-circle"></i>
+                                </a>
+                            </label>
+                            <input type="text" asp-for="Search"
+                                   class="form-control"
+                                   placeholder="Search for Sr/Reg no, Name, Mobile number, Father's name..." />
+                            <div class="invalid-feedback"><span asp-validation-for="Search"></span></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group mb-0 text-right"><input type="submit" class="btn btn-primary" value="Search" /></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

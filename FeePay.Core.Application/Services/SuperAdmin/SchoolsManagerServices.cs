@@ -54,7 +54,7 @@ namespace FeePay.Core.Application.Services.SuperAdmin
             if (registerSchool.Id == 0)
             {
                 registerSchool.AddedBy = UserId;
-                registerSchool.UniqueId = GetSchoolUniqueId(registerSchool.Name);
+                registerSchool.UniqueId = CreateSchoolUniqueId(registerSchool.Name);
 
                 var checkExist = await _unitOfWork.RegisteredSchool.FindByNameAsync(registerSchool.NormalizedName);
                 if (checkExist != null && checkExist.UniqueId == registerSchool.UniqueId)
@@ -70,7 +70,7 @@ namespace FeePay.Core.Application.Services.SuperAdmin
                 if (checkExist == null) return new Response<bool>("No data found to update.");
                 if (registerSchool.NormalizedName != checkExist.NormalizedName)
                 {
-                    registerSchool.UniqueId = GetSchoolUniqueId(registerSchool.Name);
+                    registerSchool.UniqueId = CreateSchoolUniqueId(registerSchool.Name);
                     var checkUniqueIdExist = await _unitOfWork.RegisteredSchool.FindByNameAsync(registerSchool.NormalizedName);
                     if (checkUniqueIdExist != null) return new Response<bool>("School already register with this name....");
                 }
@@ -100,10 +100,39 @@ namespace FeePay.Core.Application.Services.SuperAdmin
         }
         #endregion
 
+        #region PAYMENT GATEWAY DOCUMENT
+        public async Task<Response<List<PaymentGatewayDocumentViewModel>>> GetPaymentGatewayDocumentList()
+        {
+            var list = await _unitOfWork.PaymentGatewayDocument.GetAll_WithSchoolDataAsync();
+            List<PaymentGatewayDocumentViewModel> model = _mapper.Map<List<PaymentGatewayDocumentViewModel>>(list?.ToList());
+            return new Response<List<PaymentGatewayDocumentViewModel>>(model);
+        }
+        public async Task<Response<PaymentGatewayDocumentViewModel>> GetPaymentGatewayDocumentById(int id)
+        {
+            var paymentGatewayDocument = await _unitOfWork.PaymentGatewayDocument.FindByIdAsync(id);
+            if (paymentGatewayDocument == null) return new Response<PaymentGatewayDocumentViewModel>("No data found.");
+            PaymentGatewayDocumentViewModel model = _mapper.Map<PaymentGatewayDocumentViewModel>(paymentGatewayDocument);
+            var school = await _unitOfWork.RegisteredSchool.FindByIdAsync(paymentGatewayDocument.RegisteredSchoolId, true);
+            if (school == null) return new Response<PaymentGatewayDocumentViewModel>("School data found.");
+            model.RegisterSchool = _mapper.Map<RegisterSchoolViewModel>(school);
+            return new Response<PaymentGatewayDocumentViewModel>(model);
+        }
+        public async Task<Response<bool>> ApprovePaymentGateway(IsActiveRequestViewModel model)
+        {
+            int userId = Convert.ToInt32(_loginService.GetLogedInSuperAdminId());
+            var paymentGatewayDocument = await _unitOfWork.PaymentGatewayDocument.FindByIdAsync(model.DataId);
+            if (paymentGatewayDocument == null) return new Response<bool>("No Data Found.");
+            paymentGatewayDocument.IsApproved = model.IsApproved;
+            paymentGatewayDocument.ModifyBy = userId;
+            var res = await _unitOfWork.PaymentGatewayDocument.UpdateAsync(paymentGatewayDocument);
+            return new Response<bool>(res > 0);
+        }
 
+
+        #endregion
 
         #region Private Methods
-        private string GetSchoolUniqueId(string schoolName)
+        private string CreateSchoolUniqueId(string schoolName)
         {
             var firstChars = schoolName.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(s => s[0]);
             string preUniqueId = string.Join("", firstChars);

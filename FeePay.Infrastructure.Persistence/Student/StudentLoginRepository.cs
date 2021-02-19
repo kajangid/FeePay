@@ -68,6 +68,7 @@ namespace FeePay.Infrastructure.Persistence.Student
                     {
                         var Parameters = new
                         {
+                            user.StudentAdmission.AcademicSessionId,
                             user.StudentAdmission.Address,
                             user.StudentAdmission.AdmissionDate,
                             user.StudentAdmission.AlternateMobileNo,
@@ -155,16 +156,16 @@ namespace FeePay.Infrastructure.Persistence.Student
                 using IDbConnection connection = new SqlConnection(GetConStr(dbId));
                 var SpRequiredParameters = new
                 {
+                    user.Id,
                     user.AccessFailedCount,
-                    user.AddedBy,
                     user.Email,
                     user.EmailConfirmed,
                     user.IsActive,
-                    user.IsLogin,
-                    user.LastLoginDate,
-                    user.LastLoginDevice,
-                    user.LastLoginIP,
-                    user.LastLoginLocation,
+                    //user.IsLogin,
+                    //user.LastLoginDate,
+                    //user.LastLoginDevice,
+                    //user.LastLoginIP,
+                    //user.LastLoginLocation,
                     user.LockoutEnabled,
                     user.LockoutEndDate,
                     user.NormalizedEmail,
@@ -175,7 +176,8 @@ namespace FeePay.Infrastructure.Persistence.Student
                     user.PhoneNumberConfirmed,
                     user.SecurityStamp,
                     user.TwoFactorEnabled,
-                    user.UserName
+                    user.UserName,
+                    user.ModifyBy
                 };
                 return await connection.ExecuteAsync(_dBVariables.SP_Update_StudentLogin, SpRequiredParameters, commandType: CommandType.StoredProcedure);
 

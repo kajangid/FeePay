@@ -1,18 +1,32 @@
-﻿@model IEnumerable<StudentAdmissionViewModel>
+﻿@model StudentSearchViewModel
 @{
     var random = new Random();
     var ColorList = new List<string> { "primary", "secondary", "success", "info", "dark", "light", "danger", "warning" };
 }
 
 @section Style{
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Cuba/css/vendors/datatables.css")">
 }
 @section Scripts{
-    <script src="@Url.Content("~/Cuba/js/datatable/datatables/jquery.dataTables.min.js")"></script>
+    <partial name="_ValidationScriptsPartial" />
     <script>
         (function () {
             "use strict";
-            $('#studentListTable').DataTable({ "order": [[8, 'desc']] });
+            $('#studentListTable').DataTable({
+                "order": [[8, 'desc']],
+                columnDefs: [
+                    { targets: 0, visible: true, searchable: false, orderable: false },
+                    { targets: 1, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 2, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 3, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 4, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 5, visible: true, searchable: true, orderable: true, orderDataType: "dom-text" },
+                    { targets: 6, visible: true, searchable: false, orderable: false },
+                    { targets: 7, visible: true, searchable: false, orderable: false },
+                    { targets: 8, visible: true, searchable: false, orderable: true, orderDataType: "dom-text" },
+                    { targets: 9, visible: true, searchable: false, orderable: false },
+                    { targets: 10, visible: true, searchable: false, orderable: false },
+                ]
+            });
             $('#studentListTable').reArrangeDatatableSerialNumber();
         })(jQuery);
     </script>
@@ -35,6 +49,9 @@
 
 <div class="container-fluid">
     <div class="row">
+        <div class="col-sm-12">
+            @{ await Html.RenderPartialAsync("_Partial_SearchStudent", Model); }
+        </div>
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header b-r-info b-l-info border-3">
@@ -70,9 +87,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @{ if (Model != null)
+                                @{ if (Model != null && Model.Students != null)
                                     {
-                                        foreach (var item in Model)
+                                        foreach (var item in Model.Students)
                                         {
                                             var color = ColorList.OrderBy(s => random.NextDouble()).First();
                                             <tr data-key="@item.Id">
@@ -86,21 +103,78 @@
                                                     @if (item.IsActive)
                                                     {<label class="badge badge-success">Active</label>}
                                                 </td>
-                                                <td><a href="@Url.Action("StaffManage","Account",new { id = item.ModifyById })" class="btn btn-@(color) btn-xs">@item.ModifyBy</a></td>
-                                                <td>@item.ModifyDate?.ToString("dd/MM/yyyy")</td>
+                                                <td>
+                                                    <a href="@Url.Action("StaffManage","Account",new { id = item.ModifyById })"
+                                                       class="btn btn-@(color) btn-xs">
+                                                        @item.ModifyBy
+                                                    </a>
+                                                </td>
+                                                <td data-order="@item.ModifyDate?.ToString("MMddyyyyHHmmss")">@item.ModifyDate?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)</td>
                                                 <td><label class="badge badge-success">soon</label></td>
                                                 <td>
                                                     <div style="width:130px">
-                                                        <a asp-action="StudentEdit" asp-controller="StudentAdmission" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Edit Student" class="d-inline-block mr-1">
+                                                        <a asp-action="StudentEdit"
+                                                           asp-controller="StudentAdmission"
+                                                           asp-route-id="@item.Id"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="Edit Student"
+                                                           class="d-inline-block mr-1">
                                                             <i data-feather="edit-3"></i>
                                                         </a>
-                                                        <a asp-action="StudentProfile" asp-controller="StudentAdmission" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="View Student" class="d-inline-block mr-1">
+                                                        <a asp-action="StudentProfile"
+                                                           asp-controller="StudentAdmission"
+                                                           asp-route-id="@item.Id"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="View Student"
+                                                           class="d-inline-block mr-1">
                                                             <i data-feather="user"></i>
                                                         </a>
-                                                        <a href="javascript:void(0)" data-ajaxurl="@Url.Action("GetUserPassword","StudentAdmission",new { id = item.Id })" data-onclilck="showPassword" data-container="body" data-toggle="popover" data-placement="top" title="See Password" class="d-inline-block mr-1">
+                                                        <a asp-action="StudentLedger"
+                                                           asp-controller="FeeManagement"
+                                                           asp-route-id="@item.Id"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="Student Ledger"
+                                                           class="d-inline-block mr-1">
+                                                            <i data-feather="server"></i>
+                                                        </a>
+                                                        <a data-ajaxurl="@Url.Action("GetUserPassword","StudentAdmission",new { id = item.Id })"
+                                                           href="javascript:void(0)"
+                                                           data-onclilck="showPassword"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="See Password"
+                                                           class="d-inline-block mr-1">
+                                                            <i data-feather="lock"></i>
+                                                        </a>
+                                                        <a data-ajaxurl="@Url.Action("ChnageCredentials","StudentAdmission",new { id = item.Id })"
+                                                           href="javascript:void(0)"
+                                                           data-onclilck="changePasswordAdmin"
+                                                           data-actionmag="change credentials"
+                                                           data-ajaxkey="@item.Id"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="Change Credentials"
+                                                           class="d-inline-block mr-1">
                                                             <i data-feather="unlock"></i>
                                                         </a>
-                                                        <a data-action="deleterow" data-actionmag="Class" asp-action="StudentDelete" asp-controller="StudentAdmission" asp-route-id="@item.Id" data-container="body" data-toggle="popover" data-placement="top" title="Delete Student" class="d-inline-block">
+                                                        <a asp-action="StudentDelete"
+                                                           asp-controller="StudentAdmission"
+                                                           asp-route-id="@item.Id"
+                                                           data-action="deleterow"
+                                                           data-actionmag="Class"
+                                                           data-container="body"
+                                                           data-toggle="popover"
+                                                           data-placement="top"
+                                                           title="Delete Student"
+                                                           class="d-inline-block">
                                                             <i data-feather="trash-2"></i>
                                                         </a>
                                                     </div>
@@ -122,4 +196,5 @@
 
 @section Models{
     @{ await Html.RenderPartialAsync("_Area_Partial_ShowUserNamePassword"); }
+    @{ await Html.RenderPartialAsync("_Area_Partial_ChangePassword", new ResetPasswordViewModel()); }
 }

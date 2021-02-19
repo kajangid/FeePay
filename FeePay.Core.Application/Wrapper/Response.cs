@@ -23,6 +23,12 @@ namespace FeePay.Core.Application.Wrapper
             Message = message;
             Errors = errors;
         }
+        public Response(Exception exception, string message = null)
+        {
+            Succeeded = false;
+            Message = message;
+            Exception = exception;
+        }
         public Response(T data, string message = null)
         {
             Succeeded = true;
@@ -32,6 +38,7 @@ namespace FeePay.Core.Application.Wrapper
         public bool Succeeded { get; set; }
         public string Message { get; set; }
         public List<string> Errors { get; set; }
+        public Exception Exception { get; set; }
         public T Data { get; set; }
     }
 }
